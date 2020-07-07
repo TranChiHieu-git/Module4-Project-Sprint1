@@ -1,10 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
-import {AdminComponent} from "./admin.component";
-import {ListAdminComponent} from "./list-admin/list-admin.component";
+import {TestComponent} from "../user/test/test.component";
 
-const routes: Routes = [{path: 'admin/list', component: ListAdminComponent}];
+const routes: Routes = [{path: 'user/test', component: TestComponent}];
 
 @NgModule({
   declarations: [],
@@ -13,5 +12,5 @@ const routes: Routes = [{path: 'admin/list', component: ListAdminComponent}];
     CommonModule
   ]
 })
-export class AdminRoutingModule {
+export class UserRoutingModule {
 }
