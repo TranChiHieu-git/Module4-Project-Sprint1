@@ -4,7 +4,18 @@ import {RouterModule, Routes} from "@angular/router";
 import {AdminComponent} from "./admin.component";
 import {ListAdminComponent} from "./list-admin/list-admin.component";
 
-const routes: Routes = [{path: 'admin/list', component: ListAdminComponent}];
+const routes: Routes = [{
+  path: 'admin', component: AdminComponent,
+  children: [
+    {
+      path: 'list', component: ListAdminComponent
+    },
+    // ví dụ
+    // {
+    //   path: 'bac', component: ListAdminComponent
+    // }
+  ]
+}];
 
 @NgModule({
   declarations: [],
