@@ -6,6 +6,8 @@ import {AppComponent} from './app.component';
 import {AdminComponent} from './admin/admin.component';
 import {AdminModule} from "./admin/admin.module";
 import {ShareModule} from "./shares/share.module";
+import {MaterialModule} from "./shares/material.module";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import {ShareModule} from "./shares/share.module";
     BrowserModule,
     AdminModule,
     AppRoutingModule,
-    ShareModule
+    ShareModule,
+    MaterialModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
