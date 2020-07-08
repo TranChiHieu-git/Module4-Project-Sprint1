@@ -11,5 +11,7 @@ export class ListAccountComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  info(){
 
+  }
 }
