@@ -1,25 +1,25 @@
 <div class="container-fluid">
   <div class="row w-auto">
-    <nav class="w-100 navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="w-100 navbar navbar-expand-lg navbar-light header-color">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto ml-2">
-          <li class="nav-item active">
-            <h2 class="navbar-brand" href="#">Brand</h2>
+        <ul class=" navbar-nav mr-auto ml-2">
+          <li class="mt-1 nav-item active">
+            <h2 class="text-light navbar-brand" href="#">Brand</h2>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Quản lý</a>
+          <li class="mt-1 nav-item active">
+            <a class="text-light nav-link" href="#">Quản lý</a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Bán hàng</a>
+          <li class="mt-1 nav-item active">
+            <a class="text-light nav-link" href="#">Bán hàng</a>
           </li>
           <li class="nav-item">
             <div class="main">
               <!-- Actual search box -->
-              <div class="form-group has-search mt-1">
+              <div class="form-group has-search mt-2">
                 <span class="fa fa-search form-control-feedback"></span>
                 <input type="text" class="form-control" placeholder="Search">
               </div>
@@ -33,22 +33,22 @@
     </nav>
   </div>
   <div class="row border-top-black-custom">
-    <div class="pt-5 p-0 col-md-2 ">
+    <div class="sidebar-color pt-5 p-0 col-md-2 ">
       <ul class="list-group ">
         <button
-          class="border border-primary mb-3 list-group-item h-auto w-100 btn btn-outline-primary my-2 my-sm-0"
+          class="border border-primary list-group-item h-auto w-100 btn btn-outline-custom mb-3"
           routerLink="/admin/access-times">
           Bảng điều khiển
         </button>
         <button
-          class="border border-primary mb-3 list-group-item h-auto w-100 btn btn-outline-primary my-2 my-sm-0"
+          class="border border-primary mb-3 list-group-item h-auto w-100 btn btn-outline-custom my-2 my-sm-0"
           routerLink="/admin/list-account">
           Quản lý tài khoản
         </button>
       </ul>
     </div>
-    <div class="main-size border-black-custom col-md-10">
-      <div class="h-25"></div>
+    <div class="content-color main-size border-black-custom col-md-10">
+      <div class="space-router"></div>
       <router-outlet></router-outlet>
     </div>
   </div>
