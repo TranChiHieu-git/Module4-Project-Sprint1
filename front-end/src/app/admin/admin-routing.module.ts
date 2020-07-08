@@ -1,21 +1,20 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterModule, Routes} from "@angular/router";
-import {AdminComponent} from "./admin.component";
-import {ListAdminComponent} from "./list-admin/list-admin.component";
+import {RouterModule, Routes} from '@angular/router';
+import {AdminComponent} from './admin.component';
+import {ListAccountComponent} from './list-account/list-account.component';
+import {AccessTimesComponent} from './access-times/access-times.component';
 
-const routes: Routes = [{
-  path: 'admin', component: AdminComponent,
-  children: [
-    {
-      path: 'list', component: ListAdminComponent
-    },
-    // ví dụ
-    // {
-    //   path: 'bac', component: ListAdminComponent
-    // }
-  ]
-}];
+const routes: Routes = [
+  {
+    path: 'admin', component: AdminComponent,
+    children: [
+      {path: 'list-account', component: ListAccountComponent},
+      {path: 'access-times', component: AccessTimesComponent}
+    ]
+  },
+  {path: '**', component: AdminComponent},
+];
 
 @NgModule({
   declarations: [],
