@@ -37,8 +37,8 @@
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/popper.js/dist/umd/popper.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "./src/assets/js/collapse_sidebar.js",
-              "./src/assets/js/show-info.js"
+              "src/assets/js/collapse_sidebar.js",
+              "src/assets/js/show-info.js"
             ]
           },
           "configurations": {
