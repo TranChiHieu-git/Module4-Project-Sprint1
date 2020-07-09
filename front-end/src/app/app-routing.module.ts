@@ -4,8 +4,6 @@ import {AdminRoutingModule} from './admin/admin-routing.module';
 import {AdminComponent} from './admin/admin.component';
 import {EmployeeRoutingModule} from './employee/employee-routing.module';
 import {EmployeeComponent} from './employee/employee.component';
-
-
 const routes: Routes = [
   {path: 'admin', component: AdminComponent},
   {path: 'employee', component: EmployeeComponent}
