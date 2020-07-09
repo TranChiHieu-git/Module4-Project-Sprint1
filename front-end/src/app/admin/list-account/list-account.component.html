@@ -10,20 +10,11 @@
           <th></th>
         </tr>
         </thead>
-        <tbody class="border border-dark">
+        <tbody class="border border-dark" *ngFor="let account of accountList">
         <tr>
-          <th scope="row">1</th>
-          <td class="details" (click)="info()">Mark</td>
-          <td>Otto</td>
-          <td>
-            <button class="border-0 mr-5 bg-transparent fas fa-pencil-alt" (click)="edit()"></button>
-            <button class="border-0 bg-transparent	fa fa-trash " (click)="delete()"></button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">1</th>
-          <td (click)="info()">Mark</td>
-          <td>Otto</td>
+          <th scope="row">{{account.id}}</th>
+          <td class="details" (click)="info()">{{account.user_name}}</td>
+          <td>{{account.password}}</td>
           <td>
             <button class="border-0 mr-5 bg-transparent fas fa-pencil-alt" (click)="edit()"></button>
             <button class="border-0 bg-transparent	fa fa-trash " (click)="delete()"></button>
@@ -33,53 +24,61 @@
       </table>
     </div>
   </div>
+
+<!--  THêm mới-->
   <div class="row">
     <div class="col-md-12">
       <button type="button" class="float-right btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
         Thêm mới
       </button>
-      <div class="pt-5 modal fade bd-example-modal-lg" data-backdrop="static" tabindex="-1" role="dialog"
-           aria-labelledby="myLargeModalLabel"
-           aria-hidden="true">
-        <div class="modal-dialog modal-lg pt-5">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Thêm tài khoản mới</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="email">Tên tài khoản: </label>
-                <input type="email" class="form-control" id="email" name="email">
+      <form (ngSubmit)="create()" [formGroup]="accountForm">
+        <div class="pt-5 modal fade bd-example-modal-lg" data-backdrop="static" tabindex="-1" role="dialog"
+             aria-labelledby="myLargeModalLabel"
+             aria-hidden="true">
+          <div class="modal-dialog modal-lg pt-5">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Thêm tài khoản mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
-              <div class="form-group">
-                <label>Mật khẩu</label>
-                <input type="password" class="form-control" id="pwd" name="pswd">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label>Tên tài khoản: </label>
+                  <input formControlName="user_name" type="text" class="form-control" name="email">
+
+                </div>
+                <div class="form-group">
+                  <label>Mật khẩu: </label>
+                  <input formControlName="password" type="password" class="form-control" id="pwd" name="pswd">
+                </div>
+                <div class="form-group">
+                  <label class="mt-1 float-left">Mã nhân viên:
+                    <select class="w-100 m-0 p-0 pl-3 custom-select">
+                      <option selected>Open this select menu</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                    <button class="btn btn-primary">Kiểm tra thông tin nhân viên</button>
+                  </label>
+
+                </div>
               </div>
-              <div class="form-group">
-                <label class="mt-1 float-left">Mã nhân viên:</label>
-                <select class="w-50 m-0 p-0 pl-3 custom-select">
-                  <option selected>Open this select menu</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
-                <button class="btn btn-primary">Kiểm tra thông tin nhân viên</button>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Thêm mới</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Thêm mới</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
             </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>
 
+<!--details modal-->
 <div class="modal" tabindex="-1" role="dialog" id="infor">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
