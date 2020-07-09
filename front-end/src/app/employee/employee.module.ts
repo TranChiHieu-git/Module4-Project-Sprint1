@@ -21,12 +21,14 @@ import { ListDistributorComponent } from './partner-management/list-distributor/
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {MatCardModule} from '@angular/material/card';
+import {MAT_DATE_LOCALE} from '@angular/material/core';
+import {CustomerManagementComponent} from './partner-management/customer-management/customer-management.component';
 
 @NgModule({
     declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
   WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BillComponent,
     ListBillComponent,
-    SearchBillComponent],
+    SearchBillComponent, CustomerManagementComponent],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent
@@ -44,6 +46,9 @@ import {MatCardModule} from '@angular/material/card';
     MatDialogModule,
     ShareModule,
     MatCardModule,
+  ],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
   ]
 })
 export class EmployeeModule {
