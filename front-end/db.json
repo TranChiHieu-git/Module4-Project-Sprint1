@@ -1,0 +1,61 @@
+{
+  "user": [
+    {
+      "id": 1,
+      "name": "Nick Jonas",
+      "prefix": "MR",
+      "email": "nick@gmail.com",
+      "position": "admin",
+      "gender": "M"
+    },
+    {
+      "id": 2,
+      "name": "Selena Gomez",
+      "prefix": "MS",
+      "email": "selena@gmail.com",
+      "position": "admin",
+      "gender": "F"
+    },
+    {
+      "id": 3,
+      "name": "Will Smith",
+      "prefix": "MR",
+      "email": "will@gmail.com",
+      "position": "student",
+      "gender": "M"
+    },
+    {
+      "id": 4,
+      "name": "Demi Lovato",
+      "prefix": "MS",
+      "email": "demi@gmail.com",
+      "position": "admin",
+      "gender": "F"
+    },
+    {
+      "id": 5,
+      "name": "Ariana Grande",
+      "prefix": "MS",
+      "email": "ariana@gmail.com",
+      "position": "student",
+      "gender": "F"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
