@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+
 import {Customer} from './customer';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+
 
 declare var $: any;
 
@@ -11,6 +13,7 @@ declare var $: any;
   styleUrls: ['./customer-management.component.scss']
 })
 export class CustomerManagementComponent implements OnInit {
+  public customers;
   tempCustomer: Customer = new Customer();
   customer = new Customer();
   customerForm: FormGroup;
@@ -54,5 +57,8 @@ export class CustomerManagementComponent implements OnInit {
   backCheckMenu(): void {
     $('#editcheckModal').modal('hide');
     $('#deletecheckModal').modal('hide');
+  }
+
+  addcheckModel(customer: Customer) {
   }
 }
