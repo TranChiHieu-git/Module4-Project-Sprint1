@@ -38,8 +38,4 @@ export class EmployeeDetailComponent implements OnInit {
   //   // this.change();
   //   $('#deleteModal').modal('show');
   // }
-  // quayLaiDanhSach(): void {
-  //   $('#editModal').modal().hide();
-  //   $('#DeleteModal').modal('hide');
-  // }
 }
