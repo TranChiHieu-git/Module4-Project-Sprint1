@@ -22,12 +22,13 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {MatCardModule} from '@angular/material/card';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
+import {CustomerManagementComponent} from './partner-management/customer-management/customer-management.component';
 
 @NgModule({
     declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
   WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BillComponent,
     ListBillComponent,
-    SearchBillComponent],
+    SearchBillComponent, CustomerManagementComponent],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent
@@ -40,7 +41,7 @@ import {MAT_DATE_LOCALE} from '@angular/material/core';
     Ng2SearchPipeModule,
     Ng2OrderModule,
     HttpClientModule,
-    NgbModule, 
+    NgbModule,
     MaterialModule,
     MatDialogModule,
     ShareModule,

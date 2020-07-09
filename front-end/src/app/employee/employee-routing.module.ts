@@ -12,6 +12,7 @@ import {ProductComponent} from './warehouse-management/product/product.component
 import {EmployeeManagerComponent} from './employee-manager/employee-manager.component';
 import {EmployeeDetailComponent} from './employee-manager/employee-detail/employee-detail.component';
 import {ListDistributorComponent} from './partner-management/list-distributor/list-distributor.component';
+import {CustomerManagementComponent} from './partner-management/customer-management/customer-management.component';
 
 const routes: Routes = [{
   path: 'employee', component: EmployeeComponent,
@@ -19,7 +20,9 @@ const routes: Routes = [{
     {
       path: 'partner-management', component: PartnerManagementComponent, children: [
         {path: 'test', component: TestPartnerComponent},
-        {path: 'list-distributor', component: ListDistributorComponent}
+        {path: 'list-distributor', component: ListDistributorComponent},
+        {path: 'customer-management', component: CustomerManagementComponent
+        }
       ]
     },
     {
