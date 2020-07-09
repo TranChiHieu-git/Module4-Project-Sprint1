@@ -18,7 +18,7 @@ import {EmployeeComponent} from './employee/employee.component';
     AppComponent,
     AdminComponent,
     EmployeeComponent,
-    UserComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +28,7 @@ import {EmployeeComponent} from './employee/employee.component';
     ShareModule,
     MaterialModule,
     MatIconModule,
-    UserModule,
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]
