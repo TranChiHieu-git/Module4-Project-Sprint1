@@ -8,7 +8,12 @@ import {UserOdersComponent} from './user-oders/user-oders.component';
 import {UserOderDetailComponent} from './user-oder-detail/user-oder-detail.component';
 import {UserDetailComponent} from './user-detail/user-detail.component';
 
-const routes: Routes = [
+const routes: Routes = [{
+  path: 'home', component: UserComponent,
+  children: [
+    {path: 'test', component: TestComponent}
+  ],
+},
   {
     path: 'user-manage',
     component: UserManageComponent,
@@ -33,7 +38,6 @@ const routes: Routes = [
     ],
   }
 ];
-
 @NgModule({
   declarations: [],
   imports: [
