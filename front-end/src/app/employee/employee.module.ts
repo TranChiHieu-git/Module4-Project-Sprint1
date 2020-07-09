@@ -38,7 +38,7 @@ import {HttpClientModule} from '@angular/common/http';
     Ng2SearchPipeModule,
     Ng2OrderModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
     MaterialModule,
     MatDialogModule,
     ShareModule,

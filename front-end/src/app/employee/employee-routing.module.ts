@@ -32,9 +32,11 @@ const routes: Routes = [{
         {path: 'product', component: ProductComponent}
       ]
     },
-    {path: 'employee-manager', component: EmployeeManagerComponent, children: [
+    {
+      path: 'employee-manager', component: EmployeeManagerComponent, children: [
         {path: 'detail', component: EmployeeDetailComponent}
-      ]}
+      ]
+    }
   ]
 }
 ];
