@@ -11,10 +11,11 @@ import {UserForgetpasswordComponent} from './user-forgetpassword/user-forgetpass
 import {UserLoginComponent} from './user-login/user-login.component';
 import {UserRegisterComponent} from './user-register/user-register.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
-
+import { UserManageComponent } from './user-manage/user-manage.component';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
-  declarations: [TestComponent, OrderButtonComponent, UserRegisterComponent, UserLoginComponent, UserForgetpasswordComponent],
+  declarations: [TestComponent, UserManageComponent, OrderButtonComponent, UserRegisterComponent, UserLoginComponent, UserForgetpasswordComponent],
   exports: [
     OrderButtonComponent,
     UserRegisterComponent,
