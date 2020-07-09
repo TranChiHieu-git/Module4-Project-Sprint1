@@ -5,7 +5,6 @@ import {EmployeeComponent} from './employee.component';
 import {PartnerManagementComponent} from './partner-management/partner-management.component';
 import {WarehouseManagementComponent} from './warehouse-management/warehouse-management.component';
 import {TestPartnerComponent} from './partner-management/test-partner/test-partner.component';
-import {TestWarehouseComponent} from './warehouse-management/test-warehouse/test-warehouse.component';
 import {HomeComponent} from './warehouse-management/home/home.component';
 import {ProductComponent} from './warehouse-management/product/product.component';
 
@@ -19,7 +18,6 @@ const routes: Routes = [{
     },
     {
       path: 'warehouse-management', component: WarehouseManagementComponent, children: [
-        {path: 'test', component: TestWarehouseComponent},
         {path: 'home', component: HomeComponent},
         {path: 'product', component: ProductComponent}
       ]
