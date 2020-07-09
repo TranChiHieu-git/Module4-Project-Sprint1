@@ -7,11 +7,10 @@ import {AdminComponent} from '../admin/admin.component';
 const routes: Routes = [{
   path: 'user', component: AdminComponent,
   children: [
-    {
-      path: 'test', component: TestComponent
-    },
-  ]
-}];
+    {path: 'test', component: TestComponent}
+  ],
+}
+];
 
 @NgModule({
   declarations: [],
