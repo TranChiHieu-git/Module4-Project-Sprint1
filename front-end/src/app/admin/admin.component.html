@@ -1,55 +1,52 @@
-<div class="container-fluid">
-  <div class="row w-auto">
-    <nav class="w-100 navbar navbar-expand-lg navbar-light header-color">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class=" navbar-nav mr-auto ml-2">
-          <li class="mt-1 nav-item active">
-            <h2 class="text-light navbar-brand" href="#">Brand</h2>
-          </li>
-          <li class="mt-1 nav-item active">
-            <a class="text-light nav-link" href="#">Quản lý</a>
-          </li>
-          <li class="mt-1 nav-item active">
-            <a class="text-light nav-link" href="#">Bán hàng</a>
-          </li>
-          <li class="nav-item">
-            <div class="main">
-              <!-- Actual search box -->
-              <div class="form-group has-search mt-2">
-                <span class="fa fa-search form-control-feedback"></span>
-                <input type="text" class="form-control" placeholder="Search">
-              </div>
-            </div>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <img class="logo-custom" src="https://image.freepik.com/free-vector/wolf-sport-logo_94073-50.jpg">
-          <button class="ml-2 btn btn-outline-primary my-2 my-sm-0" type="submit">Đăng Xuất</button>
-        </form>
-      </div>
+<div class="container-fluid px-0 py-0">
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top mx-0 my-0">
+    <nav class="navbar navbar-light">
+      <a class="navbar-brand" [routerLink]="'/admin'">
+        <img
+          src="../../assets/photo/logo.png" width="auto" height="30" alt="logo">
+      </a>
     </nav>
-  </div>
-  <div class="row border-top-black-custom">
-    <div class="sidebar-color pt-5 p-0 col-md-2 ">
-      <ul class="list-group ">
-        <button
-          class="border border-primary list-group-item h-auto w-100 btn btn-outline-custom mb-3"
-          routerLink="/admin/access-times">
-          Bảng điều khiển
-        </button>
-        <button
-          class="border border-primary mb-3 list-group-item h-auto w-100 btn btn-outline-custom my-2 my-sm-0"
-          routerLink="/admin/list-account">
-          Quản lý tài khoản
-        </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+          <a class="nav-link pt-3" [routerLink]="'/employee/list'">Quản Lí Bán Hàng</a>
+        </li>
+        <li class="nav-item">
+          <div class="main pt-1 ml-3">
+            <div class="form-group has-search mt-2">
+              <span class="fa fa-search form-control-feedback"></span>
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+          </div>
+        </li>
       </ul>
     </div>
-    <div class="content-color main-size border-black-custom col-md-10">
-      <div class="space-router"></div>
+    <nav class="navbar navbar-light">
+      <a class="navbar-brand" [routerLink]="'/admin'">
+        <img class="rounded-circle"
+             src="../../assets/photo/avt.jpg" width="40" height="40" alt="logo">
+      </a>
+      <a class="logout" [routerLink]="'/index'">Đăng xuất</a>
+    </nav>
+  </nav>
+  <div class="row-12 outborder bg-dark px-0">
+    <div class="col-2 leftshape px-0 fixed-top">
+      <div class="list-group mt-5 ">
+        <a [routerLink]="'/admin/access-times'"
+           class="pt-3 pb-3 listQL list-group-item-action sidebarChose">
+          Bảng điều khiển
+        </a>
+        <a [routerLink]="'/admin/list-account'"
+           class="pt-3 pb-3 listQL list-group-item-action sidebarChose">
+          Quản lí tài khoản
+        </a>
+      </div>
+    </div>
+    <div class="col-10 rightshape px-0 ">
       <router-outlet></router-outlet>
     </div>
   </div>
 </div>
+
+
+
