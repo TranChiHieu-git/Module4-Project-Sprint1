@@ -22,7 +22,7 @@ const routes: Routes = [{
       path: 'warehouse-management', component: WarehouseManagementComponent, children: [
         {path: 'test', component: TestWarehouseComponent},
         {path: 'home', component: HomeComponent},
-        {path: 'brand', component: BrandManagementComponent}
+        {path: 'brand', component: BrandManagementComponent},
         {path: 'product', component: ProductComponent}
       ]
     }
