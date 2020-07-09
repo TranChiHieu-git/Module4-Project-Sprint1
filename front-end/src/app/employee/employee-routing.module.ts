@@ -9,20 +9,22 @@ import {TestWarehouseComponent} from './warehouse-management/test-warehouse/test
 import {HomeComponent} from './warehouse-management/home/home.component';
 import {BrandManagementComponent} from './warehouse-management/brand-management/brand-management.component';
 import {ProductComponent} from './warehouse-management/product/product.component';
+import {ListDistributorComponent} from './partner-management/list-distributor/list-distributor.component';
 
 const routes: Routes = [{
   path: 'employee', component: EmployeeComponent,
   children: [
     {
       path: 'partner-management', component: PartnerManagementComponent, children: [
-        {path: 'test', component: TestPartnerComponent}
+        {path: 'test', component: TestPartnerComponent},
+        {path: 'list-distributor', component: ListDistributorComponent}
       ]
     },
     {
       path: 'warehouse-management', component: WarehouseManagementComponent, children: [
         {path: 'test', component: TestWarehouseComponent},
         {path: 'home', component: HomeComponent},
-        {path: 'brand', component: BrandManagementComponent}
+        {path: 'brand', component: BrandManagementComponent},
         {path: 'product', component: ProductComponent}
       ]
     }
