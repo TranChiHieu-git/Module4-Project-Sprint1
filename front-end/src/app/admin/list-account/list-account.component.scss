@@ -1,7 +1,23 @@
-//
-label {
-  float:left;
+.modal-content {
+  width: 120%;
 }
-.details{
+
+input {
+  width: 400px;
+}
+
+.modal-dialog {
+  justify-content: center;
+}
+
+label {
+  float: left;
+}
+
+.details {
   cursor: pointer;
+}
+
+.deleteTitle {
+  text-align: center;
 }

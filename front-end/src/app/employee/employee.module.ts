@@ -8,21 +8,24 @@ import { HomeComponent } from './warehouse-management/home/home.component';
 import {BillComponent} from './warehouse-management/bill/bill.component';
 import {ListBillComponent} from './warehouse-management/bill/list-bill/list-bill.component';
 import {SearchBillComponent} from './warehouse-management/bill/search-bill/search-bill.component';
-import {ReactiveFormsModule} from '@angular/forms';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {Ng2OrderModule} from 'ng2-order-pipe';
-import {HttpClientModule} from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ProductComponent } from './warehouse-management/product/product.component';
+import {MaterialModule} from '../shares/material.module';
+import { EmployeeDetailComponent } from './employee-manager/employee-detail/employee-detail.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {ShareModule} from '../shares/share.module';
+import { EmployeeManagerComponent } from './employee-manager/employee-manager.component';
+import { ListDistributorComponent } from './partner-management/list-distributor/list-distributor.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    PartnerManagementComponent,
-    WarehouseManagementComponent,
-    HomeComponent,
-    BillComponent,
+    declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
+  WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BillComponent,
     ListBillComponent,
-    SearchBillComponent
-  ],
+    SearchBillComponent],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent
@@ -36,6 +39,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     Ng2OrderModule,
     HttpClientModule,
     NgbModule
+    MaterialModule,
+    MatDialogModule,
+    ShareModule,
   ]
 })
 export class EmployeeModule {
