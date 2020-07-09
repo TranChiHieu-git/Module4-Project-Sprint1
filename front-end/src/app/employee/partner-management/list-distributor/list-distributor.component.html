@@ -1,0 +1,99 @@
+<div class="container">
+  <div>
+    <h2 class="d-flex">Danh Sách Nhà Phân Phối</h2>
+    <div class="d-flex justify-content-end">
+      <div class="add-data">
+        <a href="" data-toggle="modal" data-target="#largeModal">
+          <button type="button" class="btn- btn-primary">Thêm Mới</button>
+        </a>
+      </div>
+      <div class="modal fade pt-5" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <form (ngSubmit)="onSubmit()" [formGroup]="distributorForm">
+              <div class="modal-header">
+                <h5 class="modal-title content-dialog" id="exampleModalLabel">Thêm nhà phân phối mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-4">
+                    <!--                  <img src="http://placehold.it/260x340" alt="" class="imgDialog">-->
+                    <!--                  <button type="button" class="btn btn-primary buttonThemAnh">Thêm ảnh</button>-->
+                    <div class="avatar-wrapper" style="margin-left: 90px; margin-top: 65px">
+                      <img class="profile-pic" src="" />
+                      <div class="upload-button">
+                        <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                      </div>
+                      <input class="file-upload" type="file" accept="image/*" formControlName="img"/>
+                    </div>
+                  </div>
+                  <div class="col-2"></div>
+                  <div class="col-4">
+                    <div class="form-group row">
+                      <label class="col">
+                        Tên nhà phân phối
+                        <input type="name" class="form-control" formControlName="name">
+                      </label>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col">
+                        Địa chỉ
+                        <input type="name" class="form-control" formControlName="address">
+                      </label>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col">
+                        Số điện thoại
+                        <input type="name" class="form-control" formControlName="numberPhone">
+                      </label>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col">
+                        Email
+                        <input type="name" class="form-control" formControlName="email">
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-2"></div>
+                </div>
+              </div>
+              <div class="modal-footer d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">Thêm</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Mã</th>
+        <th scope="col">Tên</th>
+        <th scope="col">Địa chỉ</th>
+        <th scope="col">Số điện thoại</th>
+        <th scope="col">Email</th>
+        <th scope="col">Thao tác</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let distributor of distributorList , index as i ">
+        <tr>
+          <th scope="row">{{i+1}}</th>
+          <td>{{distributor.id}}</td>
+          <td>{{distributor.name}}</td>
+          <td>{{distributor.address}}</td>
+          <td>{{distributor.numberPhone}}</td>
+          <td>{{distributor.email}}</td>
+          <td class="fas fa-pen" routerLink="#"></td>
+          <td class="fas fa-trash" routerLink="#"></td>
+        <tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

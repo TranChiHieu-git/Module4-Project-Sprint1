@@ -1,13 +1,18 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ListAdminComponent} from './list-admin/list-admin.component';
-import {MatIconModule} from "@angular/material/icon";
+import {MatIconModule} from '@angular/material/icon';
+import {ListAccountComponent} from './list-account/list-account.component';
+import {AccessTimesComponent} from './access-times/access-times.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
-  declarations: [ListAdminComponent],
+  declarations: [ListAccountComponent, AccessTimesComponent],
   imports: [
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ]
 })
 export class AdminModule {
