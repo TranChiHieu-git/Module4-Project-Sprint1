@@ -1,5 +1,6 @@
 import * as $ from 'jquery';
 import { Component, OnInit } from '@angular/core';
+
 declare let showInfo: any;
 @Component({
   selector: 'app-brand-management',
@@ -7,6 +8,7 @@ declare let showInfo: any;
   styleUrls: ['./brand-management.component.scss']
 })
 export class BrandManagementComponent implements OnInit {
+  public isCollapsed = true;
   imageUrl = 'http://yourdost-blog-images.s3-ap-southeast-1.amazonaws.com/wp-content/uploads/2016/01/03165939/Dogs.jpg';
   uploadImg: any;
   constructor() {
@@ -24,5 +26,8 @@ export class BrandManagementComponent implements OnInit {
         this.uploadImg = event.target.result;
       };
     }
+  }
+  loadPage(): void{
+    window.location.reload();
   }
 }
