@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {TestComponent} from '../user/test/test.component';
+import {UserComponent} from './user.component';
 import {AdminComponent} from '../admin/admin.component';
 import {UserManageComponent} from './user-manage/user-manage.component';
 import {UserOdersComponent} from './user-oders/user-oders.component';
@@ -9,7 +10,7 @@ import {UserOderDetailComponent} from './user-oder-detail/user-oder-detail.compo
 import {UserDetailComponent} from './user-detail/user-detail.component';
 
 const routes: Routes = [{
-  path: 'user', component: AdminComponent,
+  path: 'home', component: UserComponent,
   children: [
     {path: 'test', component: TestComponent}
   ],
@@ -32,7 +33,6 @@ const routes: Routes = [{
     ]
   }
 ];
-
 @NgModule({
   declarations: [],
   imports: [
