@@ -1,6 +1,7 @@
+// declare var $: any;
 import { Component, OnInit } from '@angular/core';
 import {Employee} from '../../employee';
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
 
 @Component({
   selector: 'app-employee-detail',
@@ -25,20 +26,20 @@ export class EmployeeDetailComponent implements OnInit {
       };
     }
   }
-  // dung modal
-  editModel(element: Employee): void {
-    // this.tempStudent = element;
-    // this.change();
-    $('#editModal').modal('show');
-  }
 
-  deleteModel(element: Employee): void {
-    // this.tempStudent = element;
-    // this.change();
-    $('#deleteModal').modal('show');
-  }
-  quayLaiDanhSach(): void {
-    $('#editModal').modal('hide');
-    $('#DeleteModal').modal('hide');
-  }
+  // editModel(element: Employee): void {
+  //   // this.tempStudent = element;
+  //   // this.change();
+  //   $('#editModal').modal('show');
+  // }
+  //
+  // deleteModel(element: Employee): void {
+  //   // this.tempStudent = element;
+  //   // this.change();
+  //   $('#deleteModal').modal('show');
+  // }
+  // quayLaiDanhSach(): void {
+  //   $('#editModal').modal().hide();
+  //   $('#DeleteModal').modal('hide');
+  // }
 }
