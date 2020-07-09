@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {AdminRoutingModule} from "./admin/admin-routing.module";
-import {AdminComponent} from "./admin/admin.component";
+import {AdminRoutingModule} from './admin/admin-routing.module';
+import {AdminComponent} from './admin/admin.component';
 
 
 const routes: Routes = [{path: 'admin', component: AdminComponent}];

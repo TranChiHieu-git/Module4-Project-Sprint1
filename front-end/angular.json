@@ -100,7 +100,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/CakeJs.js"
+            ]
           }
         },
         "lint": {
@@ -131,5 +133,8 @@
       }
     }
   },
-  "defaultProject": "front-end"
+  "defaultProject": "front-end",
+  "cli": {
+    "analytics": false
+  }
 }
