@@ -25,4 +25,7 @@ export class BrandManagementComponent implements OnInit {
       };
     }
   }
+  loadPage(): void{
+    window.location.reload();
+  }
 }

@@ -11,13 +11,15 @@ import {BrandManagementComponent} from './warehouse-management/brand-management/
 import {ProductComponent} from './warehouse-management/product/product.component';
 import {EmployeeManagerComponent} from './employee-manager/employee-manager.component';
 import {EmployeeDetailComponent} from './employee-manager/employee-detail/employee-detail.component';
+import {ListDistributorComponent} from './partner-management/list-distributor/list-distributor.component';
 
 const routes: Routes = [{
   path: 'employee', component: EmployeeComponent,
   children: [
     {
       path: 'partner-management', component: PartnerManagementComponent, children: [
-        {path: 'test', component: TestPartnerComponent}
+        {path: 'test', component: TestPartnerComponent},
+        {path: 'list-distributor', component: ListDistributorComponent}
       ]
     },
     {

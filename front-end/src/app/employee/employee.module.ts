@@ -11,10 +11,13 @@ import { EmployeeDetailComponent } from './employee-manager/employee-detail/empl
 import {MatDialogModule} from '@angular/material/dialog';
 import {ShareModule} from '../shares/share.module';
 import { EmployeeManagerComponent } from './employee-manager/employee-manager.component';
+import { ListDistributorComponent } from './partner-management/list-distributor/list-distributor.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
-    declarations: [PartnerManagementComponent, WarehouseManagementComponent, HomeComponent, ProductComponent,
-      EmployeeDetailComponent, EmployeeManagerComponent],
+    declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
+  WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent
@@ -26,6 +29,8 @@ import { EmployeeManagerComponent } from './employee-manager/employee-manager.co
     MaterialModule,
     MatDialogModule,
     ShareModule
+    ReactiveFormsModule,
+    HttpClientModule
   ]
 })
 export class EmployeeModule {
