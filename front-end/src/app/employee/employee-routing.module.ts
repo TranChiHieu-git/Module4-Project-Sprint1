@@ -7,6 +7,7 @@ import {WarehouseManagementComponent} from './warehouse-management/warehouse-man
 import {TestPartnerComponent} from './partner-management/test-partner/test-partner.component';
 import {TestWarehouseComponent} from './warehouse-management/test-warehouse/test-warehouse.component';
 import {HomeComponent} from './warehouse-management/home/home.component';
+import {BillComponent} from './warehouse-management/bill/bill.component';
 import {BrandManagementComponent} from './warehouse-management/brand-management/brand-management.component';
 import {ProductComponent} from './warehouse-management/product/product.component';
 import {EmployeeManagerComponent} from './employee-manager/employee-manager.component';
@@ -26,6 +27,7 @@ const routes: Routes = [{
       path: 'warehouse-management', component: WarehouseManagementComponent, children: [
         {path: 'test', component: TestWarehouseComponent},
         {path: 'home', component: HomeComponent},
+        {path: 'bill', component: BillComponent},
         {path: 'brand', component: BrandManagementComponent},
         {path: 'product', component: ProductComponent}
       ]
@@ -34,7 +36,8 @@ const routes: Routes = [{
         {path: 'detail', component: EmployeeDetailComponent}
       ]}
   ]
-}];
+}
+];
 
 @NgModule({
   declarations: [],

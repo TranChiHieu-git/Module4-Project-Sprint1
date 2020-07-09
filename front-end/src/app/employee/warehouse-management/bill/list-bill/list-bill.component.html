@@ -1,0 +1,340 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <table class="table table-responsive" >
+        <tr>
+          <th (click)="sort('name')">Mã phiếu</th>
+          <th (click)="sort('prefix')">Tên phiếu</th>
+          <th>Tình trạng</th>
+          <th>#</th>
+          <th>#</th>
+        </tr>
+
+        <tbody>
+        <tr *ngFor="let user of filteredUsers| orderBy: key : reverse | filter: searchByKeyword">
+          <td >
+            <span>
+              <span>
+                <i class="fa fa-plus-circle" aria-hidden="true" (click)="isCollapsed = !isCollapsed"
+                   [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"></i>
+              </span>
+              {{ user.name }}
+              <div id="collapseExample" [ngbCollapse]="isCollapsed">
+                <div class="card">
+                  <div class="card-body">
+                    You can collapse this card by clicking Toggle
+                  </div>
+                </div>
+              </div>
+            </span>
+
+          </td>
+          <td >{{ user.prefix }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <!-- Button trigger modal -->
+<!--            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#abc">-->
+            <i class="fa fa-pencil-square" aria-hidden="true" data-toggle="modal" data-target="#abc"></i>
+<!--              <i class="fa fa-plus-circle" aria-hidden="true" ></i>-->
+<!--            </button>-->
+
+            <!-- Modal -->
+            <div class="modal fade" id="abc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" >Thông tin phiếu - Chỉnh sửa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form [formGroup]="myForm">
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Mã phiếu</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên Loại</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên DT</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên NV</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên TT</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên Kho</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Mã VT</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên phiếu</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên VC</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Ngày</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Trạng thái XL</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Trạng thái VC</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Thạng thái TT</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                      <button type="button" class="btn btn-warning">Tiếp tục</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <!-- Button trigger modal -->
+            <i class="fa fa-trash" aria-hidden="true" data-toggle="modal" data-target="#xyz"></i>
+<!--            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#xyz">-->
+<!--              Xóa-->
+<!--            </button>-->
+
+            <!-- Modal -->
+            <div class="modal fade" id="xyz" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"  data-backdrop="static">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle1">Thông tin phiếu - Xóa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form [formGroup]="myForm">
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Mã phiếu</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên Loại</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên DT</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên NV</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên TT</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên Kho</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Mã VT</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên phiếu</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên VC</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Ngày</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Trạng thái XL</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Trạng thái VC</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Thạng thái TT</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" autofocus>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                      <button type="button" class="btn btn-danger">Xóa</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

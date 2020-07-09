@@ -28,7 +28,7 @@ import {EmployeeComponent} from './employee/employee.component';
     ShareModule,
     MaterialModule,
     MatIconModule,
-    UserModule,
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]
