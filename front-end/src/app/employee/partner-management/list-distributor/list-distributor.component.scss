@@ -1,0 +1,81 @@
+.imgDialog{
+  height: 230px;
+  margin-left: 90px;
+  margin-top: 27px;
+}
+.buttonThemAnh{
+  margin-top: 9px;
+  margin-left: 129px;
+}
+.avatar-distributor{
+  margin-top: 46px;
+  margin-left: 91px;
+}
+.avatar-wrapper{
+  position: relative;
+  height: 200px;
+  width: 200px;
+  margin: 50px auto;
+  overflow: hidden;
+  box-shadow: 1px 1px 15px -5px black;
+  transition: all .3s ease;
+  &:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+  }
+  &:hover .profile-pic{
+    opacity: .5;
+  }
+  .profile-pic {
+    height: 100%;
+    width: 100%;
+    transition: all .3s ease;
+    &:after{
+      font-family: FontAwesome;
+      content: "\f007";
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      font-size: 190px;
+      background: #ecf0f1;
+      color: #34495e;
+      text-align: center;
+    }
+  }
+  .upload-button {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    width: 100%;
+    .fa-arrow-circle-up{
+      position: absolute;
+      font-size: 234px;
+      top: -17px;
+      left: 0;
+      text-align: center;
+      opacity: 0;
+      transition: all .3s ease;
+      color: #34495e;
+    }
+    &:hover .fa-arrow-circle-up{
+      opacity: .9;
+    }
+  }
+}
+.scheduler-border {
+  font-size: 1.2em !important;
+  font-weight: bold !important;
+  text-align: left !important;
+}
+.scheduler-border2 {
+  border: 1px groove #ddd !important;
+  padding: 0 1.4em 1.4em 1.4em !important;
+  margin: 0 0 1.5em 0 !important;
+  -webkit-box-shadow:  0px 0px 0px 0px #000;
+  box-shadow:  0px 0px 0px 0px #000;
+}
+.content-dialog{
+  margin-left: 260px;
+}
+
