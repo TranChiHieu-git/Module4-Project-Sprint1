@@ -1,0 +1,12 @@
+.cdk-overlay-container {
+  z-index: 500 !important;
+}
+::ng-deep .cdk-overlay-container{
+  z-index: 1200 !important;
+}
+
+.modal-content {
+  left: -30%;
+  width: 150%;
+}
+

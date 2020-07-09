@@ -1,0 +1,206 @@
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-a">
+  Chỉnh sửa
+</button>
+
+<div class="modal fade "  id="modal-a" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" >Thông tin mặt hàng- Chỉnh sửa</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form>
+
+          <div class="row">
+            <div class="col">
+              <label>Mã MH: <input type="text" class="form-control" autofocus>
+
+              </label>
+
+            </div>
+            <div class="col">
+              <label >Tên DM:
+                <select class="form-control" formControlName="department">
+                  <option>Bánh </option>
+                  <option>Kẹo</option>
+                </select>
+              </label>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+             <label>Tên MH:
+               <input type="text" class="form-control"></label>
+            </div>
+            <div class="col">
+              <label >Tên TH:
+                <select class="form-control" formControlName="department">
+                  <option>Orion</option>
+                  <option>Kinh đô</option>
+                  <option>Pipi Ca</option>
+                </select></label>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col " >
+              <label >HSD:<br>
+                <mat-form-field appearance="fill"  >
+                  <input matInput [matDatepicker]="dp3" disabled>
+                  <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                  <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                </mat-form-field>
+              </label>
+            </div>
+            <div class="col">
+              <label>Đơn Giá:
+                <input type="text" class="form-control" ></label>
+
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button  type="button" class="btn btn-warning " data-toggle="modal" data-target="#modal-b">
+          Chỉnh Sửa
+        </button>
+        <button id="dsa" type="button" class="btn btn-secondary " data-dismiss="modal">Hủy</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-b" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel1">Xác Nhận</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5 class="my-3 d-flex justify-content-center">
+          Bạn có chắc chỉnh sửa mặt hàng này không?
+        </h5>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-success">Có</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-1">
+  Xóa
+</button>
+
+<div class="modal fade " id="modal-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Thông tin mặt hàng- Xóa</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form>
+
+          <div class="row">
+            <div class="col">
+              <label>Mã MH: <input type="text" class="form-control" autofocus>
+
+              </label>
+
+            </div>
+            <div class="col">
+              <label >Tên DM:
+                <select class="form-control" formControlName="department">
+                  <option>Bánh </option>
+                  <option>Kẹo</option>
+                </select>
+              </label>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label>Tên MH:
+                <input type="text" class="form-control"></label>
+
+            </div>
+            <div class="col">
+              <label >Tên TH:
+                <select class="form-control" formControlName="department">
+                  <option>Orion</option>
+                  <option>Kinh đô</option>
+                  <option>Pipi Ca</option>
+                </select>
+              </label>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label> HSD:
+                <input type="text" class="form-control" ></label>
+
+            </div>
+            <div class="col">
+              <label>
+                Đơn Giá:
+                <input type="text" class="form-control" >
+              </label>
+
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button  type="button" class="btn btn-danger " data-toggle="modal" data-target="#modal-2">
+          Xóa
+        </button>
+        <button  type="button" class="btn btn-secondary " data-dismiss="modal">Hủy</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Xác Nhận</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5 class="my-3">
+          Bạn có chắc xóa mặt hàng này không?
+        </h5>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-success">Có</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+
+      </div>
+    </div>
+  </div>
+</div>
