@@ -4,42 +4,56 @@
 <br><br><br>
 <div class="row">
   <div class="col-md-5" style="">
+    <div class="left-unit">
     <div id="frame">
-      <img [src]="url" alt="xd"></div>
+      <img [src]="url" alt="x"></div>
     <div id="img-button">
       <input type='file' (change)="onSelectFile($event)" id="files" style="visibility: hidden"><br>
-      <button class="btn btn-warning"><label for="files" >Thay ảnh</label></button>
+      <button class="btn btn-primary"><label for="files" >Thay ảnh</label></button>
     </div>
-    <button type="button" class="btn btn-warning"><a data-toggle="modal" data-target="#editModal" (click)="editModel(employee)">Thay đổi thông tin</a></button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal">
+        Thay đổi thông tin
+      </button>
     <br>
-    <button type="button" class="btn btn-warning"><a data-toggle="modal" data-target="#DeleteModal" (click)="deleteModel(employee)">Thay đổi mật khẩu</a></button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#DeleteModal">
+        Thay đổi mật khẩu
+      </button>
+  </div>
   </div>
   <div class="col-md-7">
-    <table>
-      <label>
-        Họ Tên:
-      </label><br>
-      <label>
-        Giới Tính:
-      </label><br>
-      <label>
-        Ngày Sinh:
-      </label><br>
-      <label>
-        Địa Chỉ:
-      </label><br>
-      <label>
-        Chức Vụ:
-      </label><br>
-      <label>
-        Phòng Ban:
-      </label><br>
-      <label>
-        Số Điện Thoại:
-      </label><br>
-      <label>
-        Email:
-      </label><br>
+    <table class="table-nv table " >
+      <tr>
+        <th>Họ Tên: </th>
+        <td>Nguyễn A</td>
+      </tr>
+      <tr>
+        <th>Giới tính: </th>
+        <td>Nam</td>
+      </tr>
+      <tr>
+        <th>Ngày sinh: </th>
+        <td>11/11/1999</td>
+      </tr>
+      <tr>
+        <th>Địa chỉ: </th>
+        <td>Đà Nẵng</td>
+      </tr>
+      <tr>
+        <th>Chức vụ: </th>
+        <td>Quản kho</td>
+      </tr>
+      <tr>
+        <th>Phòng ban: </th>
+        <td>Kho</td>
+      </tr>
+      <tr>
+        <th>Số điện thoại: </th>
+        <td>0123456789</td>
+      </tr>
+      <tr>
+        <th>Email: </th>
+        <td>nv1@gmail.com</td>
+      </tr>
     </table>
   </div>
 </div>
@@ -68,8 +82,8 @@
           <tr>
             <th>Giới tính</th>
             <td>
-              <label><input type="radio" value="Nam" formControlName="gender">NaM</label>&nbsp;&nbsp;
-              <label><input type="radio" value="Nữ" formControlName="gender">Nữ</label>
+              <label><input type="radio" value="Nam" name="gender" >Nam</label>&nbsp;&nbsp;
+              <label><input type="radio" value="Nữ" name="gender">Nữ</label>
             </td>
           </tr>
           <tr>
@@ -105,7 +119,7 @@
         <!--          <input type="submit" value="Luu" [disabled]="studentForm.invalid">-->
         <button type="button" class="btn btn-success edit-customer-btn1">Sửa</button>
         <!--        </form>-->
-        <button type="button" (click)="quayLaiDanhSach()" class="btn btn-secondary edit-customer-btn2">Hủy</button>
+        <button id="edit-em" type="button" class="btn btn-secondary " data-dismiss="modal">Hủy</button>
       </div>
     </div>
   </div>
@@ -142,8 +156,8 @@
         </table>
         <!--          <input type="submit" value="Luu" [disabled]="studentForm.invalid">-->
         <button type="button" class="btn btn-success edit-customer-btn1">Xác nhận</button>
-        <!--        </form>-->
-        <button type="button" (click)="quayLaiDanhSach()"class="btn btn-secondary edit-customer-btn2">Hủy</button>
+<!--        <button type="button" (click)="quayLaiDanhSach()" class="btn btn-secondary edit-customer-btn2">Hủy</button>-->
+        <button id="update-pass" type="button" class="btn btn-secondary " data-dismiss="modal">Hủy</button>
       </div>
     </div>
   </div>

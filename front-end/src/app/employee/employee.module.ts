@@ -28,7 +28,7 @@ import {HttpClientModule} from '@angular/common/http';
     RouterModule,
     MaterialModule,
     MatDialogModule,
-    ShareModule
+    ShareModule,
     ReactiveFormsModule,
     HttpClientModule
   ]
