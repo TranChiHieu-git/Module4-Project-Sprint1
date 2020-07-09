@@ -1,0 +1,82 @@
+body {
+  background-image: url("../../assets/background-img/bakery-background-hand-drawn-cooking-bread-bakery-vector-23984254-xx.jpg");
+  height: 900px;
+  background-size: cover;
+}
+//.blurfilter{
+//  /* Add the blur effect */
+//  filter: blur(8px);
+//  -webkit-filter: blur(8px);
+//
+//  /* Full height */
+//  height: 100%;
+//}
+//.modal-open .supreme-container{
+//  -webkit-filter: blur(1px) !important;
+//  -moz-filter: blur(1px)!important;
+//  -o-filter: blur(1px)!important;
+//  -ms-filter: blur(1px)!important;
+//  filter: blur(1px)!important;
+//}
+//.modal-open .container-fluid, .modal-open  .container {
+//  -webkit-filter: blur(5px) grayscale(90%);
+//}
+.codeBakery {
+
+  //background-image: linear-gradient( #f6e58d, #d35400) ;
+  //background: -webkit-linear-gradient(#f1c40f, #763833);
+  //-webkit-background-clip: text;
+  //-webkit-text-fill-color: transparent;
+  background-color: transparent;
+  color: transparent;
+  background-image: url('../../assets/background-img/logo-cutout.png');
+  background-size: cover;
+  width: 274px;
+  height: 51px;
+}
+
+.orderButton {
+  text-align: center;
+  margin-top: 400px;
+}
+
+.searchInput {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-color: black;
+}
+
+.button-user {
+  color: black;
+  border-color: black;
+}
+
+.button-user:hover {
+  background-color: rgba(254, 202, 87, 1);
+}
+
+.modal-content {
+  background-color: rgba(248, 194, 145, 0.7);
+  padding: 11px;
+
+}
+
+.modal {
+  margin-top: 80px;
+}
+.closeButton{
+  width: 10px;
+  align-self: flex-end;
+}
+/* === CSS FILTER EFFECTS === */
+
+.firstBlur.modalBlur > *:not(.modal) {
+  -webkit-filter: blur(8px);
+}
+.firstBlur.modalDesaturate > *:not(.modal) {
+  -webkit-filter: saturate(0%);
+}
+/* === SOFTEN THE MODAL BACKDROP SO THE EFFECT IS MORE VISIBLE === */
+.modal-backdrop {
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+}

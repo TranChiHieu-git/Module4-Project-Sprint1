@@ -1,0 +1,20 @@
+.orderButton {
+  color: #7a5744;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: #7a5744;
+  padding: 10px;
+  background-color: Transparent;
+  overflow: hidden;
+  outline:none;
+ font-size: 30px;
+  border-block-end-style: inherit;
+  border-block-start: none;
+
+  border-spacing: 5px;
+  border-width: 5px;
+}
+.orderButton:hover {
+  background-color: rgba(246, 229, 141,0.2);
+
+}
