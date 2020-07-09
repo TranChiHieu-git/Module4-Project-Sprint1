@@ -1,4 +1,4 @@
-<body >
+<body>
 <div class="container-fluid pt-lg-5 ">
   <nav class="navbar navbar-expand-lg navbar-light ">
     <div class="navbar-brand codeBakery" href="#">
@@ -31,16 +31,15 @@
       </form>
       <div class="nav-item dropdown">
         <div class="cart d-flex justify-content-center mr-2 ml-5">
-          <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown"
+          <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown1" role="button"
+               data-toggle="dropdown"
                aria-haspopup="true"
                aria-expanded="true">
             <span class="material-icons">shopping_cart</span>
             <span class="badge badge-light">4</span>
           </div>
           <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
-            <a class="dropdown-item " href="#">Sản Phẩm 1</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Sản Phẩm 2</a>
+            <a class="dropdown-item " [routerLink]="'/user-manage/user-oder/1'">Chi tiết Đơn hàng</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Thanh Toán</a>
           </div>
@@ -48,7 +47,8 @@
       </div>
       <!--  // tai khoan chua dang nhap&ndash;&gt;-->
       <div class="nav-item dropdown ">
-        <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown" role="button"
+             data-toggle="dropdown"
              aria-haspopup="true"
              aria-expanded="true">
           <span class="material-icons mr-2">account_circle</span>
@@ -70,7 +70,7 @@
           </div>
         </div>
       </div>
-      <div class="modal fade" id="forgetPasswordModal" data-backdrop="false"  role="dialog"
+      <div class="modal fade" id="forgetPasswordModal" data-backdrop="false" role="dialog"
            aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -110,6 +110,5 @@
   </div>
 </div>
 </body>
-
 <router-outlet></router-outlet>
 

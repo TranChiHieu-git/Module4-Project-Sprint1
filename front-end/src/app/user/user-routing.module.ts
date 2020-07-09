@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {TestComponent} from '../user/test/test.component';
 import {UserComponent} from './user.component';
-import {AdminComponent} from '../admin/admin.component';
 import {UserManageComponent} from './user-manage/user-manage.component';
 import {UserOdersComponent} from './user-oders/user-oders.component';
 import {UserOderDetailComponent} from './user-oder-detail/user-oder-detail.component';
@@ -31,6 +30,12 @@ const routes: Routes = [{
         component: UserOderDetailComponent
       }
     ]
+  },
+  {
+    path: '', component: UserComponent,
+    children: [
+      {path: 'test', component: TestComponent}
+    ],
   }
 ];
 @NgModule({

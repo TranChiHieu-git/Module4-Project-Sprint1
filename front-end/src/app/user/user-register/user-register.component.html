@@ -3,7 +3,7 @@
     <h1 class="text-center pt-2">Đăng Ký</h1>
     <div class="form-row mb-3 ">
       <div class="col-md-4">
-        <label>Giới Tính:</label> </div>
+        <label>Giới Tính:</label></div>
       <div class="form-check col-md-4 text-center">
         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
         <label class="form-check-label" for="exampleRadios1">
@@ -89,8 +89,10 @@
       </div>
     </div>
     <div class="text-center mt-3">
-      <button type="submit" class="btn btn-primary submitButton mr-3 w-25">Đăng Ký</button>
-      <button href="" class="btn btn-primary submitButton w-25"  data-dismiss="modal"> Hủy </button>
+      <button type="submit" class="btn btn-primary submitButton mr-3 w-25" [routerLink]="'/user-manage/user-detail'">
+        Đăng Ký
+      </button>
+      <button href="" class="btn btn-primary submitButton w-25" data-dismiss="modal"> Hủy</button>
     </div>
   </form>
 </div>

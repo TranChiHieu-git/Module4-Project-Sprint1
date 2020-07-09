@@ -1,5 +1,5 @@
 body {
-  background-image: url("../../assets/background-img/bakery-background-hand-drawn-cooking-bread-bakery-vector-23984254-xx.jpg");
+  background-image: url("../../assets/background/bakery-background-hand-drawn-cooking-bread-bakery-vector-23984254-xx.jpg");
   height: 900px;
   background-size: cover;
 }
@@ -29,7 +29,7 @@ body {
   //-webkit-text-fill-color: transparent;
   background-color: transparent;
   color: transparent;
-  background-image: url('../../assets/background-img/logo-cutout.png');
+  background-image: url('../../assets/photo/logo.png');
   background-size: cover;
   width: 274px;
   height: 51px;
@@ -63,7 +63,7 @@ body {
 .modal {
   margin-top: 80px;
 }
-.closeButton{
+.closeButton {
   width: 10px;
   align-self: flex-end;
 }

@@ -21,7 +21,11 @@ const routes: Routes = [{
       path: 'partner-management', component: PartnerManagementComponent, children: [
         {path: 'test', component: TestPartnerComponent},
         {path: 'list-distributor', component: ListDistributorComponent},
-        {path: 'customer-management', component: CustomerManagementComponent
+        {path: 'customer-management', component: CustomerManagementComponent},
+        {
+          path: 'employee-manager', component: EmployeeManagerComponent, children: [
+            {path: 'detail', component: EmployeeDetailComponent}
+          ]
         }
       ]
     },
@@ -30,12 +34,12 @@ const routes: Routes = [{
         {path: 'home', component: HomeComponent},
         {path: 'bill', component: BillComponent},
         {path: 'brand', component: BrandManagementComponent},
-        {path: 'product', component: ProductComponent}
-      ]
-    },
-    {
-      path: 'employee-manager', component: EmployeeManagerComponent, children: [
-        {path: 'detail', component: EmployeeDetailComponent}
+        {path: 'product', component: ProductComponent},
+        {
+          path: 'employee-manager', component: EmployeeManagerComponent, children: [
+            {path: 'detail', component: EmployeeDetailComponent}
+          ]
+        }
       ]
     }
   ]
