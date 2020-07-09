@@ -11,5 +11,4 @@ export class TestWarehouseComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

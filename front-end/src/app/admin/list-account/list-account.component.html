@@ -1,5 +1,5 @@
-<div class="container">
-  <div class="row">
+<div class="container mt-5">
+  <div class="row px-0 py-0">
     <div class="col-md-12">
       <table class="table table-borderless">
         <thead>
@@ -10,68 +10,248 @@
           <th></th>
         </tr>
         </thead>
-        <tbody class="border border-dark">
+        <tbody class="border border-dark" *ngFor="let account of accountList">
         <tr>
-          <th scope="row">1</th>
-          <td class="details" (click)="info()">Mark</td>
-          <td>Otto</td>
+          <th scope="row">{{account.id}}</th>
+          <td class="details" (click)="info()">{{account.user_name}}</td>
+          <td>{{account.password}}</td>
           <td>
-            <button class="border-0 mr-5 bg-transparent fas fa-pencil-alt"></button>
-            <button class="border-0 bg-transparent	fa fa-trash "></button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">1</th>
-          <td (click)="info()">Mark</td>
-          <td>Otto</td>
-          <td>
-            <button class="border-0 mr-5 bg-transparent fas fa-pencil-alt"></button>
-            <button class="border-0 bg-transparent	fa fa-trash "></button>
+            <button class="border-0 mr-5 bg-transparent fas fa-pencil-alt" (click)="edit()"></button>
+            <button class="border-0 bg-transparent	fa fa-trash " (click)="delete()"></button>
           </td>
         </tr>
         </tbody>
       </table>
     </div>
   </div>
+
+<!--  THêm mới-->
   <div class="row">
     <div class="col-md-12">
       <button type="button" class="float-right btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
         Thêm mới
       </button>
-      <div class="pt-5 modal fade bd-example-modal-lg" data-backdrop="static" tabindex="-1" role="dialog"
-           aria-labelledby="myLargeModalLabel"
-           aria-hidden="true">
-        <div class="modal-dialog modal-lg pt-5">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Thêm tài khoản mới</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+      <form (ngSubmit)="create()" [formGroup]="accountForm">
+        <div class="pt-5 modal fade bd-example-modal-lg" data-backdrop="static" tabindex="-1" role="dialog"
+             aria-labelledby="myLargeModalLabel"
+             aria-hidden="true">
+          <div class="modal-dialog modal-lg pt-5">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Thêm tài khoản mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label>Tên tài khoản: </label>
+                  <input formControlName="user_name" type="text" class="form-control" name="email">
+
+                </div>
+                <div class="form-group">
+                  <label>Mật khẩu: </label>
+                  <input formControlName="password" type="password" class="form-control" id="pwd" name="pswd">
+                </div>
+                <div class="form-group">
+                  <label class="mt-1 float-left">Mã nhân viên:
+                    <select class="w-100 m-0 p-0 pl-3 custom-select">
+                      <option selected>Open this select menu</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                    <button class="btn btn-primary">Kiểm tra thông tin nhân viên</button>
+                  </label>
+
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Thêm mới</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+              </div>
             </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="email">Tên tài khoản: </label>
-                <input type="email" class="form-control" id="email" name="email">
-              </div>
-              <div class="form-group">
-                <label>Mật khẩu</label>
-                <input type="password" class="form-control" id="pwd" name="pswd">
-              </div>
-              <div class="form-group">
-                <label class="mt-1 float-left">Mã nhân viên:</label>
-                <select class="w-50 m-0 p-0 pl-3 custom-select">
-                  <option selected>Open this select menu</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
-                <button class="btn btn-primary">Kiểm tra thông tin nhân viên</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--details modal-->
+<div class="modal" tabindex="-1" role="dialog" id="infor">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title">Thông tin nhân viên</h3>
+        <br>
+        <table>
+          <tr>
+            <td>Mã nhân viên:&nbsp;</td>
+            <td>57130154</td>
+          </tr>
+          <tr>
+            <td>Tên nhân viên:&nbsp;</td>
+            <td>Mark</td>
+          </tr>
+        </table>
+        <br>
+        <table class="w-100">
+          <tr>
+            <td>Vị trí:</td>
+            <td>Quản Lý</td>
+            <td>Bộ phận:</td>
+            <td>Ký thuật</td>
+          </tr>
+          <tr>
+            <td>Trình độ:</td>
+            <td>Đại học</td>
+            <td>Ngày sinh:</td>
+            <td>14/02/1991</td>
+          </tr>
+          <tr>
+            <td>Số CMND:</td>
+            <td>1987523602</td>
+            <td>Lương:</td>
+            <td>10 triệu</td>
+          </tr>
+          <tr>
+            <td>Số Điện Thoại:</td>
+            <td>0907539514</td>
+            <td>Email:</td>
+            <td>email1444@gmail.com</td>
+          </tr>
+          <tr>
+            <td>Địa chỉ:</td>
+            <td>Đà Nẵng</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--edit modal-->
+<div class="modal" tabindex="-1" role="dialog" id="edit">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title">Sửa thông tin nhân viên</h3>
+        <br>
+        <br>
+
+        <table class="w-100">
+          <tr>
+            <td>
+              <label>Tên tài khoản:</label>
+            </td>
+            <td>
+              <label>Mark</label>
+            </td>
+          </tr>
+          <tr>&nbsp;</tr>
+          <tr>
+            <td>
+              <label>Mật khẩu:</label>
+            </td>
+            <td>
+              <input type="password" value="123456789">
+            </td>
+          </tr>
+          <tr>&nbsp;</tr>
+          <tr>
+            <td>
+              <label>Mã nhân viên:</label>
+            </td>
+            <td>
+              <label>57130154</label>
+            </td>
+          </tr>
+        </table>
+        <br>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-8"></div>
+            <div class="col-4">
+              <div class="row">
+                <div class="col-3"></div>
+                <div class="col-2">
+                  <button class="btn btn-warning">sửa</button>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-5">
+                  <button class="btn btn-secondary destroy">Hủy</button>
+                </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Thêm mới</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--delete modal-->
+<div class="modal" tabindex="-1" role="dialog" id="delete">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <table class="w-100">
+          <tr>
+            <th colspan="2" class="deleteTitle">
+              <h3><img src="https://image.flaticon.com/icons/png/512/63/63436.png" width="22px" height="auto"> Bạn có
+                muốn xóa tài khoản này</h3>
+            </th>
+          </tr>
+          <br>
+          <tr>
+            <td>
+              <label>Tên tài khoản:</label>
+            </td>
+            <td>
+              <label>Mark</label>
+            </td>
+          </tr>
+          <tr>&nbsp;</tr>
+          <tr>
+            <td>
+              <label>Mật khẩu:</label>
+            </td>
+            <td>
+              <input type="password" value="123456789">
+            </td>
+          </tr>
+          <tr>&nbsp;</tr>
+          <tr>
+            <td>
+              <label>Mã nhân viên:</label>
+            </td>
+            <td>
+              <label>57130154</label>
+            </td>
+          </tr>
+        </table>
+        <br>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-8"></div>
+            <div class="col-4">
+              <div class="row">
+                <div class="col-3"></div>
+                <div class="col-2">
+                  <button class="btn btn-danger">Xóa</button>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-5">
+                  <button class="btn btn-secondary destroy">Hủy</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

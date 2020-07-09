@@ -18,17 +18,17 @@ import {EmployeeComponent} from './employee/employee.component';
     AppComponent,
     AdminComponent,
     EmployeeComponent,
-    UserComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
     AdminModule,
+    EmployeeModule,
     AppRoutingModule,
     ShareModule,
     MaterialModule,
     MatIconModule,
-    UserModule,
-    EmployeeModule
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]

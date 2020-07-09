@@ -1,0 +1,231 @@
+<div class="container">
+  <div>
+    <h2 class="d-flex">Danh Sách Nhà Phân Phối</h2>
+    <div class="d-flex justify-content-end">
+      <div class="add-data">
+        <a href="" data-toggle="modal" data-target="#largeModal">
+          <button type="button" class="btn- btn-primary">Thêm Mới</button>
+        </a>
+      </div>
+      <div class="modal fade pt-5" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <form (ngSubmit)="onSubmit()" [formGroup]="distributorForm">
+              <div class="modal-header">
+                <h5 class="modal-title content-dialog" id="exampleModalLabel">Thêm nhà phân phối mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-4">
+                    <!--                  <img src="http://placehold.it/260x340" alt="" class="imgDialog">-->
+                    <!--                  <button type="button" class="btn btn-primary buttonThemAnh">Thêm ảnh</button>-->
+                    <div class="avatar-wrapper" style="margin-left: 90px; margin-top: 65px">
+                      <img class="profile-pic" src="" />
+                      <div class="upload-button">
+                        <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                      </div>
+                      <input class="file-upload" type="file" accept="image/*" formControlName="img"/>
+                    </div>
+                  </div>
+                  <div class="col-2"></div>
+                  <div class="col-4">
+                    <div class="form-group row">
+                      <label class="col">
+                        Tên nhà phân phối
+                        <input type="name" class="form-control" formControlName="name">
+                      </label>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col">
+                        Địa chỉ
+                        <input type="name" class="form-control" formControlName="address">
+                      </label>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col">
+                        Số điện thoại
+                        <input type="name" class="form-control" formControlName="numberPhone">
+                      </label>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col">
+                        Email
+                        <input type="name" class="form-control" formControlName="email">
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-2"></div>
+                </div>
+              </div>
+              <div class="modal-footer d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">Thêm</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Mã</th>
+        <th scope="col">Tên</th>
+        <th scope="col">Địa chỉ</th>
+        <th scope="col">Số điện thoại</th>
+        <th scope="col">Email</th>
+        <th scope="col">Thao tác</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let distributor of distributorList , index as i ">
+        <tr>
+          <th scope="row">{{i+1}}</th>
+          <td>{{distributor.id}}</td>
+          <td>{{distributor.name}}</td>
+          <td>{{distributor.address}}</td>
+          <td>{{distributor.numberPhone}}</td>
+          <td>{{distributor.email}}</td>
+         <td ><button (click)="openEditForm()"><i class="fas fa-pen"></i></button></td>
+          <td ><button (click)="openDeleteForm()"><i class="fas fa-trash"></i></button></td>
+        <tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<!--//EDIT FORM-->
+<button type="button" id="edit" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" hidden>Large modal
+</button>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600'
+      rel='stylesheet' type='text/css'>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true" data-backdrop="static" data-keyboard="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body row">
+        <div class="col-xl-12" style="position: relative">
+          <div class="boundary row">
+            <div class="col-xl-12">
+              <div class="row title">
+                <h1>CHỈNH SỬA NHÀ PHÂN PHỐI</h1>
+              </div>
+              <div class="row">
+                <div class="col-xl-4">
+                  <mat-card (mouseover)="hoverUploadPic()" class="mat-card-img" (mouseleave)="leaveUploadPic()" (click)="selectAvatar()">
+                    <img id="avatar" src="https://worklink.vn/wp-content/uploads/2018/07/no-logo.png" class="img" >
+                    <input class="file-upload-input" type='file' (change)="readURL($event.target);" accept="image/*"  hidden id="myAvatar"/>
+
+                    <i class="img" style="font-size: 100px; color: blue; position: absolute; left: 60px; top:60px ; opacity: 0.1" class="icon-upload-alt"></i>
+                  </mat-card>
+                </div>
+                <div class="col-xl-8">
+
+                  <form action="/">
+                    <div class="item" style="margin-top: 20px" data-tip="Tên nhà phân phối">
+                      <label id="icon" for="name"><i class="icon-user"></i> </label>
+                      <input type="text" name="name" id="name" placeholder="Tên nhà phân phối" />
+                      <span>Validate </span>
+                    </div>
+                    <div class="item">
+                      <label id="icon" for="address"><i class="icon-map-marker"></i></label>
+                      <input type="text" name="name" id="address" placeholder="Địa chỉ" />
+                    </div>
+                    <div class="item">
+                      <label id="icon" for="name"><i class="icon-envelope-alt"></i></label>
+                      <input type="text" name="name" id="name" placeholder="Email" />
+                    </div>
+                    <div class="item">
+                      <label id="icon" for="name"><i class="icon-phone"></i> </label>
+                      <input type="text" name="name" id="name" placeholder="Số điện thoại" />
+                    </div>
+                    <div class="item button">
+                      <button class="btn btn-info" data-dismiss="modal" style="background-color: #3a57af"> SỬA</button>
+                      <button class="btn btn-secondary" data-dismiss="modal"> HỦY</button>
+                    </div>
+
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--DELETE FORM-->
+
+
+
+<button id="delete" type="button" class="btn btn-primary" data-toggle="modal" data-target=".delete" hidden>Large modal
+</button>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600'
+      rel='stylesheet' type='text/css'>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+<div class="modal fade bd-example-modal-lg delete" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true" data-backdrop="static" data-keyboard="true">
+  <div class="modal-dialog modal-lg" >
+    <div class="modal-content">
+      <div class="modal-body row">
+        <div class="col-xl-12" style="position: relative">
+          <div class="boundary row">
+            <div class="col-xl-12">
+              <div class="row title">
+                <h1>CHỈNH SỬA NHÀ PHÂN PHỐI</h1>
+              </div>
+              <div class="row">
+                <div class="col-xl-4">
+                  <mat-card (mouseover)="hoverUploadPic()" class="mat-card-img" (mouseleave)="leaveUploadPic()" (click)="selectAvatar()">
+                    <img id="avatar1" src="https://worklink.vn/wp-content/uploads/2018/07/no-logo.png" class="img">
+                    <input class="file-upload-input" type='file' (change)="readURL($event.target);" accept="image/*"  hidden id="myAvatar1"/>
+                    <i class="img" style="font-size: 100px; color: blue; position: absolute; left: 60px; top:60px ; opacity: 0.1" class="icon-upload-alt"></i>
+                  </mat-card>
+                </div>
+                <div class="col-xl-8">
+
+                  <form action="/">
+                    <div class="item" style="margin-top: 20px" data-tip="Tên nhà phân phối">
+                      <label id="icon" for="name"><i class="icon-user"></i> </label>
+                      <input type="text" name="name"  placeholder="Tên nhà phân phối" readonly />
+                    </div>
+                    <div class="item">
+                      <label id="icon" for="name"><i class="icon-map-marker"></i></label>
+                      <input type="text" name="name" placeholder="Địa chỉ" readonly/>
+                    </div>
+                    <div class="item">
+                      <label id="icon" for="name"><i class="icon-envelope-alt"></i></label>
+                      <input type="text" name="name" placeholder="Email" readonly/>
+                    </div>
+                    <div class="item">
+                      <label id="icon" for="name"><i class="icon-phone"></i> </label>
+                      <input type="text" name="name"  placeholder="Số điện thoại" readonly/>
+                    </div>
+                    <div class="item button">
+                      <button class="btn btn-info" data-dismiss="modal" style="background-color: #3a57af"> XÓA</button>
+                      <button class="btn btn-secondary" data-dismiss="modal"> HỦY</button>
+                    </div>
+
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -10,16 +10,16 @@ const routes: Routes = [
     path: 'admin', component: AdminComponent,
     children: [
       {path: 'list-account', component: ListAccountComponent},
-      {path: 'access-times', component: AccessTimesComponent}
+      {path: 'access-times', component: AccessTimesComponent},
+      {path: 'list-account/:userName', component: ListAccountComponent}
     ]
   },
-
 ];
 
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forChild(routes),
     CommonModule
   ]
 })
