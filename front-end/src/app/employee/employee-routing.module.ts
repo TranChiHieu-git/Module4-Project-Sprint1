@@ -6,6 +6,7 @@ import {PartnerManagementComponent} from './partner-management/partner-managemen
 import {WarehouseManagementComponent} from './warehouse-management/warehouse-management.component';
 import {TestPartnerComponent} from './partner-management/test-partner/test-partner.component';
 import {TestWarehouseComponent} from './warehouse-management/test-warehouse/test-warehouse.component';
+import {HomeComponent} from './warehouse-management/home/home.component';
 
 const routes: Routes = [{
   path: 'employee', component: EmployeeComponent,
@@ -17,7 +18,8 @@ const routes: Routes = [{
     },
     {
       path: 'warehouse-management', component: WarehouseManagementComponent, children: [
-        {path: 'test', component: TestWarehouseComponent}
+        {path: 'test', component: TestWarehouseComponent},
+        {path: 'home', component: HomeComponent}
       ]
     }
   ]
@@ -26,7 +28,7 @@ const routes: Routes = [{
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forChild(routes),
     CommonModule
   ]
 })
