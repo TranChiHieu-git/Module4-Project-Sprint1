@@ -9,6 +9,8 @@ import {TestWarehouseComponent} from './warehouse-management/test-warehouse/test
 import {HomeComponent} from './warehouse-management/home/home.component';
 import {BrandManagementComponent} from './warehouse-management/brand-management/brand-management.component';
 import {ProductComponent} from './warehouse-management/product/product.component';
+import {EmployeeManagerComponent} from './employee-manager/employee-manager.component';
+import {EmployeeDetailComponent} from './employee-manager/employee-detail/employee-detail.component';
 
 const routes: Routes = [{
   path: 'employee', component: EmployeeComponent,
@@ -22,10 +24,13 @@ const routes: Routes = [{
       path: 'warehouse-management', component: WarehouseManagementComponent, children: [
         {path: 'test', component: TestWarehouseComponent},
         {path: 'home', component: HomeComponent},
-        {path: 'brand', component: BrandManagementComponent}
+        {path: 'brand', component: BrandManagementComponent},
         {path: 'product', component: ProductComponent}
       ]
-    }
+    },
+    {path: 'employee-manager', component: EmployeeManagerComponent, children: [
+        {path: 'detail', component: EmployeeDetailComponent}
+      ]}
   ]
 }];
 

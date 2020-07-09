@@ -7,19 +7,26 @@ import {WarehouseManagementComponent} from './warehouse-management/warehouse-man
 import { HomeComponent } from './warehouse-management/home/home.component';
 import { ProductComponent } from './warehouse-management/product/product.component';
 import {MaterialModule} from '../shares/material.module';
+import { EmployeeDetailComponent } from './employee-manager/employee-detail/employee-detail.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {ShareModule} from '../shares/share.module';
+import { EmployeeManagerComponent } from './employee-manager/employee-manager.component';
 
 @NgModule({
-    declarations: [PartnerManagementComponent, WarehouseManagementComponent, HomeComponent, ProductComponent],
+    declarations: [PartnerManagementComponent, WarehouseManagementComponent, HomeComponent, ProductComponent,
+      EmployeeDetailComponent, EmployeeManagerComponent],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent
   ],
-    imports: [
-        CommonModule,
-        EmployeeRoutingModule,
-        RouterModule,
-      MaterialModule
-    ]
+  imports: [
+    CommonModule,
+    EmployeeRoutingModule,
+    RouterModule,
+    MaterialModule,
+    MatDialogModule,
+    ShareModule
+  ]
 })
 export class EmployeeModule {
 }
