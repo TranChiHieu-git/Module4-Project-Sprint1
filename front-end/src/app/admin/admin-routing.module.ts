@@ -13,7 +13,7 @@ const routes: Routes = [
       {path: 'access-times', component: AccessTimesComponent}
     ]
   },
-  {path: '**', component: AdminComponent},
+
 ];
 
 @NgModule({
