@@ -41,5 +41,31 @@
       "id": 6,
       "date": "25/05/2020"
     }
+    ],
+  "listDistributor": [
+    {
+      "id": 1,
+      "name": "Tien",
+      "address": "2k",
+      "numberPhone": "0935984188",
+      "email": "lengochuydn998@gmail.com",
+      "img": "abc"
+    },
+    {
+      "id": 2,
+      "name": "Tien",
+      "address": "2k",
+      "numberPhone": "0935984188",
+      "email": "lengochuydn998@gmail.com",
+      "img": "abc"
+    },
+    {
+      "id": 3,
+      "name": "Tien",
+      "address": "2k",
+      "numberPhone": "0935984188",
+      "email": "lengochuydn998@gmail.com",
+      "img": "abc"
+    }
   ]
 }
