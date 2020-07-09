@@ -20,6 +20,7 @@ import { EmployeeManagerComponent } from './employee-manager/employee-manager.co
 import { ListDistributorComponent } from './partner-management/list-distributor/list-distributor.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
     declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
@@ -42,6 +43,7 @@ import {HttpClientModule} from '@angular/common/http';
     MaterialModule,
     MatDialogModule,
     ShareModule,
+    MatCardModule,
   ]
 })
 export class EmployeeModule {

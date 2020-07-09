@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Distributor} from '../../../models/distributor';
 import {DistributorService} from '../../../services/distributor.service';
@@ -12,9 +12,11 @@ import {Router} from '@angular/router';
 export class ListDistributorComponent implements OnInit {
   distributorForm: FormGroup;
   distributorList: Distributor[];
+
   constructor(private fb: FormBuilder,
               private distributorService: DistributorService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit(): void {
     this.distributorForm = this.fb.group({
@@ -62,7 +64,23 @@ export class ListDistributorComponent implements OnInit {
         });
       });
     })(jQuery);
+
+
+    //Thach
+    $('.icon-upload-alt').css('opacity', '-1');
+    $('.button').click(function() {
+      const buttonId = $(this).attr('id');
+      $('#modal-container').removeAttr('class').addClass(buttonId);
+      $('body').addClass('modal-active');
+    });
+
+    $('#modal-container').click(function() {
+      $(this).addClass('out');
+      $('body').removeClass('modal-active');
+    });
+
   }
+
   onSubmit() {
     if (this.distributorForm.valid) {
       this.distributorService.create(this.distributorForm.value).subscribe(
@@ -75,6 +93,42 @@ export class ListDistributorComponent implements OnInit {
       );
     } else {
       alert('Invalid');
+    }
+  }
+
+
+  //Thach Function
+  openEditForm() {
+    $('#edit').click();
+  }
+
+  openDeleteForm() {
+    $('#delete').click();
+  }
+
+  hoverUploadPic() {
+    $('.icon-upload-alt').css('opacity', '0.8');
+  }
+
+
+  leaveUploadPic() {
+    $('.icon-upload-alt').css('opacity', '-1');
+  }
+
+  selectAvatar() {
+    $('#myAvatar').click();
+  }
+
+
+  readURL(target: HTMLInputElement) {
+    if (target.files && target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const temp: any = e.target.result;
+        $('#avatar').attr('src', temp);
+      };
+      reader.readAsDataURL(target.files[0]);
+    } else {
     }
   }
 }
