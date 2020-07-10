@@ -22,6 +22,7 @@ const routes: Routes = [{
         {path: 'test', component: TestPartnerComponent},
         {path: 'list-distributor', component: ListDistributorComponent},
         {path: 'customer-management', component: CustomerManagementComponent},
+         {path: 'customer-management/customer-list', component: CustomerManagementComponent},
         {
           path: 'employee-manager', component: EmployeeManagerComponent, children: [
             {path: 'detail', component: EmployeeDetailComponent}
