@@ -1,0 +1,57 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+.left-menu{
+  background-color:rgba(241, 242, 246,0.8);
+  //height: 100%;
+  //border: white solid 1px;
+  padding: 0;
+
+}
+
+
+.list-menu li{
+  padding: 10px;
+  border-bottom: black solid 0.5px;
+
+}
+.list-menu li:hover{
+}
+li{
+  list-style-type: none;
+}
+
+.title{
+  margin: 0;
+  background:#d1af9b;
+  line-height: 200%;
+}
+i{
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.list-group-item{
+  border: white solid 1px;
+  background-color:transparent;
+
+
+}
+.list-group-item:hover{
+  background-color: rgba(255, 218, 121,0.5);
+
+}
+
+.content{
+  margin: 0;
+  background-color:transparent;
+
+}
+.list-group-item.active{
+  background-color: rgba(255, 218, 121,1.0);
+  border: rgba(255, 165, 2,1.0);
+}
+.user-manage{
+  height: 100vh;
+  background-image: url("../../../assets/background/bakery-background-hand-drawn-cooking-bread-bakery-vector-23984254-xx.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+

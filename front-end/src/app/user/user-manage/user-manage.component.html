@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<div class="container-fluid pt-5 user-manage">
+
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-3 left-menu font-weight-bold">
+          <h3 class="title"><i class="fa fa-cog"></i>Tài khoản</h3>
+
+          <div class="list-group" id="list-tab" role="tablist">
+            <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"
+               href="#list-home" role="tab" aria-controls="home" [routerLink]="['/user-manage','user-detail']">Quản lý tài
+              khoản</a>
+            <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+               href="#list-profile" role="tab" aria-controls="profile" [routerLink]="['/user-manage','user-oder']">Theo dõi đơn hàng</a>
+
+          </div>
+
+        </div>
+        <div class="col-md-9 content">
+
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

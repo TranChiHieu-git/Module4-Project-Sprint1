@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AdminComponent} from './admin/admin.component';
@@ -18,7 +17,7 @@ import {EmployeeComponent} from './employee/employee.component';
     AppComponent,
     AdminComponent,
     EmployeeComponent,
-    UserComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +27,7 @@ import {EmployeeComponent} from './employee/employee.component';
     ShareModule,
     MaterialModule,
     MatIconModule,
-    UserModule,
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]

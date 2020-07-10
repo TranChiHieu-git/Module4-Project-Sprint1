@@ -37,7 +37,8 @@
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/popper.js/dist/umd/popper.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "src/assets/js/collapse_sidebar.js"
+              "src/assets/js/collapse_sidebar.js",
+              "src/assets/js/show-info.js"
             ]
           },
           "configurations": {
@@ -102,7 +103,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/CakeJs.js"
+            ]
           }
         },
         "lint": {
@@ -135,6 +138,6 @@
   },
   "defaultProject": "front-end",
   "cli": {
-    "analytics": "b8e08a65-c9ea-48f8-bb78-b130191520ea"
+    "analytics": false
   }
 }
