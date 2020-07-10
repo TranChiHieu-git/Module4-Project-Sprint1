@@ -91,18 +91,22 @@
       <tr >
         <td>
           <div >
-            <button mat-mini-fab>
+            <button  (click)="hiddenTab(customer.id)">
               <!--              <mat-icon color="primary" (click)="hiddenTab()">add_circle</mat-icon>-->
               <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z"/>
               </svg>
             </button>
-            {{customer.id }}
+            1
+<!--            {{customer.id }}   -->
           </div>
         </td>
-        <td>{{customer.name}}</td>
-        <td>{{customer.address }}</td>
-        <td>{{customer.email }}</td>
+<!--        <td>{{customer.name}}</td>-->
+        <td>cao quoc huy</td>
+<!--        <td>{{customer.address }}</td>-->
+        <td>quang nam</td>
+<!--        <td>{{customer.email }}</td>-->
+        <td>cao@gmail.com</td>
         <td style="width: auto">
           <!--        <button class="btn btn-sm btn-success mr-3" (click)="openDetail(sinhvien.id)">chi tiet</button>-->
           <button type="button" class="btn btn-warning"><a data-toggle="modal" data-target="#editModal" (click)="editModel(customer)">Sửa</a></button>
@@ -112,15 +116,16 @@
       <tr value="'flag'">
         <table  >
           <tr >
-            <th>email</th>
-            <th>so dien thoai</th>
+            <th>Sô lần đã mua hàng</th>
+            <th>Tổng giá trị hàng đã mua</th>
+            <th>Mã chiết khấu</th>
           </tr>
           <tr  >
             <td>{{customers.numberOfPurchases}}</td>
             <td>{{customers.totalValue }}</td>
             <td>{{customers.discountCode }}</td>
           </tr>
-        </table>
+        </table>d
       </tr>
       </tbody>
     </ng-container>
