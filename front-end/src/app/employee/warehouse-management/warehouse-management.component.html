@@ -6,10 +6,8 @@
           aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" routerLink="home">
-    <img src="https://v4-alpha.getbootstrap.com/assets/brand/bootstrap-solid.svg" width="30" height="30"
-         class="d-inline-block align-top" alt="">
-    <span class="menu-collapsed">Bánh Kẹo</span>
+  <a class="navbar-brand" [routerLink]="'/employee/partner-management'">
+    <img src="../../assets/photo/logo.png" width="auto" height="30" alt="logo">
   </a>
   <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavDropdown">
     <ul class="navbar-nav">
@@ -22,8 +20,9 @@
               <span>Chào, Anh Nguyên</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Tài khoản của tôi</a>
-              <a class="dropdown-item" href="#">Đăng xuất</a>
+              <a class="dropdown-item" [routerLink]="'/employee/warehouse-management/employee-manager/detail'">Tài khoản
+                của tôi</a>
+              <a class="dropdown-item" [routerLink]="'/'">Đăng xuất</a>
             </div>
           </li>
         </ul>
@@ -75,7 +74,7 @@
       </div>
       <a routerLink="brand" class="sidebar list-group-item list-group-item-action">
         <div class="d-flex w-100 justify-content-start align-items-center">
-          <span  class="menu-collapsed">Thương Hiệu</span>
+          <span class="menu-collapsed">Thương Hiệu</span>
         </div>
       </a>
     </ul><!-- List Group END-->
