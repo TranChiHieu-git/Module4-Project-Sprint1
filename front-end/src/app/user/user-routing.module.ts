@@ -13,12 +13,7 @@ import {HomeCandyComponent} from './home-store/home-candy/home-candy.component';
 import {DetailComponent} from './home-store/detail/detail.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
 
-const routes: Routes = [{
-  path: 'home', component: UserComponent,
-  children: [
-    {path: 'test', component: TestComponent}
-  ],
-},
+const routes: Routes = [
   {
     path: 'user-manage',
     component: UserManageComponent,
@@ -51,6 +46,7 @@ const routes: Routes = [{
     ],
   }
 ];
+
 @NgModule({
   declarations: [],
   imports: [

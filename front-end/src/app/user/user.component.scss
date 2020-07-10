@@ -3,6 +3,7 @@ body {
   height: 900px;
   background-size: cover;
 }
+
 //.blurfilter{
 //  /* Add the blur effect */
 //  filter: blur(8px);
@@ -63,18 +64,22 @@ body {
 .modal {
   margin-top: 80px;
 }
+
 .closeButton {
   width: 10px;
   align-self: flex-end;
 }
+
 /* === CSS FILTER EFFECTS === */
 
 .firstBlur.modalBlur > *:not(.modal) {
   -webkit-filter: blur(8px);
 }
+
 .firstBlur.modalDesaturate > *:not(.modal) {
   -webkit-filter: saturate(0%);
 }
+
 /* === SOFTEN THE MODAL BACKDROP SO THE EFFECT IS MORE VISIBLE === */
 .modal-backdrop {
   opacity: 0.65;
