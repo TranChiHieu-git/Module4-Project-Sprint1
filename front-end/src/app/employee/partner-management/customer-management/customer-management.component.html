@@ -1,0 +1,138 @@
+<button type="button" class="btn btn-warning"><a data-toggle="modal" data-target="#editModal" (click)="editModel(customer)">Sửa</a></button>
+<button type="button" class="btn btn-danger"><a data-toggle="modal" data-target="#DeleteModal" (click)="deleteModel(customer)">Xóa</a></button>
+
+<!-- Modal edit-->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title modal-titles" id="editModalLabel">Sửa thông tin khách hàng</h5>
+        <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--        <form (ngSubmit)="onSubmit()"  [formGroup]="customerForm">-->
+        <img class="avatar" src="../../../../assets/photo/customer-avatar.png" alt="avatar">
+        <!--        <img class="avatar" [src]="KHACHANG.Anh" alt="avatar">-->
+
+        <table>
+          <tr>
+            <th>Tên nhà phân phối</th>
+            <th><input type="text"></th>
+            <!--            <th><input formControlName="NHAPHANPHOI.Ten"></th>-->
+          </tr>
+          <tr>
+            <th>Địa chỉ</th>
+            <th><input type="text"></th>
+            <!--            <th><input formControlName="KHACHMUAHANG.DiaChi"></th>-->
+
+          </tr>
+          <tr>
+            <th>Số điện thoại</th>
+            <th><input type="text"></th>
+            <!--            <th><input formControlName="KHACHMUAHANG.SDT"></th>-->
+          </tr>
+          <tr>
+            <th>Email</th>
+            <th><input type="text"></th>
+            <!--            <th><input formControlName="KHACHMUAHANG.Email"></th>-->
+          </tr>
+        </table>
+        <!--          <input type="submit" value="Luu" [disabled]="studentForm.invalid">-->
+
+        <button type="button" class="btn btn-warning edit-customer-btn1"><a data-toggle="modal" data-target="#editcheckModal" (click)="editcheckModel(customer)">Sửa</a></button>
+        <!-- Modal edit check-->
+        <div class="modal fade" id="editcheckModal" tabindex="-1" role="dialog" aria-labelledby="editCheckModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title modal-titles" id="editCheckModalLabel">Xác nhận</h5>
+                <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body check-edit-body">
+                <p>Bạn có chắc chắn muốn thay đổi thông tin của khách mua hàng này?</p>
+                <button type="button" class="btn btn-success check-edit-btn">Xác Nhận</button>
+                <button type="button" (click)="backCheckMenu()" class="btn btn-secondary edit-customer-btn2">Hủy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!--        </form>-->
+        <button type="button" (click)="backMenu()" class="btn btn-secondary edit-customer-btn2">Hủy</button>
+        <button type="button" class="btn btn-primary edit-customer-btn3">Thêm ảnh đại diện</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal delete-->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title modal-titles" id="deleteModalLabel">Sửa thông tin khách hàng</h5>
+        <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--        <form (ngSubmit)="onSubmit()"  [formGroup]="customerForm">-->
+        <img class="avatar" src="../../../../assets/photo/customer-avatar.png" alt="avatar">
+<!--        <img class="avatar" [src]="KHACHANG.Anh" alt="avatar">-->
+
+        <table>
+          <tr>
+            <th>Tên nhà phân phối</th>
+            <th><input type="text"></th>
+<!--            <th><input formControlName="NHAPHANPHOI.Ten"></th>-->
+          </tr>
+          <tr>
+            <th>Địa chỉ</th>
+            <th><input type="text"></th>
+<!--            <th><input formControlName="KHACHMUAHANG.DiaChi"></th>-->
+
+          </tr>
+          <tr>
+            <th>Số điện thoại</th>
+            <th><input type="text"></th>
+<!--            <th><input formControlName="KHACHMUAHANG.SDT"></th>-->
+          </tr>
+          <tr>
+            <th>Email</th>
+            <th><input type="text"></th>
+<!--            <th><input formControlName="KHACHMUAHANG.Email"></th>-->
+          </tr>
+        </table>
+        <!--          <input type="submit" value="Luu" [disabled]="studentForm.invalid">-->
+        <button type="button" class="btn btn-warning edit-customer-btn1"><a data-toggle="modal" data-target="#deletecheckModal" (click)="deletecheckModel(customer)">Xóa</a></button>
+        <!-- Modal edit check-->
+        <div class="modal fade" id="deletecheckModal" tabindex="-1" role="dialog" aria-labelledby="deleteCheckModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title modal-titles" id="deleteCheckModalLabel">Xác nhận</h5>
+                <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body check-edit-body">
+                <p>Bạn có chắc chắn muốn xóa thông tin của khách mua hàng này?</p>
+                <button type="button" class="btn btn-success check-edit-btn">Xác Nhận</button>
+                <button type="button" (click)="backCheckMenu()" class="btn btn-secondary edit-customer-btn2">Hủy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        </form>-->
+        <button type="button" (click)="backMenu()"class="btn btn-secondary edit-customer-btn2">Hủy</button>
+        <button type="button" class="btn btn-primary edit-customer-btn3">Thêm ảnh đại diện</button>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
