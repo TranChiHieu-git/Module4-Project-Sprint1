@@ -1,7 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Customer} from './customer';
+
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnChanges, OnInit} from '@angular/core';
+import {CustomerService} from '../../../services/customer.service';
+import {Customer} from '../../../models/customer';
+
 
 declare var $: any;
 
@@ -10,17 +13,22 @@ declare var $: any;
   templateUrl: './customer-management.component.html',
   styleUrls: ['./customer-management.component.scss']
 })
-export class CustomerManagementComponent implements OnInit {
+export class CustomerManagementComponent implements OnInit, OnChanges {
+  customers;
   tempCustomer: Customer = new Customer();
-  customer = new Customer();
+  customer: Customer;
   customerForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private customerService: CustomerService) {
   }
 
   ngOnInit(): void {
+    this.customerService.getAllCustomer().subscribe(data => {
+      this.customers = data;
+    });
   }
 
   editModel(element: Customer): void {
@@ -54,5 +62,24 @@ export class CustomerManagementComponent implements OnInit {
   backCheckMenu(): void {
     $('#editcheckModal').modal('hide');
     $('#deletecheckModal').modal('hide');
+  }
+
+  addcheckModel(customer: Customer) {
+  }
+
+  hiddenTab(id): void {
+    this.customerService.getCustomerById(id).subscribe(next => {
+      this.customer = next;
+      this.customer.status = !this.customer.status;
+      this.customerService.editCustomer(this.customer).subscribe();
+      console.log(this.customer.status);
+      this.customerService.getAllCustomer().subscribe(data => {
+        this.customers = data;
+      });
+    });
+  }
+  ngOnChanges(): void {
+    // @ts-ignore
+    this.hiddenTab();
   }
 }
