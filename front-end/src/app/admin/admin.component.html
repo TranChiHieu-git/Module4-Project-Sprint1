@@ -1,0 +1,55 @@
+<div class="container-fluid px-0 py-0">
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top mx-0 my-0">
+    <nav class="navbar navbar-light">
+      <a class="navbar-brand" [routerLink]="'/admin'">
+        <img
+          src="../../assets/photo/logo.png" width="auto" height="30" alt="logo">
+      </a>
+    </nav>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+          <a class="nav-link pt-3" [routerLink]="'/employee/warehouse-management'">Quản Lí</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link pt-3" [routerLink]="'/employee/partner-management'">Bán Hàng</a>
+        </li>
+        <li class="nav-item">
+          <div class="main pt-1 ml-3">
+            <form (ngSubmit)="search()">
+              <input [(ngModel)]="userName" name="userName" class="form-control" placeholder="Search">
+            </form>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <nav class="navbar navbar-light">
+      <a class="navbar-brand" [routerLink]="'/admin/employee-manager/detail'">
+        <img class="rounded-circle"
+             src="../../assets/photo/avt.jpg" width="40" height="40" alt="logo">
+      </a>
+      <a class="logout" [routerLink]="'/'">Đăng xuất</a>
+    </nav>
+  </nav>
+  <div class="row-12 outborder bg-dark px-0">
+    <div class="col-2 leftshape px-0 fixed-top">
+      <div class="list-group mt-5 ">
+        <a [routerLink]="'/admin/access-times'"
+           class="pt-3 pb-3 listQL list-group-item-action sidebarChose">
+          Bảng điều khiển
+        </a>
+        <a [routerLink]="'/admin/list-account'"
+           class="pt-3 pb-3 listQL list-group-item-action sidebarChose">
+          Quản lí tài khoản
+        </a>
+      </div>
+    </div>
+    <div class="col-10 rightshape px-0 ">
+      <div class="row"></div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+
+
