@@ -27,7 +27,7 @@ import {CustomerManagementComponent} from './partner-management/customer-managem
 @NgModule({
     declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
   WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BillComponent,
-    ListBillComponent,
+    ListBillComponent, BrandManagementComponent,
     SearchBillComponent, CustomerManagementComponent],
   exports: [
     WarehouseManagementComponent,

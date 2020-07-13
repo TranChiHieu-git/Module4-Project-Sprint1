@@ -1,5 +1,175 @@
-<button type="button" class="btn btn-warning"><a data-toggle="modal" data-target="#editModal" (click)="editModel(customer)">Sửa</a></button>
-<button type="button" class="btn btn-danger"><a data-toggle="modal" data-target="#DeleteModal" (click)="deleteModel(customer)">Xóa</a></button>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="row justify-content-between mt-3">
+  <h2>Danh sách khách hàng</h2>
+  <div class="d-flex">
+    <input class="form-control mr-3 " type="text" placeholder="Search..." style="width: 400px; height: 100%"
+    >
+    <button class="btn btn-outline-primary">Tìm kiếm</button>
+  </div>
+</div>
+<div class="row mt-3 px-3">
+  <button class="btn btn-primary " data-toggle="modal" data-target="#exampleModal">Thêm mới</button>
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title modal-titles" id="addModalLabel">Thêm thông tin khách hàng</h5>
+          <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!--        <form (ngSubmit)="onSubmit()"  [formGroup]="customerForm">-->
+          <img class="avatar" src="../../../../assets/photo/customer-avatar.png" alt="avatar">
+          <!--        <img class="avatar" [src]="KHACHANG.Anh" alt="avatar">-->
+          <table>
+            <tr>
+              <th>Tên nhà phân phối</th>
+              <th><input type="text"></th>
+              <!--            <th><input formControlName="NHAPHANPHOI.Ten"></th>-->
+            </tr>
+            <tr>
+              <th>Địa chỉ</th>
+              <th><input type="text"></th>
+              <!--            <th><input formControlName="KHACHMUAHANG.DiaChi"></th>-->
+
+            </tr>
+            <tr>
+              <th>Số điện thoại</th>
+              <th><input type="text"></th>
+              <!--            <th><input formControlName="KHACHMUAHANG.SDT"></th>-->
+            </tr>
+            <tr>
+              <th>Email</th>
+              <th><input type="text"></th>
+              <!--            <th><input formControlName="KHACHMUAHANG.Email"></th>-->
+            </tr>
+          </table>
+          <!--          <input type="submit" value="Luu" [disabled]="studentForm.invalid">-->
+
+          <button type="button" class="btn btn-warning add-customer-btn1"><a data-toggle="modal"
+                                                                             data-target="#addcheckModal"
+                                                                             (click)="addcheckModel(customer)">Thêm</a>
+          </button>
+          <!-- Modal edit check-->
+          <div class="modal fade" id="addcheckModal" tabindex="-1" role="dialog" aria-labelledby="addCheckModalLabel"
+               aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title modal-titles" id="addCheckModalLabel">Xác nhận</h5>
+                  <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body check-add-body">
+                  <p>Bạn có chắc chắn muốn thay đổi thông tin của khách mua hàng này?</p>
+                  <button type="button" class="btn btn-success check-add-btn">Xác Nhận</button>
+                  <button type="button" (click)="backCheckMenu()" class="btn btn-secondary edit-customer-btn2">Hủy
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!--        </form>-->
+          <button type="button" (click)="backMenu()" class="btn btn-secondary edit-customer-btn2">Hủy</button>
+          <button type="button" class="btn btn-primary edit-customer-btn3">Thêm ảnh đại diện</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <table class="table table-bordered" style="font-size: 12px">
+    <ng-container>
+      <thead class="bg-secondary">
+      <tr>
+        <th scope="col">Mã</th>
+        <th scope="col">Tên</th>
+        <th scope="col">Địa chỉ</th>
+        <th scope="col">Email</th>
+        <th scope="col">Chức Năng</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>
+          <button (click)="hiddenTab(customer.id)">
+            <!--              <mat-icon color="primary" (click)="hiddenTab()">add_circle</mat-icon>-->
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z"/>
+            </svg>
+          </button>
+          cao quoc huy
+        </td>
+        <!--        <td>{{customer.address }}</td>-->
+        <td>quang nam</td>
+        <!--        <td>{{customer.email }}</td>-->
+        <td>cao@gmail.com</td>
+        <td style="width: auto">
+          <!--        <button class="btn btn-sm btn-success mr-3" (click)="openDetail(sinhvien.id)">chi tiet</button>-->
+          <button type="button" class="global-button m-1"><a data-toggle="modal" data-target="#editModal"
+                                                           (click)="editModel(customer)">Sửa</a></button>
+          <button type="button" class="global-button "><a data-toggle="modal" data-target="#DeleteModal"
+                                                          (click)="deleteModel(customer)">Xóa</a></button>
+        </td>
+      </tr>
+      </thead>
+      <tbody *ngFor="let customer of customers ">
+      <tr>
+        <td>đâsd</td>
+      </tr>
+      <tr>
+        <td>
+          <div>
+            <button (click)="hiddenTab(customer.id)">
+              <!--              <mat-icon color="primary" (click)="hiddenTab()">add_circle</mat-icon>-->
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z"/>
+              </svg>
+            </button>
+            1
+            <!--            {{customer.id }}   -->
+          </div>
+        </td>
+        <!--        <td>{{customer.name}}</td>-->
+        <td>cao quoc huy</td>
+        <!--        <td>{{customer.address }}</td>-->
+        <td>quang nam</td>
+        <!--        <td>{{customer.email }}</td>-->
+        <td>cao@gmail.com</td>
+        <td style="width: auto">
+          <!--        <button class="btn btn-sm btn-success mr-3" (click)="openDetail(sinhvien.id)">chi tiet</button>-->
+          <button type="button" class="global-button"><a data-toggle="modal" data-target="#editModal"
+                                                           (click)="editModel(customer)">Sửa</a></button>
+          <button type="button" class="global-button"><a data-toggle="modal" data-target="#DeleteModal"
+                                                          (click)="deleteModel(customer)">Xóa</a></button>
+        </td>
+      </tr>
+      <tr value="'flag'">
+        <table>
+          <tr>
+            <th>Sô lần đã mua hàng</th>
+            <th>Tổng giá trị hàng đã mua</th>
+            <th>Mã chiết khấu</th>
+          </tr>
+          <tr>
+            <td>{{customers.numberOfPurchases}}</td>
+            <td>{{customers.totalValue }}</td>
+            <td>{{customers.discountCode }}</td>
+          </tr>
+        </table>
+      </tr>
+      </tbody>
+    </ng-container>
+  </table>
+</div>
+
 
 <!-- Modal edit-->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -16,34 +186,51 @@
         <img class="avatar" src="../../../../assets/photo/customer-avatar.png" alt="avatar">
         <!--        <img class="avatar" [src]="KHACHANG.Anh" alt="avatar">-->
 
-        <table>
-          <tr>
-            <th>Tên nhà phân phối</th>
-            <th><input type="text"></th>
-            <!--            <th><input formControlName="NHAPHANPHOI.Ten"></th>-->
-          </tr>
-          <tr>
-            <th>Địa chỉ</th>
-            <th><input type="text"></th>
-            <!--            <th><input formControlName="KHACHMUAHANG.DiaChi"></th>-->
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name0" placeholder="Tên nhà phân phối"/>
 
-          </tr>
-          <tr>
-            <th>Số điện thoại</th>
-            <th><input type="text"></th>
-            <!--            <th><input formControlName="KHACHMUAHANG.SDT"></th>-->
-          </tr>
-          <tr>
-            <th>Email</th>
-            <th><input type="text"></th>
-            <!--            <th><input formControlName="KHACHMUAHANG.Email"></th>-->
-          </tr>
-        </table>
+          <label class="global-content-popup-icon" for="name0"><i class="icon-user"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name1" placeholder="Địa chỉ"/>
+
+          <label class="global-content-popup-icon" for="name1"><i class="icon-map-marker"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name2" placeholder="Ngày sinh"/>
+
+          <label class="global-content-popup-icon" for="name2"><i class="icon-calendar"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name3" placeholder="Số điện thoại"/>
+
+          <label class="global-content-popup-icon" for="name3"><i class="icon-phone"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name4" placeholder="Email"/>
+
+          <label class="global-content-popup-icon" for="name4"><i class="icon-envelope-alt"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+
         <!--          <input type="submit" value="Luu" [disabled]="studentForm.invalid">-->
 
-        <button type="button" class="btn btn-warning edit-customer-btn1"><a data-toggle="modal" data-target="#editcheckModal" (click)="editcheckModel(customer)">Sửa</a></button>
+        <button type="button" class="global-button edit-customer-btn1"><a data-toggle="modal"
+                                                                            data-target="#editcheckModal"
+                                                                            (click)="editcheckModel(customer)">Sửa</a>
+        </button>
         <!-- Modal edit check-->
-        <div class="modal fade" id="editcheckModal" tabindex="-1" role="dialog" aria-labelledby="editCheckModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editcheckModal" tabindex="-1" role="dialog" aria-labelledby="editCheckModalLabel"
+             aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -55,7 +242,8 @@
               <div class="modal-body check-edit-body">
                 <p>Bạn có chắc chắn muốn thay đổi thông tin của khách mua hàng này?</p>
                 <button type="button" class="btn btn-success check-edit-btn">Xác Nhận</button>
-                <button type="button" (click)="backCheckMenu()" class="btn btn-secondary edit-customer-btn2">Hủy</button>
+                <button type="button" (click)="backCheckMenu()" class="global-button-cancel edit-customer-btn2">Hủy
+                </button>
               </div>
             </div>
           </div>
@@ -63,19 +251,20 @@
 
 
         <!--        </form>-->
-        <button type="button" (click)="backMenu()" class="btn btn-secondary edit-customer-btn2">Hủy</button>
-        <button type="button" class="btn btn-primary edit-customer-btn3">Thêm ảnh đại diện</button>
+        <button type="button" (click)="backMenu()" class="global-button-cancel edit-customer-btn2">Hủy</button>
+        <button type="button" class="global-button edit-customer-btn3">Thêm ảnh đại diện</button>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Modal delete-->
-<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title modal-titles" id="deleteModalLabel">Sửa thông tin khách hàng</h5>
+        <h5 class="modal-title modal-titles" id="deleteModalLabel">Xóa thông tin khách hàng</h5>
         <button type="button" class="close " data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -83,35 +272,50 @@
       <div class="modal-body">
         <!--        <form (ngSubmit)="onSubmit()"  [formGroup]="customerForm">-->
         <img class="avatar" src="../../../../assets/photo/customer-avatar.png" alt="avatar">
-<!--        <img class="avatar" [src]="KHACHANG.Anh" alt="avatar">-->
+        <!--        <img class="avatar" [src]="KHACHANG.Anh" alt="avatar">-->
 
-        <table>
-          <tr>
-            <th>Tên nhà phân phối</th>
-            <th><input type="text"></th>
-<!--            <th><input formControlName="NHAPHANPHOI.Ten"></th>-->
-          </tr>
-          <tr>
-            <th>Địa chỉ</th>
-            <th><input type="text"></th>
-<!--            <th><input formControlName="KHACHMUAHANG.DiaChi"></th>-->
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name0" placeholder="Tên nhà phân phối"/>
 
-          </tr>
-          <tr>
-            <th>Số điện thoại</th>
-            <th><input type="text"></th>
-<!--            <th><input formControlName="KHACHMUAHANG.SDT"></th>-->
-          </tr>
-          <tr>
-            <th>Email</th>
-            <th><input type="text"></th>
-<!--            <th><input formControlName="KHACHMUAHANG.Email"></th>-->
-          </tr>
-        </table>
+          <label class="global-content-popup-icon" for="name0"><i class="icon-user"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name1" placeholder="Địa chỉ"/>
+
+          <label class="global-content-popup-icon" for="name1"><i class="icon-map-marker"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name2" placeholder="Ngày sinh"/>
+
+          <label class="global-content-popup-icon" for="name2"><i class="icon-calendar"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name3" placeholder="Số điện thoại"/>
+
+          <label class="global-content-popup-icon" for="name3"><i class="icon-phone"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name4" placeholder="Email"/>
+
+          <label class="global-content-popup-icon" for="name4"><i class="icon-envelope-alt"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
         <!--          <input type="submit" value="Luu" [disabled]="studentForm.invalid">-->
-        <button type="button" class="btn btn-warning edit-customer-btn1"><a data-toggle="modal" data-target="#deletecheckModal" (click)="deletecheckModel(customer)">Xóa</a></button>
+        <button type="button" class="global-button edit-customer-btn1"><a data-toggle="modal"
+                                                                            data-target="#deletecheckModal"
+                                                                            (click)="deletecheckModel(customer)">Xóa</a>
+        </button>
         <!-- Modal edit check-->
-        <div class="modal fade" id="deletecheckModal" tabindex="-1" role="dialog" aria-labelledby="deleteCheckModalLabel" aria-hidden="true">
+        <div class="modal fade" id="deletecheckModal" tabindex="-1" role="dialog"
+             aria-labelledby="deleteCheckModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -123,14 +327,15 @@
               <div class="modal-body check-edit-body">
                 <p>Bạn có chắc chắn muốn xóa thông tin của khách mua hàng này?</p>
                 <button type="button" class="btn btn-success check-edit-btn">Xác Nhận</button>
-                <button type="button" (click)="backCheckMenu()" class="btn btn-secondary edit-customer-btn2">Hủy</button>
+                <button type="button" (click)="backCheckMenu()" class="btn btn-secondary edit-customer-btn2">Hủy
+                </button>
               </div>
             </div>
           </div>
         </div>
         <!--        </form>-->
-        <button type="button" (click)="backMenu()"class="btn btn-secondary edit-customer-btn2">Hủy</button>
-        <button type="button" class="btn btn-primary edit-customer-btn3">Thêm ảnh đại diện</button>
+        <button type="button" (click)="backMenu()" class="global-button-cancel edit-customer-btn2">Hủy</button>
+        <button type="button" class="global-button edit-customer-btn3">Thêm ảnh đại diện</button>
       </div>
     </div>
   </div>

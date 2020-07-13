@@ -10,7 +10,7 @@
           <th></th>
         </tr>
         </thead>
-        <tbody class="border border-dark" *ngFor="let account of accountList">
+        <tbody class="border border-dark" *ngFor="let account of accountList| paginate: { itemsPerPage: 3, currentPage: p };">
         <tr>
           <th scope="row">{{account.id}}</th>
           <td class="details" (click)="info()">{{account.user_name}}</td>
@@ -22,6 +22,7 @@
         </tr>
         </tbody>
       </table>
+      <pagination-controls class="float-right" (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 
