@@ -1,3 +1,5 @@
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="row justify-content-between mt-3">
   <h2>Danh sách khách hàng</h2>
   <div class="d-flex">
@@ -109,9 +111,9 @@
         <td>cao@gmail.com</td>
         <td style="width: auto">
           <!--        <button class="btn btn-sm btn-success mr-3" (click)="openDetail(sinhvien.id)">chi tiet</button>-->
-          <button type="button" class="btn btn-warning"><a data-toggle="modal" data-target="#editModal"
+          <button type="button" class="global-button m-1"><a data-toggle="modal" data-target="#editModal"
                                                            (click)="editModel(customer)">Sửa</a></button>
-          <button type="button" class="btn btn-danger"><a data-toggle="modal" data-target="#DeleteModal"
+          <button type="button" class="global-button "><a data-toggle="modal" data-target="#DeleteModal"
                                                           (click)="deleteModel(customer)">Xóa</a></button>
         </td>
       </tr>
@@ -143,9 +145,9 @@
         <td>cao@gmail.com</td>
         <td style="width: auto">
           <!--        <button class="btn btn-sm btn-success mr-3" (click)="openDetail(sinhvien.id)">chi tiet</button>-->
-          <button type="button" class="btn btn-warning"><a data-toggle="modal" data-target="#editModal"
+          <button type="button" class="global-button"><a data-toggle="modal" data-target="#editModal"
                                                            (click)="editModel(customer)">Sửa</a></button>
-          <button type="button" class="btn btn-danger"><a data-toggle="modal" data-target="#DeleteModal"
+          <button type="button" class="global-button"><a data-toggle="modal" data-target="#DeleteModal"
                                                           (click)="deleteModel(customer)">Xóa</a></button>
         </td>
       </tr>
@@ -184,32 +186,45 @@
         <img class="avatar" src="../../../../assets/photo/customer-avatar.png" alt="avatar">
         <!--        <img class="avatar" [src]="KHACHANG.Anh" alt="avatar">-->
 
-        <table>
-          <tr>
-            <th>Tên nhà phân phối</th>
-            <th><input type="text"></th>
-            <!--            <th><input formControlName="NHAPHANPHOI.Ten"></th>-->
-          </tr>
-          <tr>
-            <th>Địa chỉ</th>
-            <th><input type="text"></th>
-            <!--            <th><input formControlName="KHACHMUAHANG.DiaChi"></th>-->
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name0" placeholder="Tên nhà phân phối"/>
 
-          </tr>
-          <tr>
-            <th>Số điện thoại</th>
-            <th><input type="text"></th>
-            <!--            <th><input formControlName="KHACHMUAHANG.SDT"></th>-->
-          </tr>
-          <tr>
-            <th>Email</th>
-            <th><input type="text"></th>
-            <!--            <th><input formControlName="KHACHMUAHANG.Email"></th>-->
-          </tr>
-        </table>
+          <label class="global-content-popup-icon" for="name0"><i class="icon-user"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name1" placeholder="Địa chỉ"/>
+
+          <label class="global-content-popup-icon" for="name1"><i class="icon-map-marker"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name2" placeholder="Ngày sinh"/>
+
+          <label class="global-content-popup-icon" for="name2"><i class="icon-calendar"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name3" placeholder="Số điện thoại"/>
+
+          <label class="global-content-popup-icon" for="name3"><i class="icon-phone"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name4" placeholder="Email"/>
+
+          <label class="global-content-popup-icon" for="name4"><i class="icon-envelope-alt"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+
         <!--          <input type="submit" value="Luu" [disabled]="studentForm.invalid">-->
 
-        <button type="button" class="btn btn-warning edit-customer-btn1"><a data-toggle="modal"
+        <button type="button" class="global-button edit-customer-btn1"><a data-toggle="modal"
                                                                             data-target="#editcheckModal"
                                                                             (click)="editcheckModel(customer)">Sửa</a>
         </button>
@@ -227,7 +242,7 @@
               <div class="modal-body check-edit-body">
                 <p>Bạn có chắc chắn muốn thay đổi thông tin của khách mua hàng này?</p>
                 <button type="button" class="btn btn-success check-edit-btn">Xác Nhận</button>
-                <button type="button" (click)="backCheckMenu()" class="btn btn-secondary edit-customer-btn2">Hủy
+                <button type="button" (click)="backCheckMenu()" class="global-button-cancel edit-customer-btn2">Hủy
                 </button>
               </div>
             </div>
@@ -236,8 +251,8 @@
 
 
         <!--        </form>-->
-        <button type="button" (click)="backMenu()" class="btn btn-secondary edit-customer-btn2">Hủy</button>
-        <button type="button" class="btn btn-primary edit-customer-btn3">Thêm ảnh đại diện</button>
+        <button type="button" (click)="backMenu()" class="global-button-cancel edit-customer-btn2">Hủy</button>
+        <button type="button" class="global-button edit-customer-btn3">Thêm ảnh đại diện</button>
       </div>
     </div>
   </div>
@@ -249,7 +264,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title modal-titles" id="deleteModalLabel">Sửa thông tin khách hàng</h5>
+        <h5 class="modal-title modal-titles" id="deleteModalLabel">Xóa thông tin khách hàng</h5>
         <button type="button" class="close " data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -259,31 +274,42 @@
         <img class="avatar" src="../../../../assets/photo/customer-avatar.png" alt="avatar">
         <!--        <img class="avatar" [src]="KHACHANG.Anh" alt="avatar">-->
 
-        <table>
-          <tr>
-            <th>Tên nhà phân phối</th>
-            <th><input type="text"></th>
-            <!--            <th><input formControlName="NHAPHANPHOI.Ten"></th>-->
-          </tr>
-          <tr>
-            <th>Địa chỉ</th>
-            <th><input type="text"></th>
-            <!--            <th><input formControlName="KHACHMUAHANG.DiaChi"></th>-->
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name0" placeholder="Tên nhà phân phối"/>
 
-          </tr>
-          <tr>
-            <th>Số điện thoại</th>
-            <th><input type="text"></th>
-            <!--            <th><input formControlName="KHACHMUAHANG.SDT"></th>-->
-          </tr>
-          <tr>
-            <th>Email</th>
-            <th><input type="text"></th>
-            <!--            <th><input formControlName="KHACHMUAHANG.Email"></th>-->
-          </tr>
-        </table>
+          <label class="global-content-popup-icon" for="name0"><i class="icon-user"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name1" placeholder="Địa chỉ"/>
+
+          <label class="global-content-popup-icon" for="name1"><i class="icon-map-marker"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name2" placeholder="Ngày sinh"/>
+
+          <label class="global-content-popup-icon" for="name2"><i class="icon-calendar"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name3" placeholder="Số điện thoại"/>
+
+          <label class="global-content-popup-icon" for="name3"><i class="icon-phone"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
+
+        <div class="customer-imput-outside">
+          <input class="global-content-popup-input customer-input" type="text" id="name4" placeholder="Email"/>
+
+          <label class="global-content-popup-icon" for="name4"><i class="icon-envelope-alt"></i></label>
+          <span class="global-content-popup-validate customer-validate">Validate </span>
+        </div>
         <!--          <input type="submit" value="Luu" [disabled]="studentForm.invalid">-->
-        <button type="button" class="btn btn-warning edit-customer-btn1"><a data-toggle="modal"
+        <button type="button" class="global-button edit-customer-btn1"><a data-toggle="modal"
                                                                             data-target="#deletecheckModal"
                                                                             (click)="deletecheckModel(customer)">Xóa</a>
         </button>
@@ -308,8 +334,8 @@
           </div>
         </div>
         <!--        </form>-->
-        <button type="button" (click)="backMenu()" class="btn btn-secondary edit-customer-btn2">Hủy</button>
-        <button type="button" class="btn btn-primary edit-customer-btn3">Thêm ảnh đại diện</button>
+        <button type="button" (click)="backMenu()" class="global-button-cancel edit-customer-btn2">Hủy</button>
+        <button type="button" class="global-button edit-customer-btn3">Thêm ảnh đại diện</button>
       </div>
     </div>
   </div>
