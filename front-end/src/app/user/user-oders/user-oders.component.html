@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
       integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<div class="container-oders">
 <div class="user-oder-container">
 <nav>
   <div class="nav nav-tabs font-weight-bold" id="nav-tab" role="tablist">
@@ -16,61 +17,78 @@
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
       <br>
-      <h3 class="title font-weight-bold">Danh sách đơn hàng</h3>
+      <h4 class="title font-weight-bold">Đơn hàng của tôi</h4>
 
       <a href=""><i class="fa fa-chevron-circle-left"></i>Về trang chủ</a>
       <br>
       <br>
-      <table class="table table-hover">
+      <table class="table">
         <thead>
         <tr>
           <th>Mã đơn hàng</th>
           <th>Ngày đặt hàng</th>
-          <td></td>
+          <th>Sản phẩm</th>
+          <th>Tổng tiền</th>
+          <th>Trạng thái đơn hàng</th>
+
         </tr>
         </thead>
 
         <tbody>
         <tr>
-<!--          <td><a [routerLink]="['/user-manage/user-oder',5]">MH-001</a></td>-->
-          <td>Bangalore</td>
-          <td><i class="fas fa-trash-alt" data-toggle="modal" data-target="#staticBackdrop"></i></td>
+          <td><a [routerLink]="['/user-manage/user-oder',5]">MH-001</a></td>
+          <td>20/5/2020</td>
+          <td>Bánh tình yêu</td>
+          <td>{{20000|currency}}</td>
+          <td>Đã thanh toán</td>
         </tr>
 
         <tr>
-          <td>Sachin</td>
-          <td>Mumbai</td>
-          <td><i class="fas fa-trash-alt"></i></td>
+          <td><a [routerLink]="['/user-manage/user-oder',5]">MH-001</a></td>
+          <td>20/5/2020</td>
+          <td>Bánh tình yêu</td>
+          <td>{{20000|currency}}</td>
+          <td>Đã thanh toán</td>
         </tr>
 
         <tr>
-          <td>Uma</td>
-          <td>Pune</td>
-          <td><i class="fas fa-trash-alt"></i></td>
+          <td><a [routerLink]="['/user-manage/user-oder',5]">MH-001</a></td>
+          <td>20/5/2020</td>
+          <td>Bánh tình yêu</td>
+          <td>{{20000|currency}}</td>
+          <td>Đã thanh toán</td>
         </tr>
 
         <tr>
-          <td>Uma</td>
-          <td>Pune</td>
-          <td><i class="fas fa-trash-alt"></i></td>
+          <td><a [routerLink]="['/user-manage/user-oder',5]">MH-001</a></td>
+          <td>20/5/2020</td>
+          <td>Bánh tình yêu</td>
+          <td>{{20000|currency}}</td>
+          <td>Đã thanh toán</td>
         </tr>
 
         <tr>
-          <td>Uma</td>
-          <td>Pune</td>
-          <td><i class="fas fa-trash-alt"></i></td>
+          <td><a [routerLink]="['/user-manage/user-oder',5]">MH-001</a></td>
+          <td>20/5/2020</td>
+          <td>Bánh tình yêu</td>
+          <td>{{20000|currency}}</td>
+          <td>Đã thanh toán</td>
         </tr>
 
         <tr>
-          <td>Uma</td>
-          <td>Pune</td>
-          <td><i class="fas fa-trash-alt"></i></td>
+          <td><a [routerLink]="['/user-manage/user-oder',5]">MH-001</a></td>
+          <td>20/5/2020</td>
+          <td>Bánh tình yêu</td>
+          <td>{{20000|currency}}</td>
+          <td>Đã thanh toán</td>
         </tr>
 
         <tr>
-          <td>Uma</td>
-          <td>Pune</td>
-          <td><i class="fas fa-trash-alt"></i></td>
+          <td><a [routerLink]="['/user-manage/user-oder',5]">MH-001</a></td>
+          <td>20/5/2020</td>
+          <td>Bánh tình yêu</td>
+          <td>{{20000|currency}}</td>
+          <td>Đã thanh toán</td>
         </tr>
         </tbody>
       </table>
@@ -199,25 +217,8 @@
     </div>
 
   </div>
-  <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Bạn có thực sự muốn xóa đơn hàng này</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Mã đơn hàng:
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary submitButton" data-dismiss="modal">Đóng</button>
-          <button type="button" class="btn btn-primary submitButton">Xóa đơn hàng</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
+
+</div>
 </div>
 </div>
