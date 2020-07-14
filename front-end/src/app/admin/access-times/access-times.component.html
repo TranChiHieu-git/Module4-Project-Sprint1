@@ -1,8 +1,20 @@
-<div class="container mt-5">
-  <div class="main-size count-custom">
+<div class="container-fluid mt-5 px-0 py-0">
+  <div class="row ml-5">
+<!--    <fusioncharts-->
+<!--      width="700"-->
+<!--      height="400"-->
+<!--      type="column2d"-->
+<!--      [dataSource]="dataSource">-->
+<!--    </fusioncharts>-->
 
-  </div>
-  <div class="row-cols-6 text-center">
-    Lượt truy cập
+
+    <fusioncharts
+      [width]="700"
+      [height]="400"
+      [type]="type"
+      [dataFormat]="dataFormat"
+      [dataSource]="dataSource">
+    </fusioncharts>
   </div>
 </div>
+
