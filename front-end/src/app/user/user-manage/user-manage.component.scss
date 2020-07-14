@@ -1,9 +1,11 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 .left-menu{
-  background-color:rgba(241, 242, 246,0.8);
+  background-color:rgb(236, 233, 228);
   //height: 100%;
   //border: white solid 1px;
   padding: 0;
+  border: rgb(201, 91, 61) solid 2px;
+
 
 }
 
@@ -31,27 +33,29 @@ i{
 .list-group-item{
   border: white solid 1px;
   background-color:transparent;
-
-
+color: rgb(146, 103, 96);
+  border-radius: 0;
 }
 .list-group-item:hover{
-  background-color: rgba(255, 218, 121,0.5);
+  background-color: rgb(235, 209, 174);
 
 }
-
+.list-group{
+  border-radius: 0;
+}
 .content{
   margin: 0;
   background-color:transparent;
 
+
 }
 .list-group-item.active{
-  background-color: rgba(255, 218, 121,1.0);
+  background-color: rgb(201, 91, 61);
   border: rgba(255, 165, 2,1.0);
 }
 .user-manage{
-  height: 100vh;
-  background-image: url("../../../assets/background/bakery-background-hand-drawn-cooking-bread-bakery-vector-23984254-xx.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
+ background-color: rgb(248, 247, 243);
+min-height: 100vh;
+
 }
 
