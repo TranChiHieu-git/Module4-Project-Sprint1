@@ -12,6 +12,14 @@
     <form (ngSubmit)="onSubmit()" [formGroup]="myForm">
       <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
            aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="d-flex justify-content-end">
+      <div class="add-data">
+        <a href="" data-toggle="modal" data-target="#largeModal">
+          <button type="button" class="btn- btn-primary">Thêm Mới</button>
+        </a>
+      </div>
+      <div class="modal fade pt-5" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal"
+           aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-title" id="modal-title">
             <h1>THÊM MỚI NHÀ PHÂN PHỐI</h1>
@@ -91,6 +99,20 @@
                             </button>
                           </div>
                         </div>
+            <form (ngSubmit)="onSubmit()" [formGroup]="distributorForm">
+              <div class="modal-header">
+                <h5 class="modal-title content-dialog" id="exampleModalLabel">Thêm nhà phân phối mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-4">
+                    <!--                  <img src="http://placehold.it/260x340" alt="" class="imgDialog">-->
+                    <!--                  <button type="button" class="btn btn-primary buttonThemAnh">Thêm ảnh</button>-->
+                    <div class="avatar-wrapper" style="margin-left: 90px; margin-top: 65px">
+                      <img class="profile-pic" src=""/>
+                      <div class="upload-button">
+                        <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
                       </div>
                     </div>
                   </div>
@@ -132,7 +154,6 @@
     </table>
   </div>
 </div>
-<!--//EDIT FORM-->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" id="btn-editForm"
         hidden>Large modal
 </button>
@@ -186,6 +207,7 @@
                       <label id="icon" for="name1"><i class="icon-user"></i></label>
                       <span>Validate </span>
                     </div>
+
                     <div class="item">
                       <input type="text" id="address" formControlName="address" placeholder="Địa chỉ"/>
                       <label id="icon" for="address"><i class="icon-map-marker"></i></label>

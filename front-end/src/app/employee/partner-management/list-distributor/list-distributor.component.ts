@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Distributor} from '../../../models/distributor';
 import {DistributorService} from '../../../services/distributor.service';
 import {Router} from '@angular/router';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-list-distributor',
@@ -20,6 +21,19 @@ export class ListDistributorComponent implements OnInit {
               private distributorService: DistributorService,
               private router: Router) {
     this.myForm = fb.group({
+      id: [''],
+      name: [''],
+      phone: [''],
+      email: [''],
+      address: [''],
+      fax: [''],
+      website: [''],
+      img: [''],
+      type: ['']
+    });
+  }
+  ngOnInit(): void {
+    this.distributorForm = this.fb.group({
       id: [''],
       name: [''],
       numberPhone: [''],
@@ -129,7 +143,7 @@ export class ListDistributorComponent implements OnInit {
     if (target.files && target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        // $('#avatar').attr('src', e.target.result);
+        $('#avatar').attr('src', e.target.result);
       };
       reader.readAsDataURL(target.files[0]);
     } else {
@@ -215,3 +229,83 @@ export class ListDistributorComponent implements OnInit {
   }
 }
 
+
+  // tslint:disable-next-line:typedef
+  chooseAll(item: HTMLInputElement) {
+    if ($('#box-1').prop('checked')) {
+      $('#box-2, #box-3').prop('checked', true);
+      this.distributorService.findByName('Tất cả').subscribe(
+        res => this.myForm.value.type = res,
+        error => console.log(error)
+      );
+    } else {
+      $('#box-2, #box-3').prop('checked', false);
+      this.myForm.value.type = '';
+    }
+  }
+
+  // tslint:disable-next-line:typedef
+  chooseOne(target: HTMLInputElement) {
+    if ($('#box-2').is(':checked') && $('#box-3').is(':checked')) {
+      $('#box-1').prop('checked', true);
+      this.distributorService.findByName('Tất cả').subscribe(
+        res => this.myForm.value.type = res,
+        error => console.log(error)
+      );
+    } else if ($('#box-2').is(':checked')) {
+      $('#box-1').prop('checked', false);
+      this.distributorService.findByName('Bánh').subscribe(
+        res => this.myForm.value.type = res,
+        error => console.log(error)
+      );
+    } else {
+      $('#box-1').prop('checked', false);
+      this.distributorService.findByName('Kẹo').subscribe(
+        res => this.myForm.value.type = res,
+        error => console.log(error)
+      );
+    }
+  }
+
+  // tslint:disable-next-line:typedef
+  openEditForm(id: number) {
+    this.distributorService.findById(id).subscribe(
+      res => {
+        this.myForm.patchValue(res);
+        if (this.myForm.value.img !== '') {
+          this.src = this.myForm.value.img;
+        }
+        switch (this.myForm.value.type.name) {
+          case 'Tất cả' : {
+            $('#box-2, #box-3,#box-1').prop('checked', true);
+            break;
+          }
+          case 'Bánh': {
+            $('#box-2').prop('checked', true);
+            break;
+          }
+          case 'Kẹo' : {
+            $('#box-3').prop('checked', true);
+            break;
+          }
+        }
+      },
+      error => console.log(error)
+    );
+    $('#btn-editForm').click();
+
+  }
+
+  myDistributor: Distributor;
+
+  // tslint:disable-next-line:typedef
+  openDeleteForm(id: number) {
+    $('#deleteForm').click();
+    this.distributorService.findById(id).subscribe(
+      res => {
+        this.myDistributor = res;
+      },
+      error => console.log(error)
+    );
+  }
+}

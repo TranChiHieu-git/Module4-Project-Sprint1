@@ -120,7 +120,7 @@ h1 {
   width: 48%;
   float: right;
   height: 40px;
-}
+
 img {
   max-width: 185.53px;
   max-height: 185.83px;
@@ -178,7 +178,6 @@ span{
 .modal-body{
   padding: 0 16px 16px 16px;
 }
-//
 .checkbox {
   display: flex;
   flex-wrap: wrap;
@@ -254,11 +253,11 @@ input[type="checkbox"]:checked + label:before {
 }
 .checkItem *{
   float: left;
-}
+  }
 i:hover{
   cursor: pointer;
 }
-//DELETE CSS
+
 .myButton{
   margin:25px 10% 30px 10%;
   width: 30%;

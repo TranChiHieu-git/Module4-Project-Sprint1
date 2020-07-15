@@ -26,3 +26,8 @@ export class TypeOfDistributor {
   id: number;
   name: string;
 }
+export class TypeOfDistributor {
+  id: number;
+  name: string;
+
+}
