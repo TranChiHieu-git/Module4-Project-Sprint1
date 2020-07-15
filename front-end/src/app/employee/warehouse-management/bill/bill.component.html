@@ -1,0 +1,9 @@
+<div class="container-fluid">
+  <app-search-bill (groupFilters)="filters = $event"
+                   (autoSearch)="searchText = $event"></app-search-bill>
+
+  <br/>
+
+  <app-list-bill [groupFilters]="filters"
+                 [searchByKeyword]="searchText"></app-list-bill>
+</div>
