@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 const data = {
   chart: {
@@ -126,7 +126,6 @@ export class AccessTimesComponent implements OnInit {
   type = 'msline';
   dataFormat = 'json';
   dataSource = data;
-
   // dataSource: Object;
   constructor() {
     // const chartData = [
@@ -185,5 +184,6 @@ export class AccessTimesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 }
