@@ -4,18 +4,28 @@ import {Observable} from 'rxjs';
 import {Account} from '../models/account';
 import {Employee} from '../employee/employee';
 import {Employees} from '../models/employees';
+import {Role} from '../models/role';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
   API_URL = 'http://localhost:8080/account';
+  API_ROLE_URL = 'http://localhost:8080/role';
 
   constructor(private httpClient: HttpClient) {
   }
 
   findAll(): Observable<Account[]> {
     return this.httpClient.get<Account[]>(this.API_URL);
+  }
+
+  findAllRole(): Observable<Role[]> {
+    return this.httpClient.get<Role[]>(this.API_ROLE_URL);
+  }
+
+  findRoleById(roleId: number): Observable<Role> {
+    return this.httpClient.get<Role>(this.API_ROLE_URL + '/' + roleId);
   }
 
   findByInfoId(accountId: number): Observable<Employees> {
@@ -31,10 +41,11 @@ export class AdminService {
   }
 
   deleteById(id: number): Observable<void> {
-    return this.httpClient.delete<void>(this.API_URL + '/' + id);
+    // @ts-ignore
+    return this.httpClient.patch<void>(this.API_URL + '/delete/' + id);
   }
 
   edit(account: Account): Observable<Account> {
-    return this.httpClient.patch<Account>(this.API_URL + '/' + account.accountId, account);
+    return this.httpClient.put<Account>(this.API_URL + '/update/' + account.accountId, account);
   }
 }
