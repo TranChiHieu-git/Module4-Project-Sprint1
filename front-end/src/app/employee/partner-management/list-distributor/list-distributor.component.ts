@@ -11,9 +11,11 @@ import * as $ from 'jquery';
   styleUrls: ['./list-distributor.component.scss']
 })
 export class ListDistributorComponent implements OnInit {
+
   constructor(private fb: FormBuilder,
               private distributorService: DistributorService,
               private router: Router) {
+
     this.myForm = fb.group({
       id: [''],
       name: [''],
@@ -25,7 +27,9 @@ export class ListDistributorComponent implements OnInit {
       img: [''],
       type: ['']
     });
+
   }
+
   distributorForm: FormGroup;
   distributorList: Distributor[];
   // Thach
@@ -34,20 +38,16 @@ export class ListDistributorComponent implements OnInit {
   src = 'https://worklink.vn/wp-content/uploads/2018/07/no-logo.png';
 
   myDistributor: Distributor;
+
   ngOnInit(): void {
     this.distributorForm = this.fb.group({
       id: [''],
       name: [''],
+      address: [''],
       numberPhone: [''],
       email: [''],
-      address: [''],
-      fax: [''],
-      website: [''],
-      img: [''],
-      typeOfDistributor: ['']
+      img: ['']
     });
-  }
-  ngOnInit(): void {
     this.distributorService.findAll().subscribe(
       next => this.distributorList = next,
       error => {
@@ -55,6 +55,7 @@ export class ListDistributorComponent implements OnInit {
         console.log(error);
       }
     );
+
     // tslint:disable-next-line:only-arrow-functions no-shadowed-variable typedef
     (function($) {
       // tslint:disable-next-line:only-arrow-functions typedef
@@ -63,14 +64,17 @@ export class ListDistributorComponent implements OnInit {
         const readURL = function(input) {
           if (input.files && input.files[0]) {
             const reader = new FileReader();
+
             // tslint:disable-next-line:only-arrow-functions typedef
             reader.onload = function(e) {
               // @ts-ignore
               $('.profile-pic').attr('src', e.target.result);
             };
+
             reader.readAsDataURL(input.files[0]);
           }
         };
+
         // tslint:disable-next-line:typedef
         $('.file-upload').on('change', function() {
           readURL(this);
@@ -82,6 +86,8 @@ export class ListDistributorComponent implements OnInit {
         });
       });
     })(jQuery);
+
+
     // Thach
     $('.icon-upload-alt').css('opacity', '-1');
     // tslint:disable-next-line:typedef
@@ -90,37 +96,32 @@ export class ListDistributorComponent implements OnInit {
       $('#modal-container').removeAttr('class').addClass(buttonId);
       $('body').addClass('modal-active');
     });
+
     // tslint:disable-next-line:typedef
     $('#modal-container').click(function() {
       $(this).addClass('out');
       $('body').removeClass('modal-active');
     });
+
   }
+
   // tslint:disable-next-line:typedef
   onSubmit() {
-    if (this.myForm.valid) {
-      console.log(this.myForm.value);
-      this.distributorService.create(this.myForm.value).subscribe(
+    if (this.distributorForm.valid) {
+      this.distributorService.create(this.distributorForm.value).subscribe(
         next => {
-          console.log(next);
+          if (next && next.id) {
             alert('Bạn đã thêm mới thành công');
-            // @ts-ignore
-          this.myForm.reset();
-          this.distributorService.findAll().subscribe(
-            next => this.distributorList = next,
-            error => {
-              this.distributorList = [];
-            }
-          );
-          this.router.navigate(["employee/partner-management/list-distributor"]);
-          $('#deleteFormCreate').click();
+            window.location.reload();
+          }
         }
       );
-
     } else {
       alert('Invalid');
     }
   }
+
+
   // Thach Function
   // tslint:disable-next-line:typedef
   updateDistributor() {
@@ -130,19 +131,25 @@ export class ListDistributorComponent implements OnInit {
     );
     $('#modal').hide();
   }
+
 // FUNTION PHU
   // tslint:disable-next-line:typedef
   hoverUploadPic() {
     $('.icon-upload-alt').css('opacity', '0.8');
   }
+
+
   // tslint:disable-next-line:typedef
   leaveUploadPic() {
     $('.icon-upload-alt').css('opacity', '-1');
   }
+
   // tslint:disable-next-line:typedef
   selectAvatar() {
     $('#myAvatar').click();
   }
+
+
   // tslint:disable-next-line:typedef
   readURL(target: any) {
     if (target.files && target.files[0]) {
@@ -155,6 +162,8 @@ export class ListDistributorComponent implements OnInit {
     } else {
     }
   }
+
+
   // tslint:disable-next-line:typedef
   chooseAll(item: HTMLInputElement) {
     if ($('#box-1').prop('checked')) {
@@ -220,6 +229,7 @@ export class ListDistributorComponent implements OnInit {
     $('#btn-editForm').click();
 
   }
+
   // tslint:disable-next-line:typedef
   openDeleteForm(id: number) {
     $('#deleteForm').click();
