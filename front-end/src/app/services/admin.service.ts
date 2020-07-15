@@ -2,25 +2,28 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Account} from '../models/account';
+import {Employee} from '../employee/employee';
+import {Employees} from '../models/employees';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-  API_URL = 'http://localhost:3000/account';
-  accountList: Observable<Account[]>;
+  API_URL = 'http://localhost:8080/account';
 
   constructor(private httpClient: HttpClient) {
   }
 
   findAll(): Observable<Account[]> {
-    this.accountList = this.httpClient.get<Account[]>(this.API_URL);
-    return this.accountList;
+    return this.httpClient.get<Account[]>(this.API_URL);
   }
 
-  findByUser(userName: string): Observable<Account[]> {
-    this.accountList = this.httpClient.get<Account[]>(this.API_URL + '?user_name=' + userName);
-    return this.accountList;
+  findByInfoId(accountId: number): Observable<Employees> {
+    return this.httpClient.get<Employees>(this.API_URL + '/employee/' + accountId);
+  }
+
+  findAccountById(accountId: number): Observable<Account> {
+    return this.httpClient.get<Account>(this.API_URL + '/' + accountId);
   }
 
   create(account: Account): Observable<Account> {
@@ -31,7 +34,7 @@ export class AdminService {
     return this.httpClient.delete<void>(this.API_URL + '/' + id);
   }
 
-  edit(account: Account): Observable<Account>{
-    return this.httpClient.patch<Account>(this.API_URL + '/' + account.id, account)
+  edit(account: Account): Observable<Account> {
+    return this.httpClient.patch<Account>(this.API_URL + '/' + account.accountId, account);
   }
 }

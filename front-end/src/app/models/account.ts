@@ -1,5 +1,8 @@
+import {Role} from './role';
 export class Account {
-  id: number;
-  user_name: string;
-  password: string;
+  accountId: number;
+  accountName: string;
+  accountPassword: string;
+  deleteFlag: boolean;
+  role: Role;
 }

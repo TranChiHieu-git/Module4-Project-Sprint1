@@ -31,53 +31,26 @@ input[type=text]:focus {
   color: #aaa;
 }
 
-//
-//.border-top-black-custom {
-//  border-top: 1px solid black;
-//}
-//
-//.border-black-custom {
-//  border: 1px solid black;
-//}
-//
-//.main-size {
-//  height: 90vh
-//}
-//
-//.logo-custom {
-//  width: 50px;
-//  height: auto;
-//}
-//
-//.header-color {
-//  background-color: #204051;
-//}
-//
-//.sidebar-color {
-//  background-color: #84a9ac;
-//}
-//.content-color {
-//  background-color: #e4e3e3;
-//}
-//.btn-outline-custom{background-color: #84a9ac;color: white;border-color: #84a9ac!important;text-align: left !important;}
-//.btn-outline-custom:hover{color:white;background-color:#204051}
-//.btn-outline-custom.disabled,
-//.btn-outline-custom:disabled{color:#28a745;background-color:transparent}
-//.space-router{
-//  height: 8vh;
-//}
 .logo {
+  box-shadow: 1px 0px 6px 6px #fff;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 6px;
   width: 143px;
   height: auto;
+  cursor: pointer;
 }
 
 .navbar {
-  background-color: #204051;
+  background-color: rgb(238, 159, 31) !important;
   height: 10vh;
 }
 
 .navbar-brand, .nav-link {
-  color: white !important;
+  z-index: 1;
+  color: #581008 !important;
+  font-weight: 500;
+  text-decoration: none;
 }
 
 .outborder {
@@ -85,37 +58,85 @@ input[type=text]:focus {
 }
 
 .sidebarChose {
-  background-color: #84a9ac;
-  color: white !important;
-  padding-left: 20px;
+  color: #581008 !important;
+  padding-left: 30px;
 }
 
 .sidebarChose:hover {
-  background-color: #204051;
+  background-color: #f18502;
   color: white !important;
 }
 
-.listQL {
-  border-bottom: 1px solid darkgray;
-  border-top: 1px solid darkgray;
-}
 
 .logout {
-  color: white !important;
+  color: #581008 !important;
   text-decoration: none;
+  cursor: pointer;
 }
 
-.leftshape {
-  top: 10vh;
+.container-fluid {
+  width: 100vw;
+  height: 100vh;
+}
+
+.body {
+  width: 100vw;
   height: 90vh;
-  width: 36vh;
-  background-color: #84a9ac;
+  background-color: rgba(238, 159, 31, 0.5) !important;
+  background-image: url(../../assets/background/bg-bakery-4.png);
+  background-position-y: 81em;
+  background-position-x: -38px;
+  background-size: 467px;
 }
 
-.rightshape {
-  height: 100%;
-  width: 200vh;
-  position: absolute;
-  right: 0px;
-  background-color: white;
+.head {
+  width: 100vw;
+  height: 10vh;
 }
+
+.sidebar {
+  width: 20vw;
+  height: 35vh;
+  box-shadow: 5px 8px 20px 0px rgba(158, 158, 158, 1);
+  border-radius: 10px;
+  top: 95px;
+  left: 9px;
+  content: "";
+  bottom: -34px;
+  background-image: url(../../assets/background/bg-bakery-2.png);
+  background-repeat: no-repeat;
+  background-color: #FCBC53;
+}
+
+.content {
+  width: 72vw;
+  height: 84.3vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-image: url(../../assets/background/bg-bakery-3.png);
+  background-position-y: 81em;
+  background-position-x: -38px;
+  background-position: bottom right;
+  background-size: 467px;
+}
+
+.content::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+

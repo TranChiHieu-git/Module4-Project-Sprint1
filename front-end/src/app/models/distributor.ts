@@ -31,3 +31,6 @@ export class TypeOfDistributor {
   name: string;
 
 }
+
+export class TypeOfDistributor {
+}

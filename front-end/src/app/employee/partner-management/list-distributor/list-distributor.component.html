@@ -154,6 +154,7 @@
     </table>
   </div>
 </div>
+<!--//EDIT FORM-->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" id="btn-editForm"
         hidden>Large modal
 </button>
@@ -200,6 +201,10 @@
                         <label for="box-3">Kẹo</label>
                       </div>
                     </div>
+                    <!--                    <div class="item">-->
+                    <!--                      <label id="icon2" style="margin-top: 30px"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></label>-->
+                    <!--                      <label style="margin-top: 30px; line-height: 40px; padding-left: 10px">Trường không bắt buộc</label>-->
+                    <!--                    </div>-->
                   </div>
                   <div class="col-xl-8">
                     <div class="item" style="margin-top: 20px" data-tip="Tên nhà phân phối">
@@ -257,19 +262,19 @@
 <!--DELETE FORM-->
 <button id="deleteForm" type="button" class="btn btn-primary" data-toggle="modal" data-target=".delete" hidden>Large modal
 </button>
-<div class="modal fade bd-example-modal-sm delete" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-     aria-hidden="true" data-backdrop="static" data-keyboard="true">
-  <div class="modal-dialog" >
-    <div class="modal-title" id="modal-title2">
-      <h1>XÓA NHÀ PHÂN PHỐI</h1>
-    </div>
-    <div class="modal-content">
-      <h5 class="deleteTitle">Bạn có muốn xóa nhà phân phối?</h5>
-      <h5 *ngIf="myDistributor" class="deleteTitle distributorName">{{myDistributor.name}}</h5>
-      <div>
-        <button class="btn btn-dark myButton" data-dismiss="modal">HỦY</button>
-        <button class="btn btn-danger myButton" data-dismiss="modal">XÓA</button>
+  <div class="modal fade bd-example-modal-sm delete" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+       aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog" >
+      <div class="modal-title" id="modal-title2">
+        <h1>XÓA NHÀ PHÂN PHỐI</h1>
+      </div>
+      <div class="modal-content">
+        <h5 class="deleteTitle">Bạn có muốn xóa nhà phân phối?</h5>
+        <h5 class="deleteTitle distributorName">{{myDistributor.name}}</h5>
+        <div>
+          <button class="btn btn-dark myButton" data-dismiss="modal">HỦY</button>
+          <button class="btn btn-danger myButton" data-dismiss="modal">XÓA</button>
+        </div>
       </div>
     </div>
   </div>
-</div>

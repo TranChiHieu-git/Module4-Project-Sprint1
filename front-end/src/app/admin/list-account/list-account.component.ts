@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {AdminService} from '../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Account} from '../../models/account';
+import {Employees} from '../../models/employees';
 
 @Component({
   selector: 'app-list-account',
@@ -15,7 +16,8 @@ export class ListAccountComponent implements OnInit {
   accountForm: FormGroup;
   userName: string;
   p = 1;
-
+  infoAccountById: Employees = new Employees();
+  AccountById: Account = new Account();
   constructor(private adminService: AdminService,
               private route: Router,
               private formBuilder: FormBuilder,
@@ -23,20 +25,10 @@ export class ListAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(param => {
-      this.userName = param.get('userName');
-    });
-    if (this.userName === null) {
-      this.adminService.findAll().subscribe(
-        next => this.accountList = next,
-        error => console.log(error)
-      );
-    } else {
-      this.adminService.findByUser(this.userName).subscribe(
-        next => this.accountList = next,
-        error => console.log(error)
-      );
-    }
+    this.adminService.findAll().subscribe(
+      next => this.accountList = next,
+      error => console.log(error)
+    );
     this.accountForm = this.formBuilder.group({
       id: [''],
       user_name: [''],
@@ -45,7 +37,18 @@ export class ListAccountComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  info() {
+  info(id) {
+    this.adminService.findByInfoId(id).subscribe(next => {
+      this.infoAccountById = next;
+    }, error => {
+      console.log(error);
+    });
+    this.adminService.findAccountById(id).subscribe(next => {
+      this.AccountById = next;
+    }, error => {
+      console.log(error);
+    });
+
     $('#infor').show();
     // tslint:disable-next-line:only-arrow-functions typedef
     $('.close').click(function() {
@@ -83,6 +86,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
+  // tslint:disable-next-line:typedef
   create() {
     this.adminService.create(this.accountForm.value).subscribe(
       () => window.location.reload(),
