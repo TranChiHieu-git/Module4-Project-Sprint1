@@ -21,7 +21,6 @@ export class ListAccountComponent implements OnInit {
   infoAccountById: Employees = new Employees();
   AccountById: Account = new Account();
   editResuilt: Account;
-
   constructor(private adminService: AdminService,
               private route: Router,
               private formBuilder: FormBuilder,
