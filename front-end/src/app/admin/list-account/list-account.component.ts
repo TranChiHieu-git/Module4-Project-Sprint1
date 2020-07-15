@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AdminService} from '../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Account} from '../../models/account';
 import {Employees} from '../../models/employees';
+import {Role} from '../../models/role';
 
 @Component({
   selector: 'app-list-account',
@@ -13,11 +14,13 @@ import {Employees} from '../../models/employees';
 })
 export class ListAccountComponent implements OnInit {
   accountList: Account[];
+  roleList: Role[];
   accountForm: FormGroup;
-  userName: string;
+  editAccountForm: FormGroup;
   p = 1;
   infoAccountById: Employees = new Employees();
   AccountById: Account = new Account();
+  editResuilt: Account;
   constructor(private adminService: AdminService,
               private route: Router,
               private formBuilder: FormBuilder,
@@ -33,6 +36,13 @@ export class ListAccountComponent implements OnInit {
       id: [''],
       user_name: [''],
       password: ['']
+    });
+    this.editAccountForm = this.formBuilder.group({
+      accountId: ['', [Validators.required]],
+      accountName: ['', [Validators.required]],
+      accountPassword: ['', [Validators.required]],
+      deleteFlag: ['', [Validators.required]],
+      role: ['', [Validators.required]]
     });
   }
 
@@ -54,14 +64,31 @@ export class ListAccountComponent implements OnInit {
     $('.close').click(function() {
       $('#infor').hide();
     });
-    // tslint:disable-next-line:only-arrow-functions typedef
-    $('.destroy').click(function() {
-      $('#infor').hide();
-    });
   }
 
   // tslint:disable-next-line:typedef
-  edit() {
+  edit(id) {
+    this.adminService.findAccountById(id).subscribe(next => {
+      this.editAccountForm.patchValue({
+        accountId: next.accountId,
+        accountName: next.accountName,
+        accountPassword: next.accountPassword,
+        deleteFlag: next.deleteFlag,
+        role: next.role.roleId
+      });
+    }, error => {
+      console.log(error);
+    });
+    this.adminService.findByInfoId(id).subscribe(next => {
+      this.infoAccountById = next;
+    }, error => {
+      console.log(error);
+    });
+    this.adminService.findAllRole().subscribe(next => {
+      this.roleList = next;
+    }, error => {
+      console.log(error);
+    });
     $('#edit').show();
     // tslint:disable-next-line:only-arrow-functions typedef
     $('.close').click(function() {
@@ -74,7 +101,12 @@ export class ListAccountComponent implements OnInit {
   }
 
 // tslint:disable-next-line:typedef
-  delete() {
+  delete(id) {
+    this.adminService.findAccountById(id).subscribe(next => {
+      this.AccountById = next;
+    }, error => {
+      console.log(error);
+    });
     $('#delete').show();
     // tslint:disable-next-line:only-arrow-functions typedef
     $('.close').click(function() {
@@ -84,6 +116,7 @@ export class ListAccountComponent implements OnInit {
     $('.destroy').click(function() {
       $('#delete').hide();
     });
+    // tslint:disable-next-line:only-arrow-functions typedef
   }
 
   // tslint:disable-next-line:typedef
@@ -92,5 +125,33 @@ export class ListAccountComponent implements OnInit {
       () => window.location.reload(),
       error => console.log(error)
     );
+  }
+
+  // tslint:disable-next-line:typedef
+  deleted(accountId) {
+    this.adminService.deleteById(accountId).subscribe(next => {
+      window.location.reload();
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  // tslint:disable-next-line:typedef
+  onSubmit() {
+    this.editResuilt = new Account();
+    this.editResuilt.accountId = this.editAccountForm.value.accountId;
+    this.editResuilt.accountName = this.editAccountForm.value.accountName;
+    this.editResuilt.accountPassword = this.editAccountForm.value.accountPassword;
+    this.editResuilt.deleteFlag = this.editAccountForm.value.deleteFlag;
+    this.adminService.findRoleById(this.editAccountForm.value.role).subscribe(next => {
+      this.editResuilt.role = next;
+      this.adminService.edit(this.editResuilt).subscribe(next2 => {
+        window.location.reload();
+      }, error => {
+        console.log(error);
+      });
+    }, error => {
+      console.log(error);
+    });
   }
 }
