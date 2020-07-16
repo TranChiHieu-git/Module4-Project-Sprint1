@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       {path: 'list-account', component: ListAccountComponent},
       {path: 'access-times', component: AccessTimesComponent},
-      {path: 'list-account/:userName', component: ListAccountComponent},
+      {path: 'list-account/:accountName', component: ListAccountComponent},
     ]
   },
 ];

@@ -29,7 +29,7 @@ export class CustomerManagementComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private customerService: CustomerService) {
     this.customerService.getAllCustomer().subscribe(data => {
-        this.customers = data.content;
+        this.customers = data;
       }, error => {
         console.log(error);
       }, () => {

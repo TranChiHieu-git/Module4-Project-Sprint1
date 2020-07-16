@@ -11,12 +11,12 @@
         </tr>
         </thead>
         <tbody class="border border-dark"
-               *ngFor="let account of accountList| paginate: { itemsPerPage: 6, currentPage: p };">
+               *ngFor="let account of accountList">
         <tr>
           <th scope="row">{{account.accountId}}</th>
           <td class="details" (click)="info(account.accountId)" data-toggle="modal"
               data-target="#infor">{{account.accountName}}</td>
-          <td>{{account.accountPassword}}</td>
+          <td><input disabled type="password" class="pw" width="150px" value="{{account.accountPassword}}"></td>
           <td>
             <button class="border-0 mr-5 bg-transparent fas fa-pencil-alt"
                     (click)="edit(account.accountId)" data-toggle="modal" data-target="#edit"></button>
@@ -26,59 +26,116 @@
         </tr>
         </tbody>
       </table>
-      <pagination-controls class="float-right" (pageChange)="p = $event"></pagination-controls>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination float-right mr-5">
+          <!--          <li *ngIf="pageClicked>0" class="page-item" (click)="onFirst()"><a class="page-link">First</a></li>-->
+          <li class="page-item" (click)="onPrevious()" [ngClass]="pageClicked==0?'disabled':''">
+            <a class="page-link">Previous</a>
+          </li>
+          <li *ngIf="pageClicked != 0" class="page-item" (click)="getAllSubmit(pages[pageClicked-1])">
+            <a class="page-link">{{pageClicked}}</a>
+          </li>
+          <li [ngClass]="(pageClicked == pages[pageClicked]) ? 'active' : ''" class="page-item"
+              (click)="getAllSubmit(pages[pageClicked])">
+            <a class="page-link">{{pageClicked + 1}}</a>
+          </li>
+          <li *ngIf="pageClicked < pages.length -1" class="page-item" (click)="getAllSubmit(pages[pageClicked+1])">
+            <a class="page-link">{{pageClicked + 2}}</a>
+          </li>
+          <li *ngIf="pageClicked < pages.length -3" class="page-item">
+            <a class="page-link">...</a>
+          </li>
+          <li *ngIf="pageClicked < pages.length-2" class="page-item" (click)="onLast()">
+            <a class="page-link">{{pages[pages.length - 1] + 1}}</a>
+          </li>
+          <li class="page-item" (click)="onNext()" [ngClass]="pageClicked==totalPages-1?'disabled':''">
+            <a class="page-link">Next</a>
+          </li>
+          <!--          <li class="page-item" (click)="onLast()"><a class="page-link">Last</a></li>-->
+        </ul>
+      </nav>
     </div>
   </div>
 
   <!--  THêm mới-->
   <div class="row">
     <div class="col-md-12">
-      <button type="button" class="float-right btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+      <button type="button" class="float-right btn btn-primary" data-toggle="modal" data-target="#create">
         Thêm mới
       </button>
-      <form (ngSubmit)="create()" [formGroup]="accountForm">
-        <div class="pt-5 modal fade bd-example-modal-lg" data-backdrop="static" tabindex="-1" role="dialog"
-             aria-labelledby="myLargeModalLabel"
-             aria-hidden="true">
-          <div class="modal-dialog modal-lg pt-5">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Thêm tài khoản mới</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                  <label>Tên tài khoản: </label>
-                  <input formControlName="user_name" type="text" class="form-control" name="email">
-
+      <div class="modal" tabindex="-1" role="dialog" id="create">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h3 class="modal-title">Tạo mới tài khoản</h3>
+              <br>
+              <form [formGroup]="accountForm" (ngSubmit)="create()">
+                <table class="w-100">
+                  <input type="text" class="form-control" formControlName="accountId" aria-label="Username"
+                         aria-describedby="basic-addon1" disabled hidden>
+                  <input type="text" class="form-control" formControlName="deleteFlag"
+                         aria-label="Username" aria-describedby="basic-addon1" disabled
+                         hidden>
+                  <tr>Tên Tài Khoản:</tr>
+                  <tr>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text fas fa-vcard prefix"></span>
+                      </div>
+                      <input type="text" class="form-control" formControlName="accountName" aria-label="Username"
+                             aria-describedby="basic-addon1">
+                    </div>
+                  </tr>
+                  <tr>Mật Khẩu:</tr>
+                  <tr>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text fas fa-id-card prefix"></span>
+                      </div>
+                      <input type="password" class="form-control" formControlName="accountPassword"
+                             aria-label="Username"
+                             aria-describedby="basic-addon1">
+                    </div>
+                  </tr>
+                  <tr>Loại Tài Khoản:</tr>
+                  <tr>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text fa fa-list-ol prefix"></span>
+                      </div>
+                      <select class="browser-default custom-select form-control" formControlName="role">
+                        <ng-container *ngFor="let role of roleList">
+                          <option value="{{role.roleId}}">{{role.roleName}}</option>
+                        </ng-container>
+                      </select>
+                    </div>
+                  </tr>
+                  <!--                  <tr *ngIf="employee.value === '2'">Mã Nhân viên:-->
+                  <!--                    <div class="input-group mb-3">-->
+                  <!--                      <div class="input-group-prepend">-->
+                  <!--                        <span class="input-group-text fas fa-user prefix"></span>-->
+                  <!--                      </div>-->
+                  <!--                      <select class="browser-default custom-select form-control" formControlName="role">-->
+                  <!--                        <ng-container *ngFor="let role of roleList">-->
+                  <!--                          <option value="{{role.roleId}}">{{role.roleName}}</option>-->
+                  <!--                        </ng-container>-->
+                  <!--                      </select>-->
+                  <!--                    </div>-->
+                  <!--                  </tr>-->
+                </table>
+                <br>
+                <div class="container-fluid">
+                  <button id="close" class="btn btn-secondary float-right destroy" data-dismiss="modal">Hủy</button>
+                  <button class="btn btn-primary mr-3 float-right" type="submit">Thêm mới</button>
                 </div>
-                <div class="form-group">
-                  <label>Mật khẩu: </label>
-                  <input formControlName="password" type="password" class="form-control" id="pwd" name="pswd">
-                </div>
-                <div class="form-group">
-                  <label class="mt-1 float-left">Mã nhân viên:
-                    <select class="w-100 m-0 p-0 pl-3 custom-select">
-                      <option selected>Open this select menu</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                    <button class="btn btn-primary">Kiểm tra thông tin nhân viên</button>
-                  </label>
-
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Thêm mới</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-              </div>
+              </form>
             </div>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>
@@ -235,8 +292,8 @@
                   <span class="input-group-text fa fa-list-ol prefix"></span>
                 </div>
                 <select class="browser-default custom-select form-control" formControlName="role">
-                  <ng-container *ngFor="let role of roleList">
-                    <option value="{{role.roleId}}">{{role.roleName}}</option>
+                  <ng-container *ngFor="let roles of roleList">
+                    <option value="{{roles.roleId}}">{{roles.roleName}}</option>
                   </ng-container>
                 </select>
               </div>
@@ -248,7 +305,7 @@
                   <span class="input-group-text fas fa-user prefix"></span>
                 </div>
                 <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-                       value="{{infoAccountById.id}}">
+                       value="{{infoAccountById.name}}">
               </div>
             </tr>
           </table>
