@@ -61,7 +61,7 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
       appId: '1: 182695859067: web: b15282dd2b619582a323de',
       measurementId: 'G-H8Y4QN69YE'
     }),
-    AngularFireStorageModule
+    AngularFireStorageModule,
     NgxPaginationModule,
     MatPaginatorModule,
   ],
