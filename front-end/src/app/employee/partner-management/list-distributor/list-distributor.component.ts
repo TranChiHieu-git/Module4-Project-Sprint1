@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Distributor} from '../../../models/distributor';
 import {DistributorService} from '../../../services/distributor.service';
 import {Router} from '@angular/router';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-list-distributor',
@@ -132,8 +133,8 @@ export class ListDistributorComponent implements OnInit {
       this.distributorService.create(this.myForm.value).subscribe(
         next => {
           console.log(next);
-            alert('Bạn đã thêm mới thành công');
-            // @ts-ignore
+          alert('Bạn đã thêm mới thành công');
+          // @ts-ignore
           this.myForm.reset();
           this.getAllDistributor();
           this.router.navigate(["employee/partner-management/list-distributor"]);
@@ -300,8 +301,6 @@ export class ListDistributorComponent implements OnInit {
       },
       error => console.log(error)
     );
-    console.log('helllo');
     $('#btn-detailForm').click();
   }
 }
-

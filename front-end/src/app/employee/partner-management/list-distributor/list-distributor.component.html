@@ -131,12 +131,14 @@
           <td>{{distributor.address}}</td>
           <td>{{distributor.numberPhone}}</td>
           <td>{{distributor.email}}</td>
-          <td><i class="fas fa-pen" (click)="openEditForm(distributor.id)"></i ></td>
           <td>
-            <i (click)="openDeleteForm(distributor.id)" class="fas fa-trash"></i>
+             <i class="fas fa-pen" (click)="openEditForm(distributor.id)"></i>
           </td>
         <td>
-          <i (click)="openDetailForm(distributor.id)" class="fas fa-trademark"></i>
+         <i (click)="openDeleteForm(distributor.id)" class="fas fa-trash"></i>
+        </td>
+        <td>
+          <i (click)="openDetailForm(distributor.id)" class="fa fa-info"></i>
         </td>
         <tr>
       </ng-container>
@@ -205,8 +207,8 @@
                       <img id="avatar" src={{src}}>
                       <input formControlName="id" readonly hidden>
                       <input  readonly class="file-upload-input" type='file'
-                             (change)="readURL($event.target);" accept="image/*"
-                             hidden id="myAvatar"/>
+                              (change)="readURL($event.target);" accept="image/*"
+                              hidden id="myAvatar"/>
                       <i class="img"
                          style="font-size: 100px; color: blue; position: absolute; left: 60px; top:60px ; opacity: 0.1"
                          class="icon-upload-alt"></i>

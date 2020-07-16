@@ -9,7 +9,9 @@ export class Distributor {
   website: string;
   typeOfDistributor: TypeOfDistributor;
   deleted: boolean;
-  constructor(id: number, name: string, address: string, numberPhone: string, email: string, img: string, fax: string, website: string, typeOfDistributor: TypeOfDistributor, deleted: boolean) {
+
+  constructor(id: number, name: string, address: string, numberPhone: string, email: string, img: string,
+              fax: string, website: string, typeOfDistributor: TypeOfDistributor, deleted: boolean) {
     this.id = id;
     this.name = name;
     this.address = address;
@@ -22,6 +24,7 @@ export class Distributor {
     this.deleted = deleted;
   }
 }
+
 export class TypeOfDistributor {
   id: number;
   name: string;
