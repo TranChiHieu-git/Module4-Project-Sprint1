@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnChanges, OnInit} from '@angular/core';
 import {CustomerService} from '../../../services/customer.service';
 import {Customer} from '../../../models/customer';
-import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
 
 declare var $: any;
 
@@ -29,7 +28,7 @@ export class CustomerManagementComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private customerService: CustomerService) {
     this.customerService.getAllCustomer().subscribe(data => {
-        this.customers = data;
+        this.customers = data.content;
       }, error => {
         console.log(error);
       }, () => {
