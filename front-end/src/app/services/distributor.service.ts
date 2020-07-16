@@ -37,4 +37,7 @@ export class DistributorService {
   save(item: Distributor): Observable<any> {
     return this.httpClient.post<any>(this.MY_API_URL + '/distributor', item);
   }
+  getAllDistributor(currentPage,size,search):Observable<any>{
+    return this.httpClient.get(this.MY_API_URL+ '/distributor/list'+ '?page=' +currentPage + '&size='+size+ '&search=' +search)
+  }
 }

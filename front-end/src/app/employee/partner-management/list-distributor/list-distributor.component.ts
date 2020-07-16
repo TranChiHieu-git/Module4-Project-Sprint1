@@ -12,9 +12,19 @@ import {Router} from '@angular/router';
 export class ListDistributorComponent implements OnInit {
   distributorForm: FormGroup;
   distributorList: Distributor[];
+  size = 5;
+  pageClick = 0;
+  pages = [];
+
+  search = '';
+  isSearch = false;
+
+  totalPages = 1;
+  listError: any = "";
   // Thach
   img: any;
   myForm: FormGroup;
+
   src = 'https://worklink.vn/wp-content/uploads/2018/07/no-logo.png';
   constructor(private fb: FormBuilder,
               private distributorService: DistributorService,
@@ -31,14 +41,53 @@ export class ListDistributorComponent implements OnInit {
       typeOfDistributor: ['']
     });
   }
+  onNext() {
+    if (this.pageClick < this.totalPages - 1) {
+      this.pageClick++;
+      this.onChange(this.pageClick);
+    }
+  }
+  onPrevious() {
+    if (this.pageClick > 0) {
+      this.pageClick--;
+      this.onChange(this.pageClick);
+    }
+  }
+  onFirst() {
+    this.pageClick = 0;
+    this.onChange(this.pageClick);
+  }
+  onLast() {
+    this.pageClick = this.totalPages - 1;
+    this.onChange(this.pageClick);
+  }
+
+  onChange(page){
+    this.distributorService.getAllDistributor(page,this.size,this.search).subscribe(
+      next => {
+        console.log(next);
+        this.pageClick = page;
+        this.distributorList = next.content;
+        this.totalPages = next.totalPages;
+        this.pages =  Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
+      },
+      error => console.log(error)
+    )
+  }
+  getAllDistributor():void{
+    this.onChange(0);
+  };
   ngOnInit(): void {
-    this.distributorService.findAll().subscribe(
-      next => this.distributorList = next,
-      error => {
-        this.distributorList = [];
-        console.log(error);
-      }
-    );
+    this.getAllDistributor();
+    // this.distributorService.findAll().subscribe(
+    //   next => this.distributorList = next,
+    //   error => {
+    //     this.distributorList = [];
+    //     console.log(error);
+    //   }
+    // );
+
+
     // tslint:disable-next-line:only-arrow-functions
     (function($) {
       // tslint:disable-next-line:only-arrow-functions
@@ -86,12 +135,7 @@ export class ListDistributorComponent implements OnInit {
             alert('Bạn đã thêm mới thành công');
             // @ts-ignore
           this.myForm.reset();
-          this.distributorService.findAll().subscribe(
-            next => this.distributorList = next,
-            error => {
-              this.distributorList = [];
-            }
-          );
+          this.getAllDistributor();
           this.router.navigate(["employee/partner-management/list-distributor"]);
           $('#deleteFormCreate').click();
         }
@@ -106,7 +150,10 @@ export class ListDistributorComponent implements OnInit {
   updateDistributor() {
     console.log(this.myForm.value);
     this.distributorService.save(this.myForm.value).subscribe(
-      res => alert('Thành công'),
+      res => {
+        alert('Thành công');
+        this.myForm.reset();
+      },
       error => alert('Thất bại')
     );
     $('#modal').hide();
@@ -212,6 +259,49 @@ export class ListDistributorComponent implements OnInit {
       },
       error => console.log(error)
     );
+  }
+  searchName() {
+    if (this.search === '') {
+      this.isSearch = false;
+      this.ngOnInit();
+    } else {
+      this.isSearch = true;
+      this.onChange(0);
+    }
+  }
+  backToSearch() {
+    this.search = '';
+    this.isSearch = false;
+    this.ngOnInit();
+  }
+  openDetailForm(id: number) {
+    this.distributorService.findById(id).subscribe(
+      res => {
+        this.myForm.patchValue(res);
+        if (this.myForm.value.img !== '') {
+          this.src = this.myForm.value.img;
+        }
+        switch (this.myForm.value.typeOfDistributor.name) {
+          case 'Tất cả' : {
+            $('#box-2, #box-3,#box-1').prop('checked', true);
+            break;
+          }
+          case 'Bánh': {
+            $('#box-2').prop('checked', true);
+            $('#box-1,#box-3').prop('checked', false);
+            break;
+          }
+          case 'Kẹo' : {
+            $('#box-3').prop('checked', true);
+            $('#box-1,#box-2').prop('checked', false);
+            break;
+          }
+        }
+      },
+      error => console.log(error)
+    );
+    console.log('helllo');
+    $('#btn-detailForm').click();
   }
 }
 
