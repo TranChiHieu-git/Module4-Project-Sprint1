@@ -9,120 +9,6 @@
           rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <form (ngSubmit)="onSubmit()" [formGroup]="myForm">
-      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-           aria-hidden="true" data-backdrop="static" data-keyboard="true">
-    <div class="d-flex justify-content-end">
-      <div class="add-data">
-        <a href="" data-toggle="modal" data-target="#largeModal">
-          <button type="button" class="btn- btn-primary">Thêm Mới</button>
-        </a>
-      </div>
-      <div class="modal fade pt-5" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal"
-           aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-title" id="modal-title">
-            <h1>THÊM MỚI NHÀ PHÂN PHỐI</h1>
-          </div>
-          <div class="modal-content">
-            <div class="modal-body row">
-              <div class="col-xl-12" style="position: relative">
-                <div class="boundary row">
-                  <div class="col-xl-12">
-                    <div class="row">
-                      <div class="col-xl-4">
-                        <mat-card (mouseover)="hoverUploadPic()" class="mat-card-img" (mouseleave)="leaveUploadPic()"
-                                  (click)="selectAvatar()">
-                          <img id="avatar" src={{src}}>
-                          <input formControlName="id" readonly hidden>
-                          <input class="file-upload-input" type='file'
-                                 (change)="readURL($event.target);" accept="image/*"
-                                 hidden id="myAvatar"/>
-                          <i class="img"
-                             style="font-size: 100px; color: blue; position: absolute; left: 60px; top:60px ; opacity: 0.1"
-                             class="icon-upload-alt"></i>
-                        </mat-card>
-                        <div class="boxes">
-                          <div class="checkItem">
-                            <input type="checkbox" id="box-1" (change)="chooseAll($event.target)" value="Tất cả">
-                            <label for="box-1">Phân phối tất cả</label>
-                          </div>
-                          <div class="checkItem">
-                            <input type="checkbox" id="box-2" (change)="chooseOne($event.target)" value="Bánh">
-                            <label for="box-2">Bánh</label>
-                          </div>
-                          <div class="checkItem" (change)="chooseOne($event.target)">
-                            <input type="checkbox" id="box-3" value="Kẹo">
-                            <label for="box-3">Kẹo</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-8">
-                        <div class="item" style="margin-top: 20px" data-tip="Tên nhà phân phối">
-                          <input type="text" formControlName="name" id="name1" placeholder="Tên nhà phân phối"/>
-                          <label id="icon" for="name1"><i class="icon-user"></i></label>
-                          <span>Validate </span>
-                        </div>
-                        <div class="item">
-                          <input type="text" id="address" formControlName="address" placeholder="Địa chỉ"/>
-                          <label id="icon" for="address"><i class="icon-map-marker"></i></label>
-                        </div>
-                        <div class="item">
-                          <input type="text" id="email" placeholder="Email" formControlName="email"/>
-                          <label id="icon" for="email"><i class="icon-envelope-alt"></i></label>
-                        </div>
-                        <div class="item">
-                          <input type="text" id="website" placeholder="Website" formControlName="website"/>
-                          <label id="icon2" for="website"><i class="fa fa-internet-explorer" aria-hidden="true"></i>
-                          </label>
-                        </div>
-                        <div class="item">
-                          <div class="div1">
-                            <input type="text" formControlName="numberPhone" id="phone" placeholder="Số điện thoại"/>
-                            <label id="icon" for="phone"><i class="icon-phone"></i> </label>
-                          </div>
-                          <div class="div2">
-                            <input type="text" formControlName="fax" id="fax" placeholder="Fax"/>
-                            <label id="icon2" for="fax"><i class="fa fa-fax" aria-hidden="true"></i> </label>
-                          </div>
-                        </div>
-                        <div class="item" style="margin-bottom: 15px">
-                          <!--                      <div class="div1">-->
-                          <!--                      </div>-->
-                          <div class="div2">
-                            <button class="btn btn-secondary " data-dismiss="modal" id="deleteFormCreate"
-                                    style="float: right;background-color: #4c4c4c">
-                              Hủy
-                            </button>
-                            <button class="btn btn-info " type="submit"
-                                    style="background-color: #3a57af; float: left"> Thêm
-                            </button>
-                          </div>
-                        </div>
-            <form (ngSubmit)="onSubmit()" [formGroup]="distributorForm">
-              <div class="modal-header">
-                <h5 class="modal-title content-dialog" id="exampleModalLabel">Thêm nhà phân phối mới</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              </div>
-              <div class="modal-body">
-                <div class="row">
-                  <div class="col-4">
-                    <!--                  <img src="http://placehold.it/260x340" alt="" class="imgDialog">-->
-                    <!--                  <button type="button" class="btn btn-primary buttonThemAnh">Thêm ảnh</button>-->
-                    <div class="avatar-wrapper" style="margin-left: 90px; margin-top: 65px">
-                      <img class="profile-pic" src=""/>
-                      <div class="upload-button">
-                        <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
     <table class="table">
       <thead>
       <tr>
@@ -144,7 +30,7 @@
           <td>{{distributor.address}}</td>
           <td>{{distributor.numberPhone}}</td>
           <td>{{distributor.email}}</td>
-          <td><i class="fas fa-pen" (click)="openEditForm(distributor.id)"></i ></td>
+          <td><i class="fas fa-pen" (click)="openEditForm(distributor.id)"></i></td>
           <td>
             <i (click)="openDeleteForm(distributor.id)" class="fas fa-trash"></i>
           </td>
@@ -154,6 +40,9 @@
     </table>
   </div>
 </div>
+
+
+
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" id="btn-editForm"
         hidden>Large modal
 </button>
@@ -161,12 +50,12 @@
       rel='stylesheet' type='text/css'>
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<form (ngSubmit)="updateDistributor()" [formGroup]="myForm">
+<form (ngSubmit)="onSubmit()" [formGroup]="myForm">
   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
        aria-hidden="true" data-backdrop="static" data-keyboard="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-title" id="modal-title">
-        <h1>CHỈNH SỬA NHÀ PHÂN PHỐI</h1>
+        <h1>{{functionTitle}}</h1>
       </div>
       <div class="modal-content">
         <div class="modal-body row">
@@ -232,15 +121,13 @@
                       </div>
                     </div>
                     <div class="item" style="margin-bottom: 15px">
-                      <!--                      <div class="div1">-->
-                      <!--                      </div>-->
                       <div class="div2">
                         <button class="btn btn-secondary " data-dismiss="modal"
-                                style="float: right;background-color: #4c4c4c">
+                                style="float: right;background-color: #4c4c4c" id="closeForm">
                           HỦY
                         </button>
                         <button class="btn btn-info" type="submit"
-                                style="background-color: #3a57af; float: left"> SỬA
+                                style="background-color: #3a57af; float: left"> {{functionButton}}
                         </button>
                       </div>
                     </div>
@@ -255,11 +142,12 @@
   </div>
 </form>
 <!--DELETE FORM-->
-<button id="deleteForm" type="button" class="btn btn-primary" data-toggle="modal" data-target=".delete" hidden>Large modal
+<button id="deleteForm" type="button" class="btn btn-primary" data-toggle="modal" data-target=".delete" hidden>Large
+  modal
 </button>
 <div class="modal fade bd-example-modal-sm delete" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
      aria-hidden="true" data-backdrop="static" data-keyboard="true">
-  <div class="modal-dialog" >
+  <div class="modal-dialog">
     <div class="modal-title" id="modal-title2">
       <h1>XÓA NHÀ PHÂN PHỐI</h1>
     </div>
@@ -267,9 +155,10 @@
       <h5 class="deleteTitle">Bạn có muốn xóa nhà phân phối?</h5>
       <h5 *ngIf="myDistributor" class="deleteTitle distributorName">{{myDistributor.name}}</h5>
       <div>
-        <button class="btn btn-dark myButton" data-dismiss="modal">HỦY</button>
-        <button class="btn btn-danger myButton" data-dismiss="modal">XÓA</button>
+        <button class="btn btn-dark myButton" data-dismiss="modal" id="closeDeleteForm">HỦY</button>
+        <button class="btn btn-danger myButton" (click)="deleteDistrinbutor(myDistributor.id)">XÓA</button>
       </div>
     </div>
   </div>
 </div>
+<div id="snackbar"></div>
