@@ -16,7 +16,7 @@
           <th scope="row">{{account.accountId}}</th>
           <td class="details" (click)="info(account.accountId)" data-toggle="modal"
               data-target="#infor">{{account.accountName}}</td>
-          <td>{{account.accountPassword}}</td>
+          <td><input disabled type="password" class="pw" width="150px" value="{{account.accountPassword}}"></td>
           <td>
             <button class="border-0 mr-5 bg-transparent fas fa-pencil-alt"
                     (click)="edit(account.accountId)" data-toggle="modal" data-target="#edit"></button>
