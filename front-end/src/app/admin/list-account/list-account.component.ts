@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AdminService} from '../../services/admin.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Account} from '../../models/account';
@@ -14,7 +14,8 @@ import {Md5} from 'ts-md5';
   styleUrls: ['./list-account.component.scss']
 })
 export class ListAccountComponent implements OnInit {
-  accountList: Account[];
+  accountList: Account[] = [];
+  accountlist: Account[] = [];
   roleList: Role[];
   accountForm: FormGroup;
   editAccountForm: FormGroup;
@@ -22,7 +23,7 @@ export class ListAccountComponent implements OnInit {
   infoAccountById: Employees = new Employees();
   AccountById: Account = new Account();
   editResuilt: Account;
-  size = 5;
+  size = 6;
   pageClicked = 0;
   pages = [];
   search = '';
@@ -38,6 +39,11 @@ export class ListAccountComponent implements OnInit {
   ngOnInit(): void {
     this.adminService.findAllRole().subscribe(next => {
       this.roleList = next;
+    }, error => {
+      console.log(error);
+    });
+    this.adminService.findAll().subscribe(next => {
+      this.accountlist = next;
     }, error => {
       console.log(error);
     });
@@ -57,11 +63,21 @@ export class ListAccountComponent implements OnInit {
     });
     this.editAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
-      accountName: ['', [Validators.required]],
+      accountName: ['', [Validators.required, this.existAccountName.bind(this)]],
       accountPassword: ['', [Validators.required]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]]
     });
+  }
+
+  existAccountName(c: AbstractControl) {
+    const v = c.value;
+    for (const acc of this.accountlist) {
+      if (acc.accountName === v && v !== this.AccountById.accountName) {
+        return {nameAccountExist: true};
+      }
+    }
+    return null;
   }
 
   getAll(): void {
@@ -136,6 +152,11 @@ export class ListAccountComponent implements OnInit {
     });
     this.adminService.findAllRole().subscribe(next => {
       this.roleList = next;
+    }, error => {
+      console.log(error);
+    });
+    this.adminService.findAccountById(id).subscribe(next => {
+      this.AccountById = next;
     }, error => {
       console.log(error);
     });
