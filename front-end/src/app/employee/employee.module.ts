@@ -23,6 +23,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {MatCardModule} from '@angular/material/card';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {CustomerManagementComponent} from './partner-management/customer-management/customer-management.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import {BrandManagementComponent} from './warehouse-management/brand-management/brand-management.component';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireStorageModule} from '@angular/fire/storage';
@@ -30,7 +32,7 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 @NgModule({
     declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
   WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BillComponent,
-    ListBillComponent, BrandManagementComponent,
+    ListBillComponent,BrandManagementComponent,
     SearchBillComponent, CustomerManagementComponent],
   exports: [
     WarehouseManagementComponent,
@@ -60,6 +62,8 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
       measurementId: 'G-H8Y4QN69YE'
     }),
     AngularFireStorageModule
+    NgxPaginationModule,
+    MatPaginatorModule,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},

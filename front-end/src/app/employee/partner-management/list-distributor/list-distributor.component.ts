@@ -7,7 +7,6 @@ import * as $ from 'jquery';
 import {finalize} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
-
 @Component({
   selector: 'app-list-distributor',
   templateUrl: './list-distributor.component.html',
@@ -28,8 +27,6 @@ export class ListDistributorComponent implements OnInit {
   functionTitle: string;
   functionButton: string;
   mode: string;
-
-
   constructor(private fb: FormBuilder,
               private distributorService: DistributorService,
               private router: Router, private afStorage: AngularFireStorage) {
@@ -45,7 +42,6 @@ export class ListDistributorComponent implements OnInit {
       typeOfDistributor: ['']
     });
   }
-
   ngOnInit(): void {
     this.distributorService.findAll().subscribe(
       next => this.distributorList = next,
@@ -91,7 +87,6 @@ export class ListDistributorComponent implements OnInit {
       $('body').removeClass('modal-active');
     });
   }
-
   // tslint:disable-next-line:typedef
   onSubmit() {
     if (this.myForm.valid) {
@@ -110,7 +105,6 @@ export class ListDistributorComponent implements OnInit {
       this.showNotications('Vui lòng kiểm tra lại các trường');
     }
   }
-
   updateDistributor(): void {
     if (this.isChangePic) {
       this.uploadFireBaseAndSubmit();
@@ -118,7 +112,6 @@ export class ListDistributorComponent implements OnInit {
       this.submitForm();
     }
   }
-
   private submitForm(): void {
     $('#closeEditForm').click();
     this.distributorService.create(this.myForm.value).subscribe(
@@ -144,27 +137,20 @@ export class ListDistributorComponent implements OnInit {
         this.showNotications(notication);
       }
     );
-
   }
-
 // FUNTION PHU
   // tslint:disable-next-line:typedef
   hoverUploadPic() {
     $('.icon-upload-alt').css('opacity', '0.8');
   }
-
-
   // tslint:disable-next-line:typedef
   leaveUploadPic() {
     $('.icon-upload-alt').css('opacity', '-1');
   }
-
   // tslint:disable-next-line:typedef
   selectAvatar() {
     $('#myAvatar').click();
   }
-
-
   // tslint:disable-next-line:typedef
   readURL(target: any) {
     if (target.files && target.files[0]) {
@@ -177,8 +163,6 @@ export class ListDistributorComponent implements OnInit {
     } else {
     }
   }
-
-
   private uploadFireBaseAndSubmit(): void {
     const target: any = document.getElementById('myAvatar');
     const id = Math.random().toString(36).substring(2);
@@ -195,14 +179,11 @@ export class ListDistributorComponent implements OnInit {
               this.myForm.value.typeOfDistributor = value;
               this.submitForm();
             });
-
           });
         });
       }))
       .subscribe();
-
   }
-
 // tslint:disable-next-line:typedef
   chooseAll(item: HTMLInputElement) {
     if ($('#box-1').prop('checked')) {
@@ -216,7 +197,6 @@ export class ListDistributorComponent implements OnInit {
       this.myForm.value.typeOfDistributor = '';
     }
   }
-
   // tslint:disable-next-line:typedef
   chooseOne(target: HTMLInputElement) {
     if ($('#box-2').is(':checked') && $('#box-3').is(':checked')) {
@@ -243,7 +223,6 @@ export class ListDistributorComponent implements OnInit {
       );
     }
   }
-
   // tslint:disable-next-line:typedef
   openEditForm(id: number) {
     this.mode = 'edit';
@@ -276,10 +255,7 @@ export class ListDistributorComponent implements OnInit {
       error => console.log(error)
     );
     $('#btn-editForm').click();
-
   }
-
-
   openDeleteForm(id: number): void {
     $('#deleteForm').click();
     this.distributorService.findById(id).subscribe(
@@ -289,7 +265,6 @@ export class ListDistributorComponent implements OnInit {
       error => console.log(error)
     );
   }
-
   deleteDistrinbutor(id: number): void {
     this.myDistributor.deleted = false;
     this.distributorService.create(this.myDistributor).subscribe(
@@ -303,7 +278,6 @@ export class ListDistributorComponent implements OnInit {
       }
     );
   }
-
   showNotications(mess: string): void {
     let x = document.getElementById('snackbar');
     x.textContent = '';
@@ -315,7 +289,6 @@ export class ListDistributorComponent implements OnInit {
       x.className = x.className.replace('show', '');
     }, 3000);
   }
-
   openCreateForm(): void {
     $('#box-2, #box-3,#box-1').prop('checked', false);
     this.src = 'https://worklink.vn/wp-content/uploads/2018/07/no-logo.png';
@@ -327,7 +300,6 @@ export class ListDistributorComponent implements OnInit {
     this.functionButton = 'THÊM';
     $('#createForm').click();
   }
-
   resetList(): void {
     this.distributorService.findAll().subscribe(
       res => {
