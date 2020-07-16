@@ -1,0 +1,97 @@
+.modal-content{
+  left: -30%;
+  width: 160%;
+}
+.avatar{
+  height: 200px;
+  float: left;
+  margin-bottom: 40px;
+}
+.modal-body table{
+  float: right;
+  width: 60%;
+  margin: 0 6.8%;
+} tr th{
+  padding: 10px 0;
+  }
+.edit-customer-btn1,.edit-customer-btn2{
+  margin: 40px 0;
+}
+.edit-customer-btn1{
+  margin-left: 63%;
+}
+.edit-customer-btn2{
+  margin-left: 5%;
+}
+.edit-customer-btn3{
+  width:23.2%;
+  position: absolute;
+  left: 23px;
+  top: 220px;
+}
+.check-edit-body{
+  margin: auto;
+}
+.check-edit-btn{
+  margin-left: 30%;
+}
+.customer-input{
+  width: 92.5%;
+}
+.customer-imput-outside{
+  padding-left: 30%;
+}
+.customer-validate{
+  top: -10px;
+}
+//test css
+
+.global-button{
+   background: transparent linear-gradient(38deg, #EE9F1F 0%, #FCBC53 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.31);
+   font-size: 12px;
+  border: none;
+   border-radius: 10px;
+   padding: 2% 5%;
+   color: #581008;
+   font-weight: 700;
+ }
+
+.global-button-cancel{
+  background: transparent linear-gradient(38deg, #6c757d 0%, #3b4044 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.31);
+  font-size: 12px;
+  border: none;
+  border-radius: 10px;
+  padding: 2% 5%;
+  color: white;
+  font-weight: 700;
+}
+.global-content-popup-input{
+  height: 40px;
+  border-radius: 0 5px 5px 0;
+  float: right;
+  box-sizing: border-box;
+  border: solid 0.25px;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.31);
+}
+.global-content-popup-icon{
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: rgb(238, 159, 31);
+  line-height: 40px;
+  border-radius: 4px 0px 0px 4px;
+  color: white;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.09);
+  border: solid 0px #cbc9c9;
+  box-sizing: border-box;
+  font-size: 18px;
+  text-align: center;
+}
+.global-content-popup-validate{
+  position: relative;
+  left: 40px;
+  color: red;
+  font-style: italic;
+}
