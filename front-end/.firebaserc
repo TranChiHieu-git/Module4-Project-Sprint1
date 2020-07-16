@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "module4-ef369": {
+      "hosting": {
+        "front-end": [
+          "module4-ef369"
+        ]
+      }
+    }
+  }
+}

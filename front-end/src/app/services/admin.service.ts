@@ -12,10 +12,13 @@ import {Role} from '../models/role';
 export class AdminService {
   API_URL = 'http://localhost:8080/account';
   API_ROLE_URL = 'http://localhost:8080/role';
+  httpOptions: any;
 
   constructor(private httpClient: HttpClient) {
   }
-
+  getAllCourse(currentPage, size, search): Observable<any> {
+    return this.httpClient.get(this.API_URL + '?page=' + currentPage + '&size=' + size + '&search=' + search, this.httpOptions);
+  }
   findAll(): Observable<Account[]> {
     return this.httpClient.get<Account[]>(this.API_URL);
   }
@@ -37,7 +40,7 @@ export class AdminService {
   }
 
   create(account: Account): Observable<Account> {
-    return this.httpClient.post<Account>(this.API_URL, account);
+    return this.httpClient.post<Account>(this.API_URL + '/create', account);
   }
 
   deleteById(id: number): Observable<void> {

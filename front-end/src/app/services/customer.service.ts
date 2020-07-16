@@ -8,7 +8,7 @@ import {Customer} from '../models/customer';
 })
 export class CustomerService {
 
-  public readonly API_URL = 'http://localhost:3000/customers';
+  public readonly API_URL = 'http://localhost:8080/customers';
 
   constructor(private httpClient: HttpClient) {
   }

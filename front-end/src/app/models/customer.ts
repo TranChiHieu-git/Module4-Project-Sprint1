@@ -1,12 +1,12 @@
 export class Customer {
   id: number;
-  name: string;
+  userName: string;
   address: string;
-  phoneNumber: string;
+  phone: string;
   email: string;
-  numberOfPurchases: string;
-  totalValue: string;
-  discountCode: string;
-  status: boolean;
+  birthday: Date;
+  gender: string;
+  imageUrl: string;
+  deleteFlag: boolean;
 }
 
