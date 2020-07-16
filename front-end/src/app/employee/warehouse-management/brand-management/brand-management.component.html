@@ -1,0 +1,489 @@
+<div class="row d-flex justify-content-between m-3">
+  <h2><span class="fa fa-bars"></span> Danh sách thương hiệu</h2>
+  <div class="d-flex">
+    <div class="form-group has-search mr-2">
+      <span class="fa fa-search form-control-feedback"></span>
+      <input type="text" class="form-control searchInput" placeholder="Search" name="search">
+    </div>
+    <div>
+      <button class="btn btn-primary pl-2" data-toggle="modal" data-target="#modal-brand"><span
+        class="fa fa-plus-square"></span> Thêm mới
+      </button>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="row mt-3 px-3">
+  <table class="table table-borderless mt-3">
+
+    <tr>
+      <th></th>
+      <th>Mã Thương Hiệu</th>
+      <th>Tên Thương Hiệu</th>
+      <th>Sửa | Xóa</th>
+    </tr>
+
+    <tr>
+      <td class="showInfo">
+        <button data-toggle="collapse" data-target="#brand-info" class="border-0 bg-transparent">
+          <span class="fa fa-plus-circle"></span></button>
+      </td>
+      <td>TH0001</td>
+      <td>ABC</td>
+      <td>
+        <button class="border-0  mr-3 bg-transparent fas fa-pencil-alt" data-toggle="modal"
+                data-target="#modalHeadquarters"></button>
+        <button class="border-0 bg-transparent fa fa-trash" data-toggle="modal"
+                data-target="#deletaHeadquarters"></button>
+      </td>
+    </tr>
+    <tr class="collapse" id="brand-info">
+      <td colspan="4">
+        <div class="row">
+          <div class="col-3 offset-2">
+            <img src="https://via.placeholder.com/150" alt="">
+          </div>
+          <div class="col-7">
+            <p>Trụ sở: 1000 Ngô Quyền, Đà Nẵng</p>
+            <p>Website: www.codegym.com</p>
+            <!--              <button class="btn btn-warning mr-2">Chỉnh sửa</button>-->
+            <!--              <button class="btn btn-danger">Xóa</button>-->
+            <button type="button" class="btn btn-warning mr-2" data-toggle="modal"
+                    data-target="#modalHeadquarters">Chỉnh sửa
+            </button>
+            <button type="button" class="btn btn-danger" data-toggle="modal"
+                    data-target="#deletaHeadquarters">Xóa
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="showInfo">
+        <button class="border-0 bg-transparent"><span class="fa fa-plus-circle"></span></button>
+      </td>
+      <td>TH0002</td>
+      <td>DEF</td>
+      <td>
+        <button class="border-0 mr-3 bg-transparent fas fa-pencil-alt"></button>
+        <button class="border-0 bg-transparent	fa fa-trash "></button>
+      </td>
+    </tr>
+  </table>
+</div>
+<!-- Add new modal -->
+<div class="modal fade" id="modal-brand" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true" data-backdrop="static">
+  <div class="custom-modal modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Thêm thương hiệu</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form>
+          <div class="row d-flex justify-content-between">
+            <div class="col-4 text-center">
+
+              <div>
+                <img class="brand-image" [src]="uploadImg ? uploadImg : 'https://www.lifewire.com/thmb/P856-0hi4lmA2xinYWyaEpRIckw=/1920x1326/filters:no_upscale()' +
+    ':max_bytes(150000):strip_icc()/cloud-upload-a30f385a928e44e199a62210d578375a.jpg'">
+              </div>
+              <div>
+                <input style="display: none" type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg"
+                       #fileInput
+                       (change)="onSelectFile($event)">
+                <button type="button" class="btn btn-primary" (click)="fileInput.click()">Chọn ảnh</button>
+              </div>
+              <!--                  <input type="file" id="customFile">-->
+              <!--                  <label class="custom-file-label" for="customFile">Choose file</label>-->
+            </div>
+            <div class="col-6 offset-2">
+              <div class="form-group">
+                <label for="maTH">Mã TH:</label>
+                <input type="text" class="form-control" id="maTH">
+              </div>
+              <div class="form-group">
+                <label for="tenTH">Tên TH:</label>
+                <input type="text" class="form-control" id="tenTH">
+              </div>
+              <div class="form-group">
+                <label for="truSo">Trụ sở</label>
+                <input type="text" class="form-control" id="truSo">
+              </div>
+              <div class="form-group">
+                <label for="website">Website</label>
+                <input type="text" class="form-control" id="website">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-warning " data-toggle="modal" data-target="#modal-brand-confirm">
+          Xác nhận
+        </button>
+        <button type="button" class="btn btn-secondary " data-dismiss="modal">Hủy</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Confirm modal --->
+<div class="modal fade" id="modal-brand-confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true"
+     data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel1">Xác Nhận</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5 class="my-3 d-flex justify-content-center">
+          Thêm mới thương hiệu ?
+        </h5>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-success">Có</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  Edit Modal-->
+
+<div class="modal fade" id="exampleModal" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="modalEditBrand" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title  headerText" id="modalEditBrand">Chỉnh sửa thương hiệu</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-5 text-center">
+              <div>
+                <img src="{{imageUrl}}" alt="aaa" class="img-thumbnail imgAvataBrand">
+              </div>
+              <div class="mt-3">
+                <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#modalInside">
+                  Thêm ảnh
+                </button>
+              </div>
+            </div>
+            <div class="col-7">
+              <div class="row">
+                <label class="col">
+                  Mã TH:
+                  <input type="text" class="form-control" formControlName="codeBrand">
+                </label>
+              </div>
+
+              <div class="row">
+                <label class="col">
+                  Tên TH:
+                  <input type="text" class="form-control" formControlName="nameBrand">
+                </label>
+              </div>
+
+              <div class="row">
+                <label class="col">
+                  Trụ Sở:
+                  <input type="text" class="form-control" formControlName="headquarters">
+                </label>
+              </div>
+
+              <div class="row">
+                <label class="col">
+                  Website:
+                  <input type="text" class="form-control" formControlName="website">
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#accepNotice">
+          Xác Nhận
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal edit img-->
+
+<div>
+  <div class="modal fade" id="modalInside" tabindex="-1" data-backdrop="static" role="dialog"
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title headerText" id="modalLabel">Thay đổi ảnh thương hiệu</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body ">
+          <div class="text-center">
+            <img [src]="uploadImg ? uploadImg : 'https://www.lifewire.com/thmb/P856-0hi4lmA2xinYWyaEpRIckw=/1920x1326/filters:no_upscale()' +
+    ':max_bytes(150000):strip_icc()/cloud-upload-a30f385a928e44e199a62210d578375a.jpg'" alt="bbb"
+                 style="width: 200px; height: 200px">
+          </div>
+          <div class="text-center mt-3">
+            <input style="display: none" type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg" #fileInput
+                   (change)="onSelectFile($event)">
+            <button type="button" class="btn btn-primary" (click)="fileInput.click()">Chọn ảnh</button>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-success" (click)="loadPage()">Xác nhận</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Confirm Edit-->
+
+<div class="modal fade" id="accepNotice" data-backdrop="static" data-keyboard="false" tabindex="-1"
+     role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title headerText" id="staticBackdropLabel">Xác nhận thay đổi</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--        <div class="modal-body">-->
+      <!--          Xác nhận -->
+      <!--        </div>-->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-warning" (click)="loadPage()">Xác Nhận</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Delete Modal-->
+
+<div class="modal fade" id="deletaBrand" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title headerText" id="labelDeleteBrand">Xóa thương hiệu</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-5">
+              <img src="{{imageUrl}}" alt="aaa" class="img-thumbnail imgAvataBrand">
+            </div>
+            <div class="col-7">
+              <div class="row">
+                <label class="col">
+                  Mã TH:
+                  <input type="text" class="form-control">
+                </label>
+              </div>
+
+              <div class="row">
+                <label class="col">
+                  Tên TH:
+                  <input type="text" class="form-control">
+                </label>
+              </div>
+
+              <div class="row">
+                <label class="col">
+                  Trụ Sở:
+                  <input type="text" class="form-control">
+                </label>
+              </div>
+
+              <div class="row">
+                <label class="col">
+                  Website:
+                  <input type="text" class="form-control">
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#accepDelete">
+          Xác Nhận
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Confirm Delete-->
+
+<div class="modal fade" id="accepDelete" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+     aria-labelledby="staticLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title headerText" id="staticLabel">Xác nhận xóa thương hiệu</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: center">
+        Bạn có chắc chắn không?
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-success" (click)="loadPage()">Xác Nhận</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Headquarters Modal-->
+
+<div class="modal fade" id="modalHeadquarters" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="modalEditBrand" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Chỉnh sửa thương hiệu</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-5 text-center">
+              <div>
+                <img src="{{imageUrl}}" alt="aaa" class="img-thumbnail mt-4">
+              </div>
+              <div class="mt-3">
+                <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#insideHeadquarters">
+                  Thêm ảnh
+                </button>
+              </div>
+            </div>
+            <div class="col-7">
+              <div class="row">
+                <label class="col">
+                  Mã TH:
+                  <input type="text" class="form-control" formControlName="codeBrand">
+                </label>
+              </div>
+
+              <div class="row">
+                <label class="col">
+                  Tên TH:
+                  <input type="text" class="form-control" formControlName="nameBrand">
+                </label>
+              </div>
+
+              <div class="row">
+                <label class="col">
+                  Trụ Sở:
+                  <input type="text" class="form-control" formControlName="headquarters">
+                </label>
+              </div>
+
+              <div class="row">
+                <label class="col">
+                  Website:
+                  <input type="text" class="form-control" formControlName="website">
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#accepNotice">
+          Xác Nhận
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Image Inside Button +-->
+
+<div>
+  <div class="modal fade" id="insideHeadquarters" tabindex="-1" data-backdrop="static" role="dialog"
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title headerText">Thay đổi ảnh</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body ">
+          <div class="text-center">
+            <img [src]="uploadImg ? uploadImg : 'https://www.lifewire.com/thmb/P856-0hi4lmA2xinYWyaEpRIckw=/1920x1326/filters:no_upscale()' +
+    ':max_bytes(150000):strip_icc()/cloud-upload-a30f385a928e44e199a62210d578375a.jpg'" alt="bbb"
+                 style="width: 150px; height: 150px">
+          </div>
+          <div class="text-center mt-3">
+            <input style="display: none" type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg" #fileInput
+                   (change)="onSelectFile($event)">
+            <button type="button" class="btn btn-primary" (click)="fileInput.click()">Chọn ảnh</button>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-warning" (click)="loadPage()">Xác nhận</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Delete Inside Button +-->
+
+<div class="modal fade" id="deletaHeadquarters" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+     aria-labelledby="staticLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title headerText">Xác nhận xóa thương hiệu</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: center">
+        Bạn có chắc chắn không?
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-danger" (click)="loadPage()">Xác Nhận</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
