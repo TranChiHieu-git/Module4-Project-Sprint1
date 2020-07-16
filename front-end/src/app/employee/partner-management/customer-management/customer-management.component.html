@@ -1,6 +1,6 @@
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<! - SDK SDK Firebase cốt lõi luôn được yêu cầu và phải được liệt kê trước ->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <div>
   <h2>Danh sách khách hàng</h2>
@@ -196,12 +196,15 @@
             </div>
             <div class="modal-body">
               <form (ngSubmit)="onSubmit()"  [formGroup]="addUser">
-                <img class="avatar" src="{{tempCustomer.imageUrl}}" alt="avatar">
-
                 <div class="customer-input-outside">
                   <input class="global-content-popup-input customer-input" type="text" id="userName" formControlName="userName"/>
                   <label class="global-content-popup-icon" for="userName"><i class="icon-user"></i></label>
-                  <span class="global-content-popup-validate customer-validate">Validate </span>
+
+                  <p class="global-content-popup-validate customer-validate" *ngIf="addUser.get('userName').hasError('required')
+                        && addUser.get('userName').touched">Tên khách hàng không được để trống!</p>
+                  <p class="global-content-popup-validate customer-validate" *ngIf="addUser.get('userName').hasError('pattern')
+                        && addUser.get('userName').touched">Tên khách khàng không được chứa kí tự đặc biệt!</p>
+
                 </div>
 
                 <div class="customer-input-outside">
@@ -209,42 +212,51 @@
 
                   <div class="datePicker">
                       <input style="width: 57%;margin-right: 35%;" class="global-content-popup-input customer-input" type="text" id="birthday" formControlName="birthday" readonly matInput [matDatepicker]="picker" (dateInput)="addEvent($event)">
-                      <div class="datePicker-div">
+                    <div class="datePicker-div">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                       </div>
                   </div>
-
                   <label class="global-content-popup-icon" for="birthday"><i class="icon-calendar"></i></label>
-                  <span class="global-content-popup-validate customer-validate">Validate </span>
-                </div>
 
-                <div class="customer-input-outside">
-                  <input class="global-content-popup-input customer-input" type="text" id="gender" formControlName="gender"/>
 
-                  <label class="global-content-popup-icon" for="gender"><i class="icon-phone"></i></label>
-                  <span class="global-content-popup-validate customer-validate">Validate </span>
+
+                  <div class="select-gender">
+                    <select formControlName="gender" id="gender" style="height:40px">
+                      <option value="Nam" [selected]="tempCustomer.gender=='Nam'">Nam</option>
+                      <option value="Nữ" [selected]="tempCustomer.gender=='Nữ'">Nữ</option>
+                    </select>
+                    <label class="global-content-popup-icon" for="gender"><i class="fa fa-venus-mars"></i></label>
+                  </div>
                 </div>
 
                 <div class="customer-input-outside">
                   <input class="global-content-popup-input customer-input" type="text" id="address" formControlName="address"/>
 
                   <label class="global-content-popup-icon" for="address"><i class="icon-map-marker"></i></label>
-                  <span class="global-content-popup-validate customer-validate">Validate </span>
+                  <p class="global-content-popup-validate customer-validate" *ngIf="addUser.get('address').hasError('required')
+                        && addUser.get('address').touched">Địa chỉ không được để trống!</p>
                 </div>
 
                 <div class="customer-input-outside">
-                  <input class="global-content-popup-input customer-input" type="text" id="Email" formControlName="email"/>
+                  <input class="global-content-popup-input customer-input" type="text" id="email" formControlName="email"/>
 
-                  <label class="global-content-popup-icon" for="Email"><i class="icon-envelope-alt"></i></label>
-                  <span class="global-content-popup-validate customer-validate">Validate </span>
+                  <label class="global-content-popup-icon" for="email"><i class="icon-envelope-alt"></i></label>
+                  <p class="global-content-popup-validate customer-validate" *ngIf="addUser.get('email').hasError('required')
+                        && addUser.get('email').touched">Email không được để trống!</p>
+                  <p class="global-content-popup-validate customer-validate" *ngIf="addUser.get('email').hasError('pattern')
+                        && addUser.get('email').touched">Email không đúng định dạng (ví dụ: son.94@gmail.com)</p>
                 </div>
 
                 <div class="customer-input-outside">
                   <input class="global-content-popup-input customer-input" type="text" id="phone" formControlName="phone"/>
 
                   <label class="global-content-popup-icon" for="phone"><i class="icon-phone"></i></label>
-                  <span class="global-content-popup-validate customer-validate">Validate </span>
+                  <p class="global-content-popup-validate customer-validate" *ngIf="addUser.get('phone').hasError('required')
+                        && addUser.get('phone').touched">Số điện thoại không được để trống</p>
+                  <p class="global-content-popup-validate customer-validate" *ngIf="addUser.get('phone').hasError('pattern')
+                        && addUser.get('phone').touched">Số điện thoại không đúng định dạng
+                    (090xxxxxxx or 091xxxxxxx or (84)+90xxxxxxx or (84)+91xxxxxxx, x là số)</p>
                 </div>
 
 
@@ -252,13 +264,28 @@
 
                 <input class="global-button edit-customer-btn1" type="submit" value="Sửa" [disabled]="addUser.invalid">
                 <input class="global-button-cancel edit-customer-btn2" type="button" data-dismiss="modal" value="Hủy">
-<!--                <div>-->
-<!--                  <form action="" method="post" enctype="multipart/form-data">-->
-<!--                    <input type="file" ng2FileSelect [uploader]="uploader" />-->
-<!--                    <button [disabled]="loading" (click)="upload()" class="btn">Upload</button>-->
-<!--                  </form>-->
-<!--                  <label>Choose file</label>-->
+
+<!--                <div class="card">-->
+<!--                  <img src="{{tempCustomer.imageUrl}}" id="img-preview" class="avatar"/>-->
+<!--                  <label class="file-upload-container" for="file-upload">-->
+<!--                    <input id="file-upload" (change)="onFileSelected($event)" type="file" style="display:none;">-->
+<!--                    Đổi ảnh đại diện-->
+<!--                  </label>-->
+<!--                  <button type="button" (click)="onUpload()">upload</button>-->
 <!--                </div>-->
+
+                <div class="card">
+                  <mat-card (mouseover)="hoverUploadPic()" class="mat-card-img" (mouseleave)="leaveUploadPic()"
+                            (click)="selectAvatar()">
+                    <img id="avatar" src={{src}}>
+                    <input formControlName="id" readonly hidden>
+                    <input class="file-upload-input" type='file'
+                           (change)="readURL($event.target);" accept="image/*"
+                           hidden id="myAvatar" style="display:none;"/>
+                    <i class="img img-upload-icon icon-upload-alt"></i>
+                  </mat-card>
+                </div>
+
               </form>
 
             </div>

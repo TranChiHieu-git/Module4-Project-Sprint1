@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnChanges, OnInit} from '@angular/core';
 import {CustomerService} from '../../../services/customer.service';
 import {Customer} from '../../../models/customer';
+import {HttpClient} from "@angular/common/http";
 
 declare var $: any;
 
@@ -22,11 +23,13 @@ export class CustomerManagementComponent implements OnInit {
   filter;
   date: any;
   deleteList = new Array();
+  selectedFile = null;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private customerService: CustomerService) {
+              private customerService: CustomerService,
+              private http: HttpClient) {
     this.customerService.getAllCustomer().subscribe(data => {
         this.customers = data.content;
       }, error => {
@@ -40,16 +43,18 @@ export class CustomerManagementComponent implements OnInit {
   validatingForm: FormGroup;
 
   ngOnInit(): void {
-    $('#checkAll').click(function() {
+    $('#checkAll').click(function () {
       $('input:checkbox').not(this).prop('checked', this.checked);
     });
 
     this.addUser = this.formBuilder.group({
       id: [''],
-      userName: [''],
-      address: [''],
-      phone: [''],
-      email: [''],
+      userName: ['', [Validators.required, Validators.pattern('[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế][a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế ]*')]],
+
+      address: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern('(090|091|\\(84\\)\\+90|\\(84\\)\\+91)[0-9]{7}')]],
+
+      email: ['', [Validators.required, Validators.pattern('[A-Za-z0-9]+(\\.?[A-Za-z0-9])*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)')]],
       birthday: [''],
       gender: [''],
       imageUrl: ['']
@@ -164,7 +169,8 @@ export class CustomerManagementComponent implements OnInit {
     const deleteConfirm = confirm('Bạn có chắc chắn muốn xóa khách mua hàng này không?');
     if (deleteConfirm) {
       this.customerService.deleteCustomerById(id).subscribe(
-        next => {window.location.reload()
+        next => {
+          window.location.reload()
         },
         error => console.log(error)
       );
@@ -236,5 +242,30 @@ export class CustomerManagementComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line:typedef
+  hoverUploadPic() {
+    $('.icon-upload-alt').css('opacity', '0.8');
+  }
+
+
+  // tslint:disable-next-line:typedef
+  leaveUploadPic() {
+    $('.icon-upload-alt').css('opacity', '-1');
+  }
+  selectAvatar() {
+    $('#myAvatar').click();
+  }
+  // tslint:disable-next-line:typedef
+  readURL(target: any) {
+    if (target.files && target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // @ts-ignore
+        $('#avatar').attr('src', e.target.result);
+      };
+      reader.readAsDataURL(target.files[0]);
+    } else {
+    }
+  }
 
 }
