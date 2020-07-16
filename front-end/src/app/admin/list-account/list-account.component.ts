@@ -71,6 +71,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
+  // tslint:disable-next-line:typedef
   existAccountName(c: AbstractControl) {
     const v = c.value;
     for (const acc of this.accountlist) {
@@ -83,14 +84,16 @@ export class ListAccountComponent implements OnInit {
 
   getAll(): void {
     this.getAllSubmit(0);
-  };
+  }
 
+  // tslint:disable-next-line:typedef
   getAllSubmit(page) {
     const md5 = new Md5();
     this.adminService.getAllCourse(page, this.size, this.search).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
+        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.accountList.length; i++) {
           this.accountList[i].accountPassword = md5.appendAsciiStr(<string> this.accountList[i].accountPassword).end();
         }
@@ -100,6 +103,7 @@ export class ListAccountComponent implements OnInit {
     );
   }
 
+  // tslint:disable-next-line:typedef
   onPrevious() {
     if (this.pageClicked > 0) {
       this.pageClicked--;
@@ -107,6 +111,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line:typedef
   onNext() {
     if (this.pageClicked < this.totalPages - 1) {
       this.pageClicked++;
@@ -114,11 +119,13 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line:typedef
   onFirst() {
     this.pageClicked = 0;
     this.getAllSubmit(this.pageClicked);
   }
 
+  // tslint:disable-next-line:typedef
   onLast() {
     this.pageClicked = this.totalPages - 1;
     this.getAllSubmit(this.pageClicked);

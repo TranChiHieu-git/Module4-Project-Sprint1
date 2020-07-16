@@ -28,11 +28,11 @@ export class CustomerManagementComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private customerService: CustomerService) {
     this.customerService.getAllCustomer().subscribe(data => {
+        console.log(data);
         this.customers = data.content;
       }, error => {
         console.log(error);
       }, () => {
-
       }
     );
   }
@@ -40,6 +40,7 @@ export class CustomerManagementComponent implements OnInit {
   validatingForm: FormGroup;
 
   ngOnInit(): void {
+    // tslint:disable-next-line:typedef
     $('#checkAll').click(function() {
       $('input:checkbox').not(this).prop('checked', this.checked);
     });
@@ -54,17 +55,17 @@ export class CustomerManagementComponent implements OnInit {
       gender: [''],
       imageUrl: ['']
     });
-    // tslint:disable-next-line:only-arrow-functions
-    (function ($) {
-      // tslint:disable-next-line:only-arrow-functions
-      $(document).ready(function () {
+    // tslint:disable-next-line:only-arrow-functions typedef no-shadowed-variable
+    (function($) {
+      // tslint:disable-next-line:only-arrow-functions typedef
+      $(document).ready(function() {
         // tslint:disable-next-line:only-arrow-functions typedef
-        const readURL = function (input) {
+        const readURL = function(input) {
           if (input.files && input.files[0]) {
             const reader = new FileReader();
 
-            // tslint:disable-next-line:only-arrow-functions
-            reader.onload = function (e) {
+            // tslint:disable-next-line:only-arrow-functions typedef
+            reader.onload = function(e) {
               // @ts-ignore
               $('.profile-pic').attr('src', e.target.result);
             };
@@ -73,24 +74,27 @@ export class CustomerManagementComponent implements OnInit {
           }
         };
 
-        $('#custom-file-input').on('change', function () {
+        // tslint:disable-next-line:typedef
+        $('#custom-file-input').on('change', function() {
           readURL(this);
         });
 
-        // tslint:disable-next-line:only-arrow-functions
-        $('#upload-button').on('click', function () {
+        // tslint:disable-next-line:only-arrow-functions typedef
+        $('#upload-button').on('click', function() {
           $('#file-upload').click();
         });
       });
     })(jQuery);
     $('.icon-upload-alt').css('opacity', '-1');
-    $('.button').click(function () {
+    // tslint:disable-next-line:typedef
+    $('.button').click(function() {
       const buttonId = $(this).attr('id');
       $('#modal-container').removeAttr('class').addClass(buttonId);
       $('body').addClass('modal-active');
     });
 
-    $('#modal-container').click(function () {
+    // tslint:disable-next-line:typedef
+    $('#modal-container').click(function() {
       $(this).addClass('out');
       $('body').removeClass('modal-active');
     });
@@ -145,6 +149,7 @@ export class CustomerManagementComponent implements OnInit {
   }
 
 
+  // tslint:disable-next-line:typedef
   onSubmit() {
     const editConfirm = confirm('Bạn có chắc chắn cập nhật thông tin của khách mua hàng này ?');
     if (editConfirm) {
@@ -164,7 +169,8 @@ export class CustomerManagementComponent implements OnInit {
     const deleteConfirm = confirm('Bạn có chắc chắn muốn xóa khách mua hàng này không?');
     if (deleteConfirm) {
       this.customerService.deleteCustomerById(id).subscribe(
-        next => {window.location.reload()
+        next => {
+          window.location.reload();
         },
         error => console.log(error)
       );
