@@ -75,7 +75,6 @@ export class ListAccountComponent implements OnInit {
         this.pageClicked = page;
         this.accountList = data.content;
         for (let i = 0; i < this.accountList.length; i++) {
-          console.log(this.accountList[i]);
           this.accountList[i].accountPassword = md5.appendAsciiStr(<string> this.accountList[i].accountPassword).end();
         }
         this.totalPages = data.totalPages;
