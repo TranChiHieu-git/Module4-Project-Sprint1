@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Distributor} from '../../../models/distributor';
 import {DistributorService} from '../../../services/distributor.service';
 import {Router} from '@angular/router';
-import * as $ from 'jquery';
 
 @Component({
   selector: 'app-list-distributor',
@@ -13,27 +12,10 @@ import * as $ from 'jquery';
 export class ListDistributorComponent implements OnInit {
   distributorForm: FormGroup;
   distributorList: Distributor[];
-  // Thach
-  img: any;
-  myForm: FormGroup;
-  src = 'https://worklink.vn/wp-content/uploads/2018/07/no-logo.png';
 
   constructor(private fb: FormBuilder,
               private distributorService: DistributorService,
               private router: Router) {
-
-    this.myForm = fb.group({
-      id: [''],
-      name: [''],
-      phone: [''],
-      email: [''],
-      address: [''],
-      fax: [''],
-      website: [''],
-      img: [''],
-      type: ['']
-    });
-
   }
 
   ngOnInit(): void {
@@ -84,7 +66,7 @@ export class ListDistributorComponent implements OnInit {
     })(jQuery);
 
 
-    // Thach
+    //Thach
     $('.icon-upload-alt').css('opacity', '-1');
     $('.button').click(function() {
       const buttonId = $(this).attr('id');
@@ -99,7 +81,6 @@ export class ListDistributorComponent implements OnInit {
 
   }
 
-  // tslint:disable-next-line:typedef
   onSubmit() {
     if (this.distributorForm.valid) {
       this.distributorService.create(this.distributorForm.value).subscribe(
@@ -116,123 +97,39 @@ export class ListDistributorComponent implements OnInit {
   }
 
 
-  // Thach Function
-  // tslint:disable-next-line:typedef
-  updateDistributor() {
-    this.distributorService.save(this.myForm.value).subscribe(
-      res => alert('Thành công'),
-      error => alert('Thất bại')
-    );
-    $('#modal').hide();
+  //Thach Function
+  openEditForm() {
+    $('#edit').click();
   }
 
-// FUNTION PHU
-  // tslint:disable-next-line:typedef
+  openDeleteForm() {
+    $('#delete').click();
+  }
+
   hoverUploadPic() {
     $('.icon-upload-alt').css('opacity', '0.8');
   }
 
 
-  // tslint:disable-next-line:typedef
   leaveUploadPic() {
     $('.icon-upload-alt').css('opacity', '-1');
   }
 
-  // tslint:disable-next-line:typedef
   selectAvatar() {
     $('#myAvatar').click();
   }
 
 
-  // tslint:disable-next-line:typedef
-  readURL(target: any) {
+  readURL(target: HTMLInputElement) {
     if (target.files && target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        $('#avatar').attr('src', e.target.result);
+        const temp: any = e.target.result;
+        $('#avatar').attr('src', temp);
       };
       reader.readAsDataURL(target.files[0]);
     } else {
     }
   }
-
-
-  // tslint:disable-next-line:typedef
-  chooseAll(item: HTMLInputElement) {
-    if ($('#box-1').prop('checked')) {
-      $('#box-2, #box-3').prop('checked', true);
-      this.distributorService.findByName('Tất cả').subscribe(
-        res => this.myForm.value.type = res,
-        error => console.log(error)
-      );
-    } else {
-      $('#box-2, #box-3').prop('checked', false);
-      this.myForm.value.type = '';
-    }
-  }
-
-  // tslint:disable-next-line:typedef
-  chooseOne(target: HTMLInputElement) {
-    if ($('#box-2').is(':checked') && $('#box-3').is(':checked')) {
-      $('#box-1').prop('checked', true);
-      this.distributorService.findByName('Tất cả').subscribe(
-        res => this.myForm.value.type = res,
-        error => console.log(error)
-      );
-    } else if ($('#box-2').is(':checked')) {
-      $('#box-1').prop('checked', false);
-      this.distributorService.findByName('Bánh').subscribe(
-        res => this.myForm.value.type = res,
-        error => console.log(error)
-      );
-    } else {
-      $('#box-1').prop('checked', false);
-      this.distributorService.findByName('Kẹo').subscribe(
-        res => this.myForm.value.type = res,
-        error => console.log(error)
-      );
-    }
-  }
-
-  // tslint:disable-next-line:typedef
-  openEditForm(id: number) {
-    this.distributorService.findById(id).subscribe(
-      res => {
-        this.myForm.patchValue(res);
-        if (this.myForm.value.img !== '') {
-          this.src = this.myForm.value.img;
-        }
-        switch (this.myForm.value.type.name) {
-          case 'Tất cả' : {
-            $('#box-2, #box-3,#box-1').prop('checked', true);
-            break;
-          }
-          case 'Bánh': {
-            $('#box-2').prop('checked', true);
-            break;
-          }
-          case 'Kẹo' : {
-            $('#box-3').prop('checked', true);
-            break;
-          }
-        }
-      },
-      error => console.log(error)
-    );
-    $('#btn-editForm').click();
-
-  }
-
-  myDistributor: Distributor;
-
-  // tslint:disable-next-line:typedef
-  openDeleteForm(id: number) {
-    $('#deleteForm').click();
-    this.distributorService.findById(id).subscribe(
-      res => {
-        this.myDistributor = res;
-      },
-      error => console.log(error)
-    );
-  }
 }
+

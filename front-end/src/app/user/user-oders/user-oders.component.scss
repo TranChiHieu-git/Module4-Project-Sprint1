@@ -1,111 +1,75 @@
-.title {
+.title{
+  text-decoration: underline;
   text-align: center;
 }
-
 i {
-  font-size: 150%;
+  font-size:  150%;
 }
 
-#nav-tab a {
+#nav-tab a{
   width: 33.3333333%;
-  border: rgb(236, 233, 228) solid 1px;
-  border-radius: 0;
+  border: rgba(255, 218, 121,1.0) solid 1px;
 
 }
 
 #nav-tab a:hover {
-  background-color: rgb(235, 209, 174);
+  background-color: rgba(255, 218, 121,0.5);
 }
-
 //tr:hover{
 //  background-color: rgba(245, 205, 121,1.0) !important;
 //}
-.container-oders {
-  min-height: 80vh;
-  background-color: rgb(236, 233, 228);
-  border: rgb(201, 91, 61) solid 2px;
+.user-oder{
+  background-color:rgba(248, 239, 186,0.8);
+  margin:0;
 
 }
-
-//.user-oder{
-//  background-color:rgb(236, 233, 228);
-//  margin:0;
-//}
-.nav-tabs {
-  background-color:#d1af9b;
-
+.nav-tabs{
+background-color: rgba(241, 242, 246,0.8);
 }
-
-.nav-tabs .active {
-  background-color: rgb(236, 233, 228);
-  border-bottom: rgb(236, 233, 228) solid;
+.nav-tabs .active{
+  background-color: rgba(255, 218, 121,1.0);
+  border: rgba(248, 239, 186,0.95) solid;
 }
-
-.nav-item {
+.nav-item{
   text-align: center;
-  color: saddlebrown;
-  line-height: 240%;
+color: saddlebrown;
 
 }
-
-.user-oder-container {
+.user-oder-container{
   //border: white solid 2px !important;
 }
-
 i {
   color: black;
-  padding: 0 1%;
+  padding:0 1%;
 }
-
-td i:hover {
-  color: chocolate;
+td i:hover{
+color:chocolate;
 }
-
 .modal-content {
   background-color: rgba(248, 194, 145, 0.95);
   padding: 11px;
 }
-
 .modal {
   margin-top: 80px;
 }
-
-h1 {
+h1{
   color: #7a5744;
 }
-
-label {
+label{
   margin-top: auto !important;
   margin-bottom: auto;
 }
-
 .submitButton {
   color: black;
   border-style: solid;
   border-color: darkgoldenrod;
   padding: 10px;
-  background-color: rgba(255, 165, 2, 1.0);
+  background-color: rgba(255, 165, 2,1.0);
   overflow: hidden;
-  outline: none;
+  outline:none;
 }
-
 .submitButton:hover {
-  background-color: rgba(246, 229, 141, 0.5);
+  background-color: rgba(246, 229, 141,0.5);
   color: black;
 }
 
-table {
-  margin: 0;
-  background-color: white;
-  border-radius: 5px;
-}
-tbody tr:hover{
-  background-color: rgb(235, 209, 174);
-
-}
-.nav-tabs #nav-profile-tab {
-  border-left: rgb(201, 91, 61) solid 1px;
-  border-right: rgb(201, 91, 61) solid 1px;
-  border-radius:  0;
-
-}

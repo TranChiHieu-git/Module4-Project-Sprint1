@@ -109,8 +109,24 @@ select {
 html {
   background-color: #ffffff;
 }
+
+//.testbox {
+//  margin: 20px auto;
+//  -webkit-border-radius: 8px/7px;
+//  -moz-border-radius: 8px/7px;
+//  border-radius: 8px/7px;
+//  background-color: #ebebeb;
+//  -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+//  -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+//  box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+//  border: solid 1px #cbc9c9;
+//}
+
 .modal-content {
-  border-radius: 0 0 5px 5px;
+  margin: 20px auto;
+  -webkit-border-radius: 8px/7px;
+  -moz-border-radius: 8px/7px;
+  border-radius: 5px/7px;
   background-color: white;
   -webkit-box-shadow: 1px 2px 5px rgba(0, 0, 0, .31);
   -moz-box-shadow: 1px 2px 5px rgba(0, 0, 0, .31);
@@ -126,18 +142,18 @@ form {
 
 label {
   height: 40px;
-  float: right;
+  float: left;
   box-sizing: border-box;
 }
 
-.item input {
+input {
   width: 91%;
   height: 40px;
   box-sizing: border-box;
   border-radius: 0 5px 5px 0;
-  float: right;
+  float: left;
   box-sizing: border-box;
-  border: solid 0.25px;
+  border: solid 0.5px;
   box-shadow: 1px 2px 5px rgba(0, 0, 0, .31);
 }
 
@@ -147,55 +163,22 @@ label {
   clear: both;
   margin: 30px 0 30px 0px;
   box-sizing: border-box;
-  border-style: none;
 }
 
 h1 {
-  margin: 0px;
-  padding: 6px 0px 6px 20px;
-  color : white;
-  font-size: 20px;
+  position: relative;
+  top: -15px;
+  left: 20px;
+  background-color: white;
+  font-weight: 400;
+
 }
 
 
-
-.div1{
-  width: 49%;
-  float: left;
-}
-.div1 input, .div2 input{
-  width: 82%;
-}
-.div #icon , .div2 #icon{
-  width: 18%;
-}
-.div2{
-  width: 50%;
-  float: right;
-
-}
 #icon {
   display: inline-block;
-  width: 40px;
+  width: 9%;
   background-color: #3a57af;
-  //padding: 8px 0px 8px 15px;
-  line-height: 40px;
-  -webkit-border-radius: 4px 0px 0px 4px;
-  -moz-border-radius: 4px 0px 0px 4px;
-  border-radius: 4px 0px 0px 4px;
-  color: white;
-  -webkit-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-  -moz-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-  box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-  border: solid 0px #cbc9c9;
-  box-sizing: border-box;
-  font-size: 18px;
-  text-align: center;
-}
-#icon2 {
-  display: inline-block;
-  width: 40px;
-  background-color: #4c4c4c;
   //padding: 8px 0px 8px 15px;
   line-height: 40px;
   -webkit-border-radius: 4px 0px 0px 4px;
@@ -212,20 +195,18 @@ h1 {
 }
 
 .boundary {
-  margin: 5px 0px 0px 0px;
-  //border: solid black 1px;
+  margin: 10px;
+  border: solid black 1px;
   border-radius: 5px;
 }
 
 .item button {
-  width: 48%;
+  width: 100px;
   float: right;
-  height: 40px;
-
+  margin-left: 20px;
 }
 
-img {
-
+.img {
   max-width: 185.53px;
   max-height: 185.83px;
   width: auto;
@@ -239,7 +220,7 @@ img {
 ::ng-deep .mat-card {
   position: relative;
   width: 100%;
-  top: 5%;
+  top: 10%;
   height: 218px;
 
 }
@@ -263,7 +244,6 @@ img {
 
 button {
   box-shadow: 1px 2px 5px rgba(0, 0, 0, .31);
-  margin: 0;
 }
 
 input[type=text]:focus{
@@ -273,136 +253,8 @@ input[type=text]:focus{
 
 span{
   position: relative;
-  top : -2px;
-  left: 40px;
+  top :3px;
   //font-style: italic;
   color: red;
 }
 
-#modal-title, #modal-title2{
-  background-color: #3a57af;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-.modal-dialog {
-  position: absolute;
-  top: 200px;
-  right: 100px;
-  bottom: 0;
-  left: 0;
-}
-.modal-body{
-  padding: 0 16px 16px 16px;
-}
-
-
-//
-.checkbox {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-
-.title {
-  width: 100%;
-  margin-bottom: 15px;
-  font-family: 'Abel', sans-serif;
-  font-size: 16px;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.modal-content{
-  margin:  0;
-  padding: 0;
-}
-/*Page styles*/
-html { height: 100%; }
-
-
-
-.boxes {
-  margin: auto;
-
-}
-
-/*Checkboxes styles*/
-input[type="checkbox"] { display: none; }
-
-input[type="checkbox"] + label {
-  display: block;
-  position: relative;
-  padding-left: 35px;
-  margin-bottom: 20px;
-  color: black;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-
-input[type="checkbox"] + label:last-child { margin-bottom: 0; }
-
-input[type="checkbox"] + label:before {
-  content: '';
-  display: block;
-  width: 20px;
-  height: 20px;
-  border: 2px solid blue;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: .8;
-  -webkit-transition: all .12s, border-color .08s;
-  transition: all .12s, border-color .08s;
-}
-
-input[type="checkbox"]:checked + label:before {
-  width: 10px;
-  top: -5px;
-  left: 5px;
-  border-radius: 0;
-  opacity: 1;
-  border-top-color: transparent;
-  border-left-color: transparent;
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-.checkItem{
-  display: inline-block;
-  width: 100%;
-  margin-top: 5px;
-}
-.boxes{
-  position: relative;
-  top: 35px;
-}
-.checkItem label {
-  font-size: 16px;
-  height: 20px;
-}
-.checkItem *{
-  float: left;
-}
-
-i:hover{
-  cursor: pointer;
-}
-
-
-//DELETE CSS
-
-.myButton{
-  margin:25px 10% 30px 10%;
-  width: 30%;
-}
-.deleteTitle{
-  margin: 10px 20px 0px 20px;
-}
-.distributorName{
-  text-align: center;
-  color: #3a57af;
-  font-weight: 400;
-}

@@ -1,6 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {ServiceBillService} from '../service-bill.service';
+import {WareHouse} from '../ware-house';
+import {Bill} from '../bill';
 
 @Component({
   selector: 'app-search-bill',
@@ -8,6 +10,7 @@ import {ServiceBillService} from '../service-bill.service';
   styleUrls: ['./search-bill.component.scss']
 })
 export class SearchBillComponent implements OnInit {
+  wareHouses: WareHouse[] = [];
 
   // panelNum: number;
   //
@@ -29,6 +32,13 @@ export class SearchBillComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+    this.userService.findAllWarehouse().subscribe(
+      next => this.wareHouses = next,
+      error => {
+        this.wareHouses = [];
+        console.log(error);
+      });
+    console.log(this.wareHouses);
   }
 
   buildForm(): void {

@@ -6,8 +6,3 @@ export class Distributor {
   email: string;
   img: string;
 }
-export class TypeOfDistributor {
-  id: number;
-  name: string;
-
-}

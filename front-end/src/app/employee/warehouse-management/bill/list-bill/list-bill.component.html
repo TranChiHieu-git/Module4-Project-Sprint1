@@ -1,6 +1,226 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12 col-sm-12">
+      <!-- Button trigger modal -->
+      <!--      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create">-->
+      <!--      <div class="position-relative ">-->
+      <!--        <i class="fa fa-plus-square fa-2x " aria-hidden="true" data-toggle="modal" data-target="#create"></i>&nbsp;&nbsp;-->
+      <!--        <span style="font-size: 25px" class="position-absolute" style="top: 2px">Thêm mới</span>-->
+      <!--      </div>-->
+      <button class="btn btn-primary pl-2" data-toggle="modal" data-target="#create"><span
+        class="fa fa-plus-square"></span> Thêm mới
+      </button>
+
+      <!--      </button>-->
+
+      <!-- Modal -->
+      <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Thêm phiếu</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form [formGroup]="myForm">
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-12 col-sm-12">
+                    <div class="row">
+                      <div class="col-md-5 col-sm-5">
+                        <p>Mã phiếu (<i style="color: red">*</i>)</p>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <input type="text" class="form-control" autofocus>
+                        <i style="color: red">Validate</i>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-5 col-sm-5">
+                        <p>Loại phiếu (<i style="color: red">*</i>)</p>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <input type="text" class="form-control" autofocus>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-5 col-sm-5">
+                        <p>Nhà phân phối (<i style="color: red">*</i>)</p>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <input type="text" class="form-control" autofocus>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-5 col-sm-5">
+                        <p>Tên nhân viên (<i style="color: red">*</i>)</p>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <input type="text" class="form-control" autofocus>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-5 col-sm-5">
+                        <p>Tên thanh toán (<i style="color: red">*</i>)</p>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <input type="text" class="form-control" autofocus>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-5 col-sm-5">
+                        <p>Tên Kho (<i style="color: red">*</i>)</p>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <input type="text" class="form-control" autofocus>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-5 col-sm-5">
+                        <p>Mã vị trí (<i style="color: red">*</i>)</p>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <input type="text" class="form-control" autofocus>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-5 col-sm-5">
+                        <p>Tên phiếu (<i style="color: red">*</i>)</p>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <input type="text" class="form-control" autofocus>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-5 col-sm-5">
+                        <p>Phương tiện vận chuyển (<i style="color: red">*</i>)</p>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <input type="text" class="form-control" autofocus>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-5 col-sm-5">
+                        <p>Ngày lập phiếu (<i style="color: red">*</i>)</p>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <input type="text" class="form-control" autofocus>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-5 col-sm-5">
+                        <p>Trạng thái xử lý</p>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <input type="text" class="form-control" autofocus>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-5 col-sm-5">
+                        <p>Trạng thái vận chuyển</p>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <input type="text" class="form-control" autofocus>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-5 col-sm-5">
+                        <p>Thạng thái thanh toán</p>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <input type="text" class="form-control" autofocus>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-detail">Tiếp tục</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="create-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Chi tiết phiếu</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-7 col-sm-7">
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                      Tên mặt hàng
+                      <input type="text" class="form-control" autofocus>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                      Số lượng
+                      <input type="text" class="form-control" autofocus>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                      HSD
+                      <input type="text" class="form-control" autofocus>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-5 col-sm-5">
+                  <br>
+                  <br>
+                  <br>
+                  <button type="button" class="btn btn-primary">Thêm vào phiếu</button>
+
+                </div>
+              </div>
+              <br>
+              <br>
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  Mặt hàng
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  Số lượng
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Lùi</button>
+              <button type="button" class="btn btn-primary">Hoàn thành</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
       <table class="table table-responsive" >
         <tr>
           <th (click)="sort('name')">Mã phiếu</th>
@@ -11,30 +231,54 @@
         </tr>
 
         <tbody>
-        <tr *ngFor="let user of filteredUsers| orderBy: key : reverse | filter: searchByKeyword">
+        <tr *ngFor="let user of filteredUsers| orderBy: key : reverse | filter: searchByKeyword| paginate: { itemsPerPage: 3, currentPage: p }">
           <td >
             <span>
-              <span>
-                <i class="fa fa-plus-circle" aria-hidden="true" (click)="isCollapsed = !isCollapsed"
-                   [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"></i>
-              </span>
-              {{ user.name }}
-              <div id="collapseExample" [ngbCollapse]="isCollapsed">
-                <div class="card">
-                  <div class="card-body">
-                    You can collapse this card by clicking Toggle
-                  </div>
-                </div>
-              </div>
+<!--              <span>-->
+<!--                <i class="fa fa-plus-circle" aria-hidden="true" (click)="detailBill(isCollapsed=!isCollapsed,user.id)"-->
+<!--                   [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"></i>-->
+<!--              </span>-->
+              {{ user.id }}
+<!--              <div id="collapseExample" [ngbCollapse]="isCollapsed">-->
+<!--                <div class="card">-->
+<!--                  <div class="card-body">-->
+<!--                    <div class="container">-->
+<!--                      <div class="row">-->
+<!--                        <h3>Thông tin chi tiết</h3>-->
+<!--                      </div>-->
+<!--                      <br>-->
+<!--                      <div class="row">-->
+<!--                        <div class="col-md-6 col-sm-6">-->
+<!--                          <p>Loại phiếu: </p>-->
+<!--                          <p>Nhà phân phối: </p>-->
+<!--                          <p>Tên nhân viên: </p>-->
+<!--                          <p>Tên thanh toán: </p>-->
+<!--                          <p>Tên kho:</p>-->
+<!--                          <p>Mã vị trí: </p>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-6 col-sm-6">-->
+<!--                          <p>Phương tiện vận chuyển: </p>-->
+<!--                          <p>Ngày lập phiếu: </p>-->
+<!--                          <p>Trạng thái xử lý: {{bill2.processingStatus}}</p>-->
+<!--                          <p>Trạng thái thanh toán: {{bill2.paymentStatus}}</p>-->
+<!--                          <p>Trạng thái vận chuyển: {{bill2.shippingStatus}}</p>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
             </span>
 
           </td>
-          <td >{{ user.prefix }}</td>
-          <td>{{ user.email }}</td>
+          <td >{{ user.billName }}</td>
+          <td>{{ user.billStatus }}</td>
           <td>
             <!-- Button trigger modal -->
 <!--            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#abc">-->
-            <i class="fa fa-pencil-square" aria-hidden="true" data-toggle="modal" data-target="#abc"></i>
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#abc" (click)="editBill(user.id)">Chỉnh Sửa</button>
+<!--            <i class="fa fa-pencil-square" aria-hidden="true" data-toggle="modal" data-target="#abc"></i>-->
 <!--              <i class="fa fa-plus-circle" aria-hidden="true" ></i>-->
 <!--            </button>-->
 
@@ -48,13 +292,35 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <form [formGroup]="myForm">
+                  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
                     <div class="modal-body">
                       <div class="row">
-                        <div class="col-md-6 col-sm-6">
+                        <div class="col-md-12 col-sm-12">
                           <div class="row">
                             <div class="col-md-5 col-sm-5">
-                              <p>Mã phiếu</p>
+                              <p>Mã phiếu (<i style="color: red">*</i>)</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" formControlName="id" autofocus>
+                              <i style="color: red">Validate</i>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Loại phiếu (<i style="color: red">*</i>)</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <select class="form-control col-form-label" formGroupName="idTypeBill">
+                                <option *ngFor="let direction of typeBills" [ngValue]="direction"
+                                        [selected]="direction.id === myForm.value.idTypeBill.id">{{direction.nameTypeBill}}</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Nhà phân phối (<i style="color: red">*</i>)</p>
                             </div>
                             <div class="col-md-7 col-sm-7">
                               <input type="text" class="form-control" autofocus>
@@ -63,7 +329,7 @@
 
                           <div class="row">
                             <div class="col-md-5 col-sm-5">
-                              <p>Tên Loại</p>
+                              <p>Tên nhân viên (<i style="color: red">*</i>)</p>
                             </div>
                             <div class="col-md-7 col-sm-7">
                               <input type="text" class="form-control" autofocus>
@@ -72,108 +338,101 @@
 
                           <div class="row">
                             <div class="col-md-5 col-sm-5">
-                              <p>Tên DT</p>
+                              <p>Tên thanh toán (<i style="color: red">*</i>)</p>
                             </div>
                             <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
+                              <select class="form-control col-form-label" formGroupName="idPay">
+                                <option *ngFor="let direction of pays" [ngValue]="direction"
+                                        [selected]="direction.id === myForm.value.idPay.id">{{direction.namePay}}</option>
+                              </select>
                             </div>
                           </div>
 
                           <div class="row">
                             <div class="col-md-5 col-sm-5">
-                              <p>Tên NV</p>
+                              <p>Tên Kho (<i style="color: red">*</i>)</p>
                             </div>
                             <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
+                              <select class="form-control col-form-label" formGroupName="idWareHouse">
+                                <option *ngFor="let direction of wareHouseList" [ngValue]="direction"
+                                        [selected]="direction.id === myForm.value.idWareHouse.id">{{direction.nameWareHouse}}</option>
+                              </select>
                             </div>
                           </div>
 
                           <div class="row">
                             <div class="col-md-5 col-sm-5">
-                              <p>Tên TT</p>
+                              <p>Mã vị trí (<i style="color: red">*</i>)</p>
                             </div>
                             <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
+                              <select class="form-control col-form-label" formGroupName="idStorageLocation">
+                                <option *ngFor="let direction of storageLocations" [ngValue]="direction"
+                                        [selected]="direction.id === myForm.value.idStorageLocation.id">{{direction.nameStorageLocation}}</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                              <p>Tên phiếu (<i style="color: red">*</i>)</p>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                              <input type="text" class="form-control" formControlName="billName" autofocus>
                             </div>
                           </div>
 
                           <div class="row">
                             <div class="col-md-5 col-sm-5">
-                              <p>Tên Kho</p>
+                              <p>Phương tiện vận chuyển (<i style="color: red">*</i>)</p>
                             </div>
                             <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
+                              <select class="form-control col-form-label" formGroupName="idTransportation">
+                                <option *ngFor="let trans of transportation" [ngValue]="trans"
+                                        [selected]="trans.id === myForm.value.idTransportation.id">{{trans.nameTransportation}}</option>
+                              </select>
                             </div>
                           </div>
 
                           <div class="row">
                             <div class="col-md-5 col-sm-5">
-                              <p>Mã VT</p>
+                              <p>Ngày lập phiếu (<i style="color: red">*</i>)</p>
                             </div>
                             <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6">
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Tên phiếu</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
+                              <input type="text" class="form-control" formControlName="createDate" autofocus>
                             </div>
                           </div>
 
                           <div class="row">
                             <div class="col-md-5 col-sm-5">
-                              <p>Tên VC</p>
+                              <p>Trạng thái xử lý</p>
                             </div>
                             <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
+                              <input type="text" class="form-control" formControlName="processingStatus" autofocus>
                             </div>
                           </div>
 
                           <div class="row">
                             <div class="col-md-5 col-sm-5">
-                              <p>Ngày</p>
+                              <p>Trạng thái vận chuyển</p>
                             </div>
                             <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
+                              <input type="text" class="form-control" formControlName="shippingStatus" autofocus>
                             </div>
                           </div>
 
                           <div class="row">
                             <div class="col-md-5 col-sm-5">
-                              <p>Trạng thái XL</p>
+                              <p>Thạng thái thanh toán</p>
                             </div>
                             <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
+                              <input type="text" class="form-control" formControlName="paymentStatus" autofocus>
 
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Trạng thái VC</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Thạng thái TT</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                      <button type="button" class="btn btn-warning">Tiếp tục</button>
+                      <button type="button" class="btn btn-warning">Chỉnh sửa</button>
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                     </div>
                   </form>
@@ -183,7 +442,8 @@
           </td>
           <td>
             <!-- Button trigger modal -->
-            <i class="fa fa-trash" aria-hidden="true" data-toggle="modal" data-target="#xyz"></i>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#xyz">Xóa</button>
+<!--            <i class="fa fa-trash" aria-hidden="true" data-toggle="modal" data-target="#xyz"></i>-->
 <!--            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#xyz">-->
 <!--              Xóa-->
 <!--            </button>-->
@@ -198,141 +458,22 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <form [formGroup]="myForm">
                     <div class="modal-body">
-                      <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Mã phiếu</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Tên Loại</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Tên DT</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Tên NV</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Tên TT</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Tên Kho</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Mã VT</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6">
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Tên phiếu</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Tên VC</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Ngày</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Trạng thái XL</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Trạng thái VC</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-md-5 col-sm-5">
-                              <p>Thạng thái TT</p>
-                            </div>
-                            <div class="col-md-7 col-sm-7">
-                              <input type="text" class="form-control" autofocus>
-                            </div>
-                          </div>
-                        </div>
+                      <div>
+                        <h2>Bạn có chắc muốn xóa không?</h2>
                       </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
                       <button type="button" class="btn btn-danger">Xóa</button>
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                     </div>
-                  </form>
                 </div>
               </div>
             </div>
           </td>
         </tr>
         </tbody>
+        <pagination-controls (pageChange)="p = $event" class="pag position-fixed" ></pagination-controls>
       </table>
 
     </div>
