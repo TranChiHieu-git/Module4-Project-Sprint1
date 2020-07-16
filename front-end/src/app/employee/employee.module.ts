@@ -25,11 +25,12 @@ import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {CustomerManagementComponent} from './partner-management/customer-management/customer-management.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {BrandManagementComponent} from './warehouse-management/brand-management/brand-management.component';
 
 @NgModule({
     declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
   WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BillComponent,
-    ListBillComponent,
+    ListBillComponent,BrandManagementComponent,
     SearchBillComponent, CustomerManagementComponent],
   exports: [
     WarehouseManagementComponent,
