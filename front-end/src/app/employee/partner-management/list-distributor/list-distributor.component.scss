@@ -384,3 +384,27 @@ i:hover{
   color: #3a57af;
   font-weight: 400;
 }
+
+.paging-course {
+  position: absolute;
+  margin-top: 50px;
+  margin-left: 50%;
+
+}
+
+.pagination {
+  position: absolute;
+  margin-top: -200px;
+  margin-left: 203px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: 0.25rem; }
+.searchCustom{
+  padding-top: 20px;
+}
+.buttonSearchCustom{
+  margin-left: 35px;
+}
