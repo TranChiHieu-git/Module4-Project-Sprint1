@@ -1,9 +1,14 @@
+import {Account} from './account';
+
 export class Customer {
   id: number;
-  name: string;
+  userName: string;
+  birthday: string;
+  gender: string;
   address: string;
-  phoneNumber: string;
+  phone: string;
   email: string;
+  account: Account;
   numberOfPurchases: string;
   totalValue: string;
   discountCode: string;

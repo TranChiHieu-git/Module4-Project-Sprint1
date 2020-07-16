@@ -54,16 +54,16 @@ export class ListDistributorComponent implements OnInit {
     );
 
     // tslint:disable-next-line:only-arrow-functions
-    (function($) {
+    (function ($) {
       // tslint:disable-next-line:only-arrow-functions
-      $(document).ready(function() {
+      $(document).ready(function () {
         // tslint:disable-next-line:only-arrow-functions
-        const readURL = function(input) {
+        const readURL = function (input) {
           if (input.files && input.files[0]) {
             const reader = new FileReader();
 
             // tslint:disable-next-line:only-arrow-functions
-            reader.onload = function(e) {
+            reader.onload = function (e) {
               // @ts-ignore
               $('.profile-pic').attr('src', e.target.result);
             };
@@ -72,12 +72,12 @@ export class ListDistributorComponent implements OnInit {
           }
         };
 
-        $('.file-upload').on('change', function() {
+        $('.file-upload').on('change', function () {
           readURL(this);
         });
 
         // tslint:disable-next-line:only-arrow-functions
-        $('.upload-button').on('click', function() {
+        $('.upload-button').on('click', function () {
           $('.file-upload').click();
         });
       });
@@ -86,13 +86,13 @@ export class ListDistributorComponent implements OnInit {
 
     // Thach
     $('.icon-upload-alt').css('opacity', '-1');
-    $('.button').click(function() {
+    $('.button').click(function () {
       const buttonId = $(this).attr('id');
       $('#modal-container').removeAttr('class').addClass(buttonId);
       $('body').addClass('modal-active');
     });
 
-    $('#modal-container').click(function() {
+    $('#modal-container').click(function () {
       $(this).addClass('out');
       $('body').removeClass('modal-active');
     });
@@ -148,7 +148,7 @@ export class ListDistributorComponent implements OnInit {
   readURL(target: any) {
     if (target.files && target.files[0]) {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = (e: any) => {
         $('#avatar').attr('src', e.target.result);
       };
       reader.readAsDataURL(target.files[0]);

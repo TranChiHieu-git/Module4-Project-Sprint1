@@ -23,17 +23,15 @@ const routes: Routes = [{
     path: 'user-manage',
     component: UserManageComponent,
     children: [{
-      path: 'user-detail',
+      path: 'user-detail/:idUser',
       component: UserDetailComponent,
-    },
-      {
-        path: 'user-oder',
-        component: UserOdersComponent
-      },
-      {
-        path: 'user-oder/:id',
-        component: UserOderDetailComponent
-      }
+    }, {
+      path: 'user-order/:id',
+      component: UserOdersComponent
+    }, {
+      path: 'order-detail/:idOrder',
+      component: UserOderDetailComponent
+    }
     ]
   },
   {
@@ -51,6 +49,7 @@ const routes: Routes = [{
     ],
   }
 ];
+
 @NgModule({
   declarations: [],
   imports: [
