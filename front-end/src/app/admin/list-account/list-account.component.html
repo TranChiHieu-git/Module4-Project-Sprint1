@@ -16,7 +16,7 @@
           <th scope="row">{{account.accountId}}</th>
           <td class="details" (click)="info(account.accountId)" data-toggle="modal"
               data-target="#infor">{{account.accountName}}</td>
-          <td>{{account.accountPassword}}</td>
+          <td><input disabled type="password" class="pass" value="{{account.accountPassword}}"></td>
           <td>
             <button class="border-0 mr-5 bg-transparent fas fa-pencil-alt"
                     (click)="edit(account.accountId)" data-toggle="modal" data-target="#edit"></button>
@@ -248,7 +248,7 @@
                   <span class="input-group-text fas fa-user prefix"></span>
                 </div>
                 <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-                       value="{{infoAccountById.id}}">
+                       value="{{infoAccountById.name}}">
               </div>
             </tr>
           </table>

@@ -42,7 +42,7 @@ export class AdminService {
 
   deleteById(id: number): Observable<void> {
     // @ts-ignore
-    return this.httpClient.patch<void>(this.API_URL + '/delete/' + id);
+    return this.httpClient.delete<void>(this.API_URL + '/delete/' + id);
   }
 
   edit(account: Account): Observable<Account> {

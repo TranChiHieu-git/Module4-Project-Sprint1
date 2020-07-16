@@ -21,6 +21,7 @@ export class ListAccountComponent implements OnInit {
   infoAccountById: Employees = new Employees();
   AccountById: Account = new Account();
   editResuilt: Account;
+
   constructor(private adminService: AdminService,
               private route: Router,
               private formBuilder: FormBuilder,
@@ -68,6 +69,16 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   edit(id) {
+    this.adminService.findByInfoId(id).subscribe(next2 => {
+      this.infoAccountById = next2;
+    }, error => {
+      console.log(error);
+    });
+    this.adminService.findAllRole().subscribe(next3 => {
+      this.roleList = next3;
+    }, error => {
+      console.log(error);
+    });
     this.adminService.findAccountById(id).subscribe(next => {
       this.editAccountForm.patchValue({
         accountId: next.accountId,
@@ -79,16 +90,7 @@ export class ListAccountComponent implements OnInit {
     }, error => {
       console.log(error);
     });
-    this.adminService.findByInfoId(id).subscribe(next => {
-      this.infoAccountById = next;
-    }, error => {
-      console.log(error);
-    });
-    this.adminService.findAllRole().subscribe(next => {
-      this.roleList = next;
-    }, error => {
-      console.log(error);
-    });
+
     $('#edit').show();
     // tslint:disable-next-line:only-arrow-functions typedef
     $('.close').click(function() {
