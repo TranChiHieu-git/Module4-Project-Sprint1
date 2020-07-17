@@ -1,3 +1,5 @@
+import {Position} from './position';
+
 export class Employee {
   id: number;
   image: string;
