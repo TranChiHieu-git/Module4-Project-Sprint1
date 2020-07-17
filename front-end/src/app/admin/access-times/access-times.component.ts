@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {AccessTimesService} from '../../services/access-times.service';
 import {Accesstimes} from '../../models/accesstimes';
 
-
 @Component({
   selector: 'app-access-times',
   templateUrl: './access-times.component.html',
@@ -17,10 +16,7 @@ export class AccessTimesComponent implements OnInit {
   promiseCounts: any;
 
   constructor(private accessTimesService: AccessTimesService) {
-
-
   }
-
   ngOnInit(): void {
     this.accessTimesService.findAll().subscribe(next => {
       this.accessTimes = next;
@@ -143,7 +139,6 @@ export class AccessTimesComponent implements OnInit {
             ]
           }
         ]
-
       };
       this.dataSource = this.data;
     });

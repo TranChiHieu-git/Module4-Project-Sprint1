@@ -8,7 +8,6 @@ import {Employees} from '../../models/employees';
 import {Role} from '../../models/role';
 import {Md5} from 'ts-md5';
 
-
 @Component({
   selector: 'app-list-account',
   templateUrl: './list-account.component.html',
@@ -30,13 +29,11 @@ export class ListAccountComponent implements OnInit {
   search = '';
   totalPages = 1;
   promiseAccount: any;
-
   constructor(private adminService: AdminService,
               private route: Router,
               private formBuilder: FormBuilder,
               private activatedRoute: ActivatedRoute) {
   }
-
   ngOnInit(): void {
     this.adminService.findAllRole().subscribe(next => {
       this.roleList = next;
