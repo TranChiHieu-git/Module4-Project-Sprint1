@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AdminService} from '../../services/admin.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Account} from '../../models/account';
@@ -15,7 +15,8 @@ import {Md5} from 'ts-md5';
   styleUrls: ['./list-account.component.scss']
 })
 export class ListAccountComponent implements OnInit {
-  accountList: Account[];
+  accountList: Account[] = [];
+  accountlist: Account[] = [];
   roleList: Role[];
   accountForm: FormGroup;
   editAccountForm: FormGroup;
@@ -23,7 +24,7 @@ export class ListAccountComponent implements OnInit {
   infoAccountById: Employees = new Employees();
   AccountById: Account = new Account();
   editResuilt: Account;
-  size = 5;
+  size = 6;
   pageClicked = 0;
   pages = [];
   search = '';
@@ -39,6 +40,11 @@ export class ListAccountComponent implements OnInit {
   ngOnInit(): void {
     this.adminService.findAllRole().subscribe(next => {
       this.roleList = next;
+    }, error => {
+      console.log(error);
+    });
+    this.adminService.findAll().subscribe(next => {
+      this.accountlist = next;
     }, error => {
       console.log(error);
     });
@@ -58,23 +64,36 @@ export class ListAccountComponent implements OnInit {
     });
     this.editAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
-      accountName: ['', [Validators.required]],
-      accountPassword: ['', [Validators.required]],
+      accountName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,}$'), this.existAccountName.bind(this)]],
+      accountPassword: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]{1,}$')]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]]
     });
   }
 
+  // tslint:disable-next-line:typedef
+  existAccountName(c: AbstractControl) {
+    const v = c.value;
+    for (const acc of this.accountlist) {
+      if (acc.accountName === v && v !== this.AccountById.accountName) {
+        return {nameAccountExist: true};
+      }
+    }
+    return null;
+  }
+
   getAll(): void {
     this.getAllSubmit(0);
-  };
+  }
 
+  // tslint:disable-next-line:typedef
   getAllSubmit(page) {
     const md5 = new Md5();
     this.adminService.getAllCourse(page, this.size, this.search).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
+        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.accountList.length; i++) {
           this.accountList[i].accountPassword = md5.appendAsciiStr(<string> this.accountList[i].accountPassword).end();
         }
@@ -84,6 +103,7 @@ export class ListAccountComponent implements OnInit {
     );
   }
 
+  // tslint:disable-next-line:typedef
   onPrevious() {
     if (this.pageClicked > 0) {
       this.pageClicked--;
@@ -91,6 +111,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line:typedef
   onNext() {
     if (this.pageClicked < this.totalPages - 1) {
       this.pageClicked++;
@@ -98,11 +119,13 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line:typedef
   onFirst() {
     this.pageClicked = 0;
     this.getAllSubmit(this.pageClicked);
   }
 
+  // tslint:disable-next-line:typedef
   onLast() {
     this.pageClicked = this.totalPages - 1;
     this.getAllSubmit(this.pageClicked);
@@ -137,6 +160,11 @@ export class ListAccountComponent implements OnInit {
     });
     this.adminService.findAllRole().subscribe(next => {
       this.roleList = next;
+    }, error => {
+      console.log(error);
+    });
+    this.adminService.findAccountById(id).subscribe(next => {
+      this.AccountById = next;
     }, error => {
       console.log(error);
     });
