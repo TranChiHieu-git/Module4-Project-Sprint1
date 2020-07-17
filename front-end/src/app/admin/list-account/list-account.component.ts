@@ -64,8 +64,8 @@ export class ListAccountComponent implements OnInit {
     });
     this.editAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
-      accountName: ['', [Validators.required, this.existAccountName.bind(this)]],
-      accountPassword: ['', [Validators.required]],
+      accountName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,}$'), this.existAccountName.bind(this)]],
+      accountPassword: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]{1,}$')]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]]
     });
