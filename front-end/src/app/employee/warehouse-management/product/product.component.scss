@@ -39,19 +39,12 @@
   pointer-events: none;
   color: #aaa;
 }
-
-.showInfo {
-  text-align: right;
-}
-
 .border-0 {
   outline: none;
 }
-
-.custom-modal {
-  max-width: 50% !important;
+.modal-lg-custom {
+  max-width: 80%;
 }
-
-img {
-  max-width: 180px;
+.table-header th{
+  background: #7fdbda;
 }

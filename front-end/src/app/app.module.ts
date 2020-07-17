@@ -23,11 +23,11 @@ import {EmployeeComponent} from './employee/employee.component';
     BrowserModule,
     AdminModule,
     EmployeeModule,
-    AppRoutingModule,
     ShareModule,
+    AppRoutingModule,
     MaterialModule,
     MatIconModule,
-    UserModule
+    UserModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
