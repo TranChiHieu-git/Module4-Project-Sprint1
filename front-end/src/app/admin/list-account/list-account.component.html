@@ -281,7 +281,7 @@
                 <span *ngIf="editAccountForm.get('accountName').hasError('required')">
             Tên tài khoản không được bỏ trống</span>
                 <span
-                *ngIf="editAccountForm.get('accountName').hasError('pattern')">
+                  *ngIf="editAccountForm.get('accountName').hasError('pattern')">
             Tên tài khoản chỉ gồm chữ, số, và .,-_@</span>
                 <span
                   *ngIf="editAccountForm.get('accountName').hasError('nameAccountExist')">
