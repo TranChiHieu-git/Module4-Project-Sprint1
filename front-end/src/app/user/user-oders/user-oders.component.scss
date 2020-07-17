@@ -3,7 +3,7 @@
 }
 
 i {
-  font-size: 150%;
+  font-size: 120%;
 }
 
 #nav-tab a {
@@ -16,6 +16,7 @@ i {
 #nav-tab a:hover {
   background-color: rgb(235, 209, 174);
 }
+
 
 //tr:hover{
 //  background-color: rgba(245, 205, 121,1.0) !important;
@@ -44,7 +45,7 @@ i {
 .nav-item {
   text-align: center;
   color: saddlebrown;
-  line-height: 240%;
+  line-height: 200%;
 
 }
 
@@ -57,9 +58,6 @@ i {
   padding: 0 1%;
 }
 
-td i:hover {
-  color: chocolate;
-}
 
 .modal-content {
   background-color: rgba(248, 194, 145, 0.95);
@@ -100,7 +98,7 @@ table {
   border-radius: 5px;
 }
 tbody tr:hover{
-  background-color: rgb(235, 209, 174);
+  background-color: whitesmoke;
 
 }
 .nav-tabs #nav-profile-tab {
@@ -108,4 +106,14 @@ tbody tr:hover{
   border-right: rgb(201, 91, 61) solid 1px;
   border-radius:  0;
 
+}
+.page{
+  position: absolute;
+  bottom: 0;
+  right:40%;
+  padding: 15px;
+}
+
+button i{
+  font-size: 100%;
 }

@@ -20,21 +20,6 @@ const routes: Routes = [{
   ],
 },
   {
-    path: 'user-manage',
-    component: UserManageComponent,
-    children: [{
-      path: 'user-detail/:idUser',
-      component: UserDetailComponent,
-    }, {
-      path: 'user-order/:id',
-      component: UserOdersComponent
-    }, {
-      path: 'order-detail/:idOrder',
-      component: UserOderDetailComponent
-    }
-    ]
-  },
-  {
     path: '', component: UserComponent,
     children: [
       {path: '', component: OrderButtonComponent}
@@ -44,6 +29,21 @@ const routes: Routes = [{
           {path: 'cake', component: HomeCakeComponent},
           {path: 'candy', component: HomeCandyComponent},
           {path: 'detail', component: DetailComponent}
+        ]
+      },
+      {
+        path: 'user-manage',
+        component: UserManageComponent,
+        children: [{
+          path: 'user-detail',
+          component: UserDetailComponent,
+        }, {
+          path: 'user-order',
+          component: UserOdersComponent
+        }, {
+          path: 'order-detail',
+          component: UserOderDetailComponent
+        }
         ]
       }
     ],

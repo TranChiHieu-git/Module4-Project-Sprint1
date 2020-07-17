@@ -1,13 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
+import {OrderService} from '../services/order.service';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
+  idUser: number;
 
-  constructor() { }
+  constructor(private orderService: OrderService) {
+    // lấy id user từ service
+    this.orderService.chanceIdUser(5);
+  }
 
   ngOnInit(): void {
     // $('.blurbutton').on('click', function(){
@@ -26,6 +32,8 @@ export class UserComponent implements OnInit {
       console.log('hide');
       $('body').removeClass('modalBlur');
     });
+// lấy id user từ service
+//     this.orderService.chanceIdUser(this.idUser);
   }
 
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Order} from '../models/order';
 
 @Injectable({
@@ -10,12 +10,29 @@ export class OrderService {
   ORDER_API_URL = 'http://localhost:8081/user-order';
   ORDER_DETAIL_API_URL = 'http://localhost:8081/order';
   ORDER_CANCEL_API_URL = 'http://localhost:8081/order-cancel';
+  idUserSource = new BehaviorSubject<number>(0);
+  curentIdUser = this.idUserSource.asObservable();
+
+  idOrderSource = new BehaviorSubject<number>(0);
+  curentIdOrder = this.idOrderSource.asObservable();
 
   constructor(private  httpClient: HttpClient) {
   }
 
+  chanceIdUser(id) {
+    this.idUserSource.next(id);
+  }
+
+  chanceIdOrder(id) {
+    this.idOrderSource.next(id);
+  }
+
   findAllOrderByUserId(id: number): Observable<Order[]> {
     return this.httpClient.get<Order[]>(this.ORDER_API_URL + '/' + id);
+  }
+
+  findAllOrderByUserIdOnPage(id: number, page: number): Observable<Order[]> {
+    return this.httpClient.get<Order[]>(this.ORDER_API_URL + '/' + id + '/?page=' + page);
   }
 
   findOrderById(id: number): Observable<Order> {

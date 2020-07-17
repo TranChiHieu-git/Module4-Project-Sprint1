@@ -13,14 +13,18 @@ export class UserOderDetailComponent implements OnInit {
   order: Order;
   orderDetails: OrderDetail[];
   totalMoney = 0;
+  idOrder: number;
 
   constructor(private activatedRoute: ActivatedRoute,
               private orderService: OrderService,
-              private router: Router) {
-    this.activatedRoute.paramMap.subscribe((param: ParamMap) => {
-      const idOrder = Number(param.get('idOrder'));
-      this.orderService.findOrderById(idOrder).subscribe(next => {
+              private router: Router
+  ) {
+    this.orderService.curentIdOrder.subscribe(message => {
+      this.idOrder = message;
+      this.orderService.findOrderById(this.idOrder).subscribe(next => {
           this.order = next;
+          // lấy id user từ service
+          this.orderService.chanceIdUser(this.order.user.id);
           this.orderDetails = this.order.orderDetailList;
           this.orderDetails.forEach(product => {
             product.temMoney = product.orderQuantity * product.id.product.price;
@@ -31,17 +35,21 @@ export class UserOderDetailComponent implements OnInit {
           console.log(error);
           this.order = null;
         });
+
     });
+
   }
 
   ngOnInit(): void {
+
   }
 
   // tslint:disable-next-line:typedef
   cancelOrder(orderId: number) {
     this.orderService.cancelOrder(orderId).subscribe(
       res => {
-        window.location.reload();
+        this.router.navigate(['/user-manage/user-order']);
+        alert("Hủy đơn hàng thành công");
       },
       error => {
         console.log(error);
