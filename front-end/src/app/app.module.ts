@@ -11,6 +11,8 @@ import {UserComponent} from './user/user.component';
 import {UserModule} from './user/user.module';
 import {EmployeeModule} from './employee/employee.module';
 import {EmployeeComponent} from './employee/employee.component';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {AuthInterceptor} from './auth/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,11 @@ import {EmployeeComponent} from './employee/employee.component';
     MatIconModule,
     UserModule
   ],
-  providers: [],
+  providers: [ {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
