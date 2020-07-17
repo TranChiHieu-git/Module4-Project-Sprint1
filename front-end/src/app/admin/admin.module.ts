@@ -5,6 +5,7 @@ import {ListAccountComponent} from './list-account/list-account.component';
 import {AccessTimesComponent} from './access-times/access-times.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [ListAccountComponent, AccessTimesComponent],
@@ -12,7 +13,8 @@ import {HttpClientModule} from "@angular/common/http";
     CommonModule,
     MatIconModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule
   ]
 })
 export class AdminModule {

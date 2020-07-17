@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
-import {TestComponent} from '../user/test/test.component';
+import {TestComponent} from './test/test.component';
 import {UserComponent} from './user.component';
 import {UserManageComponent} from './user-manage/user-manage.component';
 import {UserOdersComponent} from './user-oders/user-oders.component';
@@ -12,11 +12,13 @@ import {HomeCakeComponent} from './home-store/home-cake/home-cake.component';
 import {HomeCandyComponent} from './home-store/home-candy/home-candy.component';
 import {DetailComponent} from './home-store/detail/detail.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
+import {UserLoginComponent} from './user-login/user-login.component';
 
 const routes: Routes = [{
   path: 'home', component: UserComponent,
   children: [
-    {path: 'test', component: TestComponent}
+    {path: 'test', component: TestComponent},
+    {path: 'login', component: UserLoginComponent}
   ],
 },
   {
