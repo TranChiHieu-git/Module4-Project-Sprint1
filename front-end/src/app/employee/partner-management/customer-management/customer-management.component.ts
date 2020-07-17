@@ -4,7 +4,11 @@ import {Component, OnChanges, OnInit} from '@angular/core';
 import {CustomerService} from '../../../services/customer.service';
 import {Customer} from '../../../models/customer';
 import {HttpClient} from "@angular/common/http";
+import {finalize} from "rxjs/operators";
+import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from "@angular/fire/storage";
+
 declare var $: any;
+
 @Component({
   selector: 'app-customer-management',
   templateUrl: './customer-management.component.html',
@@ -22,12 +26,17 @@ export class CustomerManagementComponent implements OnInit {
   date: any;
   deleteList = new Array();
   selectedFile = null;
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+  editUrl: any;
+
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private customerService: CustomerService,
-              private http: HttpClient) {
-    this.customerService.getAllCustomer().subscribe(data => {
+              private http: HttpClient,
+              private afStorage: AngularFireStorage) {
+    this.customerService.getAllCustomer().subscribe((data: any) => {
         this.customers = data.content;
       }, error => {
         console.log(error);
@@ -46,10 +55,8 @@ export class CustomerManagementComponent implements OnInit {
     this.addUser = this.formBuilder.group({
       id: [''],
       userName: ['', [Validators.required, Validators.pattern('[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế][a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế ]*')]],
-
       address: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('(090|091|\\(84\\)\\+90|\\(84\\)\\+91)[0-9]{7}')]],
-
       email: ['', [Validators.required, Validators.pattern('[A-Za-z0-9]+(\\.?[A-Za-z0-9])*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)')]],
       birthday: [''],
       gender: [''],
@@ -154,6 +161,11 @@ export class CustomerManagementComponent implements OnInit {
           birthday: this.date,
         });
       }
+      if (this.editUrl !== undefined) {
+        this.addUser.patchValue({
+          imageUrl: this.editUrl,
+        });
+      }
       this.customerService.editCustomer(this.addUser.value).subscribe(
         next => window.location.reload(),
         error => console.log(error)
@@ -248,9 +260,11 @@ export class CustomerManagementComponent implements OnInit {
   leaveUploadPic() {
     $('.icon-upload-alt').css('opacity', '-1');
   }
+
   selectAvatar() {
     $('#myAvatar').click();
   }
+
   // tslint:disable-next-line:typedef
   readURL(target: any) {
     if (target.files && target.files[0]) {
@@ -260,8 +274,23 @@ export class CustomerManagementComponent implements OnInit {
         $('#avatar').attr('src', e.target.result);
       };
       reader.readAsDataURL(target.files[0]);
+      this.uploadFireBaseAndSubmit();
     } else {
     }
+  }
+
+  private uploadFireBaseAndSubmit(): void {
+    const target: any = document.getElementById('myAvatar');
+    const id = Math.random().toString(36).substring(2);
+    this.ref = this.afStorage.ref(id);
+    this.task = this.ref.put(target.files[0]);
+    this.task.snapshotChanges().pipe(
+      finalize(() => {
+        this.ref.getDownloadURL().subscribe(url => {
+          this.editUrl = url;
+        });
+      }))
+      .subscribe();
   }
 
 }
