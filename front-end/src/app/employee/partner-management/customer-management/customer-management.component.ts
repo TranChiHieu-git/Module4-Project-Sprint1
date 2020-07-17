@@ -4,9 +4,7 @@ import {Component, OnChanges, OnInit} from '@angular/core';
 import {CustomerService} from '../../../services/customer.service';
 import {Customer} from '../../../models/customer';
 import {HttpClient} from "@angular/common/http";
-
 declare var $: any;
-
 @Component({
   selector: 'app-customer-management',
   templateUrl: './customer-management.component.html',
@@ -24,7 +22,6 @@ export class CustomerManagementComponent implements OnInit {
   date: any;
   deleteList = new Array();
   selectedFile = null;
-
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -35,7 +32,6 @@ export class CustomerManagementComponent implements OnInit {
       }, error => {
         console.log(error);
       }, () => {
-
       }
     );
   }
