@@ -24,7 +24,11 @@ import {MatCardModule} from '@angular/material/card';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {CustomerManagementComponent} from './partner-management/customer-management/customer-management.component';
 import {BrandManagementComponent} from './warehouse-management/brand-management/brand-management.component';
-import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import {AngularFireAuthModule} from '@angular/fire/auth';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
 
 @NgModule({
     declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
@@ -49,6 +53,19 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     ShareModule,
     MatCardModule,
     MatPaginatorModule,
+    AngularFireModule.initializeApp({
+      apiKey: 'AIzaSyAFbHzEL2J7oXY5bWTF6dA3DnO_iCj5W48',
+      authDomain: 'webapp-1b736.firebaseapp.com',
+      databaseURL: 'https://webapp-1b736.firebaseio.com',
+      projectId: 'webapp-1b736',
+      storageBucket: 'webapp-1b736.appspot.com',
+      messagingSenderId: '1077539336649',
+      appId: '1:1077539336649:web:e5fbf4e6a877218b887818',
+      measurementId: 'G-N3YS1JFN9K'
+    }),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireStorageModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
