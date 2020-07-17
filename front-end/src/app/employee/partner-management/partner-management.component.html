@@ -1,50 +1,61 @@
-<div class="container-fluid px-0 py-0">
-  <nav class="global-header-navbar navbar navbar-expand-lg navbar-light sticky-top mx-0 my-0 ">
-    <nav class="global-header-navbar-bg navbar navbar-light ">
-      <a class="navbar-brand" [routerLink]="'/admin'">
-        <img class="global-header-logo"
-          src="../../assets/photo/logo.png" width="auto" height="30" alt="logo">
-      </a>
-    </nav>
-    <div class=" global-header-text collapse navbar-collapse" id="navbarTogglerDemo03">
-      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item">
-          <a class="global-header-text nav-link pt-3 " [routerLink]="'/employee/warehouse-management'">Quản Lí</a>
-        </li>
-        <li class="nav-item">
-          <a class="global-header-text nav-link pt-3 " [routerLink]="'/employee/partner-management'">Bán Hàng</a>
-        </li>
-        <li class="nav-item">
-          <div class="main pt-1 ml-3">
-            <div class="form-group has-search mt-2">
-              <span class="fa fa-search form-control-feedback"></span>
-              <input type="text" class="form-control" placeholder="Search">
-            </div>
-          </div>
-        </li>
-      </ul>
+<div class="container-fluid mx-0 px-0">
+  <div class="row-12 mx-0 px-0">
+    <div class="col mx-0 px-0 head bg-info">
+      <nav class="navbar navbar-expand-lg navbar-light sticky-top mx-0 my-0 ">
+        <nav class="navbar navbar-light">
+          <a class="navbar-brand" [routerLink]="'/admin'">
+            <img class="logo"
+                 src="../../assets/photo/logo.png" width="auto" height="30" alt="logo">
+          </a>
+        </nav>
+        <div class="collapse navbar-collapse global-header-text" id="navbarTogglerDemo03">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+              <a class="nav-link pt-3" [routerLink]="'/employee/warehouse-management'">Quản Lí</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pt-3" [routerLink]="'/employee/partner-management'">Bán Hàng</a>
+            </li>
+            <li class="nav-item">
+              <div class="main pt-1">
+                <div class="form-group has-search mt-2">
+                  <span class="fa fa-search form-control-feedback"></span>
+                  <input type="text" class="form-control" placeholder="Search">
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <nav class="navbar navbar-light">
+          <a class="navbar-brand" [routerLink]="'/admin/employee-manager/detail'">
+            <img class="rounded-circle logout"
+                 src="../../assets/photo/avt.jpeg" width="30" height="30" alt="logo">
+          </a>
+          <a class="logout" [routerLink]="'/'">Đăng xuất</a>
+        </nav>
+      </nav>
     </div>
-    <nav class="global-header-navbar-bg navbar navbar-light ">
-      <a class="navbar-brand" [routerLink]="'/employee/partner-management/employee-manager/detail'">
-        <img class="rounded-circle"
-             src="../../assets/photo/avt.jpg" width="40" height="40" alt="logo">
-      </a>
-      <a class="global-header-text logout " [routerLink]="'/'">Đăng xuất</a>
-    </nav>
-  </nav>
-  <div class="global-bg row-12 outborder bg-dark px-0">
-    <div class="col-2 global-sidebar leftshape px-0 fixed-top">
+  </div>
+  <div class="row mx-0 px-0 body">
+    <div class="mx-0 px-0 sidebar mt-3 mb-3 ml-5 mr-3">
       <div class="list-group mt-5 ">
         <a [routerLink]="'/employee/partner-management/list-distributor'"
-           class="global-sidebar-chose pt-3 pb-3 listQL list-group-item-action sidebarChose">
+           class="pt-3 pb-3 list-group-item-action sidebarChose">
+          <img class="itemicon"
+               src="https://cdn2.iconfinder.com/data/icons/thin-charts-analytics/24/thin-1059_bar_chart_growth-256.png"
+               width="20px" height="auto">
           Quản Lý Nhà Phân Phối
-        </a>    <a [routerLink]="'/employee/partner-management/customer-management'"
-           class="global-sidebar-chose pt-3 pb-3 listQL list-group-item-action sidebarChose">
+        </a>
+        <a [routerLink]="'/employee/partner-management/customer-management'"
+           class="pt-3 pb-3 list-group-item-action sidebarChose">
+          <img class="itemicon"
+               src="https://cdn2.iconfinder.com/data/icons/thin-charts-analytics/24/thin-1059_bar_chart_growth-256.png"
+               width="20px" height="auto">
           Quản Lý khách hàng
         </a>
       </div>
     </div>
-    <div class="global-content col-10 rightshape px-0 ">
+    <div class="mx-0 px-0 content mt-3 mb-3 ml-3 mx-0">
       <router-outlet></router-outlet>
     </div>
   </div>

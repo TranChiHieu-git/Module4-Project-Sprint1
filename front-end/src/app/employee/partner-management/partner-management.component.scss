@@ -31,53 +31,26 @@ input[type=text]:focus {
   color: #aaa;
 }
 
-//
-//.border-top-black-custom {
-//  border-top: 1px solid black;
-//}
-//
-//.border-black-custom {
-//  border: 1px solid black;
-//}
-//
-//.main-size {
-//  height: 90vh
-//}
-//
-//.logo-custom {
-//  width: 50px;
-//  height: auto;
-//}
-//
-//.header-color {
-//  background-color: #204051;
-//}
-//
-//.sidebar-color {
-//  background-color: #84a9ac;
-//}
-//.content-color {
-//  background-color: #e4e3e3;
-//}
-//.btn-outline-custom{background-color: #84a9ac;color: white;border-color: #84a9ac!important;text-align: left !important;}
-//.btn-outline-custom:hover{color:white;background-color:#204051}
-//.btn-outline-custom.disabled,
-//.btn-outline-custom:disabled{color:#28a745;background-color:transparent}
-//.space-router{
-//  height: 8vh;
-//}
 .logo {
+  box-shadow: 1px 0px 6px 6px #fff;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 6px;
   width: 143px;
   height: auto;
+  cursor: pointer;
 }
 
 .navbar {
-  background-color: #204051;
+  background-color: rgb(238, 159, 31) !important;
   height: 10vh;
 }
 
 .navbar-brand, .nav-link {
-  color: white !important;
+  z-index: 1;
+  color: #581008 !important;
+  font-weight: 500;
+  text-decoration: none;
 }
 
 .outborder {
@@ -85,91 +58,46 @@ input[type=text]:focus {
 }
 
 .sidebarChose {
-  background-color: #84a9ac;
-  color: white !important;
-  padding-left: 20px;
+  color: #581008 !important;
+  padding-left: 30px;
 }
 
 .sidebarChose:hover {
-  background-color: #204051;
+  background-color: #f18502;
   color: white !important;
 }
 
-.listQL {
-  border-bottom: 1px solid darkgray;
-  border-top: 1px solid darkgray;
-}
 
 .logout {
-  color: white !important;
-  text-decoration: none;
-}
-
-.leftshape {
-  top: 10vh;
-  height: 90vh;
-  width: 36vh;
-  background-color: #84a9ac;
-}
-
-.rightshape {
-  height: 100%;
-  width: 200vh;
-  position: absolute;
-  right: 0px;
-  background-color: white;
-}
-
-
-//test css
-.global-header-logo{
-  box-shadow: 1px 0px 6px 6px #fff;
-  border-radius: 10px;
-  height: 35px;
-  background-color: #fff;
-  padding: 6px;
-}
-.global-header-navbar{
-  background-color: rgb(238, 159, 31) !important;
-}
-.global-header-navbar-bg{
-  background-color: rgba(0,0,0,0);
-}
-.global-header-text{
-  z-index: 1;
   color: #581008 !important;
-  font-weight: 500;
   text-decoration: none;
+  cursor: pointer;
 }
-.global-header-navbar:before{
-  background-size: 570px;
-  content: "";
-  width: 396px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-image: url(../../../assets/background/bg-bakery-1.png);
-  background-repeat: no-repeat;
-  background-position-x: -178px;
-  background-position-y: -104px;
+
+.container-fluid {
+  width: 100vw;
+  height: 100vh;
 }
-.global-header-navbar:after{
-  background-size: 560px;
-  content: "";
-  width: 396px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-image: url(../../../assets/background/bg-bakery-1.png);
-  background-repeat: no-repeat;
-  background-position-x: 0;
-  background-position-y: -133px;
+
+.body {
+  width: 100vw;
+  height: 90vh;
+  background-color: rgba(238, 159, 31, 0.5) !important;
+  background-image: url(../../../assets/background/bg-bakery-4.png);
+  background-position-y: 81em;
+  background-position-x: -38px;
+  background-size: 467px;
 }
-.global-sidebar{
-  height: 300px;
-  box-shadow: 5px 8px 20px 0px rgba(158,158,158,1);
+
+.head {
+  width: 100vw;
+  height: 10vh;
+}
+
+.sidebar {
+  width: 20vw;
+  height: 35vh;
+  box-shadow: 5px 8px 20px 0px rgba(158, 158, 158, 1);
   border-radius: 10px;
   top: 95px;
   left: 9px;
@@ -178,30 +106,13 @@ input[type=text]:focus {
   background-image: url(../../../assets/background/bg-bakery-2.png);
   background-repeat: no-repeat;
   background-color: #FCBC53;
-  position: fixed;
-}
-.global-sidebar-chose{
-  padding-left: 20px;
-  background-color: rgba(0,0,0,0);
-  border-bottom: none;
-  border-top: none;
-}
-.global-bg{
-  background-color: rgba(238, 159, 31,0.5)!important;
-  background-image: url(../../../assets/background/bg-bakery-4.png);
-  background-position-y: 81em;
-  background-position-x: -38px;
-  background-size: 467px;
 }
 
-.global-content{
-  border-radius: 10px;
-  margin: 30px 30px 0 0;
-  box-shadow: 5px 8px 20px 0px rgba(158,158,158,1);
-  height: 80%;
-  width: 170vh;
-  position: absolute;
-  right: 0px;
+.content {
+  width: 72vw;
+  height: 84.3vh;
+  overflow-y: auto;
+  overflow-x: hidden;
   background-color: white;
   background-repeat: no-repeat;
   background-image: url(../../../assets/background/bg-bakery-3.png);
@@ -210,12 +121,22 @@ input[type=text]:focus {
   background-position: bottom right;
   background-size: 467px;
 }
-.global-button{
-  background: transparent linear-gradient(38deg, #EE9F1F 0%, #FCBC53 100%) 0% 0% no-repeat padding-box;
-  font-size: 12px;
-  border-radius: 50px;
-  padding: 2% 7% 2% 7%;
-  color: white;
-  font-weight: 700;
+
+.content::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
