@@ -24,6 +24,12 @@ import {MatCardModule} from '@angular/material/card';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {CustomerManagementComponent} from './partner-management/customer-management/customer-management.component';
 import {BrandManagementComponent} from './warehouse-management/brand-management/brand-management.component';
+import {BrandService} from '../services/brand.service';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import {AngularFireDatabaseModule} from '@angular/fire/database';
+import {environment} from '../../environments/environment';
 import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
@@ -48,10 +54,15 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     MatDialogModule,
     ShareModule,
     MatCardModule,
+    NgxPaginationModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
+    AngularFireDatabaseModule
     MatPaginatorModule,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    BrandService
   ]
 })
 export class EmployeeModule {
