@@ -30,6 +30,7 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {environment} from '../../environments/environment';
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
     declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
@@ -57,6 +58,7 @@ import {environment} from '../../environments/environment';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
     AngularFireDatabaseModule
+    MatPaginatorModule,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
