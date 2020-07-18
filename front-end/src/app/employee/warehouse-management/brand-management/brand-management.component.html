@@ -15,7 +15,7 @@
     <thead>
     <tr>
       <th>Logo</th>
-      <th>Mã Thương Hiệu</th>
+      <th (click)="sort('id')">Mã Thương Hiệu <i class="fa fa-sort" aria-hidden="true"></i></th>
       <th>Tên Thương Hiệu</th>
       <th>Trụ sở</th>
       <th>Website</th>
@@ -23,7 +23,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let brand of brandList">
+    <tr *ngFor="let brand of brandList | orderBy: key: !reverse">
       <td style="width: 150px">
         <img class="brand-logo" [src]="brand.brandLogo">
       </td>
@@ -144,7 +144,7 @@
             </div>
           </div>
           <div class="modal-footer d-flex justify-content-center">
-            <button class="btn btn-warning ">
+            <button class="btn btn-warning #createBrand ">
               Xác nhận
             </button>
             <button class="btn btn-secondary " data-dismiss="modal">Hủy</button>
@@ -153,31 +153,6 @@
         </form>
       </div>
 
-    </div>
-  </div>
-</div>
-
-<!-- Modal Confirm Create Brand--->
-<div class="modal fade" id="brandConfirmCreate" tabindex="-1" role="dialog"
-     aria-hidden="true"
-     data-backdrop="static">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Xác Nhận</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <h5 class="my-3 d-flex justify-content-center">
-          Thêm mới thương hiệu ?
-        </h5>
-      </div>
-      <div class="modal-footer d-flex justify-content-center">
-        <button type="button" class="btn btn-warning">Có</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-      </div>
     </div>
   </div>
 </div>
