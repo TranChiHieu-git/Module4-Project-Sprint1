@@ -36,7 +36,7 @@
                       <div class="col-xl-4">
                         <mat-card (mouseover)="hoverUploadPic()" class="mat-card-img" (mouseleave)="leaveUploadPic()"
                                   (click)="selectAvatar()">
-                          <img id="avatar" src={{src}}>
+                          <img id="avatar" src='{{src}}'>
                           <input formControlName="id" readonly hidden>
                           <input class="file-upload-input" type='file'
                                  (change)="readURL($event.target);" accept="image/*"
