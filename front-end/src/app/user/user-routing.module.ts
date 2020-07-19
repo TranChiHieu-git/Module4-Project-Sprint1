@@ -12,11 +12,13 @@ import {HomeCakeComponent} from './home-store/home-cake/home-cake.component';
 import {HomeCandyComponent} from './home-store/home-candy/home-candy.component';
 import {DetailComponent} from './home-store/detail/detail.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
+import {UserLoginComponent} from './user-login/user-login.component';
 
 const routes: Routes = [{
   path: 'home', component: UserComponent,
   children: [
-    {path: 'test', component: TestComponent}
+    {path: 'test', component: TestComponent},
+    {path: 'login', component: UserLoginComponent}
   ],
 },
   {

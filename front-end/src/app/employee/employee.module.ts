@@ -24,12 +24,16 @@ import {MatCardModule} from '@angular/material/card';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {CustomerManagementComponent} from './partner-management/customer-management/customer-management.component';
 import {BrandManagementComponent} from './warehouse-management/brand-management/brand-management.component';
+import {BrandService} from '../services/brand.service';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import {AngularFireDatabaseModule} from '@angular/fire/database';
+import {environment} from '../../environments/environment';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {AngularFirestoreModule} from "@angular/fire/firestore";
-import {AngularFireStorageModule} from "@angular/fire/storage";
 import {AngularFireAuthModule} from "@angular/fire/auth";
-import {AngularFireModule} from "@angular/fire";
-
+import { FacebookModule } from 'ngx-facebook';
 @NgModule({
     declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
   WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BillComponent,
@@ -52,6 +56,9 @@ import {AngularFireModule} from "@angular/fire";
     MatDialogModule,
     ShareModule,
     MatCardModule,
+    NgxPaginationModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
     MatPaginatorModule,
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyAFbHzEL2J7oXY5bWTF6dA3DnO_iCj5W48',
@@ -65,10 +72,11 @@ import {AngularFireModule} from "@angular/fire";
     }),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AngularFireStorageModule
+    FacebookModule.forRoot()
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    BrandService
   ]
 })
 export class EmployeeModule {

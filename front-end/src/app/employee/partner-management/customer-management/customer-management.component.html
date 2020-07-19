@@ -1,6 +1,22 @@
+
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+
+
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<!-- Your Chat Plugin code -->
+<div class="fb-customerchat"
+     attribution=setup_tool
+     page_id="100944425041334"
+     theme_color="#0084ff"
+     logged_in_greeting="Hi! Code Bakery có thể hỗ trợ gì cho bạn?"
+     logged_out_greeting="Hi! Code Bakery có thể hỗ trợ gì cho bạn?">
+</div>
+
 
 <div>
   <h2>Danh sách khách hàng</h2>
@@ -273,7 +289,6 @@
 <!--                  </label>-->
 <!--                  <button type="button" (click)="onUpload()">upload</button>-->
 <!--                </div>-->
-
                 <div class="card">
                   <mat-card (mouseover)="hoverUploadPic()" class="mat-card-img" (mouseleave)="leaveUploadPic()"
                             (click)="selectAvatar()">
@@ -285,13 +300,13 @@
                     <i class="img img-upload-icon icon-upload-alt"></i>
                   </mat-card>
                 </div>
-
               </form>
 
             </div>
           </div>
         </div>
       </div>
+
 
 
       <router-outlet></router-outlet>
