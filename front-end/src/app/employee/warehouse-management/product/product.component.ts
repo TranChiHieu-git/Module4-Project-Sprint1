@@ -119,7 +119,6 @@ export class ProductComponent implements OnInit {
   }
 
   onSubmitEdit(): void {
-    console.log(this.productForm.value);
     this.productService.updateProduct(this.productForm.value).subscribe(
       next => {
         this.closeEditModal.nativeElement.click();
