@@ -198,8 +198,8 @@ export class ListDistributorComponent implements OnInit {
   readURL(target: any) {
     if (target.files && target.files[0]) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        // $('#avatar').attr('src', e.target.result);
+      reader.onload = (e: any) => {
+        $('#avatar').attr('src', e.target.result);
       };
       reader.readAsDataURL(target.files[0]);
     } else {

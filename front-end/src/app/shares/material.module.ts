@@ -6,6 +6,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -18,12 +19,14 @@ import {MatInputModule} from '@angular/material/input';
     MatNativeDateModule,
     MatInputModule,
     BrowserAnimationsModule,
+    MatSnackBarModule
   ], exports: [
     MatDatepickerModule,
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,
     BrowserAnimationsModule,
+    MatSnackBarModule
   ],
   providers: [MatDatepickerModule],
 })
