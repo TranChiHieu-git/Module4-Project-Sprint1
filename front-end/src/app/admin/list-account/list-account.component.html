@@ -151,98 +151,181 @@
         </button>
         <h3 class="modal-title">Thông tin tài khoản</h3>
         <br>
-        <table width="100%">
-          <tr>Mã số nhân viên:</tr>
-          <tr>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text fas fa-id-card prefix"></span>
+        <ng-container *ngIf="infoAccountById.position !== null">
+          <table width="100%">
+            <tr>Mã số nhân viên:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fas fa-id-card prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById.id}}">
               </div>
-              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-                     value="{{AccountById.accountId}}">
-            </div>
-          </tr>
-          <tr>Họ Và Tên:</tr>
-          <tr>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text fas fa-user prefix"></span>
+            </tr>
+            <tr>Họ Và Tên:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fas fa-user prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById.name}}">
               </div>
-              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-                     value="{{infoAccountById.name}}">
-            </div>
-          </tr>
-          <tr>Ngày Sinh:</tr>
-          <tr>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text fa fa-birthday-cake prefix"></span>
+            </tr>
+            <tr>Ngày Sinh:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fa fa-birthday-cake prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById.birthday | date: 'dd/MM/yyyy'}}">
               </div>
-              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-                     value="{{infoAccountById.birthday | date: 'dd/MM/yyyy'}}">
-            </div>
-          </tr>
-          <tr>Địa Chỉ:</tr>
-          <tr>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text fa fa-home prefix"></span>
+            </tr>
+            <tr>Địa Chỉ:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fa fa-home prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById.address}}">
               </div>
-              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-                     value="{{infoAccountById.address}}">
-            </div>
-          </tr>
-          <tr>Email:</tr>
-          <tr>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text fa fa-envelope prefix"></span>
+            </tr>
+            <tr>Email:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fa fa-envelope prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById.email}}">
               </div>
-              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-                     value="{{infoAccountById.email}}">
-            </div>
-          </tr>
-          <tr>Số Điện Thoại:</tr>
-          <tr>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text fa fa-phone prefix"></span>
+            </tr>
+            <tr>Số Điện Thoại:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fa fa-phone prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById.phoneNumber}}">
               </div>
-              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-                     value="{{infoAccountById.phoneNumber}}">
-            </div>
-          </tr>
-          <tr>Giới Tính:</tr>
-          <tr>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text fa fa-venus-mars prefix"></span>
+            </tr>
+            <tr>Giới Tính:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fa fa-venus-mars prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById.gender}}">
               </div>
-              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-                     value="{{infoAccountById.gender}}">
-            </div>
-          </tr>
-          <tr>Chức Vụ:</tr>
-          <tr>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text fa fa-briefcase prefix"></span>
+            </tr>
+            <tr>Chức Vụ:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fa fa-briefcase prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById.department.name}}">
               </div>
-              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-                     value="{{infoAccountById.department.name}}">
-            </div>
-          </tr>
-          <tr>Phòng Ban:</tr>
-          <tr>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text fa fa-industry prefix"></span>
+            </tr>
+            <tr>Phòng Ban:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fa fa-industry prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById.position.name}}">
               </div>
-              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-                     value="{{infoAccountById.position.name}}">
-            </div>
-          </tr>
-        </table>
+            </tr>
+          </table>
+        </ng-container>
+        <ng-container *ngIf="infoAccountById.position === null">
+          <table width="100%">
+            <tr>
+              <th>
+                <img class="rounded-circle avt-customer" src="{{infoAccountById2.imageUrl}}" width="15%"
+                     height="auto">
+              </th>
+            </tr>
+            <br>
+            <tr>Mã số khách hàng:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fas fa-id-card prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById2.id}}">
+              </div>
+            </tr>
+            <tr>Họ Và Tên:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fas fa-user prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById2.userName}}">
+              </div>
+            </tr>
+            <tr>Ngày Sinh:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fa fa-birthday-cake prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById2.birthday | date: 'dd/MM/yyyy'}}">
+              </div>
+            </tr>
+            <tr>Địa Chỉ:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fa fa-home prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById2.address}}">
+              </div>
+            </tr>
+            <tr>Email:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fa fa-envelope prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById2.email}}">
+              </div>
+            </tr>
+            <tr>Số Điện Thoại:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fa fa-phone prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById2.phone}}">
+              </div>
+            </tr>
+            <tr>Giới Tính:</tr>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fa fa-venus-mars prefix"></span>
+                </div>
+                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                       value="{{infoAccountById2.gender}}">
+              </div>
+            </tr>
+          </table>
+        </ng-container>
       </div>
     </div>
   </div>
@@ -272,15 +355,17 @@
                   <span class="input-group-text fas fa-vcard prefix"></span>
                 </div>
                 <input type="text" class="form-control" formControlName="accountName" aria-label="Username"
-                       aria-describedby="basic-addon1">
+                       aria-describedby="basic-addon1" placeholder="Nhập tên tài khoản nếu muốn sửa">
               </div>
             </tr>
             <tr>
               <div class="alert alert-danger" role="alert"
                    *ngIf="editAccountForm.get('accountName').invalid && editAccountForm.get('accountName').touched">
-                <span *ngIf="editAccountForm.get('accountName').hasError('required')">
-            Tên tài khoản không được bỏ trống</span><span
-                *ngIf="editAccountForm.get('accountName').hasError('nameAccountExist')">
+                <span
+                  *ngIf="editAccountForm.get('accountName').hasError('pattern')">
+            Tên tài khoản chỉ gồm chữ, số, và .,-_@</span>
+                <span
+                  *ngIf="editAccountForm.get('accountName').hasError('nameAccountExist')">
             Tên tài khoản đã tồn tại</span>
               </div>
             </tr>
@@ -291,17 +376,18 @@
                   <span class="input-group-text fas fa-id-card prefix"></span>
                 </div>
                 <input type="password" class="form-control" formControlName="accountPassword" aria-label="Username"
-                       aria-describedby="basic-addon1">
+                       aria-describedby="basic-addon1" placeholder="Nhập mật khẩu nếu muốn sửa">
               </div>
             </tr>
             <tr>
               <div class="alert alert-danger" role="alert"
                    *ngIf="editAccountForm.get('accountPassword').invalid && editAccountForm.get('accountPassword').touched">
-                <span *ngIf="editAccountForm.get('accountPassword').hasError('required')">
-            Mật khẩu không được bỏ trống</span>
+                <span
+                  *ngIf="editAccountForm.get('accountPassword').hasError('pattern')">
+            Mật khẩu chỉ bao gồm chữ và số</span>
               </div>
             </tr>
-            <tr>Loại Tài Khoản:</tr>
+            <tr>Loại Tài Khoản (*):</tr>
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -314,14 +400,21 @@
                 </select>
               </div>
             </tr>
-            <tr>Tên Nhân Viên:</tr>
+            <tr>Tên chủ tài khoản:</tr>
             <tr>
+
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text fas fa-user prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-                       value="{{infoAccountById.name}}">
+                <ng-container *ngIf="infoAccountById.name !== undefined; else elseBlock">
+                  <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                         value="{{infoAccountById.name}}">
+                </ng-container>
+                <ng-template #elseBlock>
+                  <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                         value="{{infoAccountById2.userName}}">
+                </ng-template>
               </div>
             </tr>
           </table>
@@ -333,7 +426,7 @@
                 <div class="row">
                   <div class="col-3"></div>
                   <div class="col-2 form-group">
-                    <button class="btn btn-warning" type="submit">sửa</button>
+                    <button class="btn btn-warning" [disabled]="editAccountForm.invalid" type="submit">sửa</button>
                   </div>
                   <div class="col-1"></div>
                   <div class="col-5">

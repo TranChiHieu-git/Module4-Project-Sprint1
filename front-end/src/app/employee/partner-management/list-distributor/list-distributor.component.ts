@@ -11,50 +11,96 @@ import * as $ from 'jquery';
   styleUrls: ['./list-distributor.component.scss']
 })
 export class ListDistributorComponent implements OnInit {
-
   constructor(private fb: FormBuilder,
               private distributorService: DistributorService,
               private router: Router) {
-
     this.myForm = fb.group({
       id: [''],
       name: [''],
-      phone: [''],
+      numberPhone: [''],
       email: [''],
       address: [''],
       fax: [''],
       website: [''],
       img: [''],
-      type: ['']
+      typeOfDistributor: ['']
     });
-
   }
 
   distributorForm: FormGroup;
   distributorList: Distributor[];
+  size = 5;
+  pageClick = 0;
+  pages = [];
+
+  search = '';
+  isSearch = false;
+
+  totalPages = 1;
+  listError: any = '';
   // Thach
   img: any;
   myForm: FormGroup;
-  src = 'https://worklink.vn/wp-content/uploads/2018/07/no-logo.png';
 
+  src = 'https://worklink.vn/wp-content/uploads/2018/07/no-logo.png';
   myDistributor: Distributor;
 
-  ngOnInit(): void {
-    this.distributorForm = this.fb.group({
-      id: [''],
-      name: [''],
-      address: [''],
-      numberPhone: [''],
-      email: [''],
-      img: ['']
-    });
-    this.distributorService.findAll().subscribe(
-      next => this.distributorList = next,
-      error => {
-        this.distributorList = [];
-        console.log(error);
-      }
+  // tslint:disable-next-line:typedef
+  onNext() {
+    if (this.pageClick < this.totalPages - 1) {
+      this.pageClick++;
+      this.onChange(this.pageClick);
+    }
+  }
+
+  // tslint:disable-next-line:typedef
+  onPrevious() {
+    if (this.pageClick > 0) {
+      this.pageClick--;
+      this.onChange(this.pageClick);
+    }
+  }
+
+  // tslint:disable-next-line:typedef
+  onFirst() {
+    this.pageClick = 0;
+    this.onChange(this.pageClick);
+  }
+
+  // tslint:disable-next-line:typedef
+  onLast() {
+    this.pageClick = this.totalPages - 1;
+    this.onChange(this.pageClick);
+  }
+
+  // tslint:disable-next-line:typedef
+  onChange(page) {
+    this.distributorService.getAllDistributor(page, this.size, this.search).subscribe(
+      next => {
+        console.log(next);
+        this.pageClick = page;
+        this.distributorList = next.content;
+        this.totalPages = next.totalPages;
+        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
+      },
+      error => console.log(error)
     );
+  }
+
+  getAllDistributor(): void {
+    this.onChange(0);
+  }
+
+  ngOnInit(): void {
+    this.getAllDistributor();
+    // this.distributorService.findAll().subscribe(
+    //   next => this.distributorList = next,
+    //   error => {
+    //     this.distributorList = [];
+    //     console.log(error);
+    //   }
+    // );
+
 
     // tslint:disable-next-line:only-arrow-functions no-shadowed-variable typedef
     (function($) {
@@ -64,30 +110,24 @@ export class ListDistributorComponent implements OnInit {
         const readURL = function(input) {
           if (input.files && input.files[0]) {
             const reader = new FileReader();
-
             // tslint:disable-next-line:only-arrow-functions typedef
             reader.onload = function(e) {
               // @ts-ignore
               $('.profile-pic').attr('src', e.target.result);
             };
-
             reader.readAsDataURL(input.files[0]);
           }
         };
-
         // tslint:disable-next-line:typedef
         $('.file-upload').on('change', function() {
           readURL(this);
         });
-
         // tslint:disable-next-line:only-arrow-functions typedef
         $('.upload-button').on('click', function() {
           $('.file-upload').click();
         });
       });
     })(jQuery);
-
-
     // Thach
     $('.icon-upload-alt').css('opacity', '-1');
     // tslint:disable-next-line:typedef
@@ -96,37 +136,43 @@ export class ListDistributorComponent implements OnInit {
       $('#modal-container').removeAttr('class').addClass(buttonId);
       $('body').addClass('modal-active');
     });
-
     // tslint:disable-next-line:typedef
     $('#modal-container').click(function() {
       $(this).addClass('out');
       $('body').removeClass('modal-active');
     });
-
   }
 
   // tslint:disable-next-line:typedef
   onSubmit() {
-    if (this.distributorForm.valid) {
-      this.distributorService.create(this.distributorForm.value).subscribe(
+    if (this.myForm.valid) {
+      console.log(this.myForm.value);
+      this.distributorService.create(this.myForm.value).subscribe(
         next => {
-          if (next && next.id) {
-            alert('Bạn đã thêm mới thành công');
-            window.location.reload();
-          }
+          console.log(next);
+          alert('Bạn đã thêm mới thành công');
+          // @ts-ignore
+          this.myForm.reset();
+          this.getAllDistributor();
+          this.router.navigate(['employee/partner-management/list-distributor']);
+          $('#deleteFormCreate').click();
         }
       );
+
     } else {
       alert('Invalid');
     }
   }
 
-
   // Thach Function
   // tslint:disable-next-line:typedef
   updateDistributor() {
+    console.log(this.myForm.value);
     this.distributorService.save(this.myForm.value).subscribe(
-      res => alert('Thành công'),
+      res => {
+        alert('Thành công');
+        this.myForm.reset();
+      },
       error => alert('Thất bại')
     );
     $('#modal').hide();
@@ -138,7 +184,6 @@ export class ListDistributorComponent implements OnInit {
     $('.icon-upload-alt').css('opacity', '0.8');
   }
 
-
   // tslint:disable-next-line:typedef
   leaveUploadPic() {
     $('.icon-upload-alt').css('opacity', '-1');
@@ -149,32 +194,29 @@ export class ListDistributorComponent implements OnInit {
     $('#myAvatar').click();
   }
 
-
   // tslint:disable-next-line:typedef
   readURL(target: any) {
     if (target.files && target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        // @ts-ignore
-        $('#avatar').attr('src', e.target.result);
+        // $('#avatar').attr('src', e.target.result);
       };
       reader.readAsDataURL(target.files[0]);
     } else {
     }
   }
 
-
   // tslint:disable-next-line:typedef
   chooseAll(item: HTMLInputElement) {
     if ($('#box-1').prop('checked')) {
       $('#box-2, #box-3').prop('checked', true);
       this.distributorService.findByName('Tất cả').subscribe(
-        res => this.myForm.value.type = res,
+        res => this.myForm.value.typeOfDistributor = res,
         error => console.log(error)
       );
     } else {
       $('#box-2, #box-3').prop('checked', false);
-      this.myForm.value.type = '';
+      this.myForm.value.typeOfDistributor = '';
     }
   }
 
@@ -183,22 +225,27 @@ export class ListDistributorComponent implements OnInit {
     if ($('#box-2').is(':checked') && $('#box-3').is(':checked')) {
       $('#box-1').prop('checked', true);
       this.distributorService.findByName('Tất cả').subscribe(
-        res => this.myForm.value.type = res,
+        res => this.myForm.value.typeOfDistributor = res,
         error => console.log(error)
       );
     } else if ($('#box-2').is(':checked')) {
       $('#box-1').prop('checked', false);
       this.distributorService.findByName('Bánh').subscribe(
-        res => this.myForm.value.type = res,
+        res => this.myForm.value.typeOfDistributor = res,
         error => console.log(error)
       );
     } else {
       $('#box-1').prop('checked', false);
       this.distributorService.findByName('Kẹo').subscribe(
-        res => this.myForm.value.type = res,
+        res => this.myForm.value.typeOfDistributor = res,
         error => console.log(error)
       );
     }
+  }
+
+  // tslint:disable-next-line:typedef
+  openCreateForm() {
+    $('#createForm').click();
   }
 
   // tslint:disable-next-line:typedef
@@ -209,17 +256,19 @@ export class ListDistributorComponent implements OnInit {
         if (this.myForm.value.img !== '') {
           this.src = this.myForm.value.img;
         }
-        switch (this.myForm.value.type.name) {
+        switch (this.myForm.value.typeOfDistributor.name) {
           case 'Tất cả' : {
             $('#box-2, #box-3,#box-1').prop('checked', true);
             break;
           }
           case 'Bánh': {
             $('#box-2').prop('checked', true);
+            $('#box-1,#box-3').prop('checked', false);
             break;
           }
           case 'Kẹo' : {
             $('#box-3').prop('checked', true);
+            $('#box-1,#box-2').prop('checked', false);
             break;
           }
         }
@@ -227,7 +276,6 @@ export class ListDistributorComponent implements OnInit {
       error => console.log(error)
     );
     $('#btn-editForm').click();
-
   }
 
   // tslint:disable-next-line:typedef
@@ -239,5 +287,54 @@ export class ListDistributorComponent implements OnInit {
       },
       error => console.log(error)
     );
+  }
+
+
+  // tslint:disable-next-line:typedef
+  searchName() {
+    if (this.search === '') {
+      this.isSearch = false;
+      this.ngOnInit();
+    } else {
+      this.isSearch = true;
+      this.onChange(0);
+    }
+  }
+
+  // tslint:disable-next-line:typedef
+  backToSearch() {
+    this.search = '';
+    this.isSearch = false;
+    this.ngOnInit();
+  }
+
+  // tslint:disable-next-line:typedef
+  openDetailForm(id: number) {
+    this.distributorService.findById(id).subscribe(
+      res => {
+        this.myForm.patchValue(res);
+        if (this.myForm.value.img !== '') {
+          this.src = this.myForm.value.img;
+        }
+        switch (this.myForm.value.typeOfDistributor.name) {
+          case 'Tất cả' : {
+            $('#box-2, #box-3,#box-1').prop('checked', true);
+            break;
+          }
+          case 'Bánh': {
+            $('#box-2').prop('checked', true);
+            $('#box-1,#box-3').prop('checked', false);
+            break;
+          }
+          case 'Kẹo' : {
+            $('#box-3').prop('checked', true);
+            $('#box-1,#box-2').prop('checked', false);
+            break;
+          }
+        }
+      },
+      error => console.log(error)
+    );
+    $('#btn-detailForm').click();
   }
 }

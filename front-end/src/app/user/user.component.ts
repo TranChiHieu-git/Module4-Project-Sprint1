@@ -1,31 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
+import {AccountService} from '../services/account.service';
+import {TokenStorageService} from '../auth/token-storage.service';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
+  userDisplayName = '';
 
-  constructor() { }
+  constructor(private accountService: AccountService,
+              private tokenStorage: TokenStorageService,
+  ) {
+  }
+
 
   ngOnInit(): void {
-    // $('.blurbutton').on('click', function(){
-    //   $('body').addClass('blurfilter');
-    // });
-    // $('.unblurbutton').on('click', function(){
-    //   $('body').removeClass('blurfilter');
-    // });
-    $('#registerModal').on('show.bs.modal', function (e) {
-      console.log('show');
-      $('body').addClass('modalBlur');
-      $('body').addClass('modal-backdrop show');
-    });
+    this.userDisplayName = sessionStorage.getItem('loggedUser');
+    console.log(this.userDisplayName);
+  }
 
-    $('#registerModal').on('hide.bs.modal', function (e) {
-      console.log('hide');
-      $('body').removeClass('modalBlur');
-    });
+  signOut() {
+    this.tokenStorage.signOut();
+    window.location.reload();
   }
 
 }
