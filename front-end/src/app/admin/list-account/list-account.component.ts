@@ -7,6 +7,8 @@ import {Account} from '../../models/account';
 import {Employees} from '../../models/employees';
 import {Role} from '../../models/role';
 import {Md5} from 'ts-md5';
+import {CustomerService} from '../../services/customer.service';
+import {Customer} from '../../models/customer';
 
 @Component({
   selector: 'app-list-account',
@@ -21,6 +23,7 @@ export class ListAccountComponent implements OnInit {
   editAccountForm: FormGroup;
   p = 1;
   infoAccountById: Employees = new Employees();
+  infoAccountById2: Customer = new Customer();
   AccountById: Account = new Account();
   editResuilt: Account;
   size = 6;
@@ -29,11 +32,14 @@ export class ListAccountComponent implements OnInit {
   search = '';
   totalPages = 1;
   promiseAccount: any;
+
   constructor(private adminService: AdminService,
               private route: Router,
               private formBuilder: FormBuilder,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private customerService: CustomerService) {
   }
+
   ngOnInit(): void {
     this.adminService.findAllRole().subscribe(next => {
       this.roleList = next;
@@ -61,8 +67,8 @@ export class ListAccountComponent implements OnInit {
     });
     this.editAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
-      accountName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,}$'), this.existAccountName.bind(this)]],
-      accountPassword: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]{1,}$')]],
+      accountName: ['', [Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,}$'), this.existAccountName.bind(this)]],
+      accountPassword: ['', [Validators.pattern('^[a-zA-Z0-9]{1,}$')]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]]
     });
@@ -92,7 +98,7 @@ export class ListAccountComponent implements OnInit {
         this.accountList = data.content;
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.accountList.length; i++) {
-          this.accountList[i].accountPassword = md5.appendAsciiStr(<string> this.accountList[i].accountPassword).end();
+          this.accountList[i].accountPassword = md5.appendAsciiStr(this.accountList[i].accountPassword as string).end();
         }
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
@@ -130,17 +136,19 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   info(id) {
+    this.infoAccountById.position = null;
     this.adminService.findByInfoId(id).subscribe(next => {
       this.infoAccountById = next;
     }, error => {
       console.log(error);
     });
-    this.adminService.findAccountById(id).subscribe(next => {
-      this.AccountById = next;
-    }, error => {
-      console.log(error);
-    });
-
+    if (this.infoAccountById.position === null) {
+      this.customerService.getCustomerById(id).subscribe(next => {
+        this.infoAccountById2 = next;
+      }, error => {
+        console.log(error);
+      });
+    }
     $('#infor').show();
     // tslint:disable-next-line:only-arrow-functions typedef
     $('.close').click(function() {
@@ -150,8 +158,13 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   edit(id) {
+    this.infoAccountById = new Employees();
     this.adminService.findByInfoId(id).subscribe(next => {
       this.infoAccountById = next;
+    });
+    this.customerService.getCustomerById(id).subscribe(next => {
+      this.infoAccountById2 = next;
+      // tslint:disable-next-line:no-shadowed-variable
     }, error => {
       console.log(error);
     });
@@ -168,8 +181,8 @@ export class ListAccountComponent implements OnInit {
     this.adminService.findAccountById(id).subscribe(next => {
       this.editAccountForm.patchValue({
         accountId: next.accountId,
-        accountName: next.accountName,
-        accountPassword: next.accountPassword,
+        accountName: '',
+        accountPassword: '',
         deleteFlag: next.deleteFlag,
         role: next.role.roleId
       });
@@ -244,8 +257,10 @@ export class ListAccountComponent implements OnInit {
   onSubmit() {
     this.editResuilt = new Account();
     this.editResuilt.accountId = this.editAccountForm.value.accountId;
-    this.editResuilt.accountName = this.editAccountForm.value.accountName;
-    this.editResuilt.accountPassword = this.editAccountForm.value.accountPassword;
+    // tslint:disable-next-line:max-line-length
+    this.editResuilt.accountName = this.editAccountForm.value.accountName !== '' ? this.editAccountForm.value.accountName : this.AccountById.accountName;
+    // tslint:disable-next-line:max-line-length
+    this.editResuilt.accountPassword = this.editAccountForm.value.accountPassword !== '' ? this.editAccountForm.value.accountPassword : this.AccountById.accountPassword;
     this.editResuilt.deleteFlag = this.editAccountForm.value.deleteFlag;
     this.adminService.findRoleById(this.editAccountForm.value.role).subscribe(next => {
       this.editResuilt.role = next;

@@ -107,9 +107,9 @@
                 <span>Xin Chào {{userDisplayName}} </span>
               </div>
               <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
-                <a class="dropdown-item " href="#">Quản Lý Tài Khoản</a>
+                <a class="dropdown-item " [routerLink]="['user-manage/user-detail']">Quản Lý Tài Khoản</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" [routerLink]="'/user-manage/user-oder/1'">Đơn Hàng Của Tôi</a>
+                <a class="dropdown-item" [routerLink]="['user-manage/user-order']">Đơn Hàng Của Tôi</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" (click)="signOut()">Đăng Xuất</a>
               </div>

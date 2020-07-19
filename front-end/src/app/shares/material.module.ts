@@ -28,7 +28,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     BrowserAnimationsModule,
     MatSnackBarModule
   ],
-  providers: [ MatDatepickerModule ],
+  providers: [MatDatepickerModule],
 })
 export class MaterialModule {
 }
