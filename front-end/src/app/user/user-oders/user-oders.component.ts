@@ -18,14 +18,18 @@ export class UserOdersComponent implements OnInit {
               private router: Router) {
     this.orderService.curentIdUser.subscribe(message => {
       this.idUser = message;
-      this.orderService.findAllOrderByUserIdOnPage(this.idUser, 0).subscribe((next: any) => {
-          this.orders = next.content;
-          this.totalPage = next.totalPages;
-        },
-        error => {
-          console.log(error);
-          this.orders = null;
-        });
+      this.orderService.currentPage.subscribe(page => {
+        this.currentPage = page;
+        this.orderService.findAllOrderByUserIdOnPage(this.idUser, this.currentPage).subscribe((next: any) => {
+            this.orders = next.content;
+            this.totalPage = next.totalPages;
+          },
+          error => {
+            console.log(error);
+            this.orders = null;
+          });
+      });
+
     });
   }
 
@@ -38,6 +42,7 @@ export class UserOdersComponent implements OnInit {
 
         this.currentPage++;
         console.log(this.currentPage);
+        this.orderService.chancePage(this.currentPage);
       },
       error => {
         console.log(error);
@@ -49,6 +54,8 @@ export class UserOdersComponent implements OnInit {
     this.orderService.findAllOrderByUserIdOnPage(this.idUser, this.currentPage - 1).subscribe((next: any) => {
         this.orders = next.content;
         this.currentPage--;
+        this.orderService.chancePage(this.currentPage);
+
       },
       error => {
         console.log(error);
