@@ -294,8 +294,4 @@ export class CustomerManagementComponent implements OnInit {
       }))
       .subscribe();
   }
-
-
-
-
 }
