@@ -3,7 +3,7 @@
   border: none;
 }
 .table td{
-//width: 100px;
+//min-width: 150px;
 padding: 1% 5%;
 }
 .table{
@@ -28,7 +28,7 @@ i{
   background-color: black;
 }
 
-h4{
+h5{
   padding-bottom: 1%;
   color: rgb(201, 91, 61);;
 }
@@ -40,4 +40,11 @@ input{
   width: 80%;
 
 
+}
+textarea{
+  border: none;
+  border-radius: 5px;
+}
+.table td .lable{
+  width: 20%;
 }

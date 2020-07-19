@@ -43,3 +43,49 @@ hr {
 .left-unit {
   padding-left: 25%;
 }
+.edit-customer-btn1 {
+  float: right;
+  margin-right: 10px;
+}
+#edit-em {
+  float: right;
+}
+#huy-2 {
+  float: right;
+}
+div button {
+  margin-top: 10px;
+}
+tr {
+  margin-top: 10px;
+}
+.hidden-required {
+
+  display: none;
+  font-size: 10px;
+  margin-top: 1px;
+  padding: 5px;
+}
+th:hover .hidden-required{
+  display: block;
+
+}
+.table1, .table2 {
+  border-collapse: separate;
+  border-spacing: 25px;
+}
+::ng-deep .cdk-overlay-container{
+  z-index:2000 !important;
+}
+.modal-body div .row {
+  padding-left: 25%;
+}
+label {
+  padding-left: 25%;
+}
+.header-inf {
+  margin-left: 17%;
+}
+.header-dmk{
+  margin-left: 32%;
+}
