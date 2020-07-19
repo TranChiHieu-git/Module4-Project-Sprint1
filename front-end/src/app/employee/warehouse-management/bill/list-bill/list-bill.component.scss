@@ -9,3 +9,20 @@ th, td {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.pag {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+pagination-controls{
+  bottom: 12px;
+}
+tbody .card{
+  width: 700px;
+}
+tbody .card h3{
+  text-align: center;
+}
