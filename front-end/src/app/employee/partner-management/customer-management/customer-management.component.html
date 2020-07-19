@@ -1,7 +1,7 @@
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<! - SDK SDK Firebase cốt lõi luôn được yêu cầu và phải được liệt kê trước ->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 
 <!-- Load Facebook SDK for JavaScript -->
 <div id="fb-root"></div>
@@ -14,6 +14,7 @@
      logged_out_greeting="Hi! Code Bakery có thể hỗ trợ gì cho bạn?">
 </div>
 
+
 <div>
   <h2>Danh sách khách hàng</h2>
   <div>
@@ -22,7 +23,9 @@
     <button class="btn btn-outline-primary">Tìm kiếm</button>
   </div>
 </div>
+
 <div class="mt-3">
+
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModel">Thêm mới</button>
   <button type="button" class="global-button delete-selected" (click)="delete()">Xóa khách hàng đã chọn</button>
   <table class="table table-bordered" style="font-size: 12px;">
@@ -39,6 +42,7 @@
                  id="checkAll">
           <label class="custom-control-label" for="checkAll"></label>
         </div>
+
       </th>
     </tr>
     </thead>
@@ -52,6 +56,7 @@
         {{i}}
         {{cus.id}}
       </td>
+
       <td class="col-md-3"> {{cus.userName}}</td>
       <td class="col-md-3"> {{cus.address}}</td>
       <td class="col-md-2"> {{cus.email}}</td>
@@ -60,7 +65,7 @@
           <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button m-1"><i
             class="icon-pencil"></i></button>
         </a>
-        <a data-toggle="modal" data-target="#DeleteModal" (click)="deleteSubmit(cus.id)">
+        <a data-toggle="modal" data-target="#DeleteModal" (click)="deleteSubmit(cus.id,cus.userName)">
           <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button"><i
             class="icon-trash"></i></button>
         </a>
@@ -91,7 +96,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">-->
-        <h5 class="modal-title modal-titles" id="myModalLabel">Them thông tin khách hàng</h5>
+        <h5 class="modal-title modal-titles" id="myModalLabel">Thêm thông tin khách hàng</h5>
         <button type="button" class="close " data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -211,7 +216,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form (ngSubmit)="onSubmit()" [formGroup]="addUser">
+        <form (ngSubmit)="editSubmit(tempCustomer.userName)" [formGroup]="addUser">
           <div class="customer-input-outside">
             <input class="global-content-popup-input customer-input" type="text" id="userName"
                    formControlName="userName"/>
@@ -300,13 +305,11 @@
                      hidden id="myAvatar" style="display:none;"/>
               <i class="img img-upload-icon icon-upload-alt"></i>
             </mat-card>
+            <progress  max="100" [value]="(uploadProgress | async)" *ngIf="uploadProgressStatus"></progress>
           </div>
         </form>
-
       </div>
     </div>
   </div>
 </div>
-
-
 <router-outlet></router-outlet>

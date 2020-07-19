@@ -98,7 +98,7 @@ export class ListAccountComponent implements OnInit {
         this.accountList = data.content;
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.accountList.length; i++) {
-          this.accountList[i].accountPassword = md5.appendAsciiStr(<string> this.accountList[i].accountPassword).end();
+          this.accountList[i].accountPassword = md5.appendAsciiStr(this.accountList[i].accountPassword as string).end();
         }
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
