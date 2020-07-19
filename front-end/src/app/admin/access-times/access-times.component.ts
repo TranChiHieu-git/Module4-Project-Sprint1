@@ -1,51 +1,146 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AccessTimesService} from '../../services/access-times.service';
+import {Accesstimes} from '../../models/accesstimes';
 
 @Component({
   selector: 'app-access-times',
   templateUrl: './access-times.component.html',
   styleUrls: ['./access-times.component.scss']
 })
-export class AccessTimesComponent implements OnInit, AfterViewInit {
-  private ctx: CanvasRenderingContext2D;
-  @ViewChild('myCanvas')
-  myCanvas: ElementRef<HTMLCanvasElement>;
-  y = 502;
-  x = 0;
-  x2 = 0;
-  y2 = 450;
-  count10 = 502 / 10;
-  month1 = 1082 / 12;
+export class AccessTimesComponent implements OnInit {
+  type = 'msline';
+  dataFormat = 'json';
+  data: any;
+  dataSource = new Object();
+  accessTimes: Accesstimes[];
+  promiseCounts: any;
 
-  constructor() {
+  constructor(private accessTimesService: AccessTimesService) {
   }
-
   ngOnInit(): void {
-
+    this.accessTimesService.findAll().subscribe(next => {
+      this.accessTimes = next;
+      this.data = {
+        chart: {
+          caption: 'Lượt truy cập',
+          // yAxisName: '% of youth on this platform',
+          subcaption: 'Năm ' + this.accessTimes[0].dates.slice(0, 4),
+          showhovereffect: '1',
+          numbersuffix: 'lần',
+          drawcrossline: '1',
+          plottooltext: '<b>$dataValue</b> truy cập',
+          theme: 'fusion'
+        },
+        categories: [
+          {
+            category: [
+              {
+                label: (Number).parseInt(this.accessTimes[0].dates.split('T')[0].split('-')[2]) + 1 + '/' +
+                  this.accessTimes[0].dates.split('T')[0].split('-')[1] + '/' +
+                  this.accessTimes[0].dates.split('T')[0].split('-')[0]
+              },
+              {
+                label: (Number).parseInt(this.accessTimes[1].dates.split('T')[0].split('-')[2]) + 1 + '/' +
+                  this.accessTimes[1].dates.split('T')[0].split('-')[1] + '/' +
+                  this.accessTimes[1].dates.split('T')[0].split('-')[0]
+              },
+              {
+                label: (Number).parseInt(this.accessTimes[2].dates.split('T')[0].split('-')[2]) + 1 + '/' +
+                  this.accessTimes[2].dates.split('T')[0].split('-')[1] + '/' +
+                  this.accessTimes[2].dates.split('T')[0].split('-')[0]
+              },
+              {
+                label: (Number).parseInt(this.accessTimes[3].dates.split('T')[0].split('-')[2]) + 1 + '/' +
+                  this.accessTimes[3].dates.split('T')[0].split('-')[1] + '/' +
+                  this.accessTimes[3].dates.split('T')[0].split('-')[0]
+              },
+              {
+                label: (Number).parseInt(this.accessTimes[4].dates.split('T')[0].split('-')[2]) + 1 + '/' +
+                  this.accessTimes[4].dates.split('T')[0].split('-')[1] + '/' +
+                  this.accessTimes[4].dates.split('T')[0].split('-')[0]
+              },
+              {
+                label: (Number).parseInt(this.accessTimes[5].dates.split('T')[0].split('-')[2]) + 1 + '/' +
+                  this.accessTimes[5].dates.split('T')[0].split('-')[1] + '/' +
+                  this.accessTimes[5].dates.split('T')[0].split('-')[0]
+              },
+              {
+                label: (Number).parseInt(this.accessTimes[6].dates.split('T')[0].split('-')[2]) + 1 + '/' +
+                  this.accessTimes[6].dates.split('T')[0].split('-')[1] + '/' +
+                  this.accessTimes[6].dates.split('T')[0].split('-')[0]
+              },
+              {
+                label: (Number).parseInt(this.accessTimes[7].dates.split('T')[0].split('-')[2]) + 1 + '/' +
+                  this.accessTimes[7].dates.split('T')[0].split('-')[1] + '/' +
+                  this.accessTimes[7].dates.split('T')[0].split('-')[0]
+              },
+              {
+                label: (Number).parseInt(this.accessTimes[8].dates.split('T')[0].split('-')[2]) + 1 + '/' +
+                  this.accessTimes[8].dates.split('T')[0].split('-')[1] + '/' +
+                  this.accessTimes[8].dates.split('T')[0].split('-')[0]
+              },
+              {
+                label: (Number).parseInt(this.accessTimes[9].dates.split('T')[0].split('-')[2]) + 1 + '/' +
+                  this.accessTimes[9].dates.split('T')[0].split('-')[1] + '/' +
+                  this.accessTimes[9].dates.split('T')[0].split('-')[0]
+              },
+              {
+                label: (Number).parseInt(this.accessTimes[10].dates.split('T')[0].split('-')[2]) + 1 + '/' +
+                  this.accessTimes[10].dates.split('T')[0].split('-')[1] + '/' +
+                  this.accessTimes[10].dates.split('T')[0].split('-')[0]
+              },
+              {
+                label: (Number).parseInt(this.accessTimes[11].dates.split('T')[0].split('-')[2]) + 1 + '/' +
+                  this.accessTimes[11].dates.split('T')[0].split('-')[1] + '/' +
+                  this.accessTimes[11].dates.split('T')[0].split('-')[0]
+              },
+            ]
+          }
+        ],
+        dataset: [
+          {
+            data: [
+              {
+                value: this.accessTimes[0].counts,
+              },
+              {
+                value: this.accessTimes[1].counts
+              },
+              {
+                value: this.accessTimes[2].counts
+              },
+              {
+                value: this.accessTimes[3].counts
+              },
+              {
+                value: this.accessTimes[4].counts
+              },
+              {
+                value: this.accessTimes[5].counts
+              },
+              {
+                value: this.accessTimes[6].counts
+              },
+              {
+                value: this.accessTimes[7].counts
+              },
+              {
+                value: this.accessTimes[8].counts
+              },
+              {
+                value: this.accessTimes[9].counts
+              },
+              {
+                value: this.accessTimes[10].counts
+              },
+              {
+                value: this.accessTimes[11].counts
+              }
+            ]
+          }
+        ]
+      };
+      this.dataSource = this.data;
+    });
   }
-
-  ngAfterViewInit(): void {
-    this.ctx = this.myCanvas.nativeElement.getContext('2d');
-    this.ctx.beginPath();
-    this.ctx.strokeStyle = 'black';
-    this.ctx.moveTo(this.x, this.y);
-    for (let i = 0; i < 9; i++) {
-      this.ctx.lineTo(this.x = this.x + this.month1, this.y = this.y - this.count10);
-    }
-    for (let i = 0; i < 3; i++) {
-      this.ctx.lineTo(this.x = this.x + this.month1, this.y = this.y + this.count10);
-    }
-    this.ctx.stroke();
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.x2, this.y2);
-    this.ctx.strokeStyle = 'blue';
-    for (let i = 0; i < 9; i++) {
-      this.ctx.lineTo(this.x2 = this.x2 + this.month1, this.y2 = this.y2 - this.count10);
-    }
-    for (let i = 0; i < 3; i++) {
-      this.ctx.lineTo(this.x2 = this.x2 + this.month1, this.y2 = this.y2 + this.count10);
-    }
-    this.ctx.stroke();
-
-  }
-
 }

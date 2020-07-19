@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Product} from '../../../models/product';
 import {ProductService} from '../../../services/product.service';
 import {Page} from '../../../models/pagination/page';
@@ -7,6 +7,9 @@ import {CustomPaginationService} from '../../../services/pagination/custom-pagin
 import {Unit} from '../../../models/unit';
 import {Brand} from '../../../models/brand';
 import {Category} from '../../../models/category';
+import {NotificationService} from '../../../services/notification.service';
+
+declare const dataTable: any;
 
 @Component({
   selector: 'app-product',
@@ -25,11 +28,14 @@ export class ProductComponent implements OnInit {
   categoryList: Category[];
   brandList: Brand[];
   public productName;
-  key = 'productName';
+  searchProductName: string;
+  key: string;
+  reverse = false;
 
   constructor(private fb: FormBuilder,
               private productService: ProductService,
-              private paginationService: CustomPaginationService) {
+              private paginationService: CustomPaginationService,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -55,26 +61,7 @@ export class ProductComponent implements OnInit {
       imageUrl: [''],
     });
 
-    this.createProductForm = this.fb.group({
-      productName: [''],
-      price: [''],
-      expiryDate: [''],
-      quantity: [''],
-      deleteFlag: [0],
-      category: this.fb.group({
-        categoryId: [''],
-        categoryName: ['']
-      }),
-      unit: this.fb.group({
-        unitId: [''],
-        unitName: ['']
-      }),
-      brand: this.fb.group({
-        id: [''],
-        brandName: ['']
-      }),
-      imageUrl: [''],
-    });
+    this.initCreateForm();
     this.getData();
     this.getUnit();
     this.getBrand();
@@ -123,29 +110,32 @@ export class ProductComponent implements OnInit {
 
   editProduct(id: number): void {
     this.productService.findProductById(id).subscribe(next => {
-        this.getUnit();
-        this.getBrand();
-        this.getCategory();
+        // this.getUnit();
+        // this.getBrand();
+        // this.getCategory();
         this.productForm.patchValue(next);
       },
       error => console.log('error'));
   }
 
   onSubmitEdit(): void {
+    console.log(this.productForm.value);
     this.productService.updateProduct(this.productForm.value).subscribe(
       next => {
         this.closeEditModal.nativeElement.click();
+        this.notificationService.edit('Chỉnh sửa thành công');
         this.getData();
       },
       error => console.log(error));
   }
 
   onCreate(): void {
-    console.log(this.createProductForm.value);
     this.productService.createNew(this.createProductForm.value).subscribe(
       next => {
         this.closeCreateModal.nativeElement.click();
-        this.productForm.reset();
+        this.notificationService.create('Tạo mới thành công');
+        // this.createProductForm.reset();
+        this.initCreateForm();
         this.getData();
       },
       error => console.log(error));
@@ -162,9 +152,45 @@ export class ProductComponent implements OnInit {
     this.productService.deleteProduct(this.product).subscribe(
       next => {
         this.closeDeleteModal.nativeElement.click();
+        this.notificationService.delete('Xóa thành công');
         this.getData();
       },
       error => console.log(error)
     );
+  }
+
+  OnCancelCreateForm(): void {
+    // this.closeCreateModal.nativeElement.click();
+    this.initCreateForm();
+  }
+
+  OnCancelEditForm(): void {
+    // this.closeCreateModal.nativeElement.click();
+    this.productForm.reset();
+  }
+
+  sort(key): void {
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+
+  initCreateForm(): void {
+    this.createProductForm = this.fb.group({
+      productName: ['', Validators.required],
+      price: [''],
+      expiryDate: [''],
+      quantity: [''],
+      deleteFlag: [0],
+      category: this.fb.group({
+        categoryId: ['']
+      }),
+      unit: this.fb.group({
+        unitId: ['']
+      }),
+      brand: this.fb.group({
+        id: ['']
+      }),
+      imageUrl: ['']
+    });
   }
 }

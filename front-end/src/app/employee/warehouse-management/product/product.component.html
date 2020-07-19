@@ -1,64 +1,64 @@
-<div class="container-fluid">
+<div class="container">
   <div class="row d-flex justify-content-between m-3">
-    <h2><span class="fa fa-bars"></span> Danh sách mặt hàng</h2>
+    <div class="h3 header-text-color"><span class="fa fa-bars"></span><span>Danh sách mặt hàng</span></div>
     <div class="d-flex">
       <div class="form-group has-search mr-2">
         <span class="fa fa-search form-control-feedback"></span>
-        <input type="text" class="form-control searchInput" placeholder="Search" name="search">
+        <input type="text" class="form-control searchInput" [(ngModel)]="searchProductName"
+               placeholder="Tìm Kiếm Sản Phẩm" name="search">
       </div>
     </div>
   </div>
   <hr>
-  <!--  <form>-->
-  <!--    <div class="row mt-3 px-3">-->
-  <!--      <div class="col-3 offset-1">-->
-  <!--        <div class="d-flex p-1 align-items-center">-->
-  <!--          <span class="w-100">Tên danh mục</span>-->
-  <!--          <select class="form-control">-->
-  <!--            <option value="Bánh">Bánh</option>-->
-  <!--          </select>-->
-  <!--        </div>-->
-  <!--        <div class="d-flex p-1 align-items-center">-->
-  <!--          <span class="w-100 align-middle">Thương hiệu</span>-->
-  <!--          <select class="form-control">-->
-  <!--            <option value="Kinh Đô">Kinh Đô</option>-->
-  <!--          </select>-->
-  <!--        </div>-->
-  <!--        <div></div>-->
-  <!--      </div>-->
-
-  <!--      <div class="col-2">-->
-  <!--        <div class="row pt-4">-->
-  <!--          <button class="btn btn-primary w-50">Lọc</button>-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--      <div class="col-4"></div>-->
-  <!--    </div>-->
-  <!--  </form>-->
+  <form>
+    <div class="row mt-3 px-3">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <label class="input-group-text font-weight-bold text-dark" for="inputGroupSelect01">Tên Danh Mục</label>
+        </div>
+        <select class="custom-select" #selectedCategory id="inputGroupSelect01">
+          <option selected value="">All</option>
+          <ng-container *ngFor="let category of categoryList">
+            <option [value]="category.categoryName">{{category.categoryName}}</option>
+          </ng-container>
+        </select>
+        <div class="input-group-prepend">
+          <label class="input-group-text font-weight-bold text-dark" for="inputGroupSelect02">Tên Thương Hiệu</label>
+        </div>
+        <select class="custom-select" #selectedBrand id="inputGroupSelect02">
+          <option selected value="">All</option>
+          <ng-container *ngFor="let brand of brandList">
+            <option [value]="brand.brandName">{{brand.brandName}}</option>
+          </ng-container>
+        </select>
+        <button class="btn btn-primary btn-filter-custom"><span
+          class="fa fa-filter"></span>Lọc
+        </button>
+      </div>
+    </div>
+  </form>
   <div class="row mt-3 px-3">
     <!--  Table grid -->
-    <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#modal-create-product"><span
+    <button class="btn btn-primary btn-create-custom" data-toggle="modal" data-target="#modal-create-product"><span
       class="fa fa-plus-square"></span> Thêm mới
     </button>
     <table class="table table-bordered table-striped mt-3">
       <thead class="table-header">
       <tr>
-        <th class="sticky-top">Mã Sản Phẩm</th>
-        <th class="sticky-top">Tên Sản Phẩm</th>
-        <th class="sticky-top">Giá Thành</th>
+        <th class="sticky-top sort-product-name" (click)="sort('productName')">Tên Sản Phẩm</th>
+        <th class="sticky-top">Giá Thành(VND)</th>
         <th class="sticky-top">Tên Danh Mục</th>
         <th class="sticky-top">Hạn Sử Dụng</th>
         <th class="sticky-top">Số Lượng</th>
+        <th class="sticky-top">Đơn Vị</th>
         <th class="sticky-top">Tên Thương Hiệu</th>
-        <th class="sticky-top">Sửa | Xóa</th>
+        <th class="sticky-top">Sửa</th>
+        <th class="sticky-top">Xóa</th>
       </tr>
       </thead>
       <tbody *ngIf="page">
-      <!--    | orderBy: key: reverse | filter: filter"-->
-      <tr *ngFor="let product of page.content">
-        <td>
-          <span>{{product.productId}}</span>
-        </td>
+      <tr
+        *ngFor="let product of page.content | orderBy: key : reverse | filterProduct: searchProductName | filter: selectedCategory.value | filter: selectedBrand.value">
         <td>
           <span>{{product.productName}}</span>
         </td>
@@ -75,13 +75,20 @@
           <span>{{product.quantity}}</span>
         </td>
         <td>
+          <span>{{product.unit.unitName}}</span>
+        </td>
+        <td>
           <span>{{product.brand.brandName}}</span>
         </td>
         <td>
-          <button class="border-0 mr-3 bg-transparent fas fa-pencil-alt test" data-toggle="modal"
-                  data-target="#modal-edit-product" (click)="editProduct(product.productId)"></button>
-          <button class="border-0 bg-transparent fa fa-trash" data-toggle="modal"
-                  data-target="#modal-delete-product" (click)="deleteProduct(product.productId)"></button>
+          <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal"
+                  data-target="#modal-edit-product" (click)="editProduct(product.productId)">Sửa
+          </button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal"
+                  data-target="#modal-delete-product" (click)="deleteProduct(product.productId)">Xóa
+          </button>
         </td>
       </tr>
       </tbody>
@@ -100,178 +107,163 @@
       </div>
       <div class="col-2"></div>
     </div>
-
-<!--      Modal Create-->
-    <div class="modal fade" id="modal-create-product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true"
-         data-backdrop="static">
-      <div class="modal-dialog modal-lg-custom" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Thông tin mặt hàng- Thêm mới</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <form [formGroup]="createProductForm" role="form">
+    <!--      Modal Create-->
+    <form [formGroup]="createProductForm" (ngSubmit)="onCreate()" role="form">
+      <div class="modal fade" id="modal-create-product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+           aria-hidden="true"
+           data-backdrop="static">
+        <div class="modal-dialog modal-lg-custom" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title header-text-color">Thêm Mới Mặt Hàng</h4>
+            </div>
+            <div class="modal-body">
+              <div class="container">
                 <!--wrapper-form-dialog-->
                 <div class="row wrapper-form-dialog">
                   <div class="col-6">
                     <div class="form-group row">
-                      <label for="forFieldName" class="col-sm-3 control-label">Tên Mặt Hàng*</label>
+                      <span class="align-items-center">Tên Mặt Hàng*</span>
                       <div class="col-sm-9">
-                        <input type="text" id="forFieldName" formControlName="productName" class="form-control" placeholder="Nhập Tên Mặt Hàng">
+                        <input type="text" id="forFieldName" formControlName="productName" class="form-control"
+                               placeholder="Nhập Tên Mặt Hàng">
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="forFieldQuantity" class="col-sm-3 control-label">Số Lượng*</label>
+                      <span class="align-items-center">Số Lượng/ Đơn Vị</span>
                       <div class="col-sm-6">
-                        <input type="email" id="forFieldQuantity" formControlName="quantity" class="form-control" placeholder="Nhập Số Lượng">
+                        <input type="email" id="forFieldQuantity" formControlName="quantity" class="form-control"
+                               placeholder="Nhập Số Lượng">
                       </div>
                       <div class="col-sm-3">
                         <fieldset formGroupName="unit">
                           <select class="form-control col-form-label" formControlName="unitId">
-                            <option *ngFor="let unit of unitList" [ngValue]="unit.unitId"
-                                    [selected]="unit.unitId === productForm.value.unit.unitId">
-                              {{unit.unitName}}
-                            </option>
+                            <ng-container>
+                              <option *ngFor="let unit of unitList" [ngValue]="unit.unitId"
+                                      [selected]="unit.unitId === createProductForm.value.unit.unitId">
+                                {{unit.unitName}}
+                              </option>
+                            </ng-container>
                           </select>
                         </fieldset>
                       </div>
                     </div>
+
                     <div class="form-group row">
-                      <label for="createPrice" class="col-sm-3 control-label">Đơn Giá*</label>
+                      <span class="align-items-center">Đơn Giá*</span>
                       <div class="col-sm-9">
                         <input type="text" id="createPrice" formControlName="price" class="form-control">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-3 control-label">Hạn Sử Dụng*</label>
-                      <div class="col-sm-9">
-<!--                        <mat-form-field color="accent" appearance="fill">-->
-<!--                          <input formControlName="expiryDate" matInput [matDatepicker]="picker1">-->
-<!--                          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>-->
-<!--                          <mat-datepicker #picker1 color="primary"></mat-datepicker>-->
-<!--                        </mat-form-field>-->
-                        <input type="text"  formControlName="expiryDate" class="form-control">
                       </div>
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group row">
-                      <label class="col-sm-3 control-label">Tên Danh Mục </label>
+                      <span class="align-items-center">Tên Danh Mục</span>
                       <div class="col-sm-9">
                         <fieldset formGroupName="category">
                           <select class="form-control col-form-label" formControlName="categoryId">
                             <option *ngFor="let category of categoryList" [ngValue]="category.categoryId"
-                                    [selected]="category.categoryId === productForm.value.category.categoryId">
+                                    [selected]="category.categoryId === createProductForm.value.category.categoryId">
                               {{category.categoryName}}
                             </option>
                           </select>
                         </fieldset>
                       </div>
                     </div>
+
                     <div class="form-group row">
-                      <label class="col-sm-3 control-label">Tên Thương Hiệu* </label>
+                      <span class="align-items-center">Tên Thương Hiệu*</span>
                       <div class="col-sm-9">
                         <fieldset formGroupName="brand">
                           <select class="form-control col-form-label" formControlName="id">
                             <option *ngFor="let brand of brandList" [ngValue]="brand.id"
-                                    [selected]="brand.id === productForm.value.brand.id">
+                                    [selected]="brand.id === createProductForm.value.brand.id">
                               {{brand.brandName}}
                             </option>
                           </select>
                         </fieldset>
                       </div>
                     </div>
+
                     <div class="form-group row">
-                      <label for="createImgUrl" class="col-sm-3 control-label">Ảnh*</label>
+                      <span class="align-items-center">Hạn Sử Dụng*</span>
                       <div class="col-sm-9">
-                        <input type="text" id="createImgUrl" formControlName="imageUrl" class="form-control" autofocus>
+                        <mat-form-field>
+                          <input formControlName="expiryDate" matInput [matDatepicker]="picker1">
+                          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                          <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
                       </div>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                      <button type="button" (click)="onCreate()" class="btn btn-warning mr-2 " data-toggle="modal">
-                        Thêm mới
-                      </button>
-                      <button type="button" class="btn btn-secondary " #closeCreateModal data-dismiss="modal">Hủy</button>
                     </div>
                   </div>
                 </div>
-              </form> <!-- /form -->
-            </div> <!-- ./container -->
+              </div> <!-- ./container -->
+            </div><!-- ./modal-body-->
+            <div class="d-flex justify-content-center modal-footer">
+              <button type="submit" class="btn btn-primary btn-create-custom mr-2 w-25" data-toggle="modal">
+                Thêm mới
+              </button>
+              <button type="button" class="btn btn-secondary w-25" #closeCreateModal (click)="OnCancelCreateForm()"
+                      data-dismiss="modal">Hủy
+              </button>
+            </div><!-- ./modal-footer-->
           </div>
         </div>
       </div>
-    </div>
+    </form> <!-- /form -->
     <!--Modal Edit-->
-    <div class="modal fade" id="modal-edit-product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true"
-         data-backdrop="static">
-      <div class="modal-dialog modal-lg-custom" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Thông tin mặt hàng- Chỉnh sửa</h4>
-            <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <form [formGroup]="productForm" role="form">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmitEdit()" role="form">
+      <div class="modal fade" id="modal-edit-product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+           aria-hidden="true"
+           data-backdrop="static">
+        <div class="modal-dialog modal-lg-custom" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title text-success">Chỉnh Sửa Mặt Hàng</h4>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+
                 <!--wrapper-form-dialog-->
                 <div class="row wrapper-form-dialog">
                   <div class="col-6">
                     <div class="form-group row">
-                      <label for="idProduct1" class="col-sm-3 control-label">Mã Mặt Hàng*</label>
+                      <span class="align-items-center">Tên Mặt Hàng*</span>
                       <div class="col-sm-9">
-                        <input type="text" disabled id="idProduct1" formControlName="productId" class="form-control" autofocus>
+                        <input type="text" id="nameProduct1" formControlName="productName" class="form-control"
+                               autofocus>
                       </div>
                     </div>
+
                     <div class="form-group row">
-                      <label for="nameProduct1" class="col-sm-3 control-label">Tên Mặt Hàng*</label>
-                      <div class="col-sm-9">
-                        <input type="text" id="nameProduct1" formControlName="productName" class="form-control" autofocus>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="amount1" class="col-sm-3 control-label">Số Lượng*</label>
+                      <span class="align-items-center">Số Lượng/ Đơn Vị</span>
                       <div class="col-sm-6">
                         <input type="email" id="amount1" formControlName="quantity" class="form-control">
                       </div>
                       <div class="col-sm-3">
                         <fieldset formGroupName="unit">
                           <select class="form-control col-form-label" formControlName="unitId">
-                            <option *ngFor="let unit of unitList" [ngValue]="unit.unitId"
-                                    [selected]="unit.unitId === productForm.value.unit.unitId">
-                              {{unit.unitName}}
-                            </option>
+                            <ng-container>
+                              <option *ngFor="let unit of unitList" [ngValue]="unit.unitId"
+                                      [selected]="unit.unitId === productForm.value.unit.unitId">
+                                {{unit.unitName}}
+                              </option>
+                            </ng-container>
                           </select>
                         </fieldset>
                       </div>
                     </div>
+
                     <div class="form-group row">
-                      <label for="price1" class="col-sm-3 control-label">Đơn Giá*</label>
+                      <span class="align-items-center">Đơn Giá*</span>
                       <div class="col-sm-9">
-                        <input type="text" id="price1" formControlName="price" class="form-control">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-3 control-label">Hạn Sử Dụng*</label>
-                      <div class="col-sm-9">
-                        <mat-form-field color="accent" appearance="fill">
-                          <input formControlName="expiryDate" matInput [matDatepicker]="picker2">
-                          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                          <mat-datepicker #picker2 color="primary"></mat-datepicker>
-                        </mat-form-field>
+                        <input type="text" id="editPrice" formControlName="price" class="form-control">
                       </div>
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group row">
-                      <label class="col-sm-3 control-label">Tên Danh Mục </label>
+                      <span class="align-items-center">Tên Danh Mục</span>
                       <div class="col-sm-9">
                         <fieldset formGroupName="category">
                           <select class="form-control col-form-label" formControlName="categoryId">
@@ -283,8 +275,9 @@
                         </fieldset>
                       </div>
                     </div>
+
                     <div class="form-group row">
-                      <label class="col-sm-3 control-label">Tên Thương Hiệu* </label>
+                      <span class="align-items-center">Tên Thương Hiệu*</span>
                       <div class="col-sm-9">
                         <fieldset formGroupName="brand">
                           <select class="form-control col-form-label" formControlName="id">
@@ -296,76 +289,58 @@
                         </fieldset>
                       </div>
                     </div>
+
                     <div class="form-group row">
-                      <label for="imgUrl" class="col-sm-3 control-label">Ảnh*</label>
+                      <span class="align-items-center">Hạn Sử Dụng*</span>
                       <div class="col-sm-9">
-                        <input type="text" id="imgUrl" formControlName="imageUrl" class="form-control" autofocus>
+                        <mat-form-field>
+                          <input formControlName="expiryDate" matInput [matDatepicker]="picker2">
+                          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                          <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-center">
-                      <button type="button"  class="btn btn-warning mr-2" (click)="onSubmitEdit()">
-                        Chỉnh sửa
-                      </button>
-                      <button type="button"  class="btn btn-secondary" #closeEditModal data-dismiss ="modal">Hủy</button>
-                    </div>
+
                   </div>
                 </div>
-              </form> <!-- /form -->
-            </div> <!-- ./container -->
+
+              </div> <!-- ./container -->
+            </div>
+            <div class="d-flex justify-content-center modal-footer">
+              <button type="submit" class="btn btn-success mr-2 w-25" data-toggle="modal">
+                Chỉnh sửa
+              </button>
+              <button type="button" class="btn btn-secondary w-25" #closeEditModal
+                      data-dismiss="modal">Hủy
+              </button>
+            </div><!-- ./modal-footer-->
           </div>
         </div>
       </div>
-    </div>
+    </form> <!-- /form -->
     <!--Modal Delete-->
-    <div class="modal fade" id="modal-delete-product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true"
-         data-backdrop="static">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="exampleModalLabelDelete">Xác Nhận</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-
-            <h5 class="my-3">
-              Bạn có chắc xóa mặt hàng <span class="text-danger font-weight-bold">{{productName}}</span> không?
-            </h5>
-
-
-          </div>
-          <div class="modal-footer d-flex justify-content-center">
-            <button type="button" class="btn btn-success" (click)="OnDelete()">Có</button>
-            <button type="button" class="btn btn-secondary" #closeDeleteModal data-dismiss="modal">Không</button>
+    <form (ngSubmit)="OnDelete()">
+      <div class="modal fade" id="modal-delete-product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+           aria-hidden="true"
+           data-backdrop="static">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title text-danger" id="exampleModalLabelDelete">Xác Nhận Xóa Mặt Hàng</h4>
+            </div>
+            <div class="modal-body">
+              <h5 class="my-3">
+                Bạn có chắc xóa mặt hàng <span class="text-danger font-weight-bold">{{productName}}</span> không?
+              </h5>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+              <button type="submit" class="btn btn-danger button-dialog">Có</button>
+              <button type="button" class="btn btn-secondary button-dialog" #closeDeleteModal data-dismiss="modal">Không
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="modal fade" id="modal-2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true"
-         data-backdrop="static">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="exampleModalLabel">Xác Nhận</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <h5 class="my-3">
-              Bạn có chắc xóa mặt hàng này không?
-            </h5>
-          </div>
-          <div class="modal-footer d-flex justify-content-center">
-            <button type="button" class="btn btn-success">Có</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    </form>
   </div>
 </div>
