@@ -57,8 +57,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     NgxPaginationModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
-    AngularFireDatabaseModule
-    MatPaginatorModule,
+    AngularFireDatabaseModule,
+    MatPaginatorModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
