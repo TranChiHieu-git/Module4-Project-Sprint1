@@ -1,4 +1,4 @@
-// declare var $: any;
+import * as $ from 'jquery';
 import {Component, OnInit} from '@angular/core';
 import {Employee} from '../../employee';
 import {EmployeeService} from '../../../services/employee.service';
@@ -8,7 +8,9 @@ import {Account} from '../../../models/account';
 import {Department} from '../../../models/department';
 import {finalize} from 'rxjs/operators';
 import {Router} from '@angular/router';
-// import * as $ from 'jquery';
+import {TokenStorageService} from '../../../auth/token-storage.service';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import {Tempjwtemp} from '../../../models/tempjwtemp';
 // tslint:disable-next-line:typedef
 function comparePassword(c: AbstractControl) {
   const v = c.value;
@@ -35,8 +37,8 @@ export class EmployeeDetailComponent implements OnInit {
   constructor(private employeeService: EmployeeService,
               private fb: FormBuilder,
               private afStorage: AngularFireStorage,
-              private router: Router) {
-    // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+              private router: Router,
+              private loginAccount: TokenStorageService) {
   }
 
   url: any;
@@ -44,17 +46,20 @@ export class EmployeeDetailComponent implements OnInit {
   editForm: FormGroup;
   positionList: Position[];
   departmentList: Department[];
-  accountName = 'lengochuy_employee';
+  accountName = '';
   account = new Account();
   editPasswordForm: FormGroup;
   minDate: Date;
   maxDate: Date;
+  oldPassword;
   currentPass;
 
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
   src: any;
-
+  token: any;
+  decode = new JwtHelperService();
+  tempJwt = new Tempjwtemp();
   private uploadFireBaseAndSubmit(): void {
     const target: any = document.getElementById('image');
     const id = Math.random().toString(36).substring(2);
@@ -70,6 +75,8 @@ export class EmployeeDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.tempJwt = this.decode.decodeToken(this.loginAccount.getToken());
+    this.accountName = this.tempJwt.sub;
     this.loadEditForm();
     this.loadPasswordForm();
     this.editForm = new FormGroup({
@@ -80,7 +87,7 @@ export class EmployeeDetailComponent implements OnInit {
       position: new FormControl(''),
       department: new FormControl(''),
       phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^\+84\d{9,10}$/)]),
-      email: new FormControl('', [Validators.required,]),
+      email: new FormControl('', [Validators.required, ]),
       // Validators.pattern(/^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$/)
       image: new FormControl('')
     });
@@ -91,6 +98,8 @@ export class EmployeeDetailComponent implements OnInit {
       },
       error => console.log(error)
     );
+    // this.oldPassword = this.employee.account.accountPassword;
+    // console.log(this.oldPassword);
   }
 
   onSubmit1(): void {
@@ -110,7 +119,7 @@ export class EmployeeDetailComponent implements OnInit {
         error => console.log(error)
       );
     }
-    window.location.reload();
+    // window.location.reload();
   }
 
   loadEditForm(): void {
@@ -135,10 +144,11 @@ export class EmployeeDetailComponent implements OnInit {
       accountName: new FormControl(''),
       // oldPassword: new FormControl('', [Validators.required, checkCurrentPassword]),
       pwGroup: this.fb.group({
-          password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+          password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9]{1,}$')]),
           confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
         },
         {validator: comparePassword}),
+      accountPassword: new FormControl('')
     });
     this.employeeService.findAccountByName(this.accountName).subscribe(
       next => this.account = next,
@@ -166,7 +176,7 @@ export class EmployeeDetailComponent implements OnInit {
         error => console.log(error)
       );
     }
-    // window.location.reload();
+    window.location.reload();
   }
 
   readURL(target: EventTarget): void {

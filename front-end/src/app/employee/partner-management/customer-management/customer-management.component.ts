@@ -3,10 +3,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnChanges, OnInit} from '@angular/core';
 import {CustomerService} from '../../../services/customer.service';
 import {Customer} from '../../../models/customer';
-import {HttpClient} from "@angular/common/http";
-import {finalize} from "rxjs/operators";
-import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from "@angular/fire/storage";
-import {} from "../../../../assets/js/fb.js"
+import {HttpClient} from '@angular/common/http';
+import {finalize} from 'rxjs/operators';
+import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
+import {} from '../../../../assets/js/fb.js';
 declare var $: any;
 
 @Component({
@@ -47,7 +47,7 @@ export class CustomerManagementComponent implements OnInit {
   validatingForm: FormGroup;
 
   ngOnInit(): void {
-    $('#checkAll').click(function () {
+    $('#checkAll').click(function() {
       $('input:checkbox').not(this).prop('checked', this.checked);
     });
     this.addUser = this.formBuilder.group({
@@ -180,7 +180,7 @@ export class CustomerManagementComponent implements OnInit {
     if (deleteConfirm) {
       this.customerService.deleteCustomerById(id).subscribe(
         next => {
-          window.location.reload()
+          window.location.reload();
         },
         error => console.log(error)
       );
