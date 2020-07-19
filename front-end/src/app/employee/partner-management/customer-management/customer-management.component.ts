@@ -28,6 +28,9 @@ export class CustomerManagementComponent implements OnInit {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
   editUrl: any;
+  uploadStatus = true;
+  uploadProgress: any;
+  uploadProgressStatus = false;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -108,6 +111,7 @@ export class CustomerManagementComponent implements OnInit {
 
 
   editModel(element: Customer): void {
+    this.uploadProgressStatus = false;
     this.tempCustomer = element;
     this.change();
     $('#editModal').modal('show');
@@ -156,27 +160,50 @@ export class CustomerManagementComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   onSubmit() {
-    const editConfirm = confirm('Bạn có chắc chắn cập nhật thông tin của khách mua hàng này ?');
-    if (editConfirm) {
-      if (this.date !== undefined) {
-        this.addUser.patchValue({
-          birthday: this.date,
-        });
+    if (this.uploadStatus){
+      const editConfirm = confirm('Bạn có chắc chắn cập nhật thông tin của khách mua hàng ?');
+      if (editConfirm) {
+        if (this.date !== undefined) {
+          this.addUser.patchValue({
+            birthday: this.date,
+          });
+        }
+        if (this.editUrl !== undefined) {
+          this.addUser.patchValue({
+            imageUrl: this.editUrl,
+          });
+        }
+        this.customerService.editCustomer(this.addUser.value).subscribe(
+          next => window.location.reload(),
+          error => console.log(error)
+        );
       }
-      if (this.editUrl !== undefined) {
-        this.addUser.patchValue({
-          imageUrl: this.editUrl,
-        });
-      }
-      this.customerService.editCustomer(this.addUser.value).subscribe(
-        next => window.location.reload(),
-        error => console.log(error)
-      );
     }
   }
 
-  deleteSubmit(id): void {
-    const deleteConfirm = confirm('Bạn có chắc chắn muốn xóa khách mua hàng này không?');
+  editSubmit(userName) {
+    if (this.uploadStatus){
+      const editConfirm = confirm('Bạn có chắc chắn cập nhật thông tin của khách mua hàng '+userName+' ?');
+      if (editConfirm) {
+        if (this.date !== undefined) {
+          this.addUser.patchValue({
+            birthday: this.date,
+          });
+        }
+        if (this.editUrl !== undefined) {
+          this.addUser.patchValue({
+            imageUrl: this.editUrl,
+          });
+        }
+        this.customerService.editCustomer(this.addUser.value).subscribe(
+          next => window.location.reload(),
+          error => console.log(error)
+        );
+      }
+    }
+  }
+  deleteSubmit(id,userName): void {
+    const deleteConfirm = confirm('Bạn có chắc chắn muốn xóa khách mua hàng '+userName+' không?');
     if (deleteConfirm) {
       this.customerService.deleteCustomerById(id).subscribe(
         next => {
@@ -269,6 +296,8 @@ export class CustomerManagementComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   readURL(target: any) {
+    this.uploadStatus = false;
+    this.uploadProgressStatus = true;
     if (target.files && target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -286,10 +315,12 @@ export class CustomerManagementComponent implements OnInit {
     const id = Math.random().toString(36).substring(2);
     this.ref = this.afStorage.ref(id);
     this.task = this.ref.put(target.files[0]);
+    this.uploadProgress = this.task.percentageChanges();
     this.task.snapshotChanges().pipe(
       finalize(() => {
         this.ref.getDownloadURL().subscribe(url => {
           this.editUrl = url;
+          this.uploadStatus = true;
         });
       }))
       .subscribe();
