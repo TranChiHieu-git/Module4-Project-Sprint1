@@ -13,7 +13,7 @@ const httpOptions = {
 })
 export class AuthJwtService {
 
-  loginUrl = 'http://localhost:8081/login';
+  loginUrl = 'http://localhost:8080/login';
 
   constructor(private http: HttpClient) {
   }

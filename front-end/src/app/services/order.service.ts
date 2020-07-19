@@ -7,9 +7,9 @@ import {Order} from '../models/order';
   providedIn: 'root'
 })
 export class OrderService {
-  ORDER_API_URL = 'http://localhost:8081/user-order';
-  ORDER_DETAIL_API_URL = 'http://localhost:8081/order';
-  ORDER_CANCEL_API_URL = 'http://localhost:8081/order-cancel';
+  ORDER_API_URL = 'http://localhost:8080/user-order';
+  ORDER_DETAIL_API_URL = 'http://localhost:8080/order';
+  ORDER_CANCEL_API_URL = 'http://localhost:8080/order-cancel';
   idUserSource = new BehaviorSubject<number>(0);
   curentIdUser = this.idUserSource.asObservable();
 

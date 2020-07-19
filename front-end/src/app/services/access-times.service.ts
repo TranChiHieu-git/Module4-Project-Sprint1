@@ -8,7 +8,7 @@ import {Accesstimes} from '../models/accesstimes';
   providedIn: 'root'
 })
 export class AccessTimesService {
-  API_URL = 'http://localhost:8081/access-times';
+  API_URL = 'http://localhost:8080/access-times';
   constructor(private httpClient: HttpClient) { }
 
   findAll(): Observable<Accesstimes[]> {
