@@ -33,9 +33,9 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 // @ts-ignore
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {environment} from '../../environments/environment';
-import {MatPaginatorModule} from "@angular/material/paginator";
-import {AngularFirestoreModule} from "@angular/fire/firestore";
-import {AngularFireAuthModule} from "@angular/fire/auth";
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {AngularFireAuthModule} from '@angular/fire/auth';
 import { FacebookModule } from 'ngx-facebook';
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
@@ -62,6 +62,7 @@ import { FacebookModule } from 'ngx-facebook';
     NgxPaginationModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
+
     MatPaginatorModule,
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyAFbHzEL2J7oXY5bWTF6dA3DnO_iCj5W48',

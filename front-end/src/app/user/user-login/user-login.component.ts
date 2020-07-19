@@ -77,8 +77,10 @@ export class UserLoginComponent implements OnInit {
         // tslint:disable-next-line:triple-equals
         else if (this.tokenStorage.getAuthorities().indexOf('ROLE_MEMBER') != -1) {
           sessionStorage.setItem('loggedUser', userInfo.accountName);
-          this.redirectTo('home');
+          this.redirectTo('home-store/cake');
           this.tokenStorage.getUsername();
+          window.location.reload();
+
         }
         console.log('data1', this.tokenStorage.getAuthorities());
         console.log('data', userInfo.accountName);
