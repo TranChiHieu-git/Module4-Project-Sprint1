@@ -1,11 +1,11 @@
 import * as $ from 'jquery';
 import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {AngularFireStorage} from '@angular/fire/storage';
+import {finalize} from 'rxjs/operators';
 import {Brand} from '../../../models/brand';
 import {BrandService} from '../../../services/brand.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { Observable } from 'rxjs';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { map, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-brand-management',
@@ -13,7 +13,6 @@ import { map, finalize } from 'rxjs/operators';
   styleUrls: ['./brand-management.component.scss']
 })
 export class BrandManagementComponent implements OnInit {
-  imageUrl80 = 'https://via.placeholder.com/80';
   imgSrc = 'https://via.placeholder.com/150';
   selectedImage: any = null;
   downloadURL: Observable<string>;
@@ -26,7 +25,8 @@ export class BrandManagementComponent implements OnInit {
   totalPages = 1;
   search = '';
   isSearch = false;
-  uploadProgress: Observable<number>;
+  key = '';
+  reverse = false;
   constructor(
     private brandService: BrandService,
     private fb: FormBuilder,
@@ -39,16 +39,17 @@ export class BrandManagementComponent implements OnInit {
       brandWebsite: ['', Validators.required]
     });
   }
+
   getAllBrand(): void {
     this.onSubmit(0);
   }
-  ngOnInit(): void {
-    // this.brandService.getAllBrand().subscribe(
-    //   next => (this.brandList = next),
-    //   error => (this.brandList = [])
-    // );
-    this.getAllBrand();
 
+  ngOnInit(): void {
+    this.getAllBrand();
+  }
+  sort(key): void {
+    this.key = key;
+    this.reverse = !this.reverse;
   }
   onNext(): void {
     if (this.pageClick < this.totalPages - 1) {
@@ -56,20 +57,24 @@ export class BrandManagementComponent implements OnInit {
       this.onSubmit(this.pageClick);
     }
   }
+
   onPrevious(): void {
     if (this.pageClick > 0) {
       this.pageClick--;
       this.onSubmit(this.pageClick);
     }
   }
+
   onFirst(): void {
     this.pageClick = 0;
     this.onSubmit(this.pageClick);
   }
+
   onLast(): void {
     this.pageClick = this.totalPages - 1;
     this.onSubmit(this.pageClick);
   }
+
   onSubmit(page): void {
     this.brandService.getAllBrand(page, this.size, this.search).subscribe(
       next => {
@@ -77,14 +82,15 @@ export class BrandManagementComponent implements OnInit {
         this.pageClick = page;
         this.brandList = next.content;
         this.totalPages = next.totalPages;
-        this.pages = Array.apply(null, { length: this.totalPages }).map(Number.call, Number);
+        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       },
-        error => console.log(error)
+      error => console.log(error)
     );
   }
 
   searchName(): void {
-    if (this.search === '') {
+    const temp = '';
+    if (this.search === temp) {
       this.isSearch = false;
       this.ngOnInit();
     } else {
@@ -106,17 +112,9 @@ export class BrandManagementComponent implements OnInit {
       alert('Please enter information!');
     }
   }
-  // onFileSelected(event): void {
-  //   if (event.target.files && event.target.files[0]) {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(event.target.files[0]); // read file as data url
-  //     reader.onload = (event ) => { // called once readAsDataURL is completed
-  //       this.uploadImg = event.target.result;
-  //     };
-  //   }
-  // }
-  onFileSelected(event: any){
-    if (event.target.files && event.target.files[0]){
+
+  onFileSelected(event: any): void {
+    if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e: any) => this.imgSrc = e.target.result;
       reader.readAsDataURL(event.target.files[0]);
@@ -143,8 +141,7 @@ export class BrandManagementComponent implements OnInit {
             console.log(url);
           }
         });
-    }
-    else {
+    } else {
       this.imgSrc = 'https://via.placeholder.com/150';
       this.selectedImage = null;
     }
@@ -154,15 +151,14 @@ export class BrandManagementComponent implements OnInit {
     window.location.reload();
   }
 
-  changeStatus(id: any) {
+  changeStatus(id: any): void {
     const temp = '.thh' + id;
-    // $('#thh + id').prop('disabled', true);
+
     $(temp).css('backgroundColor', '#D1D1D1');
   }
 
-  removeStatus(id: any) {
+  removeStatus(id: any): void {
     const temp = '.thh' + id;
-    // $('#thh + id').prop('disabled', true);
     $(temp).css('backgroundColor', 'white');
   }
 }
