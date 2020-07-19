@@ -3,7 +3,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnChanges, OnInit} from '@angular/core';
 import {CustomerService} from '../../../services/customer.service';
 import {Customer} from '../../../models/customer';
-
+import {HttpClient} from "@angular/common/http";
+import {finalize} from "rxjs/operators";
+import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from "@angular/fire/storage";
+import {} from "../../../../assets/js/fb.js"
 declare var $: any;
 
 @Component({
@@ -17,18 +20,22 @@ export class CustomerManagementComponent implements OnInit {
   tempCustomer: Customer = new Customer();
   addUser: FormGroup;
   customer = new Customer();
-  // customerForm: FormGroup;
   reverse = false;
   filter;
   date: any;
   deleteList = new Array();
+  selectedFile = null;
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+  editUrl: any;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private customerService: CustomerService) {
-    this.customerService.getAllCustomer().subscribe(data => {
-        console.log(data);
+              private customerService: CustomerService,
+              private http: HttpClient,
+              private afStorage: AngularFireStorage) {
+    this.customerService.getAllCustomer().subscribe((data: any) => {
         this.customers = data.content;
       }, error => {
         console.log(error);
@@ -40,17 +47,15 @@ export class CustomerManagementComponent implements OnInit {
   validatingForm: FormGroup;
 
   ngOnInit(): void {
-    // tslint:disable-next-line:typedef
-    $('#checkAll').click(function() {
+    $('#checkAll').click(function () {
       $('input:checkbox').not(this).prop('checked', this.checked);
     });
-
     this.addUser = this.formBuilder.group({
       id: [''],
-      userName: [''],
-      address: [''],
-      phone: [''],
-      email: [''],
+      userName: ['', [Validators.required, Validators.pattern('[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế][a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế ]*')]],
+      address: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern('(090|091|\\(84\\)\\+90|\\(84\\)\\+91)[0-9]{7}')]],
+      email: ['', [Validators.required, Validators.pattern('[A-Za-z0-9]+(\\.?[A-Za-z0-9])*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)')]],
       birthday: [''],
       gender: [''],
       imageUrl: ['']
@@ -158,6 +163,11 @@ export class CustomerManagementComponent implements OnInit {
           birthday: this.date,
         });
       }
+      if (this.editUrl !== undefined) {
+        this.addUser.patchValue({
+          imageUrl: this.editUrl,
+        });
+      }
       this.customerService.editCustomer(this.addUser.value).subscribe(
         next => window.location.reload(),
         error => console.log(error)
@@ -170,7 +180,7 @@ export class CustomerManagementComponent implements OnInit {
     if (deleteConfirm) {
       this.customerService.deleteCustomerById(id).subscribe(
         next => {
-          window.location.reload();
+          window.location.reload()
         },
         error => console.log(error)
       );
@@ -242,5 +252,46 @@ export class CustomerManagementComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line:typedef
+  hoverUploadPic() {
+    $('.icon-upload-alt').css('opacity', '0.8');
+  }
 
+
+  // tslint:disable-next-line:typedef
+  leaveUploadPic() {
+    $('.icon-upload-alt').css('opacity', '-1');
+  }
+
+  selectAvatar() {
+    $('#myAvatar').click();
+  }
+
+  // tslint:disable-next-line:typedef
+  readURL(target: any) {
+    if (target.files && target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // @ts-ignore
+        $('#avatar').attr('src', e.target.result);
+      };
+      reader.readAsDataURL(target.files[0]);
+      this.uploadFireBaseAndSubmit();
+    } else {
+    }
+  }
+
+  private uploadFireBaseAndSubmit(): void {
+    const target: any = document.getElementById('myAvatar');
+    const id = Math.random().toString(36).substring(2);
+    this.ref = this.afStorage.ref(id);
+    this.task = this.ref.put(target.files[0]);
+    this.task.snapshotChanges().pipe(
+      finalize(() => {
+        this.ref.getDownloadURL().subscribe(url => {
+          this.editUrl = url;
+        });
+      }))
+      .subscribe();
+  }
 }
