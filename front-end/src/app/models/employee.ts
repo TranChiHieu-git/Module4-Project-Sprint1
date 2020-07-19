@@ -1,4 +1,5 @@
 import {Position} from './position';
+import {Account} from './account';
 
 export class Employee {
   id: number;
@@ -11,6 +12,7 @@ export class Employee {
   department: string;
   phoneNumber: string;
   email: string;
+  account: Account;
 
   constructor() {
   }
