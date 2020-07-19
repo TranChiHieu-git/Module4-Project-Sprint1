@@ -38,8 +38,10 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { FilterProductPipe } from './warehouse-management/product/filter-product.pipe';
 import { FilterMultiplePipe } from './warehouse-management/product/filter-multiple.pipe';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
+
 import {AngularFireAuthModule} from '@angular/fire/auth';
-import { FacebookModule } from 'ngx-facebook';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {FacebookModule} from 'ngx-facebook';
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
     WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BillComponent,
