@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {Brand} from '../models/brand';
 @Injectable()
 export class BrandService {
-  private API_URL = 'http://localhost:8080/warehouse-management/brand';
+  private API_URL = 'http://localhost:8081/warehouse-management/brand';
   constructor(private http: HttpClient) {
   }
 

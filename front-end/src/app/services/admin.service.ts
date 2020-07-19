@@ -10,8 +10,8 @@ import {Role} from '../models/role';
   providedIn: 'root'
 })
 export class AdminService {
-  API_URL = 'http://localhost:8080/account';
-  API_ROLE_URL = 'http://localhost:8080/role';
+  API_URL = 'http://localhost:8081/account';
+  API_ROLE_URL = 'http://localhost:8081/role';
   httpOptions: any;
 
   constructor(private httpClient: HttpClient) {

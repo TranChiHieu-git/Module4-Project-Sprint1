@@ -77,8 +77,9 @@ export class UserLoginComponent implements OnInit {
         else if (this.tokenStorage.getAuthorities().indexOf('ROLE_MEMBER') != -1) {
           sessionStorage.setItem('loggedUser', userInfo.accountName);
           this.redirectTo('home-store/cake');
-          window.location.reload();
           this.tokenStorage.getUsername();
+          window.location.reload();
+
         }
         console.log('data1', this.tokenStorage.getAuthorities());
         console.log('data', userInfo.accountName);
