@@ -289,6 +289,7 @@ export class ListDistributorComponent implements OnInit {
     );
   }
 
+
   // tslint:disable-next-line:typedef
   searchName() {
     if (this.search === '') {
