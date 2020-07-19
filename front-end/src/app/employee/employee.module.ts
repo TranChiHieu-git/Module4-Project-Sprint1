@@ -33,7 +33,7 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 // @ts-ignore
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {environment} from '../../environments/environment';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginatorModule} from '@angular/material/paginator/';
 
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
