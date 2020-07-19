@@ -240,8 +240,6 @@ export class ListAccountComponent implements OnInit {
         });
       }
     );
-
-
   }
 
   // tslint:disable-next-line:typedef

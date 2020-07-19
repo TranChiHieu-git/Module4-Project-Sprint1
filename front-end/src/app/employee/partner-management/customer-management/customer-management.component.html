@@ -1,7 +1,6 @@
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <! - SDK SDK Firebase cốt lõi luôn được yêu cầu và phải được liệt kê trước ->
-
 <div>
   <h2>Danh sách khách hàng</h2>
   <div>
@@ -10,9 +9,7 @@
     <button class="btn btn-outline-primary">Tìm kiếm</button>
   </div>
 </div>
-
 <div class="mt-3">
-
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModel">Thêm mới</button>
   <button type="button" class="global-button delete-selected" (click)="delete()">Xóa khách hàng đã chọn</button>
     <table class="table table-bordered" style="font-size: 12px;">
@@ -28,7 +25,6 @@
             <input type="checkbox" name="checkbox" (click)="deleteAllCheckbox($event)" class="custom-control-input" id="checkAll" >
             <label class="custom-control-label" for="checkAll"></label>
           </div>
-
         </th>
       </tr>
       </thead>
@@ -42,7 +38,6 @@
           {{i}}
           {{cus.id}}
         </td>
-
         <td class="col-md-3"> {{cus.userName}}</td>
         <td class="col-md-3"> {{cus.address}}</td>
         <td class="col-md-2"> {{cus.email}}</td>

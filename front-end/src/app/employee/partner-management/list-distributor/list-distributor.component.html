@@ -5,8 +5,9 @@
         <h2 class="d-flex">Danh Sách Nhà Phân Phối</h2>
       </div>
       <div class="col-6 d-flex searchCustom">
-        <input class="form-control" type="text"  [(ngModel)]="search" (ngModelChange)="searchName()" placeholder="Tìm kiếm theo tên" style="width: 200px">
-        <button class="btn btn-primary buttonSearchCustom"  (click)="searchName()">Tìm kiếm</button>
+        <input class="form-control" type="text" [(ngModel)]="search" (ngModelChange)="searchName()"
+               placeholder="Tìm kiếm theo tên" style="width: 200px">
+        <button class="btn btn-primary buttonSearchCustom" (click)="searchName()">Tìm kiếm</button>
         <button *ngIf="isSearch === true" class="btn btn-outline-danger ml-1" (click)="backToSearch()">Quay về</button>
       </div>
     </div>
@@ -21,7 +22,8 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <form (ngSubmit)="onSubmit()" [formGroup]="myForm">
-      <div id="openCreateForm" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+      <div id="openCreateForm" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+           aria-labelledby="myLargeModalLabel"
            aria-hidden="true" data-backdrop="static" data-keyboard="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-title" id="modal-title">
@@ -81,7 +83,8 @@
                         </div>
                         <div class="item">
                           <div class="div1">
-                            <input type="text" formControlName="numberPhone" id="phone1" placeholder="Số điện thoại (*)"/>
+                            <input type="text" formControlName="numberPhone" id="phone1"
+                                   placeholder="Số điện thoại (*)"/>
                             <label id="icon" for="phone1"><i class="icon-phone"></i> </label>
                           </div>
                           <div class="div2">
@@ -132,14 +135,14 @@
           <td>{{distributor.numberPhone}}</td>
           <td>{{distributor.email}}</td>
           <td>
-             <i class="fas fa-pen" (click)="openEditForm(distributor.id)"></i>
+            <i class="fas fa-pen" (click)="openEditForm(distributor.id)"></i>
           </td>
-        <td>
-         <i (click)="openDeleteForm(distributor.id)" class="fas fa-trash"></i>
-        </td>
-        <td>
-          <i (click)="openDetailForm(distributor.id)" class="fa fa-info"></i>
-        </td>
+          <td>
+            <i (click)="openDeleteForm(distributor.id)" class="fas fa-trash"></i>
+          </td>
+          <td>
+            <i (click)="openDetailForm(distributor.id)" class="fa fa-info"></i>
+          </td>
         <tr>
       </ng-container>
       </tbody>
@@ -157,16 +160,16 @@
         </li>
         <li [ngClass]="(pageClick == pages[pageClick]) ? 'active' : ''" class="page-item"
             (click)="onChange(pages[pageClick])">
-          <a class="page-link">{{pageClick+1}}</a>
+          <a class="page-link">{{pageClick + 1}}</a>
         </li>
         <li *ngIf="pageClick < pages.length -1" class="page-item" (click)="onChange(pages[pageClick+1])">
-          <a class="page-link">{{pageClick+2}}</a>
+          <a class="page-link">{{pageClick + 2}}</a>
         </li>
         <li *ngIf="pageClick < pages.length -2" class="page-item">
           <a class="page-link">...</a>
         </li>
         <li *ngIf="pageClick < pages.length-2" class="page-item" (click)="onLast()">
-          <a class="page-link">{{pages[pages.length-1]+1}}</a>
+          <a class="page-link">{{pages[pages.length - 1] + 1}}</a>
         </li>
         <li class="page-item" (click)="onNext()" [ngClass]="pageClick==totalPages-1?'disabled':''">
           <a class="page-link">Next</a>
@@ -176,7 +179,6 @@
     </nav>
   </div>
 </div>
-
 
 
 <!--Detail Form-->
@@ -189,7 +191,8 @@
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <form [formGroup]="myForm">
-  <div id="detailForm" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  <div id="detailForm" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+       aria-labelledby="myLargeModalLabel"
        aria-hidden="true" data-backdrop="static" data-keyboard="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-title" id="modal-title">
@@ -206,9 +209,9 @@
                               (click)="selectAvatar()">
                       <img id="avatar" src={{src}}>
                       <input formControlName="id" readonly hidden>
-                      <input  readonly class="file-upload-input" type='file'
-                              (change)="readURL($event.target);" accept="image/*"
-                              hidden id="myAvatar"/>
+                      <input readonly class="file-upload-input" type='file'
+                             (change)="readURL($event.target);" accept="image/*"
+                             hidden id="myAvatar"/>
                       <i class="img"
                          style="font-size: 100px; color: blue; position: absolute; left: 60px; top:60px ; opacity: 0.1"
                          class="icon-upload-alt"></i>
@@ -249,11 +252,12 @@
                     </div>
                     <div class="item">
                       <div class="div1">
-                        <input readonly type="text" formControlName="numberPhone" id="phone" placeholder="Số điện thoại"/>
+                        <input readonly type="text" formControlName="numberPhone" id="phone"
+                               placeholder="Số điện thoại"/>
                         <label id="icon" for="phone"><i class="icon-phone"></i> </label>
                       </div>
                       <div class="div2">
-                        <input  type="text" formControlName="fax" id="fax" placeholder="Fax" readonly />
+                        <input type="text" formControlName="fax" id="fax" placeholder="Fax" readonly/>
                         <label id="icon2" for="fax"><i class="fa fa-fax" aria-hidden="true"></i> </label>
                       </div>
                     </div>
@@ -286,7 +290,8 @@
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <form (ngSubmit)="updateDistributor()" [formGroup]="myForm">
-  <div id="editForm" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  <div id="editForm" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+       aria-labelledby="myLargeModalLabel"
        aria-hidden="true" data-backdrop="static" data-keyboard="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-title" id="modal-title">
@@ -378,11 +383,12 @@
   </div>
 </form>
 <!--DELETE FORM-->
-<button id="deleteForm" type="button" class="btn btn-primary" data-toggle="modal" data-target=".delete" hidden>Large modal
+<button id="deleteForm" type="button" class="btn btn-primary" data-toggle="modal" data-target=".delete" hidden>Large
+  modal
 </button>
 <div class="modal fade bd-example-modal-sm delete" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
      aria-hidden="true" data-backdrop="static" data-keyboard="true">
-  <div class="modal-dialog" >
+  <div class="modal-dialog">
     <div class="modal-title" id="modal-title2">
       <h1>XÓA NHÀ PHÂN PHỐI</h1>
     </div>
