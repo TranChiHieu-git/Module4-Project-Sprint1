@@ -24,6 +24,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {CustomerManagementComponent} from './partner-management/customer-management/customer-management.component';
 import {BrandManagementComponent} from './warehouse-management/brand-management/brand-management.component';
+import {CustomPaginationComponent} from './warehouse-management/product/custom-pagination/custom-pagination.component';
 import {BrandService} from '../services/brand.service';
 import {NgxPaginationModule} from 'ngx-pagination';
 // @ts-ignore
@@ -34,6 +35,10 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {environment} from '../../environments/environment';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { FilterProductPipe } from './warehouse-management/product/filter-product.pipe';
+import { FilterMultiplePipe } from './warehouse-management/product/filter-multiple.pipe';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {FacebookModule} from 'ngx-facebook';
@@ -41,7 +46,7 @@ import {FacebookModule} from 'ngx-facebook';
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
     WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BillComponent,
     ListBillComponent, BrandManagementComponent,
-    SearchBillComponent, CustomerManagementComponent],
+    SearchBillComponent, CustomerManagementComponent, CustomPaginationComponent, FilterProductPipe, FilterMultiplePipe],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent
