@@ -25,7 +25,7 @@ import {MatInputModule} from '@angular/material/input';
     MatInputModule,
     BrowserAnimationsModule,
   ],
-  providers: [ MatDatepickerModule ],
+  providers: [MatDatepickerModule],
 })
 export class MaterialModule {
 }
