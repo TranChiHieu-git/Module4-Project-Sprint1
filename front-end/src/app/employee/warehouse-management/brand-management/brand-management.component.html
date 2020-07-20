@@ -106,9 +106,9 @@
             </div>
           </td>
           <td *ngIf="!brand.isEditable">
-            <img [src]="brand.brandLogo" alt="bbb"
-                 style="width: 94px; height: 94px">
-          </td>
+            <img class="brand-logo" [src]="brand.brandLogo">
+
+        </td>
 <!--          <input formControlName="id" hidden>-->
           <td>
             <p>{{brand.id}}</p>
@@ -234,7 +234,7 @@
               <input formControlName="brandLogo" type="text" hidden [(ngModel)]="imgSrc">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-id-card-o fa-lg" aria-hidden="true"></i></span>
+                  <span class="input-group-text"><i class="fa fa-id-card-o fa-lg add-brand-ico" aria-hidden="true"></i></span>
                 </div>
                 <input formControlName="brandName" type="text" class="form-control" placeholder="Brand name (*)">
               </div>
@@ -244,7 +244,7 @@
               </p>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i></span>
+                  <span class="input-group-text"><i class="fa fa-map-marker fa-lg add-brand-ico" aria-hidden="true"></i></span>
                 </div>
                 <input formControlName="brandAddress" type="text" class="form-control" placeholder="Brand address (*)">
               </div>
@@ -254,7 +254,7 @@
               </p>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class=" input-group-text"><i class="fa fa-globe fa-lg " aria-hidden="true"></i></span>
+                  <span class=" input-group-text"><i class="fa fa-globe fa-lg add-brand-ico " aria-hidden="true"></i></span>
                 </div>
                 <input formControlName="brandWebsite" type="text" class="form-control" placeholder="Website (*)">
               </div>
