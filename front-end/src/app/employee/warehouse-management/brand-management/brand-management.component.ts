@@ -13,13 +13,14 @@ import {BrandService} from '../../../services/brand.service';
   styleUrls: ['./brand-management.component.scss']
 })
 export class BrandManagementComponent implements OnInit {
+  listError: any = '';
   imgSrc = 'https://via.placeholder.com/150';
   selectedImage: any = null;
   downloadURL: Observable<string>;
   brandForm: FormGroup;
   brand: Brand;
   brandList: Brand[];
-  size = 3;
+  size = 2;
   pageClick = 0;
   pages = [];
   totalPages = 1;
@@ -29,6 +30,7 @@ export class BrandManagementComponent implements OnInit {
   reverse = false;
   brandName: string;
   brandEditForm: FormGroup;
+
   constructor(
     private brandService: BrandService,
     private fb: FormBuilder,
@@ -56,10 +58,12 @@ export class BrandManagementComponent implements OnInit {
   ngOnInit(): void {
     this.getAllBrand();
   }
+
   sort(key): void {
     this.key = key;
     this.reverse = !this.reverse;
   }
+
   onNext(): void {
     if (this.pageClick < this.totalPages - 1) {
       this.pageClick++;
@@ -115,7 +119,11 @@ export class BrandManagementComponent implements OnInit {
           alert('New brand has been added!');
           window.location.reload();
         },
-        error => console.log(error),
+        error => {
+          if (error.status === 500) {
+            alert("This brand is already exist!");
+          }
+        }
       );
     } else {
       alert('Please enter information!');
@@ -199,6 +207,7 @@ export class BrandManagementComponent implements OnInit {
       }
     );
   }
+
   switchEdit(brand: Brand): void {
     brand.isEditable = !brand.isEditable;
     $('#submit' + brand.id).click();

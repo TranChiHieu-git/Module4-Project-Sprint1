@@ -2,13 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AdminService} from '../../services/admin.service';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Account} from '../../models/account';
 import {Employees} from '../../models/employees';
 import {Role} from '../../models/role';
 import {Md5} from 'ts-md5';
 import {CustomerService} from '../../services/customer.service';
 import {Customer} from '../../models/customer';
+import {EmployeeService} from '../../services/employee.service';
+import {Employee} from '../../models/employee';
 
 @Component({
   selector: 'app-list-account',
@@ -29,18 +31,23 @@ export class ListAccountComponent implements OnInit {
   size = 6;
   pageClicked = 0;
   pages = [];
-  search = '';
   totalPages = 1;
   promiseAccount: any;
+  userName = '';
+  employeeList: Employee[];
 
   constructor(private adminService: AdminService,
               private route: Router,
               private formBuilder: FormBuilder,
               private activatedRoute: ActivatedRoute,
-              private customerService: CustomerService) {
+              private customerService: CustomerService,
+              private employeeService: EmployeeService) {
   }
 
   ngOnInit(): void {
+    this.employeeService.findAll().subscribe(next => {
+      this.employeeList = next;
+    });
     this.adminService.findAllRole().subscribe(next => {
       this.roleList = next;
     }, error => {
@@ -50,12 +57,6 @@ export class ListAccountComponent implements OnInit {
       this.accountlist = next;
     }, error => {
       console.log(error);
-    });
-    this.activatedRoute.paramMap.subscribe((param: ParamMap) => {
-      this.search = param.get('accountName');
-      if (this.search === null) {
-        this.search = '';
-      }
     });
     this.getAll();
     this.accountForm = this.formBuilder.group({
@@ -92,7 +93,7 @@ export class ListAccountComponent implements OnInit {
   // tslint:disable-next-line:typedef
   getAllSubmit(page) {
     const md5 = new Md5();
-    this.adminService.getAllCourse(page, this.size, this.search).subscribe(
+    this.adminService.getAllCourse(page, this.size, this.userName).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
