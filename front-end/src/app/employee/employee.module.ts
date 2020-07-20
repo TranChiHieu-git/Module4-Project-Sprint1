@@ -9,7 +9,6 @@ import {BillComponent} from './warehouse-management/bill/bill.component';
 import {ListBillComponent} from './warehouse-management/bill/list-bill/list-bill.component';
 import {SearchBillComponent} from './warehouse-management/bill/search-bill/search-bill.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
-import {Ng2OrderModule} from 'ng2-order-pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ProductComponent} from './warehouse-management/product/product.component';
 import {MaterialModule} from '../shares/material.module';
@@ -57,7 +56,6 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     RouterModule,
     ReactiveFormsModule,
     Ng2SearchPipeModule,
-    Ng2OrderModule,
     HttpClientModule,
     NgbModule,
     MaterialModule,

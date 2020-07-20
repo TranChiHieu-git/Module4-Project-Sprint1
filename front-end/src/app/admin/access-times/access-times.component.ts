@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AccessTimesService} from '../../services/access-times.service';
 import {Accesstimes} from '../../models/accesstimes';
 
+
 @Component({
   selector: 'app-access-times',
   templateUrl: './access-times.component.html',
@@ -11,12 +12,14 @@ export class AccessTimesComponent implements OnInit {
   type = 'msline';
   dataFormat = 'json';
   data: any;
-  dataSource = new Object();
+  dataSource = {};
   accessTimes: Accesstimes[];
-  promiseCounts: any;
 
   constructor(private accessTimesService: AccessTimesService) {
+
+
   }
+
   ngOnInit(): void {
     this.accessTimesService.findAll().subscribe(next => {
       this.accessTimes = next;
@@ -24,7 +27,7 @@ export class AccessTimesComponent implements OnInit {
         chart: {
           caption: 'Lượt truy cập',
           // yAxisName: '% of youth on this platform',
-          subcaption: 'Năm ' + this.accessTimes[0].dates.slice(0, 4),
+          // subcaption: 'Năm ' + this.accessTimes[0].dates.slice(0, 4),
           showhovereffect: '1',
           numbersuffix: 'lần',
           drawcrossline: '1',
@@ -139,6 +142,7 @@ export class AccessTimesComponent implements OnInit {
             ]
           }
         ]
+
       };
       this.dataSource = this.data;
     });
