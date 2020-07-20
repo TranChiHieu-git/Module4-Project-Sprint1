@@ -98,8 +98,6 @@ export class EmployeeDetailComponent implements OnInit {
       },
       error => console.log(error)
     );
-    // this.oldPassword = this.employee.account.accountPassword;
-    // console.log(this.oldPassword);
   }
 
   onSubmit1(): void {
@@ -142,7 +140,7 @@ export class EmployeeDetailComponent implements OnInit {
   loadPasswordForm(): void {
     this.editPasswordForm = this.fb.group({
       accountName: new FormControl(''),
-      // oldPassword: new FormControl('', [Validators.required, checkCurrentPassword]),
+      oldPassword: new FormControl('', [Validators.required, checkCurrentPassword]),
       pwGroup: this.fb.group({
           password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9]{1,}$')]),
           confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
@@ -151,10 +149,10 @@ export class EmployeeDetailComponent implements OnInit {
       accountPassword: new FormControl('')
     });
     this.employeeService.findAccountByName(this.accountName).subscribe(
-      next => this.account = next,
+      next => { this.account = next;
+                console.log(next); },
       error => console.log(error)
     );
-    this.currentPass = this.account.accountPassword;
   }
 
   onSubmit2(): void {

@@ -6,14 +6,16 @@
 <div class="row">
   <div class="col-md-5" style="">
     <div class="left-unit">
+      <div class="row">
       <mat-card class="mat-card-img"
                 (click)="selectFile()">
-        <img id="avatar" src="{{employee['image']}}">
+        <img class="imageEmp" id="avatar" src="{{employee['image']}}">
         <input formControlName="id" readonly hidden>
         <input class="file-upload-input" type='file'
                (change)="readURL($event.target);" accept="image/*"
                hidden id="image"/>
       </mat-card>
+      </div>
       <br>
       <button type="button" class="btn btn-warning" (click)="loadEditForm()" data-toggle="modal"
               data-target="#editModal">
