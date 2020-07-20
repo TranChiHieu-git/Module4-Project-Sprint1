@@ -14,11 +14,13 @@ import {OrderButtonComponent} from './orderButton/orderButton.component';
 import { UserManageComponent } from './user-manage/user-manage.component';
 import {UserOdersComponent} from './user-oders/user-oders.component';
 import {UserDetailComponent} from './user-detail/user-detail.component';
+import {UserOderDetailComponent} from './user-oder-detail/user-oder-detail.component';
 
 @NgModule({
   declarations: [TestComponent, UserManageComponent, OrderButtonComponent,
     UserRegisterComponent, UserLoginComponent, UserForgetpasswordComponent, UserManageComponent,
-  UserOdersComponent, UserDetailComponent],
+  UserOdersComponent, UserDetailComponent,
+  UserOdersComponent, UserDetailComponent, UserOderDetailComponent],
   exports: [
     OrderButtonComponent,
     UserRegisterComponent,

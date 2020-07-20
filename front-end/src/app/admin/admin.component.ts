@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -15,6 +15,7 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // tslint:disable-next-line:typedef
   search() {
     if (window.location.href === 'http://localhost:4200/admin/access-times') {
       this.route.navigate(['/admin/access-times', this.userName]);

@@ -5,6 +5,11 @@
   overflow-x: hidden;
 }
 
+.pw {
+  border: none;
+  background: white;
+}
+
 .modal-content {
   width: 130%;
   overflow-y: auto;
@@ -42,5 +47,9 @@ label {
 
 .deleteTitle {
   text-align: center;
+}
+
+.avt-customer {
+  margin-left: 48%;
 }
 

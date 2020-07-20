@@ -5,13 +5,13 @@
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">Tên hàng: Bánh Abc</h5>
-        <p>Thương hiệu: Chocovina</p>
-        <p>Giá: 20.000</p>
+        <h5 class="card-title">Tên hàng: {{product.productName}}</h5>
+        <p>Thương hiệu: {{product.brand.brandName}}</p>
+        <p>Giá: {{product.price}}</p>
         <p>số lượng: 1</p>
         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
         <button class="btn btn-success">Thêm vào giỏ hàng</button>
-        <button class="btn btn-warning ml-2" routerLink="/home-store/cake">trở về gian hàng</button>
+        <button class="btn btn-warning ml-2" routerLink="/home-store/home-bakery">trở về gian hàng</button>
       </div>
     </div>
   </div>

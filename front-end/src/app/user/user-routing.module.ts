@@ -12,44 +12,46 @@ import {HomeCakeComponent} from './home-store/home-cake/home-cake.component';
 import {HomeCandyComponent} from './home-store/home-candy/home-candy.component';
 import {DetailComponent} from './home-store/detail/detail.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
-import {HomeBakeryComponent} from "./home-store/home-bakery/home-bakery.component";
+import {HomeBakeryComponent} from './home-store/home-bakery/home-bakery.component';
+import {UserLoginComponent} from './user-login/user-login.component';
 
 const routes: Routes = [{
   path: 'home', component: UserComponent,
   children: [
-    {path: 'test', component: TestComponent}
+    {path: 'test', component: TestComponent},
+    {path: 'login', component: UserLoginComponent}
   ],
 },
-  {
-    path: 'user-manage',
-    component: UserManageComponent,
-    children: [{
-      path: 'user-detail',
-      component: UserDetailComponent,
-    },
-      {
-        path: 'user-oder',
-        component: UserOdersComponent
-      },
-      {
-        path: 'user-oder/:id',
-        component: UserOderDetailComponent
-      }
-    ]
-  },
-  {
+    {
     path: '', component: UserComponent,
     children: [
       {path: '', component: OrderButtonComponent}
       ,
       {
         path: 'home-store', component: HomeStoreComponent, children: [
-          {path: 'home-store/products/:id', component: DetailComponent},
+          {path: 'products/:id', component: DetailComponent},
           {path: 'home-bakery', component: HomeBakeryComponent},
           {path: 'home-bakery1', component: HomeCakeComponent},
           {path: 'home-bakery2', component: HomeCandyComponent},
         ]
-      }
+      },
+      {
+        path: 'user-manage',
+        component: UserManageComponent,
+        children: [{
+          path: 'user-detail',
+          component: UserDetailComponent,
+        },
+          {
+            path: 'user-order',
+            component: UserOdersComponent
+          },
+          {
+            path: 'order-detail/:idOrder',
+            component: UserOderDetailComponent
+          }
+        ]
+      },
     ],
   }
 ];

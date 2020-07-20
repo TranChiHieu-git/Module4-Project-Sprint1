@@ -1,7 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BrandService} from '../../services/brand.service';
 import {CategoryService} from '../../services/category.service';
-import {HomeBakeryComponent} from './home-bakery/home-bakery.component';
 
 @Component({
   selector: 'app-home-store',
@@ -22,6 +21,6 @@ export class HomeStoreComponent implements OnInit {
       console.log(this.categoryList);
     },
       error => console.log(error));
-    this.brandService.getAllBrand().subscribe(next => this.brandList = next, error => console.log(error));
+    this.brandService.getAllBrandToOption().subscribe(next => this.brandList = next, error => console.log(error));
   }
 }

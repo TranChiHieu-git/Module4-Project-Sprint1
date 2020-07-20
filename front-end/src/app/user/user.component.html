@@ -1,5 +1,5 @@
-<body>
-<div class="container-fluid pt-lg-5 ">
+<body class="firstBlur">
+<div class="container-fluid pt-lg-5 px-0 font-weight-bolder" >
   <nav class="navbar navbar-expand-lg navbar-light ">
     <div class="navbar-brand codeBakery" href="#">
       <!--      <h2 class="">CODE BAKERY</h2>-->
@@ -9,14 +9,14 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse text-danger" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto text-danger">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Trang Chủ <span class="sr-only">(current)</span></a>
+          <a class="nav-link " href="#">Trang Chủ <span class="sr-only">(current)</span></a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#">Sản Phẩm</a>
+          <a class="nav-link" [routerLink]="'/home-store'">Sản Phẩm</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Tin Tức</a>
@@ -26,7 +26,12 @@
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2 searchInput" type="search" placeholder="Tìm Kiếm" aria-label="Search">
+        <div class="form-group has-search">
+          <span class="fa fa-search form-control-feedback"></span>
+          <input class="form-control mr-sm-2 searchInput" type="search" placeholder="Tìm Kiếm" aria-label="Search">
+        </div>
+
+
         <button class="btn btn-outline-warning my-2 my-sm-0 button-user" type="submit">Tìm</button>
       </form>
       <div class="nav-item dropdown">
@@ -39,15 +44,15 @@
             <span class="badge badge-light">4</span>
           </div>
           <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
-            <a class="dropdown-item " [routerLink]="'/user-manage/user-oder/1'">Chi tiết Đơn hàng</a>
+            <a class="dropdown-item " >Chi tiết Đơn hàng</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Thanh Toán</a>
           </div>
         </div>
       </div>
       <!--  // tai khoan chua dang nhap&ndash;&gt;-->
-      <div class="nav-item dropdown ">
-        <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown" role="button"
+      <div class="nav-item dropdown " *ngIf="!userDisplayName">
+        <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown1" role="button"
              data-toggle="dropdown"
              aria-haspopup="true"
              aria-expanded="true">
@@ -61,16 +66,20 @@
         </div>
       </div>
       <div class="supreme-container"></div>
-      <div class="modal fade " id="registerModal" data-backdrop="false" tabindex="-1" role="dialog"
+      <div class="modal fade font-weight-normal " id="registerModal"
+           data-backdrop="true"
+           tabindex="-1"
+           role="dialog"
            aria-labelledby="exampleModalLabel"
            aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog" role="dialog">
           <div class="modal-content">
             <app-user-register></app-user-register>
           </div>
         </div>
       </div>
-      <div class="modal fade" id="forgetPasswordModal" data-backdrop="false" role="dialog"
+      <div class="modal fade font-weight-normal " id="forgetPasswordModal"
+           data-backdrop="true" role="dialog"
            aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -78,37 +87,41 @@
           </div>
         </div>
       </div>
-      <div class="modal fade" id="loginModal" tabindex="-1" data-backdrop="false" role="dialog"
+      <div class="modal fade font-weight-normal" id="loginModal" tabindex="-1"
+           data-backdrop="true" role="dialog"
            aria-labelledby="exampleModalLabel"
-           aria-hidden="true">
+           aria-hidden="false">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <app-user-login></app-user-login>
           </div>
         </div>
       </div>
-      <!--      //  tai khoan sau khi dang nhap-->
-      <!--      <div class="nav-item dropdown">-->
-      <!--        <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"-->
-      <!--             aria-haspopup="true"-->
-      <!--             aria-expanded="true">-->
-      <!--          <span class="material-icons mr-2">account_circle</span>-->
-      <!--          <span>Xin Chào Quang </span>-->
-      <!--        </div>-->
-      <!--        <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">-->
-      <!--          <a class="dropdown-item " href="#">Quản Lý Tài Khoản</a>-->
-      <!--          <div class="dropdown-divider"></div>-->
-      <!--          <a class="dropdown-item" href="#">Đơn Hàng Của Tôi</a>-->
-      <!--          <div class="dropdown-divider"></div>-->
-      <!--          <a class="dropdown-item" href="#">Đăng Xuất</a>-->
-      <!--        </div>-->
-      <!--      </div>-->
+
+<!--            //  tai khoan sau khi dang nhap-->
+            <div class="nav-item dropdown " *ngIf="userDisplayName">
+              <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true"
+                   aria-expanded="true">
+                <span class="material-icons mr-2">account_circle</span>
+                <span>Xin Chào {{userDisplayName}} </span>
+              </div>
+              <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
+                <a class="dropdown-item " [routerLink]="['user-manage/user-detail']">Quản Lý Tài Khoản</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" [routerLink]="['user-manage/user-order']">Đơn Hàng Của Tôi</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" (click)="signOut()">Đăng Xuất</a>
+              </div>
+            </div>
     </div>
   </nav>
-  <div class="orderButton">
-    <router-outlet></router-outlet>
-  </div>
+<!--  <div class="orderButton">-->
+<!--  <app-orderbutton></app-orderbutton>-->
+<!--  </div>-->
 </div>
+<router-outlet></router-outlet>
 </body>
+
 
 

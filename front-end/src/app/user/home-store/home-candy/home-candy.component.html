@@ -5,7 +5,7 @@
   <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
 <div class="row mt-2">
-  <div routerLink="/home-store/detail" *ngFor="let product of candyList | orderBy: key : reverse | paginate: { itemsPerPage: 8, currentPage: p }" class="col-md-3 m-0 mt-2">
+  <div *ngFor="let product of candyList | orderBy: key : reverse | paginate: { itemsPerPage: 8, currentPage: p }" class="col-md-3 m-0 mt-2" routerLink="/home-store/products/{{product.productId}}">
     <div class="container__detail">
       <div class="img_product">
         <img class="img__info" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSoQ7tZCvNDmU8AWBqqOp42ulPT5nmbpop77Q&usqp=CAU" alt="">

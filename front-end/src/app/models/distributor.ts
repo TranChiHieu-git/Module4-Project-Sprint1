@@ -29,3 +29,13 @@ export class TypeOfDistributor {
   id: number;
   name: string;
 }
+
+export class DeleteListDistributor {
+  id: number;
+  name: string;
+
+  constructor(id: number, name: string) {
+    this.id = id;
+    this.name = name;
+  }
+}
