@@ -46,6 +46,32 @@ input[type=text]:focus {
   height: 10vh;
 }
 
+.navbar:before{
+    background-size: 570px;
+    content: "";
+    width: 396px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url(../../../assets/background/bg-bakery-1.png);
+    background-repeat: no-repeat;
+    background-position-x: -178px;
+    background-position-y: -104px;
+  }
+  .navbar:after{
+    background-size: 560px;
+    content: "";
+    width: 396px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url(../../../assets/background/bg-bakery-1.png);
+    background-repeat: no-repeat;
+    background-position-x: 0;
+    background-position-y: -133px;
+  }
 .navbar-brand, .nav-link {
   z-index: 1;
   color: #581008 !important;
