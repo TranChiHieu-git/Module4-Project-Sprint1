@@ -1,4 +1,5 @@
 import * as $ from 'jquery';
+// import * as bcrypt from 'bcrypt';
 import {Component, OnInit} from '@angular/core';
 import {Employee} from '../../employee';
 import {EmployeeService} from '../../../services/employee.service';
@@ -20,12 +21,12 @@ function comparePassword(c: AbstractControl) {
 }
 
 // tslint:disable-next-line:typedef
-function checkCurrentPassword(c: AbstractControl): { [key: string]: any } {
-  const v = c.value;
-  return (v.oldPassword === v.currentPass) ? null : {
-    wrongpassword: true
-  };
-}
+// function checkCurrentPassword(c: AbstractControl): { [key: string]: any } {
+//   const v = c.value;
+//   return (v.oldPassword === v.currentPass) ? null : {
+//     wrongpassword: true
+//   };
+// }
 
 @Component({
   selector: 'app-employee-detail',
@@ -140,7 +141,7 @@ export class EmployeeDetailComponent implements OnInit {
   loadPasswordForm(): void {
     this.editPasswordForm = this.fb.group({
       accountName: new FormControl(''),
-      oldPassword: new FormControl('', [Validators.required, checkCurrentPassword]),
+      oldPassword: new FormControl('', [Validators.required]),
       pwGroup: this.fb.group({
           password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9]{1,}$')]),
           confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
@@ -158,7 +159,7 @@ export class EmployeeDetailComponent implements OnInit {
   onSubmit2(): void {
     this.editPasswordForm.patchValue({
       accountName: this.accountName,
-      accountPassword: this.editPasswordForm.get('pwGroup.password').value
+      accountPassword: this.editPasswordForm.get('pwGroup.password').value,
     });
     if (this.editPasswordForm.valid) {
       const {value} = this.editPasswordForm;

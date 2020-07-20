@@ -180,13 +180,13 @@
       </div>
       <div class="modal-body">
         <form (ngSubmit)="onSubmit2()" [formGroup]="editPasswordForm">
-          <!--          <div class="row">-->
-          <!--            <label>Mật khẩu cũ (*) <input type="text" class="form-control"  formControlName="currentPassword">-->
-          <!--            </label>-->
-          <!--          </div>-->
-          <!--          <div class="alert alert-danger" role="alert" *ngIf="editPasswordForm.get('oldPassword').hasError('wrongpassword') && editPasswordForm.get('oldPassword').touched">-->
-          <!--            Sai mật khẩu !-->
-          <!--          </div>-->
+                    <div class="row">
+                      <label>Mật khẩu cũ (*) <input type="text" class="form-control"  formControlName="oldPassword">
+                      </label>
+                    </div>
+                    <div class="alert alert-danger" role="alert" *ngIf="editPasswordForm.get('oldPassword').hasError('required') && editPasswordForm.get('oldPassword').touched">
+                      Không được để trống !
+                    </div>
           <fieldset formGroupName="pwGroup">
             <div class="row">
               <label>Mật khẩu mới (*) <input type="password" class="form-control"  formControlName="password">
