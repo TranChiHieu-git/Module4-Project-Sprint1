@@ -35,7 +35,6 @@ export class ListAccountComponent implements OnInit {
   promiseAccount: any;
   userName = '';
   employeeList: Employee[];
-  employeeInfo:Employee = new Employee();
 
   constructor(private adminService: AdminService,
               private route: Router,
@@ -273,12 +272,6 @@ export class ListAccountComponent implements OnInit {
       });
     }, error => {
       console.log(error);
-    });
-  }
-
-  infoEmployee(id){
-    this.employeeService.findEmployeeById(id).subscribe(next => {
-      this.employeeInfo = next;
     });
   }
 }

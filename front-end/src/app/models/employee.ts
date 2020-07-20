@@ -9,8 +9,8 @@ export class Employee {
   gender: string;
   birthday: string;
   address: string;
-  department: Department = new Department();
-  position: Position = new Position();
+  department: string;
+  position: string;
   phoneNumber: string;
   email: string;
   account: Account;
