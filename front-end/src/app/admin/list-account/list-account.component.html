@@ -6,7 +6,8 @@
       </button>
       <div class="float-right form-group has-search">
         <span class="fa fa-search form-control-feedback"></span>
-        <input [(ngModel)]="userName" (ngModelChange)="getAll()" name='userName' type="text" class="border border-primary form-control"
+        <input [(ngModel)]="userName" (ngModelChange)="getAll()" name='userName' type="text"
+               class="border border-primary form-control"
                placeholder="Tìm kiếm">
       </div>
     </div>
@@ -121,15 +122,15 @@
                         </div>
                         <select #employee class="browser-default custom-select form-control" formControlName="role">
                           <ng-container *ngFor="let role of roleList">
-                            <option value="{{role.roleId}}">{{role.roleName}}</option>
+                            <option selected value="{{role.roleId}}">{{role.roleName}}</option>
                           </ng-container>
                         </select>
                       </div>
                     </tr>
-                    <tr *ngIf="employee.value == '2'">
+                    <tr *ngIf="employee.value == '2' || employee.value == '3'">
                       Mã nhân viên:
                     </tr>
-                    <tr *ngIf="employee.value == '2'">
+                    <tr *ngIf="employee.value == '2'  || employee.value == '3'">
                       <div class="input-group mb-3">
                         <div class="input-group-prepend">
                           <span class="input-group-text fa 	fas fa-barcode prefix"></span>
@@ -160,6 +161,7 @@
     </div>
   </div>
 </div>
+
 <!--details modal-->
 <div class="modal " role="dialog" id="infor" data-backdrop="static"
      aria-labelledby="exampleModalScrollableTitle"
@@ -440,19 +442,17 @@
             </tr>
           </table>
           <br>
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-8"></div>
-              <div class="col-4">
-                <div class="row">
-                  <div class="col-3"></div>
-                  <div class="col-2 form-group">
-                    <button class="btn btn-warning" [disabled]="editAccountForm.invalid" type="submit">sửa</button>
-                  </div>
-                  <div class="col-1"></div>
-                  <div class="col-5">
-                    <button class="btn btn-secondary destroy" data-dismiss="modal">Hủy</button>
-                  </div>
+          <div class="row">
+            <div class="col-8"></div>
+            <div class="col-4">
+              <div class="row">
+                <div class="col-3"></div>
+                <div class="col-2 form-group">
+                  <button class="btn btn-warning" [disabled]="editAccountForm.invalid" type="submit">sửa</button>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-5">
+                  <button class="btn btn-secondary destroy" data-dismiss="modal">Hủy</button>
                 </div>
               </div>
             </div>
@@ -477,23 +477,131 @@
           </tr>
         </table>
         <br>
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-8"></div>
-            <div class="col-4">
-              <div class="row">
-                <div class="col-3"></div>
-                <div class="col-2">
-                  <button class="btn btn-danger" (click)="deleted(AccountById.accountId)">Xóa</button>
-                </div>
-                <div class="col-1"></div>
-                <div class="col-5">
-                  <button class="btn btn-secondary destroy" data-dismiss="modal">Hủy</button>
-                </div>
+        <div class="row">
+          <div class="col-8"></div>
+          <div class="col-4">
+            <div class="row">
+              <div class="col-3"></div>
+              <div class="col-2">
+                <button class="btn btn-danger" (click)="deleted(AccountById.accountId)">Xóa</button>
+              </div>
+              <div class="col-1"></div>
+              <div class="col-5">
+                <button class="btn btn-secondary destroy" data-dismiss="modal">Hủy</button>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--detail employee-->
+<div class="modal " role="dialog" id="infoEmployee" data-backdrop="static"
+     aria-labelledby="exampleModalScrollableTitle"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title">Thông tin tài khoản</h3>
+        <br>
+        <table width="100%">
+          <tr>Mã số nhân viên:</tr>
+          <tr>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text fas fa-id-card prefix"></span>
+              </div>
+              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                     value="{{employeeInfo.id}}">
+            </div>
+          </tr>
+          <tr>Họ Và Tên:</tr>
+          <tr>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text fas fa-user prefix"></span>
+              </div>
+              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                     value="{{employeeInfo.name}}">
+            </div>
+          </tr>
+          <tr>Ngày Sinh:</tr>
+          <tr>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text fa fa-birthday-cake prefix"></span>
+              </div>
+              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                     value="{{employeeInfo.birthday | date: 'dd/MM/yyyy'}}">
+            </div>
+          </tr>
+          <tr>Địa Chỉ:</tr>
+          <tr>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text fa fa-home prefix"></span>
+              </div>
+              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                     value="{{employeeInfo.address}}">
+            </div>
+          </tr>
+          <tr>Email:</tr>
+          <tr>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text fa fa-envelope prefix"></span>
+              </div>
+              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                     value="{{employeeInfo.email}}">
+            </div>
+          </tr>
+          <tr>Số Điện Thoại:</tr>
+          <tr>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text fa fa-phone prefix"></span>
+              </div>
+              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                     value="{{employeeInfo.phoneNumber}}">
+            </div>
+          </tr>
+          <tr>Giới Tính:</tr>
+          <tr>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text fa fa-venus-mars prefix"></span>
+              </div>
+              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                     value="{{employeeInfo.gender}}">
+            </div>
+          </tr>
+          <tr>Chức Vụ:</tr>
+          <tr>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text fa fa-briefcase prefix"></span>
+              </div>
+              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                     value="{{employeeInfo.department.name}}">
+            </div>
+          </tr>
+          <tr>Phòng Ban:</tr>
+          <tr>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text fa fa-industry prefix"></span>
+              </div>
+              <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                     value="{{employeeInfo.position.name}}">
+            </div>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
