@@ -19,7 +19,7 @@ export class BrandManagementComponent implements OnInit {
   brandForm: FormGroup;
   brand: Brand;
   brandList: Brand[];
-  size = 5;
+  size = 2;
   pageClick = 0;
   pages = [];
   totalPages = 1;
@@ -29,6 +29,7 @@ export class BrandManagementComponent implements OnInit {
   reverse = false;
   brandName: string;
   brandEditForm: FormGroup;
+
   constructor(
     private brandService: BrandService,
     private fb: FormBuilder,
@@ -56,10 +57,12 @@ export class BrandManagementComponent implements OnInit {
   ngOnInit(): void {
     this.getAllBrand();
   }
+
   sort(key): void {
     this.key = key;
     this.reverse = !this.reverse;
   }
+
   onNext(): void {
     if (this.pageClick < this.totalPages - 1) {
       this.pageClick++;
@@ -199,6 +202,7 @@ export class BrandManagementComponent implements OnInit {
       }
     );
   }
+
   switchEdit(brand: Brand): void {
     brand.isEditable = !brand.isEditable;
     $('#submit' + brand.id).click();
