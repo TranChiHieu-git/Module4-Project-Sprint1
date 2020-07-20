@@ -13,6 +13,7 @@ import {BrandService} from '../../../services/brand.service';
   styleUrls: ['./brand-management.component.scss']
 })
 export class BrandManagementComponent implements OnInit {
+  listError: any = '';
   imgSrc = 'https://via.placeholder.com/150';
   selectedImage: any = null;
   downloadURL: Observable<string>;
@@ -118,7 +119,11 @@ export class BrandManagementComponent implements OnInit {
           alert('New brand has been added!');
           window.location.reload();
         },
-        error => console.log(error),
+        error => {
+          if (error.status === 500) {
+            alert("This brand is already exist!");
+          }
+        }
       );
     } else {
       alert('Please enter information!');

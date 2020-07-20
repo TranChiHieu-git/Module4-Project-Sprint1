@@ -81,14 +81,14 @@
   <div class="container-fluid">
     <form [formGroup]="brandEditForm" (ngSubmit)="edit()">
       <table class="table table-bordered mt-3 table-striped">
-        <thead>
+        <thead class="table-header">
         <tr>
-          <th>Hình ảnh</th>
-          <th (click)="sort('id')">Mã Thương Hiệu <i class="fa fa-sort" aria-hidden="true"></i></th>
-          <th>Tên Thương Hiệu</th>
-          <th>Trụ sở</th>
-          <th>Website</th>
-          <th>Sửa | Xóa</th>
+          <th class="sticky-top">Hình ảnh</th>
+          <th class="sticky-top" (click)="sort('id')">Mã Thương Hiệu <i class="fa fa-sort" aria-hidden="true"></i></th>
+          <th class="sticky-top">Tên Thương Hiệu</th>
+          <th class="sticky-top">Trụ sở</th>
+          <th class="sticky-top">Website</th>
+          <th class="sticky-top">Sửa | Xóa</th>
         </tr>
         </thead>
         <tbody>
@@ -305,4 +305,3 @@
     </div>
   </div>
 </div>
-
