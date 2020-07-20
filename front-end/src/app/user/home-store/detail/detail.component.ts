@@ -18,7 +18,6 @@ export class DetailComponent implements OnInit {
     this.activatedRoute.params.subscribe(data => this.productId = data.id);
     this.productService.getProductById(this.productId).subscribe(next => {
       this.product = next;
-      console.log(this.product);
     });
   }
 

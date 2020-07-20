@@ -18,7 +18,6 @@ export class HomeStoreComponent implements OnInit {
   ngOnInit(): void {
     this.categoryService.getAllCategory().subscribe(next => {
       this.categoryList = next;
-      console.log(this.categoryList);
     },
       error => console.log(error));
     this.brandService.getAllBrandToOption().subscribe(next => this.brandList = next, error => console.log(error));

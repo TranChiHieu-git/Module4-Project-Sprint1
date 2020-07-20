@@ -22,24 +22,6 @@ export class HomeBakeryComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getAllProduct().subscribe(next => {
         this.productList = next;
-        console.log(this.productList);
       }, error => console.log(error));
-  }
-
-  // tslint:disable-next-line:typedef
-  sortDataByDateCreate() {
-    // this.productService.getAllProductSortByDateCreate().subscribe(next => {
-    //   this.productPage = next;
-    //   this.productList = next.content;
-    //   console.log(this.productPage);
-    // }, error => console.log(error));
-  }
-
-  // tslint:disable-next-line:typedef
-  sortDataByAmountSold() {
-    // this.productService.getAllProductSortByAmountSold().subscribe(next => {
-    //   this.productList = next;
-    //   console.log(this.productList);
-    // }, error => console.log(error));
   }
 }
