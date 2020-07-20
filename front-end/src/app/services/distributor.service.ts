@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class DistributorService {
-  MY_API_URL = 'http://localhost:8080';
+  MY_API_URL = 'http://localhost:8081';
   private httpOptions: any;
 
   constructor(private httpClient: HttpClient) {
