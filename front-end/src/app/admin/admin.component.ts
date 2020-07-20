@@ -18,7 +18,6 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.userName = this.tokenStorageService.getUsername();
-
   }
   search() {
     if (window.location.href === 'http://localhost:4200/admin/access-times') {
