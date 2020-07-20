@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
 import {AccountService} from '../services/account.service';
 import {TokenStorageService} from '../auth/token-storage.service';
-import {CustomerService} from '../services/customer.service';
+import {UserService} from '../services/user.service';
 import {OrderService} from '../services/order.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class UserComponent implements OnInit {
 
   constructor(private accountService: AccountService,
               private tokenStorage: TokenStorageService,
-              private customerService: CustomerService,
+              private customerService: UserService,
               private orderService: OrderService
   ) {
   }

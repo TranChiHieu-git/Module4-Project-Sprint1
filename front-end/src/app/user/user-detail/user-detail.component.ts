@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {CustomerService} from '../../services/customer.service';
-import {Customer} from '../../models/customer';
+import {UserService} from '../../services/user.service';
+import {User} from '../../models/user';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {OrderService} from '../../services/order.service';
 
@@ -10,15 +10,15 @@ import {OrderService} from '../../services/order.service';
   styleUrls: ['./user-detail.component.scss']
 })
 export class UserDetailComponent implements OnInit {
-  customer: Customer;
+  customer: User;
   idUser: number;
 
-  constructor(private customerService: CustomerService,
+  constructor(private customerService: UserService,
               private activatedRoute: ActivatedRoute, private orderService: OrderService) {
     this.orderService.curentIdUser.subscribe(message => {
       this.idUser = message;
       console.log(this.idUser);
-      this.customerService.getCustomerById(this.idUser).subscribe(next => {
+      this.customerService.getUserById(this.idUser).subscribe(next => {
           this.customer = next;
                   },
         error => {

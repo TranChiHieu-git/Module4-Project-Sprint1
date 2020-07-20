@@ -7,8 +7,8 @@ import {Account} from '../../models/account';
 import {Employees} from '../../models/employees';
 import {Role} from '../../models/role';
 import {Md5} from 'ts-md5';
-import {CustomerService} from '../../services/customer.service';
-import {Customer} from '../../models/customer';
+import {UserService} from '../../services/user.service';
+import {User} from '../../models/user';
 
 @Component({
   selector: 'app-list-account',
@@ -23,7 +23,7 @@ export class ListAccountComponent implements OnInit {
   editAccountForm: FormGroup;
   p = 1;
   infoAccountById: Employees = new Employees();
-  infoAccountById2: Customer = new Customer();
+  infoAccountById2: User = new User();
   AccountById: Account = new Account();
   editResuilt: Account;
   size = 6;
@@ -37,7 +37,7 @@ export class ListAccountComponent implements OnInit {
               private route: Router,
               private formBuilder: FormBuilder,
               private activatedRoute: ActivatedRoute,
-              private customerService: CustomerService) {
+              private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -143,7 +143,7 @@ export class ListAccountComponent implements OnInit {
       console.log(error);
     });
     if (this.infoAccountById.position === null) {
-      this.customerService.getCustomerById(id).subscribe(next => {
+      this.userService.getUserById(id).subscribe(next => {
         this.infoAccountById2 = next;
       }, error => {
         console.log(error);
@@ -162,7 +162,7 @@ export class ListAccountComponent implements OnInit {
     this.adminService.findByInfoId(id).subscribe(next => {
       this.infoAccountById = next;
     });
-    this.customerService.getCustomerById(id).subscribe(next => {
+    this.userService.getUserById(id).subscribe(next => {
       this.infoAccountById2 = next;
       // tslint:disable-next-line:no-shadowed-variable
     }, error => {
