@@ -11,19 +11,24 @@ import {UserForgetpasswordComponent} from './user-forgetpassword/user-forgetpass
 import {UserLoginComponent} from './user-login/user-login.component';
 import {UserRegisterComponent} from './user-register/user-register.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
-import { UserManageComponent } from './user-manage/user-manage.component';
+import {UserManageComponent} from './user-manage/user-manage.component';
 import {MatListModule} from '@angular/material/list';
 import {UserOdersComponent} from './user-oders/user-oders.component';
+import {UserDetailComponent} from './user-detail/user-detail.component';
+import {UserOderDetailComponent} from './user-oder-detail/user-oder-detail.component';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [TestComponent, UserManageComponent, OrderButtonComponent,
     UserRegisterComponent, UserLoginComponent, UserForgetpasswordComponent, UserManageComponent,
-  UserOdersComponent],
+    UserOdersComponent, UserDetailComponent, UserOderDetailComponent],
   exports: [
     OrderButtonComponent,
     UserRegisterComponent,
     UserLoginComponent,
     UserForgetpasswordComponent,
+    UserDetailComponent,
+    UserOderDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +38,7 @@ import {UserOdersComponent} from './user-oders/user-oders.component';
     HomeStoreModule,
     ShareModule,
     MaterialModule,
+    MatIconModule,
   ]
 })
 export class UserModule {

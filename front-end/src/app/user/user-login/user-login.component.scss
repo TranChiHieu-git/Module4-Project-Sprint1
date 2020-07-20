@@ -1,7 +1,7 @@
 .login{
   background-color: rgba(255, 255, 255,0.5) !important;
 }
-h1{
+h2{
   color: #7a5744;
 }
 .modal-content {
@@ -11,7 +11,9 @@ h1{
 
 .modal {
   //width: 500px;
-  margin-top: 80px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
 }
 .submitButton {
   color: whitesmoke;

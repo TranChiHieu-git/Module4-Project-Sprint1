@@ -16,7 +16,6 @@ export class UserLoginComponent implements OnInit {
   submitted = false;
   userInfo: AuthLoginInfo;
   message = '';
-
   constructor(private auth: AuthJwtService, private fb: FormBuilder,
               private tokenStorage: TokenStorageService,
               private router: Router
@@ -38,7 +37,10 @@ export class UserLoginComponent implements OnInit {
     console.log(this.userInfo);
     this.login(this.userInfo);
   }
-
+  // tslint:disable-next-line:typedef
+  // $('#loginButton').onSubmit(function() {
+  //   $('#loginButton').modal('hide');
+  // });
   // tslint:disable-next-line:typedef
   get fusername() {
     return this.loginForm.get('username');
@@ -57,7 +59,9 @@ export class UserLoginComponent implements OnInit {
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUsername(data.accountName);
         console.log('data', this.tokenStorage.saveUsername(data.accountName));
-
+        console.log('data', data);
+        sessionStorage.setItem('loggedUser', userInfo.accountName);
+        // sessionStorage.setItem('idUser', data.id);
         // tslint:disable-next-line:triple-equals
         if (this.tokenStorage.getAuthorities().indexOf('ROLE_ADMIN') != -1) {
           // this.router.navigateByUrl("/")
@@ -75,9 +79,10 @@ export class UserLoginComponent implements OnInit {
         }
         // tslint:disable-next-line:triple-equals
         else if (this.tokenStorage.getAuthorities().indexOf('ROLE_MEMBER') != -1) {
-          sessionStorage.setItem('loggedUser', userInfo.accountName);
+          // sessionStorage.setItem('loggedUser', userInfo.accountName);
           this.redirectTo('home');
-          this.tokenStorage.getUsername();
+          // window.location.reload();
+          // this.tokenStorage.getUsername();
         }
         console.log('data1', this.tokenStorage.getAuthorities());
         console.log('data', userInfo.accountName);

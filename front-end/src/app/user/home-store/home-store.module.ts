@@ -10,11 +10,14 @@ import { DetailComponent } from './detail/detail.component';
 
 
 @NgModule({
-  declarations: [HomeStoreComponent, HomeCakeComponent, HomeCandyComponent, DetailComponent],
+    declarations: [HomeStoreComponent, HomeCakeComponent, HomeCandyComponent, DetailComponent],
+    exports: [
+        HomeStoreComponent
+    ],
     imports: [
         CommonModule,
         RouterModule,
-      HomeRoutingModule
+        HomeRoutingModule
     ]
 })
 export class HomeStoreModule { }

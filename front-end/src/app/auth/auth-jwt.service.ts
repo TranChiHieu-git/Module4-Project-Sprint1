@@ -12,13 +12,20 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthJwtService {
+  isLoggedIn = false;
 
-  loginUrl = 'http://localhost:8080/login';
-
+  loginUrl = 'http://localhost:8080/';
+  // registerUrl = 'http://localhost:8080/customers';
   constructor(private http: HttpClient) {
   }
 
-  attemptAuth(userinfo: AuthLoginInfo): Observable<JwtResponse> {
-    return this.http.post<JwtResponse>(this.loginUrl, userinfo, httpOptions);
+  attemptAuth(userInfo: AuthLoginInfo): Observable<JwtResponse> {
+    return this.http.post<JwtResponse>(this.loginUrl, userInfo, httpOptions);
+  }
+  // registerAuth(userInfo: AuthLoginInfo): Observable<JwtResponse> {
+  //   return this.http.post<JwtResponse>(this.registerUrl, userInfo, httpOptions);
+  // }
+  logout(): void {
+    this.isLoggedIn = false;
   }
 }

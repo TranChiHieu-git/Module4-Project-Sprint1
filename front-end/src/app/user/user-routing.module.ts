@@ -15,28 +15,28 @@ import {OrderButtonComponent} from './orderButton/orderButton.component';
 import {UserLoginComponent} from './user-login/user-login.component';
 
 const routes: Routes = [{
-  path: 'home', component: UserComponent,
+  path: '', component: UserComponent,
   children: [
     {path: 'test', component: TestComponent},
-    {path: 'login', component: UserLoginComponent}
+    {path: 'login', component: UserLoginComponent},
+    {
+      path: 'user-manage', component: UserManageComponent,
+      children: [
+        {
+          path: 'user-detail', component: UserDetailComponent,
+        },
+        {
+          path: 'user-oder', component: UserOdersComponent
+        },
+        {
+          path: 'user-oder/:id', component: UserOderDetailComponent
+        }
+      ]
+    },
   ],
 },
   {
-    path: 'user-manage',
-    component: UserManageComponent,
-    children: [{
-      path: 'user-detail',
-      component: UserDetailComponent,
-    },
-      {
-        path: 'user-oder',
-        component: UserOdersComponent
-      },
-      {
-        path: 'user-oder/:id',
-        component: UserOderDetailComponent
-      }
-    ]
+    path: 'home', component: UserComponent,
   },
   {
     path: '', component: UserComponent,
@@ -44,7 +44,8 @@ const routes: Routes = [{
       {path: '', component: OrderButtonComponent}
       ,
       {
-        path: 'home-store', component: HomeStoreComponent, children: [
+        path: 'home-store', component: HomeStoreComponent,
+        children: [
           {path: 'cake', component: HomeCakeComponent},
           {path: 'candy', component: HomeCandyComponent},
           {path: 'detail', component: DetailComponent}
@@ -53,6 +54,7 @@ const routes: Routes = [{
     ],
   }
 ];
+
 @NgModule({
   declarations: [],
   imports: [

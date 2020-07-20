@@ -13,24 +13,28 @@ import {EmployeeModule} from './employee/employee.module';
 import {EmployeeComponent} from './employee/employee.component';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from './auth/auth-interceptor';
+import {HomeStoreModule} from './user/home-store/home-store.module';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminComponent,
     EmployeeComponent,
-    UserComponent
+    UserComponent,
+    PagenotfoundComponent
   ],
-  imports: [
-    BrowserModule,
-    AdminModule,
-    EmployeeModule,
-    AppRoutingModule,
-    ShareModule,
-    MaterialModule,
-    MatIconModule,
-    UserModule
-  ],
+    imports: [
+        BrowserModule,
+        AdminModule,
+        EmployeeModule,
+        AppRoutingModule,
+        ShareModule,
+        MaterialModule,
+        MatIconModule,
+        UserModule,
+        HomeStoreModule
+    ],
   providers: [ {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
