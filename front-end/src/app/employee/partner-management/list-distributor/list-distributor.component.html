@@ -1,12 +1,12 @@
 <div class="container-fluid">
   <div class="row-cols-12">
     <div class="row">
-      <div class="col-4">
+      <div class="col-md-4">
         <h2 class="d-flex table-title">Danh Sách Nhà Phân Phối</h2>
       </div>
-      <div class="col-8">
+      <div class="col-md-8">
         <input class="form-control mainButton" type="text" [(ngModel)]="search" (ngModelChange)="searchName()"
-               placeholder="Tìm kiếm theo tên" style="width: 250px; float: left ">
+               placeholder="Tìm kiếm theo tên" style="width: 250px; float: left " id="search">
 
         <button class="btn btn-primary mainButton" (click)="confirmDeleteAll()"><i class="fas fa-trash"></i>Xóa nhiều
         </button>
@@ -117,11 +117,11 @@
       </div>
       <div class="modal-content">
         <div class="modal-body row">
-          <div class="col-xl-12" style="position: relative">
+          <div class="col-md-12" style="position: relative">
             <div class="boundary row">
-              <div class="col-xl-12">
+              <div class="col-md-12">
                 <div class="row">
-                  <div class="col-xl-4">
+                  <div class="col-md-4">
                     <mat-card (mouseover)="hoverUploadPic()" class="mat-card-img" (mouseleave)="leaveUploadPic()"
                               (click)="selectAvatar()">
                       <img id="avatar" src="{{src}}">
@@ -135,24 +135,24 @@
                     </mat-card>
                     <div class="boxes">
                       <div class="checkItem">
-                        <input type="checkbox" id="box-1" (change)="chooseAll($event.target)" class="input"
+                        <input type="checkbox" name="checkbox" id="box-1" (change)="chooseAll($event.target)" class="input"
                                value="Tất cả">
                         <label for="box-1">Phân phối tất cả</label>
                       </div>
                       <div class="checkItem">
-                        <input type="checkbox" id="box-2" (change)="chooseOne($event.target)" value="Bánh">
+                        <input type="checkbox" name="checkbox" id="box-2" (change)="chooseOne($event.target)" value="Bánh">
                         <label for="box-2">Bánh</label>
                       </div>
                       <div class="checkItem" (change)="chooseOne($event.target)" style="margin-bottom: 20px">
-                        <input type="checkbox" id="box-3" value="Kẹo">
+                        <input type="checkbox" name="checkbox" id="box-3" value="Kẹo">
                         <label for="box-3">Kẹo</label>
                         <span class="spanError"
-                              *ngIf="!this.myForm.valid">{{getErrorMessage('typeOfDistributor')}} </span>
+                              *ngIf="this.myForm.invalid">{{getErrorMessage('typeOfDistributor')}} </span>
                       </div>
 
                     </div>
                   </div>
-                  <div class="col-xl-8">
+                  <div class="col-md-8">
                     <div class="item" style="margin-top: 20px" data-tip="Tên nhà phân phối">
                       <input type="text" formControlName="name" id="name1" placeholder="Tên nhà phân phối*" autofocus/>
                       <label id="icon" for="name1"><i class="icon-user"></i></label>

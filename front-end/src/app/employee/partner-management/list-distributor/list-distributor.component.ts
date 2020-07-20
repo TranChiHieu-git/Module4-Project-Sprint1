@@ -118,48 +118,18 @@ export class ListDistributorComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllDistributor();
-    // this.distributorService.findAll().subscribe(
-    //   next => this.distributorList = next,
-    //   error => {
-    //     this.distributorList = [];
-    //     console.log(error);
-    //   }
-    // );
-
-
     // Thach
     $('.icon-upload-alt').css('opacity', '-1');
-    $('.button').click(function() {
+    $('.button').click(function () {
       const buttonId = $(this).attr('id');
       $('#modal-container').removeAttr('class').addClass(buttonId);
       $('body').addClass('modal-active');
     });
-    $('#modal-container').click(function() {
+    $('#modal-container').click(function () {
       $(this).addClass('out');
       $('body').removeClass('modal-active');
     });
   }
-
-  // tslint:disable-next-line:typedef
-  // onSubmit() {
-  //   if (this.myForm.valid) {
-  //     console.log(this.myForm.value);
-  //     this.distributorService.create(this.myForm.value).subscribe(
-  //       next => {
-  //         console.log(next);
-  //         alert('Bạn đã thêm mới thành công');
-  //         // @ts-ignore
-  //         this.myForm.reset();
-  //         this.getAllDistributor();
-  //         this.router.navigate(['employee/partner-management/list-distributor']);
-  //         $('#deleteFormCreate').click();
-  //       }
-  //     );
-  //
-  //   } else {
-  //     alert('Invalid');
-  //   }
-  // }
 
 
   onSubmit(): void {
@@ -258,6 +228,7 @@ export class ListDistributorComponent implements OnInit {
     }
   }
 
+// UPLOAD FIREBASE ========================================================
   private uploadFireBaseAndSubmit(): void {
     const id = Math.random().toString(36).substring(2);
     this.ref = this.afStorage.ref(id);
@@ -278,8 +249,7 @@ export class ListDistributorComponent implements OnInit {
 
   }
 
-// FUNTION PHU
-  // tslint:disable-next-line:typedef
+
   hoverUploadPic(): void {
     $('.icon-upload-alt').css('opacity', '0.8');
   }
@@ -337,6 +307,7 @@ export class ListDistributorComponent implements OnInit {
     this.checkValidateTypeOfDistributor();
   }
 
+  // CHECK VALIDATE TYPE OF DISTRIBUTOR ========================================================
   private checkValidateTypeOfDistributor(): void {
     const checkedBox2 = $('#box-2').prop('checked');
     const checkedBox3 = $('#box-3').prop('checked');
@@ -402,6 +373,7 @@ export class ListDistributorComponent implements OnInit {
     $('#openForm').click();
   }
 
+// HIEN THONG BAO ========================================================
   showNotications(mess: string): void {
     const temp = document.getElementById('snackbar');
     temp.textContent = '';
@@ -475,10 +447,11 @@ export class ListDistributorComponent implements OnInit {
 
   }
 
+// CHUYEN TRANG THAI CAC NUT ========================================================
   switchCreateAndDetailForm(): void {
     const input = $('input');
     const inputFile = $('input[type=file]');
-    const inputCheckbox = $('input[type=checkbox]');
+    const inputCheckbox = $('input[name=checkbox]');
     if (this.functionMode === 'create' || this.functionMode === 'edit') {
       input.prop('readonly', false);
       inputCheckbox.prop('disabled', false);
@@ -488,8 +461,10 @@ export class ListDistributorComponent implements OnInit {
       inputCheckbox.prop('disabled', true);
       inputFile.prop('disabled', true);
     }
+    $('#search').prop('readonly', false);
   }
 
+// RESET LIST SAU CRUD ========================================================
   resetList(): void {
     let count = 0;
     for (let i = 0; i < this.distributorList.length; i++) {
@@ -497,7 +472,7 @@ export class ListDistributorComponent implements OnInit {
         count++;
       }
     }
-    if (this.distributorList.length === 1 || this.deleteList.length === count) {
+    if (count === 1 || this.deleteList.length === count) {
       if (this.pageClick >= 1) {
         this.onChange(this.pageClick - 1);
       } else {
@@ -510,8 +485,8 @@ export class ListDistributorComponent implements OnInit {
     this.router.navigate(['employee/partner-management/list-distributor']);
   }
 
+// FILL LIST DU 5 DOI TUONG (CAC DOI TUONG TRONG DE TABLE CHUAN)========================================================
   fillListToSize(): void {
-
     if (this.distributorList === null) {
       this.distributorList[0] = new Distributor();
     }
@@ -521,10 +496,10 @@ export class ListDistributorComponent implements OnInit {
         this.distributorList[i] = new Distributor();
         i++;
       }
-      console.log(this.distributorList);
     }
   }
 
+// GET MESS VALIDATE ========================================================
   getErrorMessage(field: string): string {
     const isFormField = this.myForm.get(field);
     if (isFormField.hasError('required') && isFormField.touched) {
