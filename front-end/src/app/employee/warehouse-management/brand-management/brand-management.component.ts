@@ -42,7 +42,7 @@ export class BrandManagementComponent implements OnInit {
     });
     this.brandEditForm = this.fb.group({
       id: [''],
-      brandLogo: ['', Validators.required],
+      brandLogo: [''],
       brandName: ['', Validators.required],
       brandAddress: ['', Validators.required],
       brandWebsite: ['', Validators.required]
@@ -162,6 +162,7 @@ export class BrandManagementComponent implements OnInit {
         this.brand = res;
         this.brandName = res.brandName;
         this.brandEditForm.patchValue(res);
+        console.log(this.brandForm.value);
       },
       error => {
         console.log(error);
@@ -169,18 +170,8 @@ export class BrandManagementComponent implements OnInit {
     );
   }
 
-  editId(id: number): void {
-    this.brandService.findById(id).subscribe(
-      next => {
-        this.brandEditForm.patchValue(next);
-
-      }
-    );
-  }
-
   // tslint:disable-next-line:typedef
   edit() {
-    console.log(this.brandForm.value);
     this.brandService.editBrand(this.brandEditForm.value).subscribe(
       next => {
         alert('Thay đổi thành công');
