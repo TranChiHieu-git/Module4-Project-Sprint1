@@ -8,12 +8,13 @@
     <div class="left-unit">
       <mat-card class="mat-card-img"
                 (click)="selectFile()">
-        <img id="avatar" src="{{src}}? {{src}} : {{employee['image']}}">
+        <img id="avatar" src="{{employee['image']}}">
         <input formControlName="id" readonly hidden>
         <input class="file-upload-input" type='file'
                (change)="readURL($event.target);" accept="image/*"
                hidden id="image"/>
       </mat-card>
+      <br>
       <button type="button" class="btn btn-warning" (click)="loadEditForm()" data-toggle="modal"
               data-target="#editModal">
         Thay đổi thông tin
@@ -37,7 +38,7 @@
       </tr>
       <tr>
         <th>Ngày sinh:</th>
-        <td>{{employee.birthday}}</td>
+        <td>{{employee.birthday | date: 'dd/MM/yyyy'}}</td>
       </tr>
       <tr>
         <th>Địa chỉ:</th>
@@ -186,7 +187,7 @@
           <!--          </div>-->
           <fieldset formGroupName="pwGroup">
             <div class="row">
-              <label>Mật khẩu mới (*) <input type="text" class="form-control"  formControlName="password">
+              <label>Mật khẩu mới (*) <input type="password" class="form-control"  formControlName="password">
               </label>
             </div>
             <div class="alert alert-danger" role="alert" *ngIf="editPasswordForm.get('pwGroup.password').hasError('required') && editPasswordForm.get('pwGroup.password').touched"  >
@@ -195,8 +196,11 @@
             <div class="alert alert-danger" role="alert" *ngIf="editPasswordForm.get('pwGroup.password').hasError('minlength') && editPasswordForm.get('pwGroup.password').touched">
               Mật khẩu yêu cầu ít nhất 6 kí tự !
             </div>
+            <div class="alert alert-danger" role="alert" *ngIf="editPasswordForm.get('pwGroup.password').hasError('pattern') && editPasswordForm.get('pwGroup.password').touched">
+              Chỉ chứa chữ và số không được chứa kí tự đặc biệt !
+            </div>
             <div class="row">
-              <label>Xác nhận lại (*) <input type="text" class="form-control"  formControlName="confirmPassword">
+              <label>Xác nhận lại (*) <input type="password" class="form-control"  formControlName="confirmPassword">
               </label>
             </div>
           </fieldset>

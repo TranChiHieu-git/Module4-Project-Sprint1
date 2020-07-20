@@ -233,7 +233,7 @@
             <!--                  <input class="global-content-popup-input customer-input" type="text" id="birthday" formControlName="birthday"/>-->
 
             <div class="datePicker">
-              <input style="width: 57%;margin-right: 35%;" class="global-content-popup-input customer-input" type="text"
+              <input style="width: 57%;margin-right: 35%;" class="global-content-popup-input customer-input" type="text" [min]="minDate" [max]="maxDate"
                      id="birthday" formControlName="birthday" readonly matInput [matDatepicker]="picker"
                      (dateInput)="addEvent($event)">
               <div class="datePicker-div">
@@ -305,7 +305,8 @@
                      hidden id="myAvatar" style="display:none;"/>
               <i class="img img-upload-icon icon-upload-alt"></i>
             </mat-card>
-            <progress  max="100" [value]="(uploadProgress | async)" *ngIf="uploadProgressStatus"></progress>
+<!--            <progress max="100" [value]="(uploadProgress | async)" *ngIf="uploadProgressStatus"></progress>-->
+            <mat-progress-bar mode="determinate" max="100" [value]="(uploadProgress | async)" *ngIf="uploadProgressStatus"></mat-progress-bar>
           </div>
         </form>
 
