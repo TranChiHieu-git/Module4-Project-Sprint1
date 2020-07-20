@@ -25,11 +25,11 @@ import {AuthInterceptor} from './auth/auth-interceptor';
     BrowserModule,
     AdminModule,
     EmployeeModule,
-    AppRoutingModule,
     ShareModule,
+    AppRoutingModule,
     MaterialModule,
     MatIconModule,
-    UserModule
+    UserModule,
   ],
   providers: [ {
     provide: HTTP_INTERCEPTORS,
