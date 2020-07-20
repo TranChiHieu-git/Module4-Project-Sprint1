@@ -40,15 +40,29 @@
           </td>
           <td *ngIf="!brand.isEditable" style="width: 150px">
             <img class="brand-logo" [src]="brand.brandLogo">
+<<<<<<< HEAD
           </td>
+=======
+
+          </td>
+          <!--          <input formControlName="id" hidden>-->
+>>>>>>> e0fa410bddb7d4ef9d0594c33103350fd058dd6f
           <td>
             <p>{{brand.id}}</p>
           </td>
           <td *ngIf="brand.isEditable">
+<<<<<<< HEAD
 
             <div class="input-group">
               <input formControlName="brandName" type="text" class="edit-input form-control"
                      placeholder="Brand name (*)" [(ngModel)]="brand.brandName">
+=======
+            <!--            <input type="text" class="edit-input form-control" formControlName="brandName"-->
+            <!--                   [(ngModel)]="brand.brandName" [hidden]="!brand.isEditable"/>-->
+            <div class="input-group">
+              <input formControlName="brandName" type="text" class="form-control" placeholder="Brand name (*)"
+                     [(ngModel)]="brand.brandName">
+>>>>>>> e0fa410bddb7d4ef9d0594c33103350fd058dd6f
             </div>
             <p class="text-danger"
                *ngIf="brandEditForm.get('brandName').hasError('required') && brandEditForm.get('brandName').touched">
@@ -59,10 +73,18 @@
             <p>{{brand.brandName}}</p>
           </td>
           <td *ngIf="brand.isEditable">
+<<<<<<< HEAD
 
             <div class="input-group">
               <input formControlName="brandAddress" type="text" class="edit-input form-control"
                      placeholder="Brand address (*)" [(ngModel)]="brand.brandAddress">
+=======
+            <!--            <input type="text" class="edit-input form-control" formControlName="brandAddress"-->
+            <!--                   [(ngModel)]="brand.brandAddress" [hidden]="!brand.isEditable"/>-->
+            <div class="input-group">
+              <input formControlName="brandAddress" type="text" class="form-control" placeholder="Brand address (*)"
+                     [(ngModel)]="brand.brandAddress">
+>>>>>>> e0fa410bddb7d4ef9d0594c33103350fd058dd6f
             </div>
             <p class="text-danger"
                *ngIf="brandEditForm.get('brandAddress').hasError('required') && brandEditForm.get('brandAddress').touched">
@@ -73,10 +95,18 @@
             <p>{{brand.brandAddress}}</p>
           </td>
           <td *ngIf="brand.isEditable">
+<<<<<<< HEAD
 
             <div class="input-group">
               <input formControlName="brandWebsite" type="text" class="edit-input form-control"
                      placeholder="Website (*)" [(ngModel)]="brand.brandWebsite">
+=======
+            <!--            <input type="text" class="edit-input form-control" formControlName="brandWebsite"-->
+            <!--                   [(ngModel)]="brand.brandWebsite" [hidden]="!brand.isEditable"/>-->
+            <div class="input-group">
+              <input formControlName="brandWebsite" type="text" class="form-control" placeholder="Website (*)"
+                     [(ngModel)]="brand.brandWebsite">
+>>>>>>> e0fa410bddb7d4ef9d0594c33103350fd058dd6f
             </div>
             <p class="text-danger"
                *ngIf="brandEditForm.get('brandWebsite').hasError('required') && brandEditForm.get('brandWebsite').touched">
@@ -187,7 +217,12 @@
               </p>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
+<<<<<<< HEAD
                   <span class=" input-group-text"><i class="fa fa-globe fa-lg " aria-hidden="true"></i></span>
+=======
+                  <span class=" input-group-text"><i class="fa fa-globe fa-lg add-brand-ico "
+                                                     aria-hidden="true"></i></span>
+>>>>>>> e0fa410bddb7d4ef9d0594c33103350fd058dd6f
                 </div>
                 <input formControlName="brandWebsite" type="text" class="form-control" placeholder="Website (*)">
               </div>
