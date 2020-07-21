@@ -3,13 +3,17 @@ import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {ListAccountComponent} from './list-account/list-account.component';
 import {AccessTimesComponent} from './access-times/access-times.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {NgxPaginationModule} from 'ngx-pagination';
-import { FusionChartsModule } from 'angular-fusioncharts';
+import {FusionChartsModule} from 'angular-fusioncharts';
 import * as FusionCharts from 'fusioncharts';
 import * as charts from 'fusioncharts/fusioncharts.charts';
 import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
+import {BrowserModule} from "@angular/platform-browser";
+
 FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
 
 @NgModule({
@@ -20,7 +24,10 @@ FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
-    FusionChartsModule
+    FusionChartsModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ]
 })
 export class AdminModule {

@@ -1,14 +1,23 @@
 import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AdminService} from '../../services/admin.service';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Account} from '../../models/account';
 import {Employees} from '../../models/employees';
 import {Role} from '../../models/role';
 import {Md5} from 'ts-md5';
 import {CustomerService} from '../../services/customer.service';
 import {Customer} from '../../models/customer';
+import {EmployeeService} from '../../services/employee.service';
+import {Employee} from '../../models/employee';
+import {NotificationService} from "../../services/notification.service";
+
+function comparePassword(c: AbstractControl) {
+  const v = c.value;
+  return (v.accountPassword === v.confirmPassword) ? null : {
+    passwordnotmatch: true
+  };
+}
 
 @Component({
   selector: 'app-list-account',
@@ -29,18 +38,23 @@ export class ListAccountComponent implements OnInit {
   size = 6;
   pageClicked = 0;
   pages = [];
-  search = '';
   totalPages = 1;
   promiseAccount: any;
+  userName = '';
+  employeeList: Employee[];
+  confirmPassword: string;
 
   constructor(private adminService: AdminService,
-              private route: Router,
               private formBuilder: FormBuilder,
-              private activatedRoute: ActivatedRoute,
-              private customerService: CustomerService) {
+              private customerService: CustomerService,
+              private employeeService: EmployeeService,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit(): void {
+    this.employeeService.findAll().subscribe(next => {
+      this.employeeList = next;
+    });
     this.adminService.findAllRole().subscribe(next => {
       this.roleList = next;
     }, error => {
@@ -51,22 +65,21 @@ export class ListAccountComponent implements OnInit {
     }, error => {
       console.log(error);
     });
-    this.activatedRoute.paramMap.subscribe((param: ParamMap) => {
-      this.search = param.get('accountName');
-      if (this.search === null) {
-        this.search = '';
-      }
-    });
     this.getAll();
     this.accountForm = this.formBuilder.group({
       accountId: [''],
-      accountName: [''],
+      accountName: ['', [Validators.required]],
       accountPassword: [''],
+      pwGroup: this.formBuilder.group({
+        accountPassword: ['', [Validators.required]],
+        confirmPassword: ['', [Validators.required]],
+      }, {validator: comparePassword}),
       deleteFlag: [''],
-      role: [''],
+      role: ['', [Validators.required]],
+
     });
     this.editAccountForm = this.formBuilder.group({
-      accountId: ['', [Validators.required]],
+      accountId: [''],
       accountName: ['', [Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,}$'), this.existAccountName.bind(this)]],
       accountPassword: ['', [Validators.pattern('^[a-zA-Z0-9]{1,}$')]],
       deleteFlag: ['', [Validators.required]],
@@ -91,15 +104,12 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getAllSubmit(page) {
-    const md5 = new Md5();
-    this.adminService.getAllCourse(page, this.size, this.search).subscribe(
+    this.adminService.getAllCourse(page, this.size, this.userName).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
+
         // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.accountList.length; i++) {
-          this.accountList[i].accountPassword = md5.appendAsciiStr(this.accountList[i].accountPassword as string).end();
-        }
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
@@ -151,7 +161,7 @@ export class ListAccountComponent implements OnInit {
     }
     $('#infor').show();
     // tslint:disable-next-line:only-arrow-functions typedef
-    $('.close').click(function() {
+    $('.close').click(function () {
       $('#infor').hide();
     });
   }
@@ -191,11 +201,11 @@ export class ListAccountComponent implements OnInit {
     });
     $('#edit').show();
     // tslint:disable-next-line:only-arrow-functions typedef
-    $('.close').click(function() {
+    $('.close').click(function () {
       $('#edit').hide();
     });
     // tslint:disable-next-line:only-arrow-functions typedef
-    $('.destroy').click(function() {
+    $('.destroy').click(function () {
       $('#edit').hide();
     });
   }
@@ -209,11 +219,11 @@ export class ListAccountComponent implements OnInit {
     });
     $('#delete').show();
     // tslint:disable-next-line:only-arrow-functions typedef
-    $('.close').click(function() {
+    $('.close').click(function () {
       $('#delete').hide();
     });
     // tslint:disable-next-line:only-arrow-functions typedef
-    $('.destroy').click(function() {
+    $('.destroy').click(function () {
       $('#delete').hide();
     });
     // tslint:disable-next-line:only-arrow-functions typedef
@@ -221,27 +231,34 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   create() {
+    const md5 = new Md5();
+    this.accountForm.patchValue({
+      accountPassword: md5.appendAsciiStr(this.accountForm.get('pwGroup.accountPassword').value as string).end()
+    });
     this.adminService.findRoleById(this.accountForm.get('role').value).subscribe(
       next => {
-        // this.accountForm.patchValue({
-        //   role: next,
-        //   deleteFlag: 0,
-        // });
         this.promiseAccount = new Promise(resolve => resolve(next));
         this.promiseAccount.then((value) => {
-          this.accountForm.value.role = value;
-          this.adminService.create(this.accountForm.value).subscribe(
-            () => {
-              this.getAll();
-              $('#close').click();
-            },
-            error => console.log(error)
-          );
-        });
+            this.accountForm.value.role = value;
+            if (this.accountForm.valid) {
+              this.adminService.create(this.accountForm.value).subscribe(
+                () => {
+                  this.getAll();
+                  this.accountForm.reset();
+                  $('#close').click();
+                  this.showCreated();
+                },
+                error => console.log(error)
+              );
+            }
+          }
+        );
       }
     );
+  }
 
-
+  showCreated() {
+    this.notificationService.showSuccess('Bạn đã thêm mới thành công', 'Thông báo')
   }
 
   // tslint:disable-next-line:typedef
@@ -274,3 +291,4 @@ export class ListAccountComponent implements OnInit {
     });
   }
 }
+
