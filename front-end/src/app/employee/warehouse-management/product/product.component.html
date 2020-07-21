@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row d-flex justify-content-between m-3">
     <div class="h3 header-text-color"><span class="fa fa-bars"></span><span>Danh sách mặt hàng</span></div>
     <div class="d-flex">
@@ -45,15 +45,15 @@
     <table class="table table-bordered table-striped mt-3">
       <thead class="table-header">
       <tr>
-        <th class="sticky-top sort-product-name" (click)="sort('productName')">Tên Sản Phẩm</th>
-        <th class="sticky-top">Giá Thành(VND)</th>
-        <th class="sticky-top">Tên Danh Mục</th>
-        <th class="sticky-top">Hạn Sử Dụng</th>
-        <th class="sticky-top">Số Lượng</th>
-        <th class="sticky-top">Đơn Vị</th>
-        <th class="sticky-top">Tên Thương Hiệu</th>
-        <th class="sticky-top">Sửa</th>
-        <th class="sticky-top">Xóa</th>
+        <th class="sticky-top-custom sort-product-name" (click)="sort('productName')">Tên Sản Phẩm</th>
+        <th class="sticky-top-custom">Giá Thành(VND)</th>
+        <th class="sticky-top-custom">Tên Danh Mục</th>
+        <th class="sticky-top-custom">Hạn Sử Dụng</th>
+        <th class="sticky-top-custom">Số Lượng</th>
+        <th class="sticky-top-custom">Đơn Vị</th>
+        <th class="sticky-top-custom">Tên Thương Hiệu</th>
+        <th class="sticky-top-custom">Sửa</th>
+        <th class="sticky-top-custom">Xóa</th>
       </tr>
       </thead>
       <tbody *ngIf="page">
@@ -238,7 +238,7 @@
                     <div class="form-group row">
                       <span class="align-items-center">Số Lượng/ Đơn Vị</span>
                       <div class="col-sm-6">
-                        <input type="email" id="amount1" formControlName="quantity" class="form-control">
+                        <input type="text" id="amount1" formControlName="quantity" class="form-control">
                       </div>
                       <div class="col-sm-3">
                         <fieldset formGroupName="unit">

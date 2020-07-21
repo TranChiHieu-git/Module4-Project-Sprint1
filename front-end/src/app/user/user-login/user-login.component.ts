@@ -57,6 +57,7 @@ export class UserLoginComponent implements OnInit {
         this.tokenStorage.saveAuthorities(data.authorities);
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUsername(data.accountName);
+        sessionStorage.setItem('loggedUser', userInfo.accountName);
         console.log('data', this.tokenStorage.saveUsername(data.accountName));
 
         // tslint:disable-next-line:triple-equals
@@ -76,7 +77,7 @@ export class UserLoginComponent implements OnInit {
         }
         // tslint:disable-next-line:triple-equals
         else if (this.tokenStorage.getAuthorities().indexOf('ROLE_MEMBER') != -1) {
-          sessionStorage.setItem('loggedUser', userInfo.accountName);
+          // sessionStorage.setItem('loggedUser', userInfo.accountName);
           this.redirectTo('home-store/cake');
           this.tokenStorage.getUsername();
           window.location.reload();

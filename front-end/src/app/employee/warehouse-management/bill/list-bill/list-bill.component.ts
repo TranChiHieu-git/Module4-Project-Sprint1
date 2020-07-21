@@ -38,14 +38,15 @@ export class ListBillComponent implements OnInit, OnChanges {
   createForm: FormGroup;
   p = 1;
 
-  sort(key): void{
+  sort(key): void {
     this.key = key;
     this.reverse = !this.reverse;
   }
 
   constructor(private userService: ServiceBillService,
               private ref: ChangeDetectorRef,
-              private fb: FormBuilder) {}
+              private fb: FormBuilder) {
+  }
 
   ngOnInit(): void {
     this.createForm = this.fb.group({
@@ -170,7 +171,9 @@ export class ListBillComponent implements OnInit, OnChanges {
 
 
   ngOnChanges(): void {
-    if (this.groupFilters) { this.filterUserList(this.groupFilters, this.users); }
+    if (this.groupFilters) {
+      this.filterUserList(this.groupFilters, this.users);
+    }
   }
 
 
@@ -191,7 +194,8 @@ export class ListBillComponent implements OnInit, OnChanges {
 
     this.filteredUsers = this.filteredUsers.length > 0 ? this.filteredUsers : this.users;
   }
-  editBill(id: number): void{
+
+  editBill(id: number): void {
     this.userService.findByIdBill(id).subscribe(
       next => {
         this.bill = next;
@@ -222,19 +226,22 @@ export class ListBillComponent implements OnInit, OnChanges {
         console.log('error')
     );
   }
-  detailBill(isCollapsed: boolean, id: number): void{
+
+  detailBill(isCollapsed: boolean, id: number): void {
     this.userService.findByIdBill(id).subscribe(
       next => this.bill2 = next,
       error => console.log(error)
     );
   }
-  deleteBill(id: number): void{
+
+  deleteBill(id: number): void {
     this.userService.deleteById(id).subscribe(next => {
       window.location.reload();
     }, error => {
       console.log(error);
     });
   }
+
   onSubmit(): void {
     if (this.myForm.valid) {
       const {value} = this.myForm;
@@ -252,7 +259,7 @@ export class ListBillComponent implements OnInit, OnChanges {
 
   }
 
-  createBill(): void{
+  createBill(): void {
     if (this.createForm.valid) {
       const {value} = this.createForm;
       const data = {
