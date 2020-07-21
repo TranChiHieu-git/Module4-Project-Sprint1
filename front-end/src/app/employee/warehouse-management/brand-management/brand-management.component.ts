@@ -6,6 +6,7 @@ import {AngularFireStorage} from '@angular/fire/storage';
 import {finalize} from 'rxjs/operators';
 import {Brand} from '../../../models/brand';
 import {BrandService} from '../../../services/brand.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-brand-management',
@@ -34,7 +35,8 @@ export class BrandManagementComponent implements OnInit {
   constructor(
     private brandService: BrandService,
     private fb: FormBuilder,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private toastr: ToastrService
   ) {
     this.brandForm = this.fb.group({
       brandLogo: [''],
@@ -58,7 +60,15 @@ export class BrandManagementComponent implements OnInit {
   ngOnInit(): void {
     this.getAllBrand();
   }
-
+  showCreateSuccess(): void {
+    this.toastr.success('Thêm mới thành công!');
+  }
+  showCreateError(): void {
+    this.toastr.error('Tên thương hiệu đã tồn tại!');
+  }
+  showCreateWarning(): void {
+    this.toastr.warning('Vui lòng nhập đầy đủ thông tin!');
+  }
   initCreateForm(): void {
     this.brandForm = this.fb.group({
       brandLogo: [''],
@@ -124,20 +134,22 @@ export class BrandManagementComponent implements OnInit {
     if (this.brandForm.valid) {
       this.brandService.createBrand(this.brandForm.value).subscribe(
         next => {
-         this.closeCreateModal.nativeElement.click();
-         this.initCreateForm();
-         this.onSubmit(0);
+          this.showCreateSuccess();
+          this.closeCreateModal.nativeElement.click();
+          this.initCreateForm();
+          this.onSubmit(0);
         },
         error => {
           if (error.status === 500) {
-            alert("This brand is already exist!");
+            this.showCreateError();
           }
         }
       );
     } else {
-      alert('Please enter information!');
+      this.showCreateWarning();
     }
   }
+
   cancelCreateForm(): void {
     this.initCreateForm();
   }
