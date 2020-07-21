@@ -11,6 +11,7 @@ export class CustomerService {
   public readonly API_URL = 'http://localhost:8080/customers';
   private httpOptions: any;
   public readonly API_URL_ACCOUNT = 'http://localhost:8080/customer-account';
+
   constructor(private httpClient: HttpClient) {
   }
 
@@ -34,6 +35,7 @@ export class CustomerService {
   editCustomer(customer: Customer): Observable<Customer> {
     return this.httpClient.patch<Customer>(this.API_URL + '/' + customer.id, customer);
   }
+
   getCustomerByAccountName(accountName: string): Observable<Customer> {
     return this.httpClient.get<Customer>(this.API_URL_ACCOUNT + '/' + accountName);
   }

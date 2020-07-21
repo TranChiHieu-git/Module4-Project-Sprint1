@@ -24,6 +24,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {CustomerManagementComponent} from './partner-management/customer-management/customer-management.component';
 import {BrandManagementComponent} from './warehouse-management/brand-management/brand-management.component';
+import {CustomPaginationComponent} from './warehouse-management/product/custom-pagination/custom-pagination.component';
 import {BrandService} from '../services/brand.service';
 import {NgxPaginationModule} from 'ngx-pagination';
 // @ts-ignore
@@ -34,16 +35,23 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {environment} from '../../environments/environment';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {FilterProductPipe} from './warehouse-management/product/filter-product.pipe';
+import {FilterMultiplePipe} from './warehouse-management/product/filter-multiple.pipe';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
+import {FacebookModule} from 'ngx-facebook';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {BillComponent} from './warehouse-management/bill/bill.component';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
+
 import { FacebookModule } from 'ngx-facebook';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
-    WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BillComponent,
-    ListBillComponent, BrandManagementComponent,
-    SearchBillComponent, CustomerManagementComponent],
+    WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BrandManagementComponent,
+    CustomerManagementComponent, CustomPaginationComponent, FilterProductPipe, FilterMultiplePipe, BillComponent, FilterWareHousePipe],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent
@@ -78,6 +86,8 @@ import {ToastrModule} from 'ngx-toastr';
     AngularFirestoreModule,
     AngularFireAuthModule,
     FacebookModule.forRoot(),
+    MatProgressBarModule,
+    NgSelectModule
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 2000,
