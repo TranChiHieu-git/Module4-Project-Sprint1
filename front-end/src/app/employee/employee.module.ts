@@ -5,9 +5,6 @@ import {RouterModule} from '@angular/router';
 import {PartnerManagementComponent} from './partner-management/partner-management.component';
 import {WarehouseManagementComponent} from './warehouse-management/warehouse-management.component';
 import {HomeComponent} from './warehouse-management/home/home.component';
-import {BillComponent} from './warehouse-management/bill/bill.component';
-import {ListBillComponent} from './warehouse-management/bill/list-bill/list-bill.component';
-import {SearchBillComponent} from './warehouse-management/bill/search-bill/search-bill.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {Ng2OrderModule} from 'ng2-order-pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -44,8 +41,6 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {BillComponent} from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
-
-import { FacebookModule } from 'ngx-facebook';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 @NgModule({
@@ -87,7 +82,7 @@ import {ToastrModule} from 'ngx-toastr';
     AngularFireAuthModule,
     FacebookModule.forRoot(),
     MatProgressBarModule,
-    NgSelectModule
+    NgSelectModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 2000,
