@@ -17,6 +17,7 @@ export class AccessTimesComponent implements OnInit {
 
   constructor(private accessTimesService: AccessTimesService) {
   }
+
   ngOnInit(): void {
     this.accessTimesService.findAll().subscribe(next => {
       this.accessTimes = next;

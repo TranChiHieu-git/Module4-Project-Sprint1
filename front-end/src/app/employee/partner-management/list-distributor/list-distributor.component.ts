@@ -1022,7 +1022,7 @@ export class ListDistributorComponent implements OnInit {
         res => {
           console.log(searchName + '  ' + this.myDistributor.name);
           if (res !== null && searchName !== this.myDistributor.name) {
-            this.myForm.get('name').setErrors({'exist': true});
+            this.myForm.get('name').setErrors({exist: true});
           } else {
 
             this.myForm.get('name').setErrors(null);
@@ -1035,6 +1035,5 @@ export class ListDistributorComponent implements OnInit {
         }
       );
     }
-    ;
   }
 }
