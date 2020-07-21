@@ -253,6 +253,7 @@ export class BrandManagementComponent implements OnInit {
       for (let i = 0; i < this.deleteList.length; i++) {
         this.brandService.deleteBrandById(this.deleteList[i]).subscribe(
           next => {
+            this.ngOnInit();
             console.log(this.brandList[i]);
           },
           error => console.log(error)
