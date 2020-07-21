@@ -51,6 +51,7 @@ export class UserLoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
+  // tslint:disable-next-line:typedef
   public login(userInfo) {
     console.log(userInfo);
     this.auth.attemptAuth(userInfo).subscribe(

@@ -1,6 +1,6 @@
 <body>
 <div class="container-fluid pt-lg-5 px-0 font-weight-bolder" >
-  <nav class="navbar navbar-expand-lg navbar-light ">
+  <nav class="navbar navbar-expand-lg navbar-light table-light ">
     <div class="navbar-brand codeBakery" href="#">
       <!--      <h2 class="">CODE BAKERY</h2>-->
     </div>
@@ -27,12 +27,10 @@
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <div class="form-group has-search">
-          <span class="fa fa-search form-control-feedback"></span>
+          <span class="fa fa-search form-control-feedback text-dark"></span>
           <input class="form-control mr-sm-2 searchInput" type="search" placeholder="Tìm Kiếm" aria-label="Search">
         </div>
-
-
-        <button class="btn btn-outline-warning my-2 my-sm-0 button-user" type="submit">Tìm</button>
+        <button class="btn btn-warning my-2 my-sm-0 button-user" type="submit">Tìm</button>
       </form>
       <div class="nav-item dropdown">
         <div class="cart d-flex justify-content-center mr-2 ml-5">
@@ -44,14 +42,16 @@
             <span class="badge badge-light">4</span>
           </div>
           <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
-            <a class="dropdown-item " >San Pham 1</a>
+            <a class="dropdown-item account" >San Pham 1</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Thanh Toán</a>
+            <a class="dropdown-item account" >San Pham 2</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item account" href="#">Thanh Toán</a>
           </div>
         </div>
       </div>
       <!--  // tai khoan chua dang nhap&ndash;&gt;-->
-      <div class="nav-item dropdown " *ngIf="!userDisplayName">
+      <div class="nav-item dropdown pr-3 " *ngIf="!userDisplayName">
         <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown11" role="button"
              data-toggle="dropdown"
              aria-haspopup="true"
@@ -59,10 +59,13 @@
           <span class="material-icons mr-2">account_circle</span>
           <span>Tài Khoản</span>
         </div>
-        <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" data-toggle="modal" data-target="#loginModal" href="#">Đăng Nhập</a>
+        <div class="dropdown-menu text-center text-warning " aria-labelledby="navbarDropdown">
+          <a class="dropdown-item account  " data-toggle="modal" data-target="#loginModal" href="#">Đăng Nhập</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" data-toggle="modal" data-target="#registerModal" href="#">Đăng Ký</a>
+          <a class="dropdown-item account" data-toggle="modal" data-target="#registerModal" href="#">Đăng Ký</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item account facebook" data-toggle="modal" data-target="#registerModal" href="#">FACE BOOK</a>
+
         </div>
       </div>
       <div class="supreme-container"></div>
@@ -107,11 +110,11 @@
                 <span>Xin Chào {{userDisplayName}} </span>
               </div>
               <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
-                <a class="dropdown-item "(click)="reload1()" [routerLink]="['/user-manage/user-detail']">Quản Lý Tài Khoản</a>
+                <a class="dropdown-item account" [routerLink]="'/user-manage/user-detail'">Quản Lý Tài Khoản</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" (click)="reload2()" [routerLink]="'/user-manage/user-order'">Đơn Hàng Của Tôi</a>
+                <a class="dropdown-item account"  [routerLink]="'/user-manage/user-order'">Đơn Hàng Của Tôi</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" (click)="signOut()">Đăng Xuất</a>
+                <a class="dropdown-item  signOut " (click)="signOut()">Đăng Xuất</a>
               </div>
             </div>
     </div>

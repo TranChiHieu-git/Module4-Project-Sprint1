@@ -8,6 +8,8 @@ import {MaterialModule} from '../../shares/material.module';
 import {Account} from '../../models/account';
 import {AccountService} from '../../services/account.service';
 import {AdminService} from '../../services/admin.service';
+import {AuthLoginInfo} from '../../auth/login-info';
+import {AuthJwtService} from '../../auth/auth-jwt.service';
 
 // tslint:disable-next-line:typedef
 function comparePassword(c: AbstractControl) {
@@ -26,6 +28,7 @@ function comparePassword(c: AbstractControl) {
 })
 export class UserRegisterComponent implements OnInit {
   constructor(private customerService: CustomerService,
+              private auth: AuthJwtService,
               private adminService: AdminService,
               private fb: FormBuilder,
               private router: Router,
@@ -87,7 +90,7 @@ export class UserRegisterComponent implements OnInit {
 
   form: any = {};
   userInfo: Customer;
-  accountInfo: Account;
+  accountInfo: AuthLoginInfo;
   isRegister = false;
   isRegisterFailed = false;
   errorMessage = '';
@@ -127,7 +130,7 @@ export class UserRegisterComponent implements OnInit {
       ])),
       email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+        Validators.pattern('^[_a-z0-9]+(\\.[_a-z0-9]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$')
       ])),
       accountPassword: new FormControl('', Validators.compose([
         Validators.minLength(5),
@@ -161,7 +164,7 @@ export class UserRegisterComponent implements OnInit {
             }
             this.isRegister = true;
             this.isRegisterFailed = false;
-            const login = 'Hãy Đăng Nhập';
+            const login = 'Quay Lại';
             const snackbarRef = this.snackbar.open('Đăng Ký Thành Công!', login, {
               horizontalPosition: 'center',
             });

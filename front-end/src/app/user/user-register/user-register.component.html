@@ -5,13 +5,11 @@
     <!-- fullName -->
     <div class="form-group mb-2">
       <div class="form-row d-flex align-items-center ">
-        <div class="col-md-4">
-          <label>
-            Họ Tên *:
-          </label>
+        <div class="col-md-2 d-flex align-items-center pr-2 ">
+          <span class="material-icons">perm_identity</span>(<i class="star">*</i>):
         </div>
-        <div class="col-md-8">
-          <input type="text" class="form-control" formControlName="user_name">
+        <div class="col-md-10">
+          <input type="text" class="form-control" formControlName="user_name" placeholder=" Họ Tên">
         </div>
       </div>
       <div *ngFor="let validation of validation_messages.user_name">
@@ -27,12 +25,10 @@
     <!-- accountName -->
     <div class="form-group mb-2">
       <div class="form-row d-flex align-items-center ">
-        <div class="col-md-4">
-          <label>
-            Tên đăng nhập *:
-          </label>
+        <div class="col-md-2 d-flex align-items-center ">
+          <span class="material-icons">account_circle</span> (<i class="star">*</i>):
         </div>
-        <div class="col-md-8">
+        <div class="col-md-10">
           <input type="text" class="form-control" id="accountName" placeholder="Tên đăng nhập"
                  formControlName="accountName">
         </div>
@@ -48,12 +44,10 @@
     <!-- Email -->
     <div class="form-group mb-2">
       <div class="form-row d-flex align-items-center ">
-        <div class="col-md-4">
-          <label>
-            Email *:
-          </label>
+        <div class="col-md-2 d-flex align-items-center ">
+          <span class="material-icons">email</span> (<i class="star">*</i>):
         </div>
-        <div class="col-md-8">
+        <div class="col-md-10">
           <input type="email" class="form-control" id="inputEmail2" placeholder="Email"
                  formControlName="email"
                  required>
@@ -69,12 +63,10 @@
     <!-- phone -->
     <div class="form-group mb-2">
       <div class="form-row d-flex align-items-center ">
-        <div class="col-md-4">
-          <label>
-            Số Điện Thoại *:
-          </label>
+        <div class="col-md-2 d-flex align-items-center ">
+          <span class="material-icons">settings_phone</span> (<i class="star">*</i>):
         </div>
-        <div class="col-md-8">
+        <div class="col-md-10">
           <input type="text" class="form-control" placeholder="Số Điện Thoại" formControlName="phone"
                  required>
         </div>
@@ -89,12 +81,10 @@
     <!-- birthday -->
     <div class="form-group mb-2">
       <div class="form-row d-flex align-items-center ">
-        <div class="col-md-4">
-          <label>
-            Ngày Sinh *:
-          </label>
+        <div class="col-md-2 d-flex align-items-center ">
+          <span class="material-icons">cake</span> (<i class="star">*</i>):
         </div>
-        <div class="col-md-8 mt-1">
+        <div class="col-md-10 mt-1">
           <mat-form-field appearance="fill">
             <mat-label class=" mb-2">Chọn Ngày</mat-label>
             <input matInput [matDatepicker]="dp3" (dateInput)="dp3">
@@ -115,13 +105,11 @@
     <fieldset>
       <div class="form-group mb-2 ">
         <div class="form-row d-flex align-items-center ">
-          <div class="col-md-4 d-flex align-items-center">
-            <label>
-              Mật Khẩu *:
-            </label>
+          <div class="col-md-2 d-flex align-items-center">
+            <span class="material-icons">vpn_key</span> (<i class="star">*</i>):
           </div>
-          <div class="col-md-8">
-            <input type="password" class="form-control" placeholder="Mật Khẩu" formControlName="accountPassword" required >
+          <div class="col-md-10">
+            <input type="password" class="form-control" placeholder="Mật Khẩu" formControlName="accountPassword" required>
           </div>
         </div>
         <div *ngFor="let validation of validation_messages.password">
@@ -136,12 +124,10 @@
       <!-- Password Confirm -->
       <div class="form-group mb-2 ">
         <div class="form-row d-flex align-items-center ">
-          <div class="col-md-4 d-flex align-items-center">
-            <label>
-              Nhập Lại Mật Khẩu:
-            </label>
+          <div class="col-md-2 d-flex align-items-center">
+            <span class="material-icons">done_all</span><span class="material-icons">vpn_key</span>(<i class="star">*</i>):
           </div>
-          <div class="col-md-8">
+          <div class="col-md-10">
             <input type="password" class="form-control" placeholder="Nhập Lại Mật Khẩu" formControlName="confirmPassword" required>
           </div>
           <div *ngFor="let validation of validation_messages.confirmPassword">
@@ -161,14 +147,15 @@
 
     </fieldset>
 
-    <div class="form-row mb-3 ">
-      <div class="col-md-4">
-        <label>Giới Tính *:</label></div>
-      <div class="form-check col-md-4 text-center">
-        <label><input type="radio" formControlName="gender" value="Nam">Nam</label>
+    <div class="form-row mb-3 align-items-center ">
+      <div class="col-md-2 align-items-center">
+        <span class="material-icons">wc</span>
       </div>
-      <div class="form-check col-md-4 text-center">
-        <label><input type="radio" formControlName="gender" value="Nữ">Nữ</label>
+      <div class="form-check col-md-5 text-center">
+        <label><input type="radio" formControlName="gender" value="Nam"> Nam</label>
+      </div>
+      <div class="form-check col-md-5 text-center">
+        <label><input type="radio" formControlName="gender" value="Nữ"> Nữ</label>
       </div>
       <div *ngFor="let validation of validation_messages.gender">
         <div class="error-message"
@@ -177,7 +164,9 @@
       </div>
     </div>
     <div class="text-center mt-3">
-      <button type="button" class="btn-sm btn-warning submitButton mr-3 w-25" (click)="onSubmitRegisters()">
+      <button type="button"
+              class="btn-sm btn-warning submitButton mr-3 w-25"
+              (click)="onSubmitRegisters()">
         Đăng Ký
       </button>
       <button class="btn-sm btn-outline-secondary  w-25" data-dismiss="modal"> Hủy</button>

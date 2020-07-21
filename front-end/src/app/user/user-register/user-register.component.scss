@@ -3,7 +3,7 @@
 }
 .text-danger{
   font-size: 13px;
-  margin-left: 157px;
+  margin-left: 80px
 }
 h2{
   color: #7a5744;
@@ -15,11 +15,14 @@ label{
 ::ng-deep .cdk-overlay-container{
   z-index: 1200 !important;
 }
+.star{
+  color: red;
+}
 .submitButton {
-  color: whitesmoke;
+  color: #d05f31;
   border-style: solid;
   border-color: black;
-  background-color: #d05f31;
+  background-color: #ffdd59;
   overflow: hidden;
   outline:none;
 }
