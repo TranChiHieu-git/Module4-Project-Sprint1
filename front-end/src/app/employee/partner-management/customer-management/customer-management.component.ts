@@ -44,7 +44,6 @@ export class CustomerManagementComponent implements OnInit {
   dateRequired = false;
   dateRegex = false;
   dateOutRange = false;
-  edited = [];
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -61,9 +60,6 @@ export class CustomerManagementComponent implements OnInit {
   ngOnInit(): void {
     this.customerService.getAllCustomer().subscribe((data: any) => {
         this.customers = data.content;
-        for (let i=0;i<this.customers.length;i++){
-          this.edited[i] = this.customers[i].id;
-        }
       }, error => {
         console.log(error);
       }, () => {
@@ -200,8 +196,6 @@ export class CustomerManagementComponent implements OnInit {
       this.customerService.editCustomer(this.addUser.value).subscribe(
         next => {
           $('#editModal').modal('hide');
-          this.edited[this.edited.indexOf(id)]=-1;
-          // alert(this.edited.indexOf(id));
           this.ngOnInit();
           this.toastr.success('Thay đổi thành công thông tin của khách hàng ' + userName + ' !');
 
@@ -254,6 +248,9 @@ export class CustomerManagementComponent implements OnInit {
 
   addEvent(event): void {
     this.date = event.value;
+    this.dateRequired = false;
+    this.dateRegex = false;
+    this.dateOutRange = false;
   }
 
   quayLaiDanhSach(): void {
