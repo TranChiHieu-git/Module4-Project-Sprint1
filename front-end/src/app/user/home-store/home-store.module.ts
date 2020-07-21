@@ -7,8 +7,9 @@ import { HomeCakeComponent } from './home-cake/home-cake.component';
 import { HomeCandyComponent } from './home-candy/home-candy.component';
 import { DetailComponent } from './detail/detail.component';
 import { HomeBakeryComponent } from './home-bakery/home-bakery.component';
-import {Ng2OrderModule} from "ng2-order-pipe";
-import {NgxPaginationModule} from "ngx-pagination";
+import {Ng2OrderModule} from 'ng2-order-pipe';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 
@@ -19,7 +20,9 @@ import {NgxPaginationModule} from "ngx-pagination";
     RouterModule,
     HomeRoutingModule,
     Ng2OrderModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class HomeStoreModule { }

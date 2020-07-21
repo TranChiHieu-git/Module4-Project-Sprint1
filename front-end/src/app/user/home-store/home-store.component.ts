@@ -1,19 +1,21 @@
 import {Component, OnInit} from '@angular/core';
 import {BrandService} from '../../services/brand.service';
 import {CategoryService} from '../../services/category.service';
+import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-home-store',
   templateUrl: './home-store.component.html',
   styleUrls: ['./home-store.component.scss']
 })
-export class HomeStoreComponent implements OnInit {
+export class HomeStoreComponent implements OnInit{
 
   brandList = [];
   categoryList = [];
 
-  constructor(public brandService: BrandService,
-              public categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService,
+              private brandService: BrandService) {
+  }
 
   ngOnInit(): void {
     this.categoryService.getAllCategory().subscribe(next => {
