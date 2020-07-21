@@ -421,7 +421,8 @@
       </button>
     </div>
     <div class="col-2">
-      <button class="btn btn-outline-danger" style="margin-left: 42px" (click)="confirmDeleteAll()"><span class="fas fa-trash"></span>
+      <button class="btn btn-outline-danger" style="margin-left: 42px" (click)="confirmDeleteAll()"><span
+        class="fas fa-trash"></span>
         Xóa nhiều
       </button>
     </div>
@@ -441,176 +442,215 @@
           <th class="sticky-top">Chi Tiết</th>
 
           <th scope="col" class="centerDiv">
-                        <input type="checkbox" id="all" (change)="addToListDelete('all','')" style="display: block"></th>
+            <input type="checkbox" id="all" (change)="addToListDelete('all','')" style="display: block"></th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let distributor of distributorList">
-          <td>
-            {{distributor.id}}
-          </td>
-          <td>
-            <span>{{distributor.name}}</span>
-          </td>
-          <td>
-            <span>{{distributor.address}}</span>
-          </td>
-          <td>
-            <span>{{distributor.numberPhone}}</span>
-          </td>
-          <td>
-            <span>{{distributor.email}}</span>
-          </td>
-          <ng-container *ngIf="distributor.id">
-          <td>
-            <a>
-              <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button m-1 customButton"><i
-                class="icon-pencil" (click)="openEditForm(distributor.id)"></i></button>
-            </a>
-          </td>
+        <ng-container *ngFor="let distributor of distributorList">
+          <tr *ngIf="distributor.id!==idHasModifined">
+            <td>
+              {{distributor.id}}
+            </td>
+            <td>
+              <span>{{distributor.name}}</span>
+            </td>
+            <td>
+              <span>{{distributor.address}}</span>
+            </td>
+            <td>
+              <span>{{distributor.numberPhone}}</span>
+            </td>
+            <td>
+              <span>{{distributor.email}}</span>
+            </td>
+            <td>
+              <a>
+                <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button"
+                        class="global-button m-1 customButton"><i
+                  class="icon-pencil" (click)="openEditForm(distributor.id)"></i></button>
+              </a>
+            </td>
 
-          <td>
-            <a>
-              <button type="button" class="global-button customButton"><i
-                class="fa fa-trash" (click)="openDeleteForm(distributor.id)"></i></button>
-            </a>
-          </td>
-          <td>
-            <a>
-              <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button customButton"><i
-                class="	fa fa-exclamation-circle" (click)="openDetailForm(distributor.id)"></i></button>
-            </a>
-          </td>
-          <td class="centerDiv" style="width: 3%">
-            <input *ngIf="distributor.id" type="checkbox" [id]="'checkbox' + distributor.id"
-                   (change)="addToListDelete(distributor.id, distributor.name)" style="display: block"></td>
-          </ng-container>
-        </tr>
+            <td>
+              <a>
+                <button type="button" class="global-button customButton"><i
+                  class="fa fa-trash" (click)="openDeleteForm(distributor.id)"></i></button>
+              </a>
+            </td>
+            <td>
+              <a>
+                <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button"
+                        class="global-button customButton"><i
+                  class="	fa fa-exclamation-circle" (click)="openDetailForm(distributor.id)"></i></button>
+              </a>
+            </td>
+            <td class="centerDiv" style="width: 3%">
+              <input *ngIf="distributor.id" type="checkbox" [id]="'checkbox' + distributor.id"
+                     (change)="addToListDelete(distributor.id, distributor.name)" style="display: block"></td>
+          </tr>
+          <tr *ngIf="distributor.id===idHasModifined">
+            <td style="width: 2%; color: blue; font-weight: 800">{{distributor.id}}</td>
+            <td style="width: 30% ;color: blue; font-weight: 800">{{distributor.name}}</td>
+            <td style="color: blue; font-weight: 800">
+              <span>{{distributor.address}}</span>
+            </td>
+            <td style="color: blue; font-weight: 800">
+              <span>{{distributor.numberPhone}}</span>
+            </td>
+            <td style="color: blue; font-weight: 800">
+              <span>{{distributor.email}}</span>
+            </td>
+            <td>
+              <a>
+                <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button"
+                        class="global-button m-1 customButton"><i
+                  class="icon-pencil" (click)="openEditForm(distributor.id)"></i></button>
+              </a>
+            </td>
+
+            <td>
+              <a>
+                <button type="button" class="global-button customButton"><i
+                  class="fa fa-trash" (click)="openDeleteForm(distributor.id)"></i></button>
+              </a>
+            </td>
+            <td>
+              <a>
+                <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button"
+                        class="global-button customButton"><i
+                  class="	fa fa-exclamation-circle" (click)="openDetailForm(distributor.id)"></i></button>
+              </a>
+            </td>
+            <td class="centerDiv" style="width: 3%">
+              <input *ngIf="distributor.id" type="checkbox" [id]="'checkbox' + distributor.id"
+                     (change)="addToListDelete(distributor.id, distributor.name)" style="display: block"></td>
+          <tr>
+        </ng-container>
         </tbody>
       </table>
     </div>
   </div>
-  <div class="row">
+  <div class="row" style="z-index: 0">
     <div class="col-12">
-            <div class="paging-course fixed-bottom" style="margin-left: 350px">
-              <nav aria-label="Page navigation example">
-                <ul class="pagination customPaging">
-                  <li class="page-item" (click)="onFirst()"><a class="page-link">Đầu</a></li>
-                  <li class="page-item" (click)="onPrevious()" [ngClass]="pageClick==0?'disabled':''">
-                    <a class="page-link">Trước</a>
-                  </li>
-                  <li *ngIf="pageClick != 0" class="page-item" (click)="onChange(pages[pageClick-1])">
-                    <a class="page-link">{{pageClick}}</a>
-                  </li>
-                  <li [ngClass]="(pageClick == pages[pageClick]) ? 'active' : ''" class="page-item"
-                      (click)="onChange(pages[pageClick])">
-                    <a class="page-link">{{pageClick + 1}}</a>
-                  </li>
-                  <li *ngIf="pageClick < pages.length -1" class="page-item" (click)="onChange(pages[pageClick+1])">
-                    <a class="page-link">{{pageClick + 2}}</a>
-                  </li>
-                  <li *ngIf="pageClick < pages.length -2" class="page-item">
-                    <a class="page-link">...</a>
-                  </li>
-                  <li *ngIf="pageClick < pages.length-2" class="page-item" (click)="onLast()">
-                    <a class="page-link">{{pages[pages.length - 1] + 1}}</a>
-                  </li>
-                  <li class="page-item" (click)="onNext()" [ngClass]="pageClick==totalPages-1?'disabled':''">
-                    <a class="page-link">Tiếp</a>
-                  </li>
-                  <li class="page-item" (click)="onLast()"><a class="page-link">Cuối</a></li>
-                </ul>
-              </nav>
-          </div>
+      <div class="paging-course fixed-bottom" style="margin-left: 350px">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination customPaging">
+            <li class="page-item" (click)="onFirst()"><a class="page-link">Đầu</a></li>
+            <li class="page-item" (click)="onPrevious()" [ngClass]="pageClick==0?'disabled':''">
+              <a class="page-link">Trước</a>
+            </li>
+            <li *ngIf="pageClick != 0" class="page-item" (click)="onChange(pages[pageClick-1])">
+              <a class="page-link">{{pageClick}}</a>
+            </li>
+            <li [ngClass]="(pageClick == pages[pageClick]) ? 'active' : ''" class="page-item"
+                (click)="onChange(pages[pageClick])">
+              <a class="page-link">{{pageClick + 1}}</a>
+            </li>
+            <li *ngIf="pageClick < pages.length -1" class="page-item" (click)="onChange(pages[pageClick+1])">
+              <a class="page-link">{{pageClick + 2}}</a>
+            </li>
+            <li *ngIf="pageClick < pages.length -2" class="page-item">
+              <a class="page-link">...</a>
+            </li>
+            <li *ngIf="pageClick < pages.length-2" class="page-item" (click)="onLast()">
+              <a class="page-link">{{pages[pages.length - 1] + 1}}</a>
+            </li>
+            <li class="page-item" (click)="onNext()" [ngClass]="pageClick==totalPages-1?'disabled':''">
+              <a class="page-link">Tiếp</a>
+            </li>
+            <li class="page-item" (click)="onLast()"><a class="page-link">Cuối</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
   <!--  <div class="row-cols-12">-->
-<!--    <div class="row">-->
-<!--      <div class="col-4">-->
-<!--        <div class="h3 header-text-color"><span class="fa fa-bars"></span><span>Danh sách nhà phân phối</span></div>-->
-<!--  <button class="btn btn-primary mainButton" (click)="openCreateForm()">Thêm Mới</button>-->
-<!--  <button class="btn btn-primary mainButton" (click)="confirmDeleteAll()"><i class="fas fa-trash"></i>Xóa nhiều</button>-->
+  <!--    <div class="row">-->
+  <!--      <div class="col-4">-->
+  <!--        <div class="h3 header-text-color"><span class="fa fa-bars"></span><span>Danh sách nhà phân phối</span></div>-->
+  <!--  <button class="btn btn-primary mainButton" (click)="openCreateForm()">Thêm Mới</button>-->
+  <!--  <button class="btn btn-primary mainButton" (click)="confirmDeleteAll()"><i class="fas fa-trash"></i>Xóa nhiều</button>-->
   <!--      </div>-->
-<!--      <div class="col-8">-->
-<!--        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600'-->
-<!--              rel='stylesheet' type='text/css'>-->
-<!--        <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">-->
-<!--        <link rel="stylesheet"-->
-<!--              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="row">-->
-<!--      <table class="table-striped table-hover">-->
-<!--        <tr>-->
-<!--          <th scope="col">Mã</th>-->
-<!--          <th scope="col">Tên</th>-->
-<!--          <th scope="col">Địa chỉ</th>-->
-<!--          <th scope="col">Số điện thoại</th>-->
-<!--          <th scope="col">Email</th>-->
-<!--          <th scope="col" class="centerDiv"> Thao tác</th>-->
-<!--          <th scope="col" class="centerDiv">-->
-<!--            <input type="checkbox" id="all" (change)="addToListDelete('all','')"-->
-<!--                   style="display: block"></th>-->
-<!--        <tr>-->
-<!--        </tr>-->
-<!--        <tbody>-->
-<!--        <ng-container *ngFor="let distributor of distributorList">-->
-<!--          <tr>-->
-<!--            <td style="width: 2%">{{distributor.id}}</td>-->
-<!--            <td style="width: 30%">{{distributor.name}}</td>-->
-<!--            <td style="width: 25%">{{distributor.address}}</td>-->
-<!--            <td style="width: 5%">{{distributor.numberPhone}}</td>-->
-<!--            <td style="width: 25%">{{distributor.email}}</td>-->
-<!--            <td style="width: 10%">-->
-<!--              <div *ngIf="distributor.id" class="centerDiv2">-->
-<!--                <i style="padding-left: 20px" class="fas fa-pen" (click)="openEditForm(distributor.id)"></i>-->
-<!--                <i style="padding-left: 20px" (click)="openDeleteForm(distributor.id)" class="fas fa-trash"></i>-->
-<!--                <i style="padding-left: 20px" (click)="openDetailForm(distributor.id)" class="fa fa-info"></i>-->
-<!--              </div>-->
+  <!--      <div class="col-8">-->
+  <!--        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600'-->
+  <!--              rel='stylesheet' type='text/css'>-->
+  <!--        <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">-->
+  <!--        <link rel="stylesheet"-->
+  <!--              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--    <div class="row">-->
+  <!--      <table class="table-striped table-hover">-->
+  <!--        <tr>-->
+  <!--          <th scope="col">Mã</th>-->
+  <!--          <th scope="col">Tên</th>-->
+  <!--          <th scope="col">Địa chỉ</th>-->
+  <!--          <th scope="col">Số điện thoại</th>-->
+  <!--          <th scope="col">Email</th>-->
+  <!--          <th scope="col" class="centerDiv"> Thao tác</th>-->
+  <!--          <th scope="col" class="centerDiv">-->
+  <!--            <input type="checkbox" id="all" (change)="addToListDelete('all','')"-->
+  <!--                   style="display: block"></th>-->
+  <!--        <tr>-->
+  <!--        </tr>-->
+  <!--        <tbody>-->
+  <!--        <ng-container *ngFor="let distributor of distributorList">-->
+  <!--          <tr>-->
+  <!--            <td style="width: 2%">{{distributor.id}}</td>-->
+  <!--            <td style="width: 30%">{{distributor.name}}</td>-->
+  <!--            <td style="width: 25%">{{distributor.address}}</td>-->
+  <!--            <td style="width: 5%">{{distributor.numberPhone}}</td>-->
+  <!--            <td style="width: 25%">{{distributor.email}}</td>-->
+  <!--            <td style="width: 10%">-->
+  <!--              <div *ngIf="distributor.id" class="centerDiv2">-->
+  <!--                <i style="padding-left: 20px" class="fas fa-pen" (click)="openEditForm(distributor.id)"></i>-->
+  <!--                <i style="padding-left: 20px" (click)="openDeleteForm(distributor.id)" class="fas fa-trash"></i>-->
+  <!--                <i style="padding-left: 20px" (click)="openDetailForm(distributor.id)" class="fa fa-info"></i>-->
+  <!--              </div>-->
 
-<!--            </td>-->
-<!--            <td class="centerDiv" style="width: 3%"><input *ngIf="distributor.id" type="checkbox"-->
-<!--                                                           [id]="'checkbox' + distributor.id"-->
-<!--                                                           (change)="addToListDelete(distributor.id, distributor.name)"-->
-<!--                                                           style="display: block"></td>-->
-<!--          <tr>-->
-<!--        </ng-container>-->
-<!--        </tbody>-->
-<!--      </table>-->
-<!--    </div>-->
-<!--    <div class="row">-->
-<!--      <div class="paging-course">-->
-<!--        <nav aria-label="Page navigation example">-->
-<!--          <ul class="pagination">-->
-<!--            <li class="page-item" (click)="onFirst()"><a class="page-link">First</a></li>-->
-<!--            <li class="page-item" (click)="onPrevious()" [ngClass]="pageClick==0?'disabled':''">-->
-<!--              <a class="page-link">Previous</a>-->
-<!--            </li>-->
-<!--            <li *ngIf="pageClick != 0" class="page-item" (click)="onChange(pages[pageClick-1])">-->
-<!--              <a class="page-link">{{pageClick}}</a>-->
-<!--            </li>-->
-<!--            <li [ngClass]="(pageClick == pages[pageClick]) ? 'active' : ''" class="page-item"-->
-<!--                (click)="onChange(pages[pageClick])">-->
-<!--              <a class="page-link">{{pageClick + 1}}</a>-->
-<!--            </li>-->
-<!--            <li *ngIf="pageClick < pages.length -1" class="page-item" (click)="onChange(pages[pageClick+1])">-->
-<!--              <a class="page-link">{{pageClick + 2}}</a>-->
-<!--            </li>-->
-<!--            <li *ngIf="pageClick < pages.length -2" class="page-item">-->
-<!--              <a class="page-link">...</a>-->
-<!--            </li>-->
-<!--            <li *ngIf="pageClick < pages.length-2" class="page-item" (click)="onLast()">-->
-<!--              <a class="page-link">{{pages[pages.length - 1] + 1}}</a>-->
-<!--            </li>-->
-<!--            <li class="page-item" (click)="onNext()" [ngClass]="pageClick==totalPages-1?'disabled':''">-->
-<!--              <a class="page-link">Next</a>-->
-<!--            </li>-->
-<!--            <li class="page-item" (click)="onLast()"><a class="page-link">Last</a></li>-->
-<!--          </ul>-->
-<!--        </nav>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
+  <!--            </td>-->
+  <!--            <td class="centerDiv" style="width: 3%"><input *ngIf="distributor.id" type="checkbox"-->
+  <!--                                                           [id]="'checkbox' + distributor.id"-->
+  <!--                                                           (change)="addToListDelete(distributor.id, distributor.name)"-->
+  <!--                                                           style="display: block"></td>-->
+  <!--          <tr>-->
+  <!--        </ng-container>-->
+  <!--        </tbody>-->
+  <!--      </table>-->
+  <!--    </div>-->
+  <!--    <div class="row">-->
+  <!--      <div class="paging-course">-->
+  <!--        <nav aria-label="Page navigation example">-->
+  <!--          <ul class="pagination">-->
+  <!--            <li class="page-item" (click)="onFirst()"><a class="page-link">First</a></li>-->
+  <!--            <li class="page-item" (click)="onPrevious()" [ngClass]="pageClick==0?'disabled':''">-->
+  <!--              <a class="page-link">Previous</a>-->
+  <!--            </li>-->
+  <!--            <li *ngIf="pageClick != 0" class="page-item" (click)="onChange(pages[pageClick-1])">-->
+  <!--              <a class="page-link">{{pageClick}}</a>-->
+  <!--            </li>-->
+  <!--            <li [ngClass]="(pageClick == pages[pageClick]) ? 'active' : ''" class="page-item"-->
+  <!--                (click)="onChange(pages[pageClick])">-->
+  <!--              <a class="page-link">{{pageClick + 1}}</a>-->
+  <!--            </li>-->
+  <!--            <li *ngIf="pageClick < pages.length -1" class="page-item" (click)="onChange(pages[pageClick+1])">-->
+  <!--              <a class="page-link">{{pageClick + 2}}</a>-->
+  <!--            </li>-->
+  <!--            <li *ngIf="pageClick < pages.length -2" class="page-item">-->
+  <!--              <a class="page-link">...</a>-->
+  <!--            </li>-->
+  <!--            <li *ngIf="pageClick < pages.length-2" class="page-item" (click)="onLast()">-->
+  <!--              <a class="page-link">{{pages[pages.length - 1] + 1}}</a>-->
+  <!--            </li>-->
+  <!--            <li class="page-item" (click)="onNext()" [ngClass]="pageClick==totalPages-1?'disabled':''">-->
+  <!--              <a class="page-link">Next</a>-->
+  <!--            </li>-->
+  <!--            <li class="page-item" (click)="onLast()"><a class="page-link">Last</a></li>-->
+  <!--          </ul>-->
+  <!--        </nav>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
 
 </div>
 
@@ -668,12 +708,10 @@
                   </div>
                   <div class="col-xl-8">
                     <div class="item" style="margin-top: 20px" data-tip="Tên nhà phân phối">
-                      <input type="text" formControlName="name" id="name1" placeholder="Tên nhà phân phối*" autofocus/>
+                      <input type="text" formControlName="name" id="name1" placeholder="Tên nhà phân phối*"
+                             (focusout)="validateDistributorIsExist()"/>
                       <label id="icon" for="name1"><i class="icon-user"></i></label>
                       <span class="spanMessError" *ngIf="!this.myForm.valid">{{getErrorMessage('name')}} </span>
-<!--                      <span-->
-<!--                        *ngIf="this.myForm.get('name').hasError('nameAccountExist')">-->
-<!--            Tên tài khoản đã tồn tại</span> -->
                     </div>
 
                     <div class="item">
@@ -696,7 +734,8 @@
                       <div class="div1">
                         <input type="text" formControlName="numberPhone" id="phone" placeholder="Số điện thoại*"/>
                         <label id="icon" for="phone"><i class="icon-phone"></i> </label>
-                        <span class="spanMessError" *ngIf="!this.myForm.valid">{{getErrorMessage('numberPhone')}} </span>
+                        <span class="spanMessError"
+                              *ngIf="!this.myForm.valid">{{getErrorMessage('numberPhone')}} </span>
                       </div>
                       <div class="div2">
                         <input type="text" formControlName="fax" id="fax" placeholder="Fax"/>
