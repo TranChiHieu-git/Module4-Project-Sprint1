@@ -27,7 +27,7 @@ export class BrandManagementComponent implements OnInit {
   totalPages = 1;
   search = '';
   isSearch = false;
-  key = '';
+  key = 'id';
   reverse = false;
   brandName: string;
   brandEditForm: FormGroup;

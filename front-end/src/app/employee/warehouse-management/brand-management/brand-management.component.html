@@ -20,7 +20,9 @@
           <thead class="table-header">
           <tr>
             <th class="sticky-top">Hình ảnh</th>
-            <th class="sticky-top" (click)="sort('id')">Mã Thương Hiệu <i class="fa fa-sort" aria-hidden="true"></i></th>
+            <th class="sticky-top" (click)="sort('id')">Mã Thương Hiệu
+              <i [class]="reverse ? 'fa fa-sort-asc' : 'fa fa-sort-desc'" aria-hidden="true"></i>
+            </th>
             <th class="sticky-top">Tên Thương Hiệu</th>
             <th class="sticky-top">Trụ sở</th>
             <th class="sticky-top">Website</th>
@@ -28,7 +30,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let brand of brandList | orderBy: key: !reverse">
+          <tr *ngFor="let brand of brandList | orderBy: key: reverse">
             <td *ngIf="brand.isEditable">
               <div>
                 <img class="brand-logo" [src]="imgSrc">
