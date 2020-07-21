@@ -7,6 +7,9 @@ import {HttpClient} from '@angular/common/http';
 import {finalize, map} from 'rxjs/operators';
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
 import {} from '../../../../assets/js/fb.js';
+import {ToastrService} from "ngx-toastr";
+import {OrderService} from "../../../services/order.service";
+import {Order} from "../../../models/order";
 
 declare var $: any;
 
@@ -36,28 +39,38 @@ export class CustomerManagementComponent implements OnInit {
   curentDay = new Date();
   maxDate = new Date();
   minDate = new Date();
-
+  orders: Order[];
+  deleteCheckOrderValue = ['Giao hàng thành công', 'Đã hủy'];
+  dateRequired = false;
+  dateRegex = false;
+  dateOutRange = false;
+  edited = [];
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private customerService: CustomerService,
               private http: HttpClient,
-              private afStorage: AngularFireStorage) {
-    this.customerService.getAllCustomer().subscribe((data: any) => {
-        this.customers = data.content;
-      }, error => {
-        console.log(error);
-      }, () => {
-      }
-    );
+              private afStorage: AngularFireStorage,
+              private toastr: ToastrService,
+              private orderService: OrderService) {
   }
 
   validatingForm: FormGroup;
 
   ngOnInit(): void {
-    this.maxDate.setFullYear(this.curentDay.getFullYear()-2);
-    this.minDate.setFullYear(this.curentDay.getFullYear()-120);
+    this.customerService.getAllCustomer().subscribe((data: any) => {
+        this.customers = data.content;
+        for (let i=0;i<this.customers.length;i++){
+          this.edited[i] = this.customers[i].id;
+        }
+      }, error => {
+        console.log(error);
+      }, () => {
+      }
+    );
+    this.maxDate.setFullYear(this.curentDay.getFullYear() - 2);
+    this.minDate.setFullYear(this.curentDay.getFullYear() - 120);
 
     $('#checkAll').click(function () {
       $('input:checkbox').not(this).prop('checked', this.checked);
@@ -163,45 +176,66 @@ export class CustomerManagementComponent implements OnInit {
           });
         }
         this.customerService.editCustomer(this.addUser.value).subscribe(
-          next => window.location.reload(),
+          next => {
+            window.location.reload()
+          },
           error => console.log(error)
         );
       }
     }
   }
 
-  editSubmit(userName) {
+  editSubmit(userName, id) {
     if (this.uploadStatus) {
-      const editConfirm = confirm('Bạn có chắc chắn cập nhật thông tin của khách mua hàng ' + userName + ' ?');
-      if (editConfirm) {
-        if (this.date !== undefined) {
-          this.addUser.patchValue({
-            birthday: this.date,
-          });
-        }
-        if (this.editUrl !== undefined) {
-          this.addUser.patchValue({
-            imageUrl: this.editUrl,
-          });
-        }
-        this.customerService.editCustomer(this.addUser.value).subscribe(
-          next => window.location.reload(),
-          error => console.log(error)
-        );
+      if (this.date !== undefined) {
+        this.addUser.patchValue({
+          birthday: this.date,
+        });
       }
-    }
-  }
-
-  deleteSubmit(id, userName): void {
-    const deleteConfirm = confirm('Bạn có chắc chắn muốn xóa khách mua hàng ' + userName + ' không?');
-    if (deleteConfirm) {
-      this.customerService.deleteCustomerById(id).subscribe(
+      if (this.editUrl !== undefined) {
+        this.addUser.patchValue({
+          imageUrl: this.editUrl,
+        });
+      }
+      this.customerService.editCustomer(this.addUser.value).subscribe(
         next => {
-          window.location.reload();
+          $('#editModal').modal('hide');
+          this.edited[this.edited.indexOf(id)]=-1;
+          // alert(this.edited.indexOf(id));
+          this.ngOnInit();
+          this.toastr.success('Thay đổi thành công thông tin của khách hàng ' + userName + ' !');
+
         },
         error => console.log(error)
       );
     }
+  }
+
+  deleteSubmit(id, userName): void {
+    this.orderService.findAllOrderByUserId(id).subscribe((next: any) => {
+        this.orders = next.content;
+        if (this.checkDeleteOrder()) {
+          this.toastr.error('Khách hàng ' + userName + ' đang đặt hàng, không thể xóa!');
+        } else {
+          this.deleteSubmitConfirm(id, userName);
+        }
+        ;
+      },
+      error => {
+        console.log(error);
+        this.orders = null;
+        this.deleteSubmitConfirm(id, userName);
+      });
+  }
+
+  deleteSubmitConfirm(id, userName): void {
+    this.customerService.deleteCustomerById(id).subscribe(
+      next => {
+        this.ngOnInit();
+        this.toastr.success('Xóa thành công khách hàng ' + userName + ' !');
+      },
+      error => console.log(error)
+    );
   }
 
   change(): void {
@@ -254,18 +288,17 @@ export class CustomerManagementComponent implements OnInit {
     if (this.deleteList.length <= 0) {
       alert('Bạn chưa chọn khách hàng nào để tiến hành xóa!');
     } else {
-      deleteConfirm = confirm('Bạn có chắc chắn muốn xóa những khách mua hàng này không?');
-    }
-    if (deleteConfirm) {
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.deleteList.length; i++) {
         this.customerService.deleteCustomerById(this.deleteList[i]).subscribe(
           next => {
+            this.ngOnInit();
+            this.customers = []
           },
           error => console.log(error)
         );
       }
-      window.location.reload();
+      this.toastr.success('Xóa thành công ' + this.deleteList.length + 'khách hàng !');
     }
   }
 
@@ -316,5 +349,44 @@ export class CustomerManagementComponent implements OnInit {
         });
       }))
       .subscribe();
+  }
+
+  checkDeleteOrder(): boolean {
+    var statusDelete = false;
+    this.orders.forEach(order => {
+      if (order.orderStatus !== this.deleteCheckOrderValue[0] && order.orderStatus !== this.deleteCheckOrderValue[1]) {
+        statusDelete = true;
+      }
+    })
+    return statusDelete;
+  }
+
+  dateValidate(event) {
+    this.dateRequired = false;
+    this.dateRegex = false;
+    this.dateOutRange = false;
+    const eventString = event.toString();
+    const nullValue = "";
+    if (eventString == nullValue) {
+      this.dateRequired = true;
+    } else {
+      let check = eventString.split('/');
+      const checkDay = check[0].match('(0[1-9]|[1-2][0-9]|3[0-1])');
+      const checkMonth = check[1]?.match('(0[0-9]|1[0-2])');
+      const checkYear = check[2]?.match('[0-9]{4}');
+      var dateObject = new Date(+check[2], check[1] - 1, +check[0]);
+      const regExp = '^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$';
+      if (eventString.match(regExp) && checkDay && checkMonth && checkYear) {
+        if (dateObject.getFullYear() <= this.maxDate.getFullYear() && dateObject.getFullYear() >= this.maxDate.getFullYear()) {
+          this.dateOutRange = true;
+        }
+      } else {
+        if (check[2] < 1600 && check[2] !== nullValue) {
+          this.dateOutRange = true;
+        } else {
+          this.dateRegex = true;
+        }
+      }
+    }
   }
 }
