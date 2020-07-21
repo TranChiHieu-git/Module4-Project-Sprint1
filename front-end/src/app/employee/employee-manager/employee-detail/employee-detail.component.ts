@@ -1,4 +1,5 @@
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
+declare var $: any;
 // import * as bcrypt from 'bcrypt';
 import {Component, OnInit} from '@angular/core';
 import {Employee} from '../../employee';
@@ -12,6 +13,7 @@ import {Router} from '@angular/router';
 import {TokenStorageService} from '../../../auth/token-storage.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Tempjwtemp} from '../../../models/tempjwtemp';
+import {ToastrService} from 'ngx-toastr';
 // tslint:disable-next-line:typedef
 function comparePassword(c: AbstractControl) {
   const v = c.value;
@@ -39,7 +41,8 @@ export class EmployeeDetailComponent implements OnInit {
               private fb: FormBuilder,
               private afStorage: AngularFireStorage,
               private router: Router,
-              private loginAccount: TokenStorageService) {
+              private loginAccount: TokenStorageService,
+              private toastr: ToastrService) {
   }
 
   url: any;
@@ -88,8 +91,7 @@ export class EmployeeDetailComponent implements OnInit {
       position: new FormControl(''),
       department: new FormControl(''),
       phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^\+84\d{9,10}$/)]),
-      email: new FormControl('', [Validators.required, ]),
-      // Validators.pattern(/^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$/)
+      email: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(.[A-Za-z0-9]+)$/) ]),
       image: new FormControl('')
     });
     this.employeeService.findEmployeeByAccountName(this.accountName).subscribe(
@@ -113,14 +115,19 @@ export class EmployeeDetailComponent implements OnInit {
       };
       this.employeeService.editEmployeeById(data).subscribe(
         next => {
+          $('#editModal').modal('hide');
           console.log(next);
+          this.ngOnInit();
+          this.toastr.success('Chỉnh sửa thông tin thành công');
         },
-        error => console.log(error)
+        error => {
+          $('#DeleteModal').modal('hide');
+          this.ngOnInit();
+          this.toastr.error('Có lỗi xảy ra!');
+        }
       );
     }
-    window.location.reload();
   }
-
   loadEditForm(): void {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
@@ -170,12 +177,18 @@ export class EmployeeDetailComponent implements OnInit {
       console.log(data);
       this.employeeService.editAccountByName(data).subscribe(
         next => {
+          $('#DeleteModal').modal('hide');
           console.log(next);
+          this.ngOnInit();
+          this.toastr.success('Chỉnh sửa mật khẩu thành công');
         },
-        error => console.log(error)
+        error => {console.log(error);
+                  $('#DeleteModal').modal('hide');
+                  this.ngOnInit();
+                  this.toastr.error('Mật khẩu cũ chưa chính xác!');
+        }
       );
     }
-    window.location.reload();
   }
 
   readURL(target: EventTarget): void {

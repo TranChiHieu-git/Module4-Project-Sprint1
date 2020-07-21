@@ -91,19 +91,19 @@
             </label>
           </div>
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('name').hasError('required') && editForm.get('name').touched">
-            Không được để trống !
+            Tên không được để trống !
           </div>
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('name').hasError('pattern') && editForm.get('name').touched">
-            Sai cú pháp
+            Email sai cú pháp !
           </div>
           <div class="row">
             <label>
-              Giới tính (*) <input type="radio" value="Nam" name="gender" formControlName="gender">Nam&nbsp;&nbsp;
+              Giới tính (*) &nbsp;&nbsp;<input type="radio" value="Nam" name="gender" formControlName="gender">Nam&nbsp;&nbsp;
               <input type="radio" value="Nữ" name="gender" formControlName="gender">Nữ
             </label>
           </div>
           <div class="row">
-            <label>Ngày sinh:<br>
+            <label>Ngày sinh (*)<br>
               <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>Choose a date</mat-label>
                 <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="birthday">
@@ -117,30 +117,30 @@
             </label>
           </div>
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('phoneNumber').hasError('required') && editForm.get('phoneNumber').touched">
-            Không được để trống !
+            Số điện thoại không được để trống !
           </div>
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('phoneNumber').hasError('pattern') && editForm.get('phoneNumber').touched">
-            Bắt đầu bằng +84 theo sau 9 hoặc 10 chữ số
+            Số điện thoại bắt đầu bằng +84 theo sau 9 hoặc 10 chữ số
           </div>
           <div class="row">
             <label>Email (*) <input type="text" class="form-control"  formControlName="email">
             </label>
           </div>
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('email').hasError('required') && editForm.get('email').touched">
-            Không được để trống
+            Email không được để trống
           </div>
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('email').hasError('pattern') && editForm.get('email').touched">
-            Sai cú pháp !
+            Email sai cú pháp !
           </div>
           <div class="row">
             <label>Địa chỉ (*) <input type="text" class="form-control"  formControlName="address">
             </label>
           </div>
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('address').hasError('pattern') && editForm.get('address').touched">
-            Sai cú pháp !
+            Email sai cú pháp !
           </div>
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('address').hasError('required') && editForm.get('address').touched">
-            Không đc để trống !
+            Địa chỉ không đc để trống !
           </div>
           <div class="row">
             <label>Chức vụ (*)
@@ -207,7 +207,7 @@
             </div>
           </fieldset>
           <div class="alert alert-danger" role="alert" *ngIf="editPasswordForm.hasError('passwordnotmatch', ['pwGroup']) &&
-      editPasswordForm.get('pwGroup').touched">
+      editPasswordForm.get('pwGroup').touched && editPasswordForm.get('pwGroup.confirmPassword').touched ">
             Mật khẩu và xác nhận chưa trùng nhau!
           </div>
           <button id="huy-2" type="button" class="btn btn-secondary " data-dismiss="modal">Hủy</button>

@@ -37,6 +37,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import { FacebookModule } from 'ngx-facebook';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToastrModule} from 'ngx-toastr';
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
     WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BillComponent,
@@ -62,7 +64,6 @@ import { FacebookModule } from 'ngx-facebook';
     NgxPaginationModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-
     MatPaginatorModule,
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyAFbHzEL2J7oXY5bWTF6dA3DnO_iCj5W48',
@@ -76,7 +77,13 @@ import { FacebookModule } from 'ngx-facebook';
     }),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    FacebookModule.forRoot()
+    FacebookModule.forRoot(),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 1500,
+      positionClass: 'toast-top-center',
+      preventDuplicates: true
+    })
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
