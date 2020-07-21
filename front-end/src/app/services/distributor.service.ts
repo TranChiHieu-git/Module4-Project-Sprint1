@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {DeleteListDistributor, Distributor, TypeOfDistributor} from '../models/distributor';
+import {Distributor, TypeOfDistributor} from '../models/distributor';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -49,17 +49,5 @@ export class DistributorService {
   getAllDistributor(currentPage, size, search): Observable<any> {
     return this.httpClient.get(this.MY_API_URL + '/distributor/list' + '?page=' + currentPage + '&size='
       + size + '&search=' + search, this.httpOptions);
-  }
-
-  findTypeOfDistributorByName(name: string): Observable<TypeOfDistributor> {
-    return this.httpClient.get<TypeOfDistributor>(this.MY_API_URL + '/type_distributor/' + name);
-  }
-
-  deleteAllDistributor(list: DeleteListDistributor[]): Observable<any> {
-    const sendList: number[] = [];
-    for (let i = 0; i < list.length; i++) {
-      sendList[i] = list[i].id;
-    }
-    return this.httpClient.post<any>(this.MY_API_URL + '/distributor/deleteAll', sendList);
   }
 }

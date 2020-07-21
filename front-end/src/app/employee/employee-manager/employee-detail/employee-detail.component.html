@@ -9,7 +9,7 @@
       <div class="row">
       <mat-card class="mat-card-img"
                 (click)="selectFile()">
-        <img class="imageEmp" id="avatar" src="{{employee['image']}}">
+        <img class="imageEmp" id="avatar" src="{{employee['image']}}" onerror="this.src = 'https://firebasestorage.googleapis.com/v0/b/webapp-1b736.appspot.com/o/58hvov18b5f?alt=media&token=bd216998-70e7-4c1b-9127-9cc1b1127278' ">
         <input formControlName="id" readonly hidden>
         <input class="file-upload-input" type='file'
                (change)="readURL($event.target);" accept="image/*"
@@ -77,14 +77,12 @@
       </div>
       <div class="modal-body">
         <form (ngSubmit)="onSubmit1()" [formGroup]="editForm">
+
 <!--          <div class="customer-input-outside form-group">-->
 <!--            <input class="global-content-popup-input customer-input form-control" id="name1" formControlName="name"-->
 <!--                   type="text"-->
 <!--                   placeholder="Ten khach hang"/>-->
-
-
-<!--            <label class="global-content-popup-icon" for="name1"><i class="icon-user"></i></label>-->
-<!--            <span class="global-content-popup-validate customer-validate">Validate </span>-->
+<!--            <label class="global-content-popup-icon" for="name1"><i class="fa fa-user-o"></i></label>-->
 <!--          </div>-->
           <div class="row">
             <label>Họ tên (*) <input type="text" class="form-control" formControlName="name">
@@ -94,8 +92,11 @@
             Tên không được để trống !
           </div>
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('name').hasError('pattern') && editForm.get('name').touched">
-            Email sai cú pháp !
+            Tên sai cú pháp !
           </div>
+          <mat-error class="error-message">
+            {{listError.name}}
+          </mat-error>
           <div class="row">
             <label>
               Giới tính (*) &nbsp;&nbsp;<input type="radio" value="Nam" name="gender" formControlName="gender">Nam&nbsp;&nbsp;
@@ -122,6 +123,9 @@
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('phoneNumber').hasError('pattern') && editForm.get('phoneNumber').touched">
             Số điện thoại bắt đầu bằng +84 theo sau 9 hoặc 10 chữ số
           </div>
+          <mat-error class="error-message">
+            {{listError.phoneNumber}}
+          </mat-error>
           <div class="row">
             <label>Email (*) <input type="text" class="form-control"  formControlName="email">
             </label>
@@ -132,32 +136,63 @@
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('email').hasError('pattern') && editForm.get('email').touched">
             Email sai cú pháp !
           </div>
+          <mat-error class="error-message">
+            {{listError.email}}
+          </mat-error>
           <div class="row">
             <label>Địa chỉ (*) <input type="text" class="form-control"  formControlName="address">
             </label>
           </div>
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('address').hasError('pattern') && editForm.get('address').touched">
-            Email sai cú pháp !
+            Địa chỉ sai cú pháp !
           </div>
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('address').hasError('required') && editForm.get('address').touched">
             Địa chỉ không đc để trống !
           </div>
-          <div class="row">
+          <mat-error class="error-message">
+            {{listError.address}}
+          </mat-error>
+
+          <fieldset formGroupName="position">
             <label>Chức vụ (*)
-              <select class="form-control" formControlName="position">
-                <ng-container *ngFor="let position of positionList">
-                  <option [value]="position.name">{{position.name}}</option>
-                </ng-container>
-              </select>
+            <select class="form-control col-form-label" formControlName="id">
+              <option *ngFor="let position of positionList" [ngValue]="position.id"
+                      [selected]="position.id === editForm.value.position.id">
+                {{position.name}}
+              </option>
+            </select>
             </label>
-          </div>
-          <div class="row">
+          </fieldset>
+
+<!--          <div class="row">-->
+<!--            <label>Chức vụ (*)-->
+<!--              <select class="form-control" formControlName="position">-->
+<!--                <ng-container *ngFor="let position of positionList">-->
+<!--                  <option [value]="position.name">{{position.name}}-->
+<!--                  </option>-->
+<!--                </ng-container>-->
+<!--              </select>-->
+<!--            </label>-->
+<!--          </div>-->
+          <fieldset formGroupName="department">
             <label>Phòng ban (*)
-              <select class="form-control" formControlName="department" >
-                <option *ngFor="let department of departmentList" [value]="department['name']">{{department['name']}}</option>
+              <select class="form-control col-form-label" formControlName="id">
+                <option *ngFor="let department of departmentList" [ngValue]="department.id"
+                        [selected]="department.id === editForm.value.department.id">
+                  {{department.name}}
+                </option>
               </select>
             </label>
-          </div>
+          </fieldset>
+
+<!--          <div class="row">-->
+<!--            <label>Phòng ban (*)-->
+<!--              <select class="form-control" formControlName="department" >-->
+<!--                <option *ngFor="let department of departmentList" [value]="department['name']">{{department['name']}}</option>-->
+<!--              </select>-->
+<!--            </label>-->
+<!--          </div>-->
+
           <button id="edit-em" type="button" class="btn btn-secondary " data-dismiss="modal">Hủy</button>
           <div>
             <button type="submit" class="btn btn-success edit-customer-btn1">Sửa</button>
@@ -181,7 +216,7 @@
       <div class="modal-body">
         <form (ngSubmit)="onSubmit2()" [formGroup]="editPasswordForm">
                     <div class="row">
-                      <label>Mật khẩu cũ (*) <input type="text" class="form-control"  formControlName="oldPassword">
+                      <label>Mật khẩu cũ (*) <input type="password" class="form-control"  formControlName="oldPassword">
                       </label>
                     </div>
                     <div class="alert alert-danger" role="alert" *ngIf="editPasswordForm.get('oldPassword').hasError('required') && editPasswordForm.get('oldPassword').touched">

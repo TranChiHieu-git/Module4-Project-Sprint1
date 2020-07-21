@@ -64,7 +64,6 @@ import {ToastrModule} from 'ngx-toastr';
     NgxPaginationModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-
     MatPaginatorModule,
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyAFbHzEL2J7oXY5bWTF6dA3DnO_iCj5W48',
@@ -81,7 +80,7 @@ import {ToastrModule} from 'ngx-toastr';
     FacebookModule.forRoot(),
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 1500,
+      timeOut: 2000,
       positionClass: 'toast-top-center',
       preventDuplicates: true
     })

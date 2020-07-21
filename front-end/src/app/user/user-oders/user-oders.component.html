@@ -39,7 +39,7 @@
 <!--              <td><a (click)="goToDetailOrder(order.orderId)">{{order.orderId}}</a></td>-->
               <td><a [routerLink]="['/user-manage/order-detail',order.orderId]">{{order.orderId}}</a></td>
               <td>{{order.orderDate|date:'dd/MM/yyyy'}}</td>
-              <td style="width: 40%">{{order.orderDetailList[0].id.product.productName}} và {{order.orderDetailList.length - 1}} sản phẩm
+              <td>{{order.orderDetailList[0].id.product.productName}} và {{order.orderDetailList.length - 1}} sản phẩm
                 khác
               </td>
               <td>{{order.totalMoney|currency}}</td>

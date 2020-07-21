@@ -4,10 +4,9 @@ import {Component, OnChanges, OnInit} from '@angular/core';
 import {CustomerService} from '../../../services/customer.service';
 import {Customer} from '../../../models/customer';
 import {HttpClient} from '@angular/common/http';
-import {finalize, map} from 'rxjs/operators';
+import {finalize} from 'rxjs/operators';
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
 import {} from '../../../../assets/js/fb.js';
-
 declare var $: any;
 
 @Component({
@@ -29,14 +28,6 @@ export class CustomerManagementComponent implements OnInit {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
   editUrl: any;
-  uploadStatus = true;
-  uploadProgress: any;
-  uploadProgressStatus = false;
-  percentUpload: any;
-  curentDay = new Date();
-  maxDate = new Date();
-  minDate = new Date();
-
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -56,10 +47,7 @@ export class CustomerManagementComponent implements OnInit {
   validatingForm: FormGroup;
 
   ngOnInit(): void {
-    this.maxDate.setFullYear(this.curentDay.getFullYear()-2);
-    this.minDate.setFullYear(this.curentDay.getFullYear()-120);
-
-    $('#checkAll').click(function () {
+    $('#checkAll').click(function() {
       $('input:checkbox').not(this).prop('checked', this.checked);
     });
     this.addUser = this.formBuilder.group({
@@ -73,16 +61,16 @@ export class CustomerManagementComponent implements OnInit {
       imageUrl: ['']
     });
     // tslint:disable-next-line:only-arrow-functions typedef no-shadowed-variable
-    (function ($) {
+    (function($) {
       // tslint:disable-next-line:only-arrow-functions typedef
-      $(document).ready(function () {
+      $(document).ready(function() {
         // tslint:disable-next-line:only-arrow-functions typedef
-        const readURL = function (input) {
+        const readURL = function(input) {
           if (input.files && input.files[0]) {
             const reader = new FileReader();
 
             // tslint:disable-next-line:only-arrow-functions typedef
-            reader.onload = function (e) {
+            reader.onload = function(e) {
               // @ts-ignore
               $('.profile-pic').attr('src', e.target.result);
             };
@@ -92,26 +80,26 @@ export class CustomerManagementComponent implements OnInit {
         };
 
         // tslint:disable-next-line:typedef
-        $('#custom-file-input').on('change', function () {
+        $('#custom-file-input').on('change', function() {
           readURL(this);
         });
 
         // tslint:disable-next-line:only-arrow-functions typedef
-        $('#upload-button').on('click', function () {
+        $('#upload-button').on('click', function() {
           $('#file-upload').click();
         });
       });
     })(jQuery);
     $('.icon-upload-alt').css('opacity', '-1');
     // tslint:disable-next-line:typedef
-    $('.button').click(function () {
+    $('.button').click(function() {
       const buttonId = $(this).attr('id');
       $('#modal-container').removeAttr('class').addClass(buttonId);
       $('body').addClass('modal-active');
     });
 
     // tslint:disable-next-line:typedef
-    $('#modal-container').click(function () {
+    $('#modal-container').click(function() {
       $(this).addClass('out');
       $('body').removeClass('modal-active');
     });
@@ -120,10 +108,23 @@ export class CustomerManagementComponent implements OnInit {
 
 
   editModel(element: Customer): void {
-    this.uploadProgressStatus = false;
     this.tempCustomer = element;
     this.change();
     $('#editModal').modal('show');
+  }
+
+  deleteModel(element: Customer): void {
+    // this.tempStudent = element;
+    // this.change();
+    $('#deleteModal').modal('show');
+  }
+
+  editcheckModel(element: Customer): void {
+    $('#editcheckModal').modal('show');
+  }
+
+  deletecheckModel(element: Customer): void {
+    $('#deletecheckModal').modal('show');
   }
 
 
@@ -132,6 +133,12 @@ export class CustomerManagementComponent implements OnInit {
     $('#addCheckModal').modal('hide');
     $('#editModal').modal('hide');
     $('#DeleteModal').modal('hide');
+    $('#editcheckModal').modal('hide');
+    $('#deletecheckModal').modal('hide');
+  }
+
+  backCheckMenu(): void {
+    $('#addcheckModal').modal('hide');
     $('#editcheckModal').modal('hide');
     $('#deletecheckModal').modal('hide');
   }
@@ -149,51 +156,27 @@ export class CustomerManagementComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   onSubmit() {
-    if (this.uploadStatus) {
-      const editConfirm = confirm('Bạn có chắc chắn cập nhật thông tin của khách mua hàng ?');
-      if (editConfirm) {
-        if (this.date !== undefined) {
-          this.addUser.patchValue({
-            birthday: this.date,
-          });
-        }
-        if (this.editUrl !== undefined) {
-          this.addUser.patchValue({
-            imageUrl: this.editUrl,
-          });
-        }
-        this.customerService.editCustomer(this.addUser.value).subscribe(
-          next => window.location.reload(),
-          error => console.log(error)
-        );
+    const editConfirm = confirm('Bạn có chắc chắn cập nhật thông tin của khách mua hàng này ?');
+    if (editConfirm) {
+      if (this.date !== undefined) {
+        this.addUser.patchValue({
+          birthday: this.date,
+        });
       }
+      if (this.editUrl !== undefined) {
+        this.addUser.patchValue({
+          imageUrl: this.editUrl,
+        });
+      }
+      this.customerService.editCustomer(this.addUser.value).subscribe(
+        next => window.location.reload(),
+        error => console.log(error)
+      );
     }
   }
 
-  editSubmit(userName) {
-    if (this.uploadStatus) {
-      const editConfirm = confirm('Bạn có chắc chắn cập nhật thông tin của khách mua hàng ' + userName + ' ?');
-      if (editConfirm) {
-        if (this.date !== undefined) {
-          this.addUser.patchValue({
-            birthday: this.date,
-          });
-        }
-        if (this.editUrl !== undefined) {
-          this.addUser.patchValue({
-            imageUrl: this.editUrl,
-          });
-        }
-        this.customerService.editCustomer(this.addUser.value).subscribe(
-          next => window.location.reload(),
-          error => console.log(error)
-        );
-      }
-    }
-  }
-
-  deleteSubmit(id, userName): void {
-    const deleteConfirm = confirm('Bạn có chắc chắn muốn xóa khách mua hàng ' + userName + ' không?');
+  deleteSubmit(id): void {
+    const deleteConfirm = confirm('Bạn có chắc chắn muốn xóa khách mua hàng này không?');
     if (deleteConfirm) {
       this.customerService.deleteCustomerById(id).subscribe(
         next => {
@@ -286,8 +269,6 @@ export class CustomerManagementComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   readURL(target: any) {
-    this.uploadStatus = false;
-    this.uploadProgressStatus = true;
     if (target.files && target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -305,14 +286,10 @@ export class CustomerManagementComponent implements OnInit {
     const id = Math.random().toString(36).substring(2);
     this.ref = this.afStorage.ref(id);
     this.task = this.ref.put(target.files[0]);
-    this.percentUpload = this.task.snapshotChanges()
-      .pipe(map(s => (s.bytesTransferred / s.totalBytes) * 100));
-    this.uploadProgress = this.task.percentageChanges();
     this.task.snapshotChanges().pipe(
       finalize(() => {
         this.ref.getDownloadURL().subscribe(url => {
           this.editUrl = url;
-          this.uploadStatus = true;
         });
       }))
       .subscribe();

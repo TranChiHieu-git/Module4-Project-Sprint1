@@ -100,4 +100,16 @@ mat-card {
   left: 4.2%;
   position: absolute;
   top: 5%;
+
+}
+div .alert-danger {
+  font-size: smaller;
+  width: 55%;
+  margin: 0 23%;
+}
+div input[type=text]  {
+  width: 125%;
+}
+div input[type=password]  {
+  width: 127%;
 }

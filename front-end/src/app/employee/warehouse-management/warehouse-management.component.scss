@@ -1,26 +1,18 @@
-.warehouse-wrapper{
-
-}
 .header {
-  background-color: #EE9F1F;
+  background-color: #204051;
 }
 //.header > span {
 //  color: white;
 //}
 .sidebar {
-  background-color: #FCBC53;
+  background-color: #84a9ac;
 }
 
 .sidebar:hover {
-  background-color: #F18502;
-  color: white !important;
+  background-color: #204051;
 }
 .content {
   background-color: #e4e3e3;
-}
-
-.logout-custom {
-  cursor: pointer;
 }
 
 #body-row {
@@ -29,7 +21,7 @@
 }
 #sidebar-container {
   min-height: 100vh;
-  background-color: #FCBC53;
+  background-color: #84a9ac;
   padding: 0;
 }
 
@@ -41,11 +33,10 @@
   width: 60px;
 }
 
-
 /* Menu item*/
 #sidebar-container .list-group a {
   height: 50px;
-  color: black;
+  color: white;
 }
 
 /* Submenu item*/
@@ -88,16 +79,6 @@
   display: inline;
   text-align: right;
   padding-left: 10px;
-}
-
-.logo {
-  box-shadow: 1px 0px 6px 6px #fff;
-  border-radius: 10px;
-  background-color: #fff;
-  padding: 6px;
-  width: 143px;
-  height: auto;
-  cursor: pointer;
 }
 
 

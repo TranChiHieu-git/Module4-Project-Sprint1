@@ -12,8 +12,6 @@ export class OrderService {
   ORDER_CANCEL_API_URL = 'http://localhost:8080/order-cancel';
   idUserSource = new BehaviorSubject<number>(0);
   curentIdUser = this.idUserSource.asObservable();
-  page = new BehaviorSubject<number>(0);
-  currentPage = this.page.asObservable();
 
   constructor(private  httpClient: HttpClient) {
   }
@@ -21,9 +19,7 @@ export class OrderService {
   chanceIdUser(id) {
     this.idUserSource.next(id);
   }
-chancePage(page){
-    this.page.next(page);
-}
+
   findAllOrderByUserId(id: number): Observable<Order[]> {
     return this.httpClient.get<Order[]>(this.ORDER_API_URL + '/' + id);
   }

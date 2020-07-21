@@ -13,14 +13,13 @@ import {BrandService} from '../../../services/brand.service';
   styleUrls: ['./brand-management.component.scss']
 })
 export class BrandManagementComponent implements OnInit {
-  listError: any = '';
   imgSrc = 'https://via.placeholder.com/150';
   selectedImage: any = null;
   downloadURL: Observable<string>;
   brandForm: FormGroup;
   brand: Brand;
   brandList: Brand[];
-  size = 2;
+  size = 3;
   pageClick = 0;
   pages = [];
   totalPages = 1;
@@ -28,9 +27,6 @@ export class BrandManagementComponent implements OnInit {
   isSearch = false;
   key = '';
   reverse = false;
-  brandName: string;
-  brandEditForm: FormGroup;
-
   constructor(
     private brandService: BrandService,
     private fb: FormBuilder,
@@ -38,13 +34,6 @@ export class BrandManagementComponent implements OnInit {
   ) {
     this.brandForm = this.fb.group({
       brandLogo: [''],
-      brandName: ['', Validators.required],
-      brandAddress: ['', Validators.required],
-      brandWebsite: ['', Validators.required]
-    });
-    this.brandEditForm = this.fb.group({
-      id: [''],
-      brandLogo: ['', Validators.required],
       brandName: ['', Validators.required],
       brandAddress: ['', Validators.required],
       brandWebsite: ['', Validators.required]
@@ -58,12 +47,10 @@ export class BrandManagementComponent implements OnInit {
   ngOnInit(): void {
     this.getAllBrand();
   }
-
   sort(key): void {
     this.key = key;
     this.reverse = !this.reverse;
   }
-
   onNext(): void {
     if (this.pageClick < this.totalPages - 1) {
       this.pageClick++;
@@ -91,7 +78,7 @@ export class BrandManagementComponent implements OnInit {
   onSubmit(page): void {
     this.brandService.getAllBrand(page, this.size, this.search).subscribe(
       next => {
-        // console.log(next);
+        console.log(next);
         this.pageClick = page;
         this.brandList = next.content;
         this.totalPages = next.totalPages;
@@ -119,11 +106,7 @@ export class BrandManagementComponent implements OnInit {
           alert('New brand has been added!');
           window.location.reload();
         },
-        error => {
-          if (error.status === 500) {
-            alert("This brand is already exist!");
-          }
-        }
+        error => console.log(error),
       );
     } else {
       alert('Please enter information!');
@@ -164,52 +147,18 @@ export class BrandManagementComponent implements OnInit {
     }
   }
 
-  catchBrandId(id: number): void {
-    this.brandService.findById(id).subscribe(
-      res => {
-        this.brand = res;
-        this.brandName = res.brandName;
-        this.brandEditForm.patchValue(res);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+  loadPage(): void {
+    window.location.reload();
   }
 
-  editId(id: number): void {
-    this.brandService.findById(id).subscribe(
-      next => {
-        this.brandEditForm.patchValue(next);
+  changeStatus(id: any): void {
+    const temp = '.thh' + id;
 
-      }
-    );
+    $(temp).css('backgroundColor', '#D1D1D1');
   }
 
-  // tslint:disable-next-line:typedef
-  edit() {
-    console.log(this.brandForm.value);
-    this.brandService.editBrand(this.brandEditForm.value).subscribe(
-      next => {
-        alert('Thay đổi thành công');
-      },
-      error => console.log(error));
-  }
-
-  delete(): void {
-    this.brandService.deleteBrand(this.brand).subscribe(
-      next => {
-        this.ngOnInit();
-        $('#close').click();
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
-  switchEdit(brand: Brand): void {
-    brand.isEditable = !brand.isEditable;
-    $('#submit' + brand.id).click();
+  removeStatus(id: any): void {
+    const temp = '.thh' + id;
+    $(temp).css('backgroundColor', 'white');
   }
 }
