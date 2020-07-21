@@ -207,6 +207,10 @@
                    *ngIf="brandForm.get('brandWebsite').hasError('required') && brandForm.get('brandWebsite').touched">
                   Website thương hiệu không được để trống!
                 </p>
+                <p class="message text-danger ml-2"
+                   *ngIf="brandForm.get('brandWebsite').hasError('pattern') && brandForm.get('brandWebsite').touched">
+                  Website sai định dạng!
+                </p>
               </div>
             </div>
           </div>

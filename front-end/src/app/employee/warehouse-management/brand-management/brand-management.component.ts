@@ -31,6 +31,8 @@ export class BrandManagementComponent implements OnInit {
   reverse = false;
   brandName: string;
   brandEditForm: FormGroup;
+  WEBSITE_PATTERN = '^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+(\\.[a-z]{2,}){1,3}(#?\\/?[a-zA-Z0-9#]+)*\\/?(\\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$';
+
 
   constructor(
     private brandService: BrandService,
@@ -42,7 +44,7 @@ export class BrandManagementComponent implements OnInit {
       brandLogo: [''],
       brandName: ['', Validators.required],
       brandAddress: ['', Validators.required],
-      brandWebsite: ['', Validators.required]
+      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_PATTERN)]]
     });
     this.brandEditForm = this.fb.group({
       id: [''],
