@@ -900,7 +900,7 @@ export class ListDistributorComponent implements OnInit {
           break;
         case ('website'):
           return 'Website phải đúng định dạng :';
-          break
+          break;
         default:
           return '';
       }
