@@ -1,5 +1,5 @@
 import * as $ from 'jquery';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {AngularFireStorage} from '@angular/fire/storage';
@@ -13,14 +13,14 @@ import {BrandService} from '../../../services/brand.service';
   styleUrls: ['./brand-management.component.scss']
 })
 export class BrandManagementComponent implements OnInit {
-  listError: any = '';
+  @ViewChild('closeCreateModal') closeCreateModal;
   imgSrc = 'https://via.placeholder.com/150';
   selectedImage: any = null;
   downloadURL: Observable<string>;
   brandForm: FormGroup;
   brand: Brand;
   brandList: Brand[];
-  size = 2;
+  size = 3;
   pageClick = 0;
   pages = [];
   totalPages = 1;
@@ -59,6 +59,15 @@ export class BrandManagementComponent implements OnInit {
     this.getAllBrand();
   }
 
+  initCreateForm(): void {
+    this.brandForm = this.fb.group({
+      brandLogo: [''],
+      brandName: ['', Validators.required],
+      brandAddress: ['', Validators.required],
+      brandWebsite: ['', Validators.required]
+    });
+  }
+
   sort(key): void {
     this.key = key;
     this.reverse = !this.reverse;
@@ -91,7 +100,6 @@ export class BrandManagementComponent implements OnInit {
   onSubmit(page): void {
     this.brandService.getAllBrand(page, this.size, this.search).subscribe(
       next => {
-        // console.log(next);
         this.pageClick = page;
         this.brandList = next.content;
         this.totalPages = next.totalPages;
@@ -116,8 +124,9 @@ export class BrandManagementComponent implements OnInit {
     if (this.brandForm.valid) {
       this.brandService.createBrand(this.brandForm.value).subscribe(
         next => {
-          alert('New brand has been added!');
-          window.location.reload();
+         this.closeCreateModal.nativeElement.click();
+         this.initCreateForm();
+         this.onSubmit(0);
         },
         error => {
           if (error.status === 500) {
@@ -128,6 +137,9 @@ export class BrandManagementComponent implements OnInit {
     } else {
       alert('Please enter information!');
     }
+  }
+  cancelCreateForm(): void {
+    this.initCreateForm();
   }
 
   onFileSelected(event: any): void {
