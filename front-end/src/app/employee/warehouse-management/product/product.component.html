@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+=======
+>>>>>>> 61727b26342a79732cd03931f5ff5c9fcaa7a7f3
 <div class="container-fluid">
   <div class="row d-flex justify-content-between m-3">
     <div class="h3 header-text-color"><span class="fa fa-bars"></span><span>Danh sách mặt hàng</span></div>
@@ -47,15 +50,15 @@
     <table class="table table-bordered table-striped mt-3">
       <thead class="table-header">
       <tr>
-        <th class="sticky-top sort-product-name" (click)="sort('productName')">Tên Sản Phẩm</th>
-        <th class="sticky-top">Giá Thành(VND)</th>
-        <th class="sticky-top">Tên Danh Mục</th>
-        <th class="sticky-top">Hạn Sử Dụng</th>
-        <th class="sticky-top">Số Lượng</th>
-        <th class="sticky-top">Đơn Vị</th>
-        <th class="sticky-top">Tên Thương Hiệu</th>
-        <th class="sticky-top">Sửa</th>
-        <th class="sticky-top">Xóa</th>
+        <th class="sticky-top-custom sort-product-name" (click)="sort('productName')">Tên Sản Phẩm</th>
+        <th class="sticky-top-custom">Giá Thành(VND)</th>
+        <th class="sticky-top-custom">Tên Danh Mục</th>
+        <th class="sticky-top-custom">Hạn Sử Dụng</th>
+        <th class="sticky-top-custom">Số Lượng</th>
+        <th class="sticky-top-custom">Đơn Vị</th>
+        <th class="sticky-top-custom">Tên Thương Hiệu</th>
+        <th class="sticky-top-custom">Sửa</th>
+        <th class="sticky-top-custom">Xóa</th>
       </tr>
       </thead>
       <tbody *ngIf="page">
@@ -273,6 +276,7 @@
                           </div>
                         </div>
                       </div>
+<<<<<<< HEAD
                       <div class="row form-group">
                         <div class="col-md-5 col-sm-5">
                           <p>Số lượng (<i class="color-validate">*</i>)</p>
@@ -284,6 +288,14 @@
                             <i class="color-validate" *ngIf="productForm.get('quantity').hasError('pattern')">Vui lòng phải nhập số lượng đúng định dạng (ví dụ: 1000)</i>
                           </div>
                         </div>
+=======
+                    </div>
+
+                    <div class="form-group row">
+                      <span class="align-items-center">Số Lượng/ Đơn Vị</span>
+                      <div class="col-sm-6">
+                        <input type="text" id="amount1" formControlName="quantity" class="form-control">
+>>>>>>> 61727b26342a79732cd03931f5ff5c9fcaa7a7f3
                       </div>
 
                       <div class="row form-group">

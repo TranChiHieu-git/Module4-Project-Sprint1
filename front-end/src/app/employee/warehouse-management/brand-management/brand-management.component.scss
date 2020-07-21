@@ -63,7 +63,7 @@ td, th{
 .paging-brand {
   position: absolute;
   //margin-top: 50px;
-  margin-left: 40%;
+  margin-left: 35%;
 }
 .btn-custom{
   border: #EE9F1F solid 1px;
@@ -72,4 +72,7 @@ td, th{
 }
 .add-brand-ico {
   color: blue;
+}
+.table-header th {
+  background: #EE9F1F;
 }

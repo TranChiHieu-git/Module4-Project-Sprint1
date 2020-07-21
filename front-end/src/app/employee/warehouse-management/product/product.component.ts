@@ -30,10 +30,14 @@ export class ProductComponent implements OnInit {
   categoryList: Category[];
   brandList: Brand[];
   public productName;
-  searchProductName: string;
   key: string;
   reverse = false;
+<<<<<<< HEAD
   public minDate = new Date();
+=======
+  searchProductName: string;
+
+>>>>>>> 61727b26342a79732cd03931f5ff5c9fcaa7a7f3
 
   constructor(private fb: FormBuilder,
               private productService: ProductService,
@@ -42,6 +46,7 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.productForm = this.fb.group({
       productId: [''],
       productName: ['', [Validators.required]],
