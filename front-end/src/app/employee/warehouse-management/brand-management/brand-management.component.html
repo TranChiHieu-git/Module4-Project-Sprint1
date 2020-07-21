@@ -81,14 +81,14 @@
   <div class="container-fluid">
     <form [formGroup]="brandEditForm" (ngSubmit)="edit()">
       <table class="table table-bordered mt-3 table-striped">
-        <thead>
+        <thead class="table-header">
         <tr>
-          <th>Hình ảnh</th>
-          <th (click)="sort('id')">Mã Thương Hiệu <i class="fa fa-sort" aria-hidden="true"></i></th>
-          <th>Tên Thương Hiệu</th>
-          <th>Trụ sở</th>
-          <th>Website</th>
-          <th>Sửa | Xóa</th>
+          <th class="sticky-top">Hình ảnh</th>
+          <th class="sticky-top" (click)="sort('id')">Mã Thương Hiệu <i class="fa fa-sort" aria-hidden="true"></i></th>
+          <th class="sticky-top">Tên Thương Hiệu</th>
+          <th class="sticky-top">Trụ sở</th>
+          <th class="sticky-top">Website</th>
+          <th class="sticky-top">Sửa | Xóa</th>
         </tr>
         </thead>
         <tbody>
@@ -108,16 +108,17 @@
           <td *ngIf="!brand.isEditable">
             <img class="brand-logo" [src]="brand.brandLogo">
 
-        </td>
-<!--          <input formControlName="id" hidden>-->
+          </td>
+          <!--          <input formControlName="id" hidden>-->
           <td>
             <p>{{brand.id}}</p>
           </td>
           <td *ngIf="brand.isEditable">
-<!--            <input type="text" class="edit-input form-control" formControlName="brandName"-->
-<!--                   [(ngModel)]="brand.brandName" [hidden]="!brand.isEditable"/>-->
+            <!--            <input type="text" class="edit-input form-control" formControlName="brandName"-->
+            <!--                   [(ngModel)]="brand.brandName" [hidden]="!brand.isEditable"/>-->
             <div class="input-group">
-              <input formControlName="brandName" type="text" class="form-control" placeholder="Brand name (*)" [(ngModel)]="brand.brandName">
+              <input formControlName="brandName" type="text" class="form-control" placeholder="Brand name (*)"
+                     [(ngModel)]="brand.brandName">
             </div>
             <p class="text-danger"
                *ngIf="brandEditForm.get('brandName').hasError('required') && brandEditForm.get('brandName').touched">
@@ -128,10 +129,11 @@
             <p>{{brand.brandName}}</p>
           </td>
           <td *ngIf="brand.isEditable">
-<!--            <input type="text" class="edit-input form-control" formControlName="brandAddress"-->
-<!--                   [(ngModel)]="brand.brandAddress" [hidden]="!brand.isEditable"/>-->
+            <!--            <input type="text" class="edit-input form-control" formControlName="brandAddress"-->
+            <!--                   [(ngModel)]="brand.brandAddress" [hidden]="!brand.isEditable"/>-->
             <div class="input-group">
-              <input formControlName="brandAddress" type="text" class="form-control" placeholder="Brand address (*)" [(ngModel)]="brand.brandAddress">
+              <input formControlName="brandAddress" type="text" class="form-control" placeholder="Brand address (*)"
+                     [(ngModel)]="brand.brandAddress">
             </div>
             <p class="text-danger"
                *ngIf="brandEditForm.get('brandAddress').hasError('required') && brandEditForm.get('brandAddress').touched">
@@ -142,10 +144,11 @@
             <p>{{brand.brandAddress}}</p>
           </td>
           <td *ngIf="brand.isEditable">
-<!--            <input type="text" class="edit-input form-control" formControlName="brandWebsite"-->
-<!--                   [(ngModel)]="brand.brandWebsite" [hidden]="!brand.isEditable"/>-->
+            <!--            <input type="text" class="edit-input form-control" formControlName="brandWebsite"-->
+            <!--                   [(ngModel)]="brand.brandWebsite" [hidden]="!brand.isEditable"/>-->
             <div class="input-group">
-              <input formControlName="brandWebsite" type="text" class="form-control" placeholder="Website (*)"  [(ngModel)]="brand.brandWebsite">
+              <input formControlName="brandWebsite" type="text" class="form-control" placeholder="Website (*)"
+                     [(ngModel)]="brand.brandWebsite">
             </div>
             <p class="text-danger"
                *ngIf="brandEditForm.get('brandWebsite').hasError('required') && brandEditForm.get('brandWebsite').touched">
@@ -163,7 +166,8 @@
                     *ngIf="brand.isEditable" (click)="switchEdit(brand)"></button>
             <button hidden type="submit" id="submit{{brand.id}}"
             ></button>
-            <button type="button" class="border-0 bg-transparent fa fa-trash" data-toggle="modal" (click)="catchBrandId(brand.id)"
+            <button type="button" class="border-0 bg-transparent fa fa-trash" data-toggle="modal"
+                    (click)="catchBrandId(brand.id)"
                     data-target="#brandConfirmDelete"></button>
           </td>
         </tr>
@@ -254,7 +258,8 @@
               </p>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class=" input-group-text"><i class="fa fa-globe fa-lg add-brand-ico " aria-hidden="true"></i></span>
+                  <span class=" input-group-text"><i class="fa fa-globe fa-lg add-brand-ico "
+                                                     aria-hidden="true"></i></span>
                 </div>
                 <input formControlName="brandWebsite" type="text" class="form-control" placeholder="Website (*)">
               </div>
@@ -300,4 +305,3 @@
     </div>
   </div>
 </div>
-
