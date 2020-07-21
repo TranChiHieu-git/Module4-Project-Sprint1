@@ -11,10 +11,10 @@ const ShareModules = [
   declarations: [],
   imports: [
     CommonModule,
-    ShareModules
+    ShareModules,
   ],
   exports: [
-    ShareModules
+    ShareModules,
   ]
 })
 export class ShareModule {

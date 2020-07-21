@@ -64,6 +64,7 @@ import {ToastrModule} from 'ngx-toastr';
     NgxPaginationModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
+
     MatPaginatorModule,
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyAFbHzEL2J7oXY5bWTF6dA3DnO_iCj5W48',
