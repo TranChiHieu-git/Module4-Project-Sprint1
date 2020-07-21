@@ -28,9 +28,10 @@ export class ProductComponent implements OnInit {
   categoryList: Category[];
   brandList: Brand[];
   public productName;
-  searchProductName: string;
   key: string;
   reverse = false;
+  searchProductName: string;
+
 
   constructor(private fb: FormBuilder,
               private productService: ProductService,
@@ -39,6 +40,7 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.productForm = this.fb.group({
       productId: [''],
       productName: [''],
