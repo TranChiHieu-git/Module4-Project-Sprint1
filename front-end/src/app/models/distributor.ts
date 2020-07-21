@@ -5,6 +5,7 @@ export class Distributor {
   numberPhone: string;
   email: string;
   img: string;
+    deleted: boolean;
   fax: string;
   website: string;
   typeOfDistributor: TypeOfDistributor;

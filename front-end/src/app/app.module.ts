@@ -13,6 +13,8 @@ import {EmployeeModule} from './employee/employee.module';
 import {EmployeeComponent} from './employee/employee.component';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from './auth/auth-interceptor';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -30,8 +32,13 @@ import {AuthInterceptor} from './auth/auth-interceptor';
     MaterialModule,
     MatIconModule,
     UserModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-center-center'
+    })
   ],
-  providers: [ {
+  providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true

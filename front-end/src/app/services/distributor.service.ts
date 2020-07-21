@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+// @ts-ignore
 import {DeleteListDistributor, Distributor, TypeOfDistributor} from '../models/distributor';
 import {Observable} from 'rxjs';
 
@@ -61,5 +62,8 @@ export class DistributorService {
       sendList[i] = list[i].id;
     }
     return this.httpClient.post<any>(this.MY_API_URL + '/distributor/deleteAll', sendList);
+  }
+  isExistDistributorName(name: string): Observable<Distributor> {
+    return this.httpClient.get<Distributor>(this.MY_API_URL + '/distributor/exist/' + name);
   }
 }
