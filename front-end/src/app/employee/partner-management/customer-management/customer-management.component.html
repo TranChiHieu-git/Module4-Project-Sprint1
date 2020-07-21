@@ -27,7 +27,9 @@
 <div class="mt-3">
 
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModel">Thêm mới</button>
-  <button type="button" class="global-button delete-selected" (click)="delete()">Xóa khách hàng đã chọn</button>
+<!--  <button data-toggle="modal" data-target="#DeleteSelectedModal" type="button" class="global-button delete-selected" (click)="delete()">Xóa khách hàng đã chọn</button>-->
+  <button data-toggle="modal" data-target="#DeleteSelectedModal" type="button" class="global-button delete-selected" (click)="deleteSelectedModel()">Xóa khách hàng đã chọn</button>
+
   <table class="table table-bordered" style="font-size: 12px;">
     <thead class="bg-secondary">
     <tr class="row px-3">
@@ -48,28 +50,28 @@
     </thead>
     <tbody>
     <tr class="row px-3" *ngFor="let cus of customers" >
-        <td class="col-md-1" >
+        <td class="col-md-1" [ngStyle]="{'background-color':edited[cus.id] ? 'rgba(238, 159, 31,.4)' : 'none' }">
           <button type="button" class="btn btn-info" data-toggle="collapse" [attr.data-target]="'#demo'+cus.id"
                   class="border-0 bg-transparent icon-row">
             <i class="fa fa-plus-circle" aria-hidden="true"></i>
           </button>
-          {{i}}
           {{cus.id}}
         </td>
-        <td class="col-md-3"> {{cus.userName}}</td>
-        <td class="col-md-3"> {{cus.address}}</td>
-        <td class="col-md-2"> {{cus.email}}</td>
-        <td class="col-md-2" style="width: auto">
+        <td class="col-md-3" [ngStyle]="{'background-color':edited[cus.id] ? 'rgba(238, 159, 31,.4)' : 'none' }"> {{cus.userName}}</td>
+        <td class="col-md-3" [ngStyle]="{'background-color':edited[cus.id] ? 'rgba(238, 159, 31,.4)' : 'none' }"> {{cus.address}}</td>
+        <td class="col-md-2" [ngStyle]="{'background-color':edited[cus.id] ? 'rgba(238, 159, 31,.4)' : 'none' }"> {{cus.email}}</td>
+        <td class="col-md-2" style="width: auto" [ngStyle]="{'background-color':edited[cus.id] ? 'rgba(238, 159, 31,.4)' : 'none' }">
           <a data-toggle="modal" data-target="#editModal" (click)="editModel(cus)">
             <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button m-1"><i
               class="icon-pencil"></i></button>
           </a>
-          <a data-toggle="modal" data-target="#DeleteModal" (click)="deleteSubmit(cus.id,cus.userName)">
+            <a data-toggle="modal" data-target="#DeleteModal" (click)="deleteModel(cus)">
+
             <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button"><i
               class="icon-trash"></i></button>
           </a>
         </td>
-        <td class="col-md-1">
+        <td class="col-md-1" [ngStyle]="{'background-color':edited[cus.id] ? 'rgba(238, 159, 31,.4)' : 'none' }">
           <div class="custom-control custom-checkbox" style="margin: 0 34%;">
             <input type="checkbox" name="checkbox" [value]="cus.id" (change)="deleteCheckbox($event,cus.id)"
                    class="custom-control-input" id="{{cus.id}}">
@@ -210,9 +212,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title modal-titles" id="editModalLabel">Sửa thông tin khách hàng</h5>
-        <button type="button" class="close " data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <div class="modal-body">
         <form (ngSubmit)="editSubmit(tempCustomer.userName, tempCustomer.id)" [formGroup]="addUser">
@@ -306,6 +305,40 @@
     </div>
   </div>
 </div>
+<!--Modal delete-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="width: 110%;left: 0%;">
+      <div class="modal-header">
+        <h5 class="modal-title modal-titles" id="deleteModalLabel">Xóa thông tin khách hàng</h5>
+      </div>
+      <div class="modal-body">
+        <span>Bạn có chắc chắn muốn xóa khách hàng {{tempCustomer.userName}} không?</span>
+          <input style="margin-left: 30%;" (click)="deleteSubmit(tempCustomer.id,tempCustomer.userName)" class="global-button edit-customer-btn2" type="button" data-dismiss="modal" value="Đồng ý">
+          <input class="global-button-cancel edit-customer-btn2" type="button" data-dismiss="modal" value="Hủy">
 
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal delete selected-->
+<div class="modal fade" id="DeleteSelectedModal" tabindex="-1" role="dialog" aria-labelledby="DeleteSelectedModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="width: 110%;left: 0%;">
+      <div class="modal-header">
+        <h5 class="modal-title modal-titles" id="DeleteSelectedModalLabel">Xóa thông tin khách hàng</h5>
+      </div>
+      <div class="modal-body" *ngIf="deleteList.length!==0">
+        <span>Bạn có chắc chắn muốn xóa {{deleteList.length}} khách hàng đã chọn không?</span>
+        <input style="margin-left: 30%;" (click)="delete()" class="global-button edit-customer-btn2" type="button" data-dismiss="modal" value="Đồng ý">
+        <input class="global-button-cancel edit-customer-btn2" type="button" data-dismiss="modal" value="Hủy">
+      </div>
+      <div class="modal-body" *ngIf="deleteList.length==0">
+        <span>Bạn chưa chọn khách hàng nào để tiến hành xóa!</span>
+        <input style="margin-left:45%;"class="global-button-cancel edit-customer-btn2" type="button" data-dismiss="modal" value="Hủy">
+      </div>
 
+    </div>
+  </div>
+</div>
 <router-outlet></router-outlet>

@@ -44,6 +44,7 @@ export class CustomerManagementComponent implements OnInit {
   dateRequired = false;
   dateRegex = false;
   dateOutRange = false;
+  edited = [];
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -134,8 +135,14 @@ export class CustomerManagementComponent implements OnInit {
     this.change();
     $('#editModal').modal('show');
   }
-
-
+  deleteModel(element: Customer): void{
+    this.tempCustomer = element;
+    this.change();
+    $('#deleteModal').modal('show');
+  }
+  deleteSelectedModel(){
+    $('#deleteSelectedModal').modal('show');
+  }
   backMenu(): void {
     $('#addModal').modal('hide');
     $('#addCheckModal').modal('hide');
@@ -197,16 +204,19 @@ export class CustomerManagementComponent implements OnInit {
         next => {
           $('#editModal').modal('hide');
           this.ngOnInit();
+          console.log(this.edited[id] = true);
+          // $('#edited' + id).css('background-color', 'black');
           this.toastr.success('Thay đổi thành công thông tin của khách hàng ' + userName + ' !');
-
         },
         error => console.log(error)
       );
+
     }
   }
 
   deleteSubmit(id, userName): void {
     this.orderService.findAllOrderByUserId(id).subscribe((next: any) => {
+        $('#deleteModal').modal('hide');
         this.orders = next.content;
         if (this.checkDeleteOrder()) {
           this.toastr.error('Khách hàng ' + userName + ' đang đặt hàng, không thể xóa!');
@@ -282,9 +292,7 @@ export class CustomerManagementComponent implements OnInit {
 
   delete(): void {
     let deleteConfirm = false;
-    if (this.deleteList.length <= 0) {
-      alert('Bạn chưa chọn khách hàng nào để tiến hành xóa!');
-    } else {
+    if (this.deleteList.length > 0) {
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.deleteList.length; i++) {
         this.customerService.deleteCustomerById(this.deleteList[i]).subscribe(
