@@ -21,7 +21,7 @@ export class BrandManagementComponent implements OnInit {
   brandForm: FormGroup;
   brand: Brand;
   brandList: Brand[];
-  size = 3;
+  size = 5;
   pageClick = 0;
   pages = [];
   totalPages = 1;

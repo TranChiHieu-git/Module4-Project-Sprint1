@@ -339,7 +339,7 @@
 //   }
 // }
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DeleteListDistributor, Distributor, TypeOfDistributor} from '../../../models/distributor';
 import {DistributorService} from '../../../services/distributor.service';
 import {Router} from '@angular/router';
@@ -347,6 +347,7 @@ import * as $ from 'jquery';
 import {Observable} from 'rxjs';
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
 import {finalize, map} from 'rxjs/operators';
+import {Account} from '../../../models/account';
 
 @Component({
   selector: 'app-list-distributor',
@@ -355,7 +356,9 @@ import {finalize, map} from 'rxjs/operators';
 })
 export class ListDistributorComponent implements OnInit {
   distributorList: Distributor[];
-  size = 5;
+  // @ts-ignore
+  DistributorById: Distributor = new Distributor();
+  size = 6;
   pageClick = 0;
   pages = [];
   search = '';
@@ -386,18 +389,28 @@ export class ListDistributorComponent implements OnInit {
               private router: Router, private afStorage: AngularFireStorage) {
     this.myForm = fb.group({
       id: [''],
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\_\\-\\sÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮ' +
+        'ẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế]+$')]],
       numberPhone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_\\.]{5,}@[a-z0-9]{1,}(\\.[a-z0-9]{2,4}){1,2}$')]],
-      address: ['', [Validators.required]],
-      fax: [''],
-      website: [''],
+      address: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\-\\/\\sÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế]+$')]],
+      fax: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
+      website: ['', [Validators.required, Validators.pattern('^((http://)|https://)+[a-zA-Z]{1}[a-zA-Z0-9\\_]{1,100}\\.[a-zA-Z]{3,10}$')]],
       img: [''],
       typeOfDistributor: [''],
       deleted: ['false']
     });
   }
-
+  // tslint:disable-next-line:typedef
+  // existAccountName(c: AbstractControl) {
+  //   const v = c.value;
+  //   for (const dis of this.distributorList) {
+  //     if (dis.name === v && v !== this.DistributorById.name) {
+  //       return {nameAccountExist: true};
+  //     }
+  //   }
+  //   return null;
+  // }
   onNext(): void {
     if (this.pageClick < this.totalPages - 1) {
       this.pageClick++;
@@ -435,17 +448,17 @@ export class ListDistributorComponent implements OnInit {
           this.distributorList = next.content;
           this.totalPages = next.totalPages;
           this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-          this.fillListToSize();
+          // this.fillListToSize();
           this.router.navigate(['employee/partner-management/list-distributor']);
         } else {
           this.distributorList = [];
-          this.fillListToSize();
+          // this.fillListToSize();
         }
 
       },
       error => {
         this.distributorList = [];
-        this.fillListToSize();
+        // this.fillListToSize();
       }
     );
     this.deleteList = [];
@@ -522,7 +535,6 @@ export class ListDistributorComponent implements OnInit {
   }
 
   private submitForm(): void {
-    // $('#closeEditForm').click();
     if (this.functionMode === 'create') {
       if (this.typeOfDistributorPromise !== undefined) {
         this.typeOfDistributorPromise.then(value => {
@@ -541,19 +553,35 @@ export class ListDistributorComponent implements OnInit {
         });
       }
     } else if (this.functionMode === 'edit') {
-      this.distributorService.create(this.myForm.value).subscribe(
-        res => {
-          this.showNotications('Chỉnh sửa thành công');
-          this.resetList();
-          this.isSubmiting = true;
-          $('#closeForm').click();
-        },
-        error => {
-          this.showNotications('Chỉnh sửa thất bại');
-        }
-      );
+      if (this.typeOfDistributorPromise !== undefined) {
+        this.typeOfDistributorPromise.then(value => {
+          this.myForm.value.typeOfDistributor = value;
+          this.distributorService.create(this.myForm.value).subscribe(
+            res => {
+              this.showNotications('Chỉnh sửa thành công');
+              this.resetList();
+              this.isSubmiting = true;
+              $('#closeForm').click();
+            },
+            error => {
+              this.showNotications('Chỉnh sửa thất bại');
+            }
+          );
+        });
+      } else {
+        this.distributorService.create(this.myForm.value).subscribe(
+          res => {
+            this.showNotications('Chỉnh sửa thành công');
+            this.resetList();
+            this.isSubmiting = true;
+            $('#closeForm').click();
+          },
+          error => {
+            this.showNotications('Chỉnh sửa thất bại');
+          }
+        );
+      }
     }
-
   }
 
   loadImgAvatar(target: any): void {
@@ -794,7 +822,7 @@ export class ListDistributorComponent implements OnInit {
   switchCreateAndDetailForm(): void {
     const input = $('input');
     const inputFile = $('input[type=file]');
-    const inputCheckbox = $('input[type=checkbox]');
+    const inputCheckbox = $('input[name=checkbox]');
     if (this.functionMode === 'create' || this.functionMode === 'edit') {
       input.prop('readonly', false);
       inputCheckbox.prop('disabled', false);
@@ -804,6 +832,7 @@ export class ListDistributorComponent implements OnInit {
       inputCheckbox.prop('disabled', true);
       inputFile.prop('disabled', true);
     }
+    $('#search').prop('readonly', false);
   }
 
 // RESET LIST SAU CRUD ========================================================
@@ -824,43 +853,58 @@ export class ListDistributorComponent implements OnInit {
     } else {
       this.onChange(this.pageClick);
     }
-    this.fillListToSize();
+    // this.fillListToSize();
     this.router.navigate(['employee/partner-management/list-distributor']);
   }
 
 // FILL LIST DU 5 DOI TUONG (CAC DOI TUONG TRONG DE TABLE CHUAN)========================================================
-  fillListToSize(): void {
-
-    if (this.distributorList === null) {
-      // @ts-ignore
-      this.distributorList[0] = new Distributor();
-    }
-    if (this.distributorList.length < this.size) {
-      let i = this.distributorList.length;
-      while (i < this.size) {
-        // @ts-ignore
-        this.distributorList[i] = new Distributor();
-        i++;
-      }
-      console.log(this.distributorList);
-    }
-  }
+//   fillListToSize(): void {
+//
+//     if (this.distributorList === null) {
+//       // @ts-ignore
+//       this.distributorList[0] = new Distributor();
+//     }
+//     if (this.distributorList.length < this.size) {
+//       let i = this.distributorList.length;
+//       while (i < this.size) {
+//         // @ts-ignore
+//         this.distributorList[i] = new Distributor();
+//         i++;
+//       }
+//       console.log(this.distributorList);
+//     }
+//   }
 
 // GET MESS VALIDATE ========================================================
   getErrorMessage(field: string): string {
     const isFormField = this.myForm.get(field);
     if (isFormField.hasError('required') && isFormField.touched) {
-      return 'Trường bắt buộc nhập thông tin!';
+      return 'Xin hãy điền đầy đủ thông tin!';
     }
     if (isFormField.hasError('pattern') && isFormField.touched) {
-      if (field === 'email') {
-        return 'Email không hợp lệ. Email theo định dạng :  abc@def.ghk';
-      } else if (field === 'numberPhone') {
-        return 'SĐT không hợp lệ (yêu cầu 10 số)';
+      switch (field) {
+        case ('email'):
+          return 'Email không hợp lệ. Email theo định dạng :  abc@def.ghk';
+          break;
+        case ('numberPhone'):
+          return 'Số điện thoại không hợp lệ (yêu cầu 10 số)';
+          break;
+        case ('name'):
+          return 'Tên không được chứa kí tự đặc biệt';
+          break;
+        case ('address'):
+          return 'Địa chỉ không được chứa kí tự đặc biệt';
+          break;
+        case ('fax'):
+          return 'Số fax gồm 9 số';
+          break;
+        case ('website'):
+          return 'Website phải đúng định dạng :';
+          break;
+        default:
+          return '';
       }
     }
-
-    return '';
   }
 
   addToListDelete(id: any, name: string): void {

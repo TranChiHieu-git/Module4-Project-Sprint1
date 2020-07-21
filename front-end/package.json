@@ -26,6 +26,7 @@
     "@angular/router": "~10.0.2",
     "@auth0/angular-jwt": "^5.0.1",
     "@ng-bootstrap/ng-bootstrap": "^6.2.0",
+    "@ng-select/ng-select": "^4.0.4",
     "angular-fusioncharts": "^3.0.4",
     "angular2-jwt": "^0.2.3",
     "angularfire2": "^5.4.2",
