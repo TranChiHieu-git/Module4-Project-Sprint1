@@ -1,4 +1,4 @@
-import * as $ from 'jquery';
+
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
@@ -6,7 +6,8 @@ import {AngularFireStorage} from '@angular/fire/storage';
 import {finalize} from 'rxjs/operators';
 import {Brand} from '../../../models/brand';
 import {BrandService} from '../../../services/brand.service';
-
+import {ToastrService} from 'ngx-toastr';
+declare var $: any;
 @Component({
   selector: 'app-brand-management',
   templateUrl: './brand-management.component.html',
@@ -30,11 +31,12 @@ export class BrandManagementComponent implements OnInit {
   reverse = false;
   brandName: string;
   brandEditForm: FormGroup;
-
+  deleteList = new Array();
   constructor(
     private brandService: BrandService,
     private fb: FormBuilder,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private toastr: ToastrService
   ) {
     this.brandForm = this.fb.group({
       brandLogo: [''],
@@ -57,6 +59,11 @@ export class BrandManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllBrand();
+
+    // tslint:disable-next-line:typedef
+    $('#checkAll').click(function() {
+      $('input:checkbox').not(this).prop('checked', this.checked);
+    });
   }
 
   sort(key): void {
@@ -121,7 +128,7 @@ export class BrandManagementComponent implements OnInit {
         },
         error => {
           if (error.status === 500) {
-            alert("This brand is already exist!");
+            alert('This brand is already exist!');
           }
         }
       );
@@ -163,14 +170,13 @@ export class BrandManagementComponent implements OnInit {
       this.selectedImage = null;
     }
   }
-
+// Lấy thông tin theo ID
   catchBrandId(id: number): void {
     this.brandService.findById(id).subscribe(
       res => {
         this.brand = res;
         this.brandName = res.brandName;
         this.brandEditForm.patchValue(res);
-        console.log(this.brandForm.value);
       },
       error => {
         console.log(error);
@@ -180,11 +186,17 @@ export class BrandManagementComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   edit() {
-    this.brandService.editBrand(this.brandEditForm.value).subscribe(
-      next => {
-        alert('Thay đổi thành công');
-      },
-      error => console.log(error));
+    if (this.brandEditForm.invalid || this.brandEditForm != null){
+      this.brandService.editBrand(this.brandEditForm.value).subscribe(
+        next => {
+          // console.log(this.brandForm.value);
+          this.ngOnInit();
+        },
+        error => console.log(error));
+    }
+    else {
+      alert('Yêu Cầu Nhập Lại');
+    }
   }
 
   delete(): void {
@@ -198,9 +210,60 @@ export class BrandManagementComponent implements OnInit {
       }
     );
   }
-
+// Thay đổi trạng thái icon edit
   switchEdit(brand: Brand): void {
     brand.isEditable = !brand.isEditable;
     $('#submit' + brand.id).click();
+  }
+
+// Test Delete All
+  deleteCheckbox(event, id): void {
+    const indexOfId = this.deleteList.indexOf(id);
+
+    if (event.target.checked) {
+      if (indexOfId < 0) {
+        this.deleteList.push(id);
+        console.log(this.deleteList.indexOf(id));
+      }
+    } else {
+      this.deleteList.splice(indexOfId, 1);
+    }
+  }
+  deleteAllCheckbox(event): void {
+    if (event.target.checked) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.brandList.length; i++) {
+        this.deleteList.push(this.brandList[i].id);
+        console.log(this.brandList[i]);
+      }
+    } else {
+      this.deleteList.splice(0, this.deleteList.length);
+    }
+  }
+  deleteManyBrand(): void {
+    let deleteConfirm = false;
+    if (this.deleteList.length <= 0) {
+      // alert('Bạn chưa chọn thương hiệu nào để tiến hành xóa!');
+      this.toastr.error('Bạn chưa chọn thương hiệu nào để tiến hành xóa!');
+    } else {
+      deleteConfirm = confirm('Bạn có chắc chắn muốn xóa những thương hiệu này không?');
+    }
+    if (deleteConfirm) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.deleteList.length; i++) {
+        this.brandService.deleteBrandById(this.deleteList[i]).subscribe(
+          next => {
+            console.log(this.brandList[i]);
+          },
+          error => console.log(error)
+        );
+      }
+      this.ngOnInit();
+    }
+  }
+
+// Hiển thị thông báo thay dổi
+  showSuccess(): void {
+    this.toastr.success('Thay đổi thành công', 'Thông báo!');
   }
 }

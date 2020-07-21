@@ -26,7 +26,10 @@ export class BrandService {
     return this.http.put<Brand>(this.API_URL + '/update/' + brand.id, brand);
   }
 
-  deleteBrand(brand): Observable<Brand> {
-    return this.http.patch<Brand>(this.API_URL + '/delete/' + brand.id, brand);
+  deleteBrand(brand): Observable<void> {
+    return this.http.patch<void>(this.API_URL + '/delete/' + brand.id, brand);
+  }
+  deleteBrandById(id: number): Observable<void> {
+    return this.http.delete<void>(this.API_URL + '/' + id);
   }
 }
