@@ -24,20 +24,17 @@ export class ProductComponent implements OnInit {
   productForm: FormGroup;
   createProductForm: FormGroup;
   product: Product;
-  productList: Product[] = [];
-  productById: Product = new Product();
   unitList: Unit[];
   categoryList: Category[];
   brandList: Brand[];
   public productName;
   key: string;
   reverse = false;
-<<<<<<< HEAD
+
   public minDate = new Date();
-=======
+
   searchProductName: string;
 
->>>>>>> 61727b26342a79732cd03931f5ff5c9fcaa7a7f3
 
   constructor(private fb: FormBuilder,
               private productService: ProductService,
