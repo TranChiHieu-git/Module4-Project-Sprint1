@@ -5,9 +5,6 @@ import {RouterModule} from '@angular/router';
 import {PartnerManagementComponent} from './partner-management/partner-management.component';
 import {WarehouseManagementComponent} from './warehouse-management/warehouse-management.component';
 import {HomeComponent} from './warehouse-management/home/home.component';
-import {BillComponent} from './warehouse-management/bill/bill.component';
-import {ListBillComponent} from './warehouse-management/bill/list-bill/list-bill.component';
-import {SearchBillComponent} from './warehouse-management/bill/search-bill/search-bill.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {Ng2OrderModule} from 'ng2-order-pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -41,12 +38,14 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {FacebookModule} from 'ngx-facebook';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {BillComponent} from './warehouse-management/bill/bill.component';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
 
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
-    WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BillComponent,
-    ListBillComponent, BrandManagementComponent,
-    SearchBillComponent, CustomerManagementComponent, CustomPaginationComponent, FilterProductPipe, FilterMultiplePipe],
+    WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BrandManagementComponent,
+    CustomerManagementComponent, CustomPaginationComponent, FilterProductPipe, FilterMultiplePipe, BillComponent, FilterWareHousePipe],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent
@@ -81,7 +80,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     AngularFirestoreModule,
     AngularFireAuthModule,
     FacebookModule.forRoot(),
-    MatProgressBarModule
+    MatProgressBarModule,
+    NgSelectModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
