@@ -1,6 +1,6 @@
 export class WareHouse {
   id: number;
-  nameWarehouse: string;
+  nameWareHouse: string;
 
   constructor() {
   }
