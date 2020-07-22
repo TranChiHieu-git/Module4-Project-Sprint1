@@ -962,11 +962,8 @@ export class ListDistributorComponent implements OnInit {
           console.log(this.deleteList);
         }
       }
-
-
     }
   }
-
 
   deleteAll(): void {
     if (this.deleteList.length === this.size) {
@@ -975,7 +972,6 @@ export class ListDistributorComponent implements OnInit {
           this.showNotications('Xóa tất cả thành công');
           this.resetList();
           $('#all').prop('checked', false);
-
         },
         error => {
           this.showNotications('Xóa thất bại');
@@ -987,7 +983,6 @@ export class ListDistributorComponent implements OnInit {
           this.showNotications('Xóa tất cả thành công');
           this.resetList();
           $('#all').prop('checked', false);
-
         },
         error => {
           this.showNotications('Xóa thất bại');
@@ -1028,7 +1023,6 @@ export class ListDistributorComponent implements OnInit {
 
             this.myForm.get('name').setErrors(null);
           }
-
         },
         error => {
           this.myForm.get('name').setErrors(null);
