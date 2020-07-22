@@ -42,7 +42,7 @@
               <td style="width: 40%">{{order.orderDetailList[0].id.product.productName}} và {{order.orderDetailList.length - 1}} sản phẩm
                 khác
               </td>
-              <td>{{order.totalMoney|currency}}</td>
+              <td>{{order.totalMoney|currency: 'VND'}}</td>
               <td>{{order.orderStatus}}</td>
             </tr>
             </tbody>

@@ -7,9 +7,9 @@ import {Order} from '../models/order';
   providedIn: 'root'
 })
 export class OrderService {
-  ORDER_API_URL = 'http://localhost:8081/user-order';
-  ORDER_DETAIL_API_URL = 'http://localhost:8081/order';
-  ORDER_CANCEL_API_URL = 'http://localhost:8081/order-cancel';
+  ORDER_API_URL = 'http://localhost:8080/user-order';
+  ORDER_DETAIL_API_URL = 'http://localhost:8080/order';
+  ORDER_CANCEL_API_URL = 'http://localhost:8080/order-cancel';
   idUserSource = new BehaviorSubject<number>(0);
   curentIdUser = this.idUserSource.asObservable();
   page = new BehaviorSubject<number>(0);
@@ -29,7 +29,7 @@ chancePage(page){
   }
 
   findAllOrderByUserIdOnPage(id: number, page: number): Observable<Order[]> {
-    return this.httpClient.get<Order[]>(this.ORDER_API_URL + '/' + id + '/?page=' + page + '&size=2');
+    return this.httpClient.get<Order[]>(this.ORDER_API_URL + '/' + id + '/?page=' + page + '&size=5');
   }
 
   findOrderById(id: number): Observable<Order> {

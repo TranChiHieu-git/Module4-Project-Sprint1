@@ -11,7 +11,7 @@ import {Category} from '../models/category';
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
-const BASE_API_URL = 'http://localhost:8081/warehouse-management';
+const BASE_API_URL = 'http://localhost:8080/warehouse-management';
 
 @Injectable({
   providedIn: 'root'

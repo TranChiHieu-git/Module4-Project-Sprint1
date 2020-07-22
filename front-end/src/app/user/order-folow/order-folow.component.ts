@@ -1,29 +1,22 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {OrderService} from '../../services/order.service';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 import {Order} from '../../models/order';
-import {OrderDetail} from '../../models/order-detail';
 
 @Component({
-  selector: 'app-user-oder-detail',
-  templateUrl: './user-oder-detail.component.html',
-  styleUrls: ['./user-oder-detail.component.scss']
+  selector: 'app-order-folow',
+  templateUrl: './order-folow.component.html',
+  styleUrls: ['./order-folow.component.scss']
 })
-export class UserOderDetailComponent implements OnInit {
+export class OrderFolowComponent implements OnInit {
   order: Order;
   orders: Order[];
   idUser: number;
   isCurrentOrder = false;
-  orderDetails: OrderDetail[];
-  totalMoney = 0;
+  status: number;
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private orderService: OrderService,
-              private router: Router
-  ) {
-      }
-
-  ngOnInit(): void {
+  constructor(private orderService: OrderService,
+              private activatedRoute: ActivatedRoute) {
     this.orderService.curentIdUser.subscribe(message => {
       this.idUser = message;
       this.orderService.findAllOrderByUserId(this.idUser).subscribe((next: any) => {
@@ -40,14 +33,14 @@ export class UserOderDetailComponent implements OnInit {
             if (this.isCurrentOrder) {
               this.orderService.findOrderById(idOrder).subscribe(next => {
                   this.order = next;
-                  this.orderDetails = this.order.orderDetailList;
-                  this.orderDetails.forEach(product => {
-                    product.temMoney = product.orderQuantity * product.id.product.price;
-                    this.totalMoney += product.temMoney;
-                  });
+                  this.status = this.checkOrderStatus(this.order.orderStatus);
+                  $('section div').removeClass('current');
+                  $('.step#' + this.status).toggleClass('current');
+                  $('.step#' + this.status).prevAll('div').toggleClass('current');
+                  console.log(this.status);
+
                 },
                 error => {
-                  console.log(error);
                   this.order = null;
                 });
             }
@@ -60,16 +53,34 @@ export class UserOderDetailComponent implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:typedef
-  cancelOrder(orderId: number) {
-    this.orderService.cancelOrder(orderId).subscribe(
-      res => {
-        alert('Hủy đơn hàng thành công');
-        this.ngOnInit();
-      },
-      error => {
-        console.log(error);
+  ngOnInit(): void {
+
+
+  }
+
+  checkOrderStatus(status): number {
+    switch (status) {
+      case 'Đặt hàng thành công': {
+        return 1;
       }
-    );
+      case 'Đã tiếp nhận': {
+        return 2;
+      }
+      case 'Đang lấy hàng': {
+        return 3;
+      }
+      case 'Bàn giao vận chuyển': {
+        return 4;
+      }
+      case 'Đang vận chuyển': {
+        return 5;
+      }
+      case 'Giao hàng thành công': {
+        return 6;
+      }
+      default: {
+        return 0;
+      }
+    }
   }
 }

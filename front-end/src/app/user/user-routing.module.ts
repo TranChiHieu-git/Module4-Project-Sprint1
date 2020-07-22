@@ -13,6 +13,7 @@ import {HomeCandyComponent} from './home-store/home-candy/home-candy.component';
 import {DetailComponent} from './home-store/detail/detail.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
 import {UserLoginComponent} from './user-login/user-login.component';
+import {OrderFolowComponent} from './order-folow/order-folow.component';
 
 const routes: Routes = [{
   path: 'home', component: UserComponent,
@@ -47,6 +48,10 @@ const routes: Routes = [{
           {
             path: 'order-detail/:idOrder',
             component: UserOderDetailComponent
+          },
+          {
+            path: 'order-follow/:idOrder',
+            component: OrderFolowComponent
           }
         ]
       },

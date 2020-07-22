@@ -10,7 +10,7 @@ export class CustomerService {
 
   public readonly API_URL = 'http://localhost:8081/customers';
   private httpOptions: any;
-  public readonly API_URL_ACCOUNT = 'http://localhost:8081/customer-account';
+  public readonly API_URL_ACCOUNT = 'http://localhost:8080/customer-account';
   constructor(private httpClient: HttpClient) {
   }
 
