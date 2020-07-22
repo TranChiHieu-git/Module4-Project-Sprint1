@@ -13,6 +13,7 @@ import {HomeCandyComponent} from './home-store/home-candy/home-candy.component';
 import {DetailComponent} from './home-store/detail/detail.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
 import {UserLoginComponent} from './user-login/user-login.component';
+import {AuthGuard} from '../auth/auth.guard';
 
 const routes: Routes = [{
   path: '', component: UserComponent,
@@ -20,16 +21,20 @@ const routes: Routes = [{
     {path: 'test', component: TestComponent},
     {path: 'login', component: UserLoginComponent},
     {
-      path: 'user-manage', component: UserManageComponent,
+      path: 'user-manage',
+      component: UserManageComponent, canActivate: [AuthGuard],
       children: [
         {
-          path: 'user-detail', component: UserDetailComponent,
+          path: 'user-detail',
+          component: UserDetailComponent,
         },
         {
-          path: 'user-oder', component: UserOdersComponent
+          path: 'user-order',
+          component: UserOdersComponent
         },
         {
-          path: 'user-oder/:id', component: UserOderDetailComponent
+          path: 'order-detail/:idOrder',
+          component: UserOderDetailComponent
         }
       ]
     },
@@ -39,7 +44,6 @@ const routes: Routes = [{
     path: 'home', component: UserComponent,
   },
   {
-
     path: '', component: UserComponent,
     children: [
       {path: '', component: OrderButtonComponent}
@@ -50,23 +54,6 @@ const routes: Routes = [{
           {path: 'cake', component: HomeCakeComponent},
           {path: 'candy', component: HomeCandyComponent},
           {path: 'detail', component: DetailComponent}
-        ]
-      },
-      {
-        path: 'user-manage',
-        component: UserManageComponent,
-        children: [{
-          path: 'user-detail',
-          component: UserDetailComponent,
-        },
-          {
-            path: 'user-order',
-            component: UserOdersComponent
-          },
-          {
-            path: 'order-detail/:idOrder',
-            component: UserOderDetailComponent
-          }
         ]
       },
     ],

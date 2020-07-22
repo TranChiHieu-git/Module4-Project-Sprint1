@@ -24,8 +24,6 @@ export class ProductComponent implements OnInit {
   productForm: FormGroup;
   createProductForm: FormGroup;
   product: Product;
-  productList: Product[] = [];
-  productById: Product = new Product();
   unitList: Unit[];
   categoryList: Category[];
   brandList: Brand[];
@@ -72,7 +70,6 @@ export class ProductComponent implements OnInit {
     this.getBrand();
     this.getCategory();
   }
-
   private getData(): void {
     this.productService.getPage(this.page.pageable)
       .subscribe(page => {
@@ -115,16 +112,15 @@ export class ProductComponent implements OnInit {
 
   editProduct(id: number): void {
     this.productService.findProductById(id).subscribe(next => {
-        console.log(next);
-        this.productForm.patchValue(next);
-        $('#edit1').click();
-      },
-      error => {
-        this.notificationService.edit('Mặt hàng này đã bị xóa');
-        this.getData();
-      });
-  }
 
+         console.log(next);
+         this.productForm.patchValue(next);
+         $('#edit1').click();
+      },
+      error => {this.notificationService.edit('Mặt hàng này đã bị xóa');
+                this.getData();
+    });
+  }
   onSubmitEdit(): void {
     if (this.productForm.valid) {
       this.productService.updateProduct(this.productForm.value).subscribe(
@@ -142,7 +138,7 @@ export class ProductComponent implements OnInit {
       next => {
         this.closeCreateModal.nativeElement.click();
         this.notificationService.create('Tạo mới thành công');
-        // this.createProductForm.reset();
+        this.createProductForm.reset();
         this.initCreateForm();
         this.getData();
       },
@@ -151,17 +147,18 @@ export class ProductComponent implements OnInit {
 
   deleteProduct(id: number): void {
     this.productService.findProductById(id).subscribe(next => {
-        this.productName = next.productName;
-        this.product = next;
-        $('#delete1').click();
-      },
+
+      this.productName = next.productName;
+      this.product = next;
+      $('#delete1').click();
+    },
       error => {
         this.notificationService.edit('Mặt hàng này đã bị xóa');
         this.getData();
       });
   }
 
-  OnDelete(): void {
+OnDelete(): void {
     this.productService.deleteProduct(this.product).subscribe(
       next => {
         this.closeDeleteModal.nativeElement.click();
@@ -172,13 +169,13 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  OnCancelCreateForm(): void {
-    // this.closeCreateModal.nativeElement.click();
+OnCancelCreateForm(): void {
+    this.closeCreateModal.nativeElement.click();
     this.initCreateForm();
   }
 
-  OnCancelEditForm(): void {
-    // this.closeCreateModal.nativeElement.click();
+OnCancelEditForm(): void {
+    this.closeCreateModal.nativeElement.click();
     this.productForm.reset();
   }
 

@@ -65,7 +65,7 @@ export class UserOderDetailComponent implements OnInit {
   cancelOrder(orderId: number) {
     this.orderService.cancelOrder(orderId).subscribe(
       res => {
-        alert("Hủy đơn hàng thành công");
+        alert('Hủy đơn hàng thành công');
        window.location.reload();
 
       },
