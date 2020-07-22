@@ -6,7 +6,21 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Tên tài khoản</th>
-          <th scope="col">Mật khẩu</th>
+          <th scope="col">
+            <div class="dropdown show">
+              <a class=" dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                 aria-haspopup="true" aria-expanded="false">
+                Loại tài khoản
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" (click)="filterTypeRole(0)">Tất cả</a>
+                <a class="dropdown-item" (click)="filterTypeRole(1)">Admin</a>
+                <a class="dropdown-item" (click)="filterTypeRole(2)">Partner</a>
+                <a class="dropdown-item" (click)="filterTypeRole(3)">Warehouse</a>
+                <a class="dropdown-item" (click)="filterTypeRole(4)">User</a>
+              </div>
+            </div>
+          </th>
           <th></th>
         </tr>
         </thead>
@@ -16,7 +30,7 @@
           <th scope="row">{{account.accountId}}</th>
           <td class="details" (click)="info(account.accountId)" data-toggle="modal"
               data-target="#infor">{{account.accountName}}</td>
-          <td><input disabled type="password" class="pw" width="150px" value="{{account.accountPassword}}"></td>
+          <td><label class="pw">{{account.role.roleName}}</label></td>
           <td>
             <button class="border-0 mr-5 bg-transparent fas fa-pencil-alt"
                     (click)="edit(account.accountId)" data-toggle="modal" data-target="#edit"></button>
@@ -341,11 +355,14 @@
         </button>
         <h3 class="modal-title">Sửa thông tin tài khoản</h3>
         <br>
-        <form [formGroup]="editAccountForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="editAccountForm">
           <table class="w-100">
             <input type="text" class="form-control" formControlName="accountId" aria-label="Username"
                    aria-describedby="basic-addon1" disabled hidden>
             <input type="text" class="form-control" formControlName="deleteFlag"
+                   aria-label="Username" aria-describedby="basic-addon1" disabled
+                   hidden>
+            <input type="text" class="form-control" formControlName="reason"
                    aria-label="Username" aria-describedby="basic-addon1" disabled
                    hidden>
             <tr>Tên Tài Khoản:</tr>
@@ -426,7 +443,10 @@
                 <div class="row">
                   <div class="col-3"></div>
                   <div class="col-2 form-group">
-                    <button class="btn btn-warning" [disabled]="editAccountForm.invalid" type="submit">sửa</button>
+                    <button id="editBtn" class="btn btn-warning"
+                            [disabled]="editAccountForm.invalid" (click)="edited()"
+                    >sửa
+                    </button>
                   </div>
                   <div class="col-1"></div>
                   <div class="col-5">
@@ -447,32 +467,67 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
-        <table class="w-100">
-          <tr>
-            <th colspan="2" class="deleteTitle">
-              <h5><img src="https://image.flaticon.com/icons/png/512/63/63436.png" width="22px" height="auto"> Bạn có
-                muốn xóa tài khoản {{AccountById.accountName}} này không ?</h5>
-            </th>
-          </tr>
-        </table>
-        <br>
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-8"></div>
-            <div class="col-4">
-              <div class="row">
-                <div class="col-3"></div>
-                <div class="col-2">
-                  <button class="btn btn-danger" (click)="deleted(AccountById.accountId)">Xóa</button>
+        <form [formGroup]="deleteAccountForm">
+          <table class="w-100">
+            <tr>
+              <th colspan="2" class="deleteTitle">
+                <h5><img src="https://image.flaticon.com/icons/png/512/63/63436.png" width="22px" height="auto"> Bạn có
+                  muốn xóa tài khoản {{AccountById.accountName}} này không ?</h5>
+              </th>
+            </tr>
+            <br>
+            <input type="text" class="form-control" formControlName="accountId" aria-label="Username"
+                   aria-describedby="basic-addon1" disabled hidden>
+            <input type="text" class="form-control" formControlName="deleteFlag"
+                   aria-label="Username" aria-describedby="basic-addon1" disabled
+                   hidden>
+            <input type="text" class="form-control" formControlName="accountName" aria-label="Username"
+                   aria-describedby="basic-addon1" disabled hidden>
+            <input type="text" class="form-control" formControlName="accountPassword"
+                   aria-label="Username" aria-describedby="basic-addon1" disabled
+                   hidden>
+            <input type="text" class="form-control" formControlName="accountPassword"
+                   aria-label="role" aria-describedby="basic-addon1" disabled
+                   hidden>
+            <tr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fa fa-trash-o prefix"></span>
                 </div>
-                <div class="col-1"></div>
-                <div class="col-5">
-                  <button class="btn btn-secondary destroy" data-dismiss="modal">Hủy</button>
+                <input type="text" class="form-control" formControlName="reason" aria-label="Username"
+                       aria-describedby="basic-addon1" placeholder="Vui lòng nhập lý do muốn xóa">
+              </div>
+            </tr>
+            <tr>
+              <div class="alert alert-danger" role="alert"
+                   *ngIf="deleteAccountForm.get('reason').invalid && deleteAccountForm.get('reason').touched">
+                <span
+                  *ngIf="deleteAccountForm.get('reason').hasError('require')">
+            lý do không được bỏ trống</span>
+              </div>
+            </tr>
+          </table>
+          <br>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-8"></div>
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-3"></div>
+                  <div class="col-2">
+                    <button class="btn btn-danger" [disabled]="deleteAccountForm.invalid"
+                            (click)="deleted(AccountById.accountId)">Xóa
+                    </button>
+                  </div>
+                  <div class="col-1"></div>
+                  <div class="col-5">
+                    <button class="btn btn-secondary destroyDelete" data-dismiss="modal">Hủy</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
