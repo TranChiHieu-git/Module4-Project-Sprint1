@@ -90,7 +90,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let bill of billList|filter:filter|filter: selectedWareHouse.value| filter: selectedEmployees.value| filter: selectedDistributor.value| filter:selectedTransportation.value| paginate: { itemsPerPage: 5, currentPage: p }" >
+      <tr *ngFor="let bill of page.content|filter:filter|filter: selectedWareHouse.value| filter: selectedEmployees.value| filter: selectedDistributor.value| filter:selectedTransportation.value" >
         <td>
           <span>{{bill.id}}</span>
         </td>
@@ -137,10 +137,23 @@
       </tbody>
       <br>
       <br>
-      <pagination-controls (pageChange)="p = $event" class="pag"></pagination-controls>
+
 
     </table>
-
+    <!--Paging-->
+    <div class="row w-100">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <app-custom-pagination
+          [page]="page"
+          (nextPageEvent)="getNextPage()"
+          (previousPageEvent)="getPreviousPage()"
+          (pageSizeEvent)="getPageInNewSize($event)">
+        </app-custom-pagination>
+      </div>
+      <div class="col-2"></div>
+    </div>
+    <!--End Paging-->
     <!--End table list bill-->
 
     <!--Modal edit-->
@@ -452,7 +465,7 @@
 <!--                        <span class="align-items-center">Ngày lập phiếu (<i style="color: red">*</i>)</span>-->
                       </div>
                       <div class="col-md-7 col-sm-7">
-                        <input type="date" formControlName="createDate" class="form-control" autofocus >
+                        <input type="date" formControlName="createDate" class="form-control" autofocus [(ngModel)]="today">
                         <div *ngIf="createForm.get('createDate').invalid && createForm.get('createDate').touched">
                           <i style="color: red" *ngIf="createForm.get('createDate').hasError('required')">Bạn nên điền ngày lập phiếu</i>
                         </div>
