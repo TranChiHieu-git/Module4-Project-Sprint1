@@ -25,6 +25,7 @@ export class ProductService {
   private unitUrl = BASE_API_URL + '/listUnit';
   private categoryUrl = BASE_API_URL + '/listCategory';
   private brandUrl = BASE_API_URL + '/brand';
+  private API_URL = 'http://localhost:8080/user/home-store';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -62,6 +63,18 @@ export class ProductService {
 
   updateProduct(product: Product): Observable<Product> {
     return this.httpClient.patch<Product>(this.updateUrl + product.productId, product);
+  }
+
+  getAllProduct(): Observable<any> {
+    return this.httpClient.get(this.API_URL + '/products');
+  }
+
+  getProductById(productId: number): Observable<any> {
+    return this.httpClient.get(this.API_URL + '/products/' + productId);
+  }
+
+  getAllProductByCategory(categoryId: number): Observable<any> {
+    return this.httpClient.get(this.API_URL + '/' + categoryId);
   }
 }
 
