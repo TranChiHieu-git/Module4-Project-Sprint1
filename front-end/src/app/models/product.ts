@@ -20,5 +20,4 @@ constructor(productId: number, productName: string, category: string,
     this.brand = brand;
     this.price = price;
   }
-
 }
