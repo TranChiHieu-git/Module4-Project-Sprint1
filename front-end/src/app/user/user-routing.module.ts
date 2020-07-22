@@ -13,6 +13,7 @@ import {HomeCandyComponent} from './home-store/home-candy/home-candy.component';
 import {DetailComponent} from './home-store/detail/detail.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
 import {UserLoginComponent} from './user-login/user-login.component';
+import {HomeBakeryComponent} from './home-store/home-bakery/home-bakery.component';
 
 const routes: Routes = [{
   path: 'home', component: UserComponent,
@@ -28,9 +29,10 @@ const routes: Routes = [{
       ,
       {
         path: 'home-store', component: HomeStoreComponent, children: [
-          {path: 'cake', component: HomeCakeComponent},
-          {path: 'candy', component: HomeCandyComponent},
-          {path: 'detail', component: DetailComponent}
+          {path: 'products/:id', component: DetailComponent},
+          {path: 'home-bakery', component: HomeBakeryComponent},
+          {path: 'home-bakery1', component: HomeCakeComponent},
+          {path: 'home-bakery2', component: HomeCandyComponent},
         ]
       },
       {

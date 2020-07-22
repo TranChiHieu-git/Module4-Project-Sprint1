@@ -1,10 +1,10 @@
-﻿
+
 <div class="ml-3 row shop-sort">
-  <button (click)="sort('createAt')" class="btn btn-light mr-3">Mới Nhất</button>
-  <button (click)="sort('amountSold')" class="btn btn-light">Bán Chạy</button>
+  <button (click)="sort('createAt')" class="btn btn-light mr-3">Sản Phẩm Mới Nhất</button>
+  <button (click)="sort('amountSold')" class="btn btn-light">Sản Phẩm Bán Chạy</button>
 </div>
 <div class="row mt-2">
-  <div *ngFor="let product of cakeList | orderBy: key : reverse | paginate: { itemsPerPage: 8, currentPage: p }" class="col-md-3 m-0 mt-2" routerLink="/home-store/products/{{product.productId}}">
+  <div *ngFor="let product of productList | orderBy: key : reverse | paginate: { itemsPerPage: 8, currentPage: p }" class="col-md-3 m-0 mt-2" routerLink="/home-store/products/{{product.productId}}">
     <div class="container__detail">
       <div class="img_product">
         <img class="img__info" src="{{product.imageUrl}}" alt="">
