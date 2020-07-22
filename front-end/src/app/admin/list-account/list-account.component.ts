@@ -11,11 +11,20 @@ import {CustomerService} from '../../services/customer.service';
 import {Customer} from '../../models/customer';
 import {ToastrService} from 'ngx-toastr';
 
+function comparePassword(c: AbstractControl) {
+  const v = c.value;
+  return (v.accountPassword === v.confirmPassword) ? null : {
+    passwordnotmatch: true
+  };
+}
+
 @Component({
   selector: 'app-list-account',
   templateUrl: './list-account.component.html',
   styleUrls: ['./list-account.component.scss']
 })
+
+
 export class ListAccountComponent implements OnInit {
 
   constructor(private adminService: AdminService,
@@ -43,6 +52,9 @@ export class ListAccountComponent implements OnInit {
   totalPages = 1;
   promiseAccount: any;
   private sumVal = 0;
+  nameRole = '';
+  userName = '';
+  confirmPassword: string;
 
   ngOnInit(): void {
     this.adminService.findAllRole().subscribe(next => {
@@ -64,11 +76,14 @@ export class ListAccountComponent implements OnInit {
     this.getAll();
     this.accountForm = this.formBuilder.group({
       accountId: [''],
-      accountName: [''],
+      accountName: ['', [Validators.required]],
       accountPassword: [''],
+      pwGroup: this.formBuilder.group({
+        accountPassword: ['', [Validators.required]],
+        confirmPassword: ['', [Validators.required]],
+      }, {validator: comparePassword}),
       deleteFlag: [''],
-      role: [''],
-      reason: [''],
+      role: ['', [Validators.required]],
     });
     this.editAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
@@ -99,38 +114,52 @@ export class ListAccountComponent implements OnInit {
     return null;
   }
 
+  getListAccount() {
+    this.adminService.findAll().subscribe(next => {
+      this.accountlist = next;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  existAccountName2() {
+    this.getListAccount();
+    let accountName = this.accountForm.get('accountName').value;
+    for (const acc of this.accountlist) {
+      if (acc.accountName === accountName && accountName !== this.AccountById.accountName) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   getAll(): void {
     this.getAllSubmit(0);
   }
 
   // tslint:disable-next-line:typedef
   getAllSubmit(page) {
-    const md5 = new Md5();
-    this.adminService.getAllCourse(page, this.size, this.search).subscribe(
+    this.adminService.getAllCourse(page, this.size, this.userName, this.nameRole).subscribe(
       data => {
-        this.pageClicked = page;
-        this.accountList = data.content;
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.accountList.length; i++) {
-          this.accountList[i].accountPassword = md5.appendAsciiStr(this.accountList[i].accountPassword as string).end();
+        if (data == null) {
+          this.toastrService.error('Không tìm thấy dữ liệu');
+        } else {
+          this.pageClicked = page;
+          this.accountList = data.content;
+          // tslint:disable-next-line:prefer-for-of
+          this.totalPages = data.totalPages;
+          this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
         }
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
     );
   }
 
   // tslint:disable-next-line:typedef
   getAllSubmitAdmin(page) {
-    const md5 = new Md5();
     this.adminService.getAllCourseAdmin(page, this.size, this.search).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.accountList.length; i++) {
-          this.accountList[i].accountPassword = md5.appendAsciiStr(this.accountList[i].accountPassword as string).end();
-        }
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
@@ -139,15 +168,10 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getAllSubmitWarehouse(page) {
-    const md5 = new Md5();
     this.adminService.getAllCourseWarhouse(page, this.size, this.search).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.accountList.length; i++) {
-          this.accountList[i].accountPassword = md5.appendAsciiStr(this.accountList[i].accountPassword as string).end();
-        }
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
@@ -156,15 +180,10 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getAllSubmitPartner(page) {
-    const md5 = new Md5();
     this.adminService.getAllCoursePartner(page, this.size, this.search).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.accountList.length; i++) {
-          this.accountList[i].accountPassword = md5.appendAsciiStr(this.accountList[i].accountPassword as string).end();
-        }
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
@@ -173,15 +192,10 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getAllSubmitUser(page) {
-    const md5 = new Md5();
     this.adminService.getAllCourseUser(page, this.size, this.search).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.accountList.length; i++) {
-          this.accountList[i].accountPassword = md5.appendAsciiStr(this.accountList[i].accountPassword as string).end();
-        }
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
@@ -376,27 +390,39 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   create() {
-    this.adminService.findRoleById(this.accountForm.get('role').value).subscribe(
-      next => {
-        // this.accountForm.patchValue({
-        //   role: next,
-        //   deleteFlag: 0,
-        // });
-        this.promiseAccount = new Promise(resolve => resolve(next));
-        this.promiseAccount.then((value) => {
-          this.accountForm.value.role = value;
-          this.adminService.create(this.accountForm.value).subscribe(
-            () => {
-              this.getAll();
-              $('#close').click();
-            },
-            error => console.log(error)
+    if (this.existAccountName2()) {
+      this.accountForm.patchValue({
+        accountPassword: this.accountForm.get('pwGroup.accountPassword').value
+      });
+      this.adminService.findRoleById(this.accountForm.get('role').value).subscribe(
+        next => {
+          this.promiseAccount = new Promise(resolve => resolve(next));
+          this.promiseAccount.then((value) => {
+              this.accountForm.value.role = value;
+              if (this.accountForm.valid) {
+                this.adminService.create(this.accountForm.value).subscribe(
+                  () => {
+                    this.getAll();
+                    this.accountForm.reset();
+                    $('#close').click();
+                    this.showCreated();
+                  },
+                  error => console.log(error)
+                );
+              }
+            }
           );
-        });
-      }
-    );
+        }
+      );
+    } else {
+      this.toastrService.error('Tên tài khoản đã tồn tại', '', {
+        positionClass: 'toast-top-center'
+      });
+    }
+  }
 
-
+  showCreated() {
+    this.toastrService.success('Bạn đã thêm mới thành công', 'Thông báo');
   }
 
   // tslint:disable-next-line:typedef

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Account} from '../models/account';
 import {Employees} from '../models/employees';
 import {Role} from '../models/role';
@@ -17,8 +17,8 @@ export class AdminService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getAllCourse(currentPage, size, search): Observable<any> {
-    return this.httpClient.get(this.API_URL + '?page=' + currentPage + '&size=' + size + '&search=' + search, this.httpOptions);
+  getAllCourse(currentPage, size, search, nameRole): Observable<any> {
+    return this.httpClient.get(this.API_URL + '?page=' + currentPage + '&size=' + size + '&search=' + search + '&role=' + nameRole);
   }
 
   getAllCourseAdmin(currentPage, size, search): Observable<any> {
