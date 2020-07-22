@@ -53,6 +53,8 @@
 td, th{
   text-align: center;
   vertical-align: middle;
+  white-space: pre-wrap;
+  word-wrap:break-word
 }
 
 .edit-input{
@@ -60,16 +62,35 @@ td, th{
   border: none;
   background-color: white;
 }
-.paging-brand {
-  position: absolute;
-  //margin-top: 50px;
-  margin-left: 40%;
-}
 .btn-custom{
   border: #EE9F1F solid 1px;
   background-color: #EE9F1F;
   color: white;
 }
 .add-brand-ico {
-  color: blue;
+  color: white;
+}
+.add-brand-span {
+  background-color: orange;
+}
+.table-header th {
+  background: #EE9F1F;
+  vertical-align: middle;
+}
+.add-brand-input {
+  height: 65px;
+  }
+.message {
+font-size: 14px;
+}
+
+.global-button{
+  background: transparent linear-gradient(38deg, #EE9F1F 0%, #FCBC53 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.31);
+  border: none;
+  border-radius: 10px;
+  padding: 2% 5%;
+  color: #581008;
+  font-weight: 700;
+
 }

@@ -29,6 +29,7 @@ export class UserComponent implements OnInit {
     });
   }
 
+  // tslint:disable-next-line:typedef
   signOut() {
     this.tokenStorage.signOut();
     window.location.reload();
