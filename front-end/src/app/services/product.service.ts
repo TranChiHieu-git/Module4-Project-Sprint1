@@ -43,7 +43,7 @@ export class ProductService {
   }
 
   findAllCategory(): Observable<Category[]> {
-    return this.httpClient.get<Category[]>(this.category  Url);
+    return this.httpClient.get<Category[]>(this.categoryUrl);
   }
 
   getPage(pageable: Pageable): Observable<Page<Product>> {
