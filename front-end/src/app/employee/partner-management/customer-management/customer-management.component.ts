@@ -292,19 +292,18 @@ export class CustomerManagementComponent implements OnInit {
 
   delete(): void {
     let deleteConfirm = false;
-    if (this.deleteList.length > 0) {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.deleteList.length; i++) {
-        this.customerService.deleteCustomerById(this.deleteList[i]).subscribe(
-          next => {
-            this.ngOnInit();
-            this.customers = []
-          },
-          error => console.log(error)
-        );
-      }
-      this.toastr.success('Xóa thành công ' + this.deleteList.length + 'khách hàng !');
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.deleteList.length; i++) {
+      this.customerService.deleteCustomerById(this.deleteList[i]).subscribe(
+        next => {
+          this.ngOnInit();
+          this.customers = [];
+          this.deleteList = [];
+        },
+        error => console.log(error)
+      );
     }
+    this.toastr.success('Xóa thành công ' + this.deleteList.length + 'khách hàng !');
   }
 
   // tslint:disable-next-line:typedef
