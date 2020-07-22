@@ -4,8 +4,15 @@
 }
 .avatar{
   height: 200px;
-  float: left;
-  margin-bottom: 40px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.card{
+  width: 28%;
+  height: 57%;
+  position: absolute;
+  top: 3%;
 }
 .modal-body table{
   float: right;
@@ -92,7 +99,7 @@
   text-align: center;
 }
 .global-content-popup-validate{
-  margin: 60px;
+  margin: 5px;
   left: 21%;
   top: 60%;
   color: red;
@@ -113,37 +120,91 @@
 }
 
 
-.checkbox label:after{
-  content: '';
-  display: table;
-  clear: both;
-}
 
-.checkbox .cr{
-  position: relative;
-  display: inline-block;
-  border: 1px solid #a9a9a9;
-  border-radius: .25em;
-  width: 1.3em;
-  height: 1.3em;
-  float: left;
-  margin-right: .5em;
-}
-
-.radio .cr {
-  border-radius: 50%;
-}
-
-.checkbox .cr .cr-icon {
-  position: absolute;
-  font-size: .8em;
-  line-height: 0;
-  top: 50%;
-  left: 20%;
-}
 .custom-control-input:checked~.custom-control-label::before {
   color: #fff;
   border-color: #ee9f1f;
   background-color: #ee9f1f;
 }
+.select-gender{
+  position: absolute;
+  top: 16.6%;
+  right: 7%;
+}
 
+.card {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+}
+
+.file-upload-container {
+  width: 100%;
+  height: 50px;
+  overflow: hidden;
+  background: transparent linear-gradient(38deg, #EE9F1F 0%, #FCBC53 100%) 0% 0% no-repeat padding-box;
+  user-select: none;
+  transition: all 150ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  text-align: center;
+  color: white;
+  line-height: 50px;
+  font-weight: 300;
+  font-size: 20px;
+  margin-top: 98%;
+}
+
+.file-upload-container:hover {
+  cursor: pointer;
+  background: transparent linear-gradient(38deg, #FCBC53 0%, #EE9F1F 100%) 0% 0% no-repeat padding-box;
+}
+img {
+  width: 185.53px;
+  height: 185.83px;
+  position: absolute;
+  top: 50%;
+  left: -240%;
+  transform: translateY(-50%);
+}
+.mat-card:not([class*=mat-elevation-z]) {
+  box-shadow: none;
+}
+.img-upload-icon{
+  font-size: 100px;
+  color: #ee9f1f;
+  position: absolute;
+  left: -90%;
+  top: -133%;
+  opacity: -1;
+}
+.fb-customerchat{
+  left: 18pt !important;
+}
+.progress {
+    width: 100%;
+    margin-top: 100px;
+}
+mat-progress-bar {
+  top: 94%;
+  position: absolute;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6%;
+}
+mat-progress-bar[value]::-webkit-progress-value {
+  background-image:
+    -webkit-linear-gradient(-45deg,
+      transparent 33%, rgba(0, 0, 0, .1) 33%,
+      rgba(0,0, 0, .1) 66%, transparent 66%),
+    -webkit-linear-gradient(top,
+      rgba(255, 255, 255, .25),
+      rgba(0, 0, 0, .25)),
+    -webkit-linear-gradient(left, #FCBC53, #EE9F1F);
+
+  border-radius: 2px;
+  background-size: 35px 20px, 100% 100%, 100% 100%;
+}

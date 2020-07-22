@@ -33,7 +33,7 @@
   outline: none;
 }
 .custom-modal {
-  max-width: 70% !important;
+  max-width: 50% !important;
 }
 .brand-image{
   width: 150px;
@@ -63,5 +63,16 @@ td, th{
 .paging-brand {
   position: absolute;
   //margin-top: 50px;
-  margin-left: 40%;
+  margin-left: 35%;
+}
+.btn-custom{
+  border: #EE9F1F solid 1px;
+  background-color: #EE9F1F;
+  color: white;
+}
+.add-brand-ico {
+  color: blue;
+}
+.table-header th {
+  background: #EE9F1F;
 }

@@ -1,11 +1,11 @@
 import * as $ from 'jquery';
 import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {AngularFireStorage} from '@angular/fire/storage';
+import {finalize} from 'rxjs/operators';
 import {Brand} from '../../../models/brand';
 import {BrandService} from '../../../services/brand.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { Observable } from 'rxjs';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { map, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-brand-management',
@@ -13,20 +13,24 @@ import { map, finalize } from 'rxjs/operators';
   styleUrls: ['./brand-management.component.scss']
 })
 export class BrandManagementComponent implements OnInit {
-  imageUrl80 = 'https://via.placeholder.com/80';
+  listError: any = '';
   imgSrc = 'https://via.placeholder.com/150';
   selectedImage: any = null;
   downloadURL: Observable<string>;
   brandForm: FormGroup;
   brand: Brand;
   brandList: Brand[];
-  size = 3;
+  size = 2;
   pageClick = 0;
   pages = [];
   totalPages = 1;
   search = '';
   isSearch = false;
-  uploadProgress: Observable<number>;
+  key = '';
+  reverse = false;
+  brandName: string;
+  brandEditForm: FormGroup;
+
   constructor(
     private brandService: BrandService,
     private fb: FormBuilder,
@@ -38,53 +42,68 @@ export class BrandManagementComponent implements OnInit {
       brandAddress: ['', Validators.required],
       brandWebsite: ['', Validators.required]
     });
+    this.brandEditForm = this.fb.group({
+      id: [''],
+      brandLogo: ['', Validators.required],
+      brandName: ['', Validators.required],
+      brandAddress: ['', Validators.required],
+      brandWebsite: ['', Validators.required]
+    });
   }
+
   getAllBrand(): void {
     this.onSubmit(0);
   }
-  ngOnInit(): void {
-    // this.brandService.getAllBrand().subscribe(
-    //   next => (this.brandList = next),
-    //   error => (this.brandList = [])
-    // );
-    this.getAllBrand();
 
+  ngOnInit(): void {
+    this.getAllBrand();
   }
+
+  sort(key): void {
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+
   onNext(): void {
     if (this.pageClick < this.totalPages - 1) {
       this.pageClick++;
       this.onSubmit(this.pageClick);
     }
   }
+
   onPrevious(): void {
     if (this.pageClick > 0) {
       this.pageClick--;
       this.onSubmit(this.pageClick);
     }
   }
+
   onFirst(): void {
     this.pageClick = 0;
     this.onSubmit(this.pageClick);
   }
+
   onLast(): void {
     this.pageClick = this.totalPages - 1;
     this.onSubmit(this.pageClick);
   }
+
   onSubmit(page): void {
     this.brandService.getAllBrand(page, this.size, this.search).subscribe(
       next => {
-        console.log(next);
+        // console.log(next);
         this.pageClick = page;
         this.brandList = next.content;
         this.totalPages = next.totalPages;
-        this.pages = Array.apply(null, { length: this.totalPages }).map(Number.call, Number);
+        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       },
-        error => console.log(error)
+      error => console.log(error)
     );
   }
 
   searchName(): void {
-    if (this.search === '') {
+    const temp = '';
+    if (this.search === temp) {
       this.isSearch = false;
       this.ngOnInit();
     } else {
@@ -100,23 +119,19 @@ export class BrandManagementComponent implements OnInit {
           alert('New brand has been added!');
           window.location.reload();
         },
-        error => console.log(error),
+        error => {
+          if (error.status === 500) {
+            alert("This brand is already exist!");
+          }
+        }
       );
     } else {
       alert('Please enter information!');
     }
   }
-  // onFileSelected(event): void {
-  //   if (event.target.files && event.target.files[0]) {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(event.target.files[0]); // read file as data url
-  //     reader.onload = (event ) => { // called once readAsDataURL is completed
-  //       this.uploadImg = event.target.result;
-  //     };
-  //   }
-  // }
-  onFileSelected(event: any){
-    if (event.target.files && event.target.files[0]){
+
+  onFileSelected(event: any): void {
+    if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e: any) => this.imgSrc = e.target.result;
       reader.readAsDataURL(event.target.files[0]);
@@ -143,26 +158,58 @@ export class BrandManagementComponent implements OnInit {
             console.log(url);
           }
         });
-    }
-    else {
+    } else {
       this.imgSrc = 'https://via.placeholder.com/150';
       this.selectedImage = null;
     }
   }
 
-  loadPage(): void {
-    window.location.reload();
+  catchBrandId(id: number): void {
+    this.brandService.findById(id).subscribe(
+      res => {
+        this.brand = res;
+        this.brandName = res.brandName;
+        this.brandEditForm.patchValue(res);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
-  changeStatus(id: any) {
-    const temp = '.thh' + id;
-    // $('#thh + id').prop('disabled', true);
-    $(temp).css('backgroundColor', '#D1D1D1');
+  editId(id: number): void {
+    this.brandService.findById(id).subscribe(
+      next => {
+        this.brandEditForm.patchValue(next);
+
+      }
+    );
   }
 
-  removeStatus(id: any) {
-    const temp = '.thh' + id;
-    // $('#thh + id').prop('disabled', true);
-    $(temp).css('backgroundColor', 'white');
+  // tslint:disable-next-line:typedef
+  edit() {
+    console.log(this.brandForm.value);
+    this.brandService.editBrand(this.brandEditForm.value).subscribe(
+      next => {
+        alert('Thay đổi thành công');
+      },
+      error => console.log(error));
+  }
+
+  delete(): void {
+    this.brandService.deleteBrand(this.brand).subscribe(
+      next => {
+        this.ngOnInit();
+        $('#close').click();
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  switchEdit(brand: Brand): void {
+    brand.isEditable = !brand.isEditable;
+    $('#submit' + brand.id).click();
   }
 }

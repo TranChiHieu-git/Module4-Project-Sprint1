@@ -17,6 +17,7 @@ export class CustomerService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json'})
       , 'Access-Control-Allow-Origin': 'http://localhost:4200/', 'Access-Control-Allow-Methods': 'POST'
     };
+
   }
 
   getAllCustomer(): Observable<any> {

@@ -59,6 +59,7 @@ export class UserLoginComponent implements OnInit {
         this.tokenStorage.saveAuthorities(data.authorities);
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUsername(data.accountName);
+        sessionStorage.setItem('loggedUser', userInfo.accountName);
         console.log('data', this.tokenStorage.saveUsername(data.accountName));
         console.log('data', data);
         sessionStorage.setItem('loggedUser', userInfo.accountName);

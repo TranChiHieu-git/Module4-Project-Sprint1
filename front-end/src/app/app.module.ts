@@ -22,7 +22,17 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
     AdminComponent,
     EmployeeComponent,
     UserComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    UserComponent
+  ],
+  imports: [
+    AdminModule,
+    EmployeeModule,
+    ShareModule,
+    AppRoutingModule,
+    MaterialModule,
+
+    UserModule,
   ],
     imports: [
         BrowserModule,

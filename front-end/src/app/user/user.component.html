@@ -1,5 +1,5 @@
 <body>
-<div class="container-fluid pt-lg-5 px-0 font-weight-bolder" >
+<div class="container-fluid pt-lg-5 px-0 font-weight-bolder">
   <nav class="navbar navbar-expand-lg navbar-light table-light ">
     <div class="navbar-brand codeBakery" href="#">
       <!--      <h2 class="">CODE BAKERY</h2>-->
@@ -42,9 +42,9 @@
             <span class="badge badge-light">4</span>
           </div>
           <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
-            <a class="dropdown-item account" >San Pham 1</a>
+            <a class="dropdown-item account">San Pham 1</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item account" >San Pham 2</a>
+            <a class="dropdown-item account">San Pham 2</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item account" href="#">Thanh Toán</a>
           </div>
@@ -101,29 +101,30 @@
         </div>
       </div>
 
-<!--            //  tai khoan sau khi dang nhap-->
-            <div class="nav-item dropdown " *ngIf="userDisplayName">
-              <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true"
-                   aria-expanded="true">
-                <span class="material-icons mr-2">account_circle</span>
-                <span>Xin Chào {{userDisplayName}} </span>
-              </div>
-              <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
-                <a class="dropdown-item account" [routerLink]="'/user-manage/user-detail'">Quản Lý Tài Khoản</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item account"  [routerLink]="'/user-manage/user-order'">Đơn Hàng Của Tôi</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item  signOut " (click)="signOut()">Đăng Xuất</a>
-              </div>
-            </div>
+      <!--            //  tai khoan sau khi dang nhap-->
+      <div class="nav-item dropdown " *ngIf="userDisplayName">
+        <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+             aria-haspopup="true"
+             aria-expanded="true">
+          <span class="material-icons mr-2">account_circle</span>
+          <span>Xin Chào {{userDisplayName}} </span>
+        </div>
+        <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
+          <a class="dropdown-item account" [routerLink]="'/user-manage/user-detail'">Quản Lý Tài Khoản</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item account" [routerLink]="'/user-manage/user-order'">Đơn Hàng Của Tôi</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item  signOut " (click)="signOut()">Đăng Xuất</a>
+        </div>
+      </div>
     </div>
   </nav>
-<!--  <div class="orderButton">-->
-<!--  <app-orderbutton></app-orderbutton>-->
-<!--  </div>-->
+  <!--  <div class="orderButton">-->
+  <!--  <app-orderbutton></app-orderbutton>-->
+  <!--  </div>-->
 </div>
-<app-home-store><router-outlet></router-outlet>
+<app-home-store>
+  <router-outlet></router-outlet>
 </app-home-store>
 </body>
 

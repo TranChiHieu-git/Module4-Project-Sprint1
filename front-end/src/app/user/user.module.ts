@@ -18,10 +18,12 @@ import {UserDetailComponent} from './user-detail/user-detail.component';
 import {UserOderDetailComponent} from './user-oder-detail/user-oder-detail.component';
 import {MatIconModule} from '@angular/material/icon';
 
+
 @NgModule({
   declarations: [TestComponent, UserManageComponent, OrderButtonComponent,
     UserRegisterComponent, UserLoginComponent, UserForgetpasswordComponent, UserManageComponent,
     UserOdersComponent, UserDetailComponent, UserOderDetailComponent],
+
   exports: [
     OrderButtonComponent,
     UserRegisterComponent,

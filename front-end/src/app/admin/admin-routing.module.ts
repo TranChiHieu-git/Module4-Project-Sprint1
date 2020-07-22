@@ -4,7 +4,11 @@ import {RouterModule, Routes} from '@angular/router';
 import {AdminComponent} from './admin.component';
 import {ListAccountComponent} from './list-account/list-account.component';
 import {AccessTimesComponent} from './access-times/access-times.component';
+<<<<<<< HEAD
 import {AuthGuard} from '../auth/auth.guard';
+=======
+import {EmployeeDetailComponent} from '../employee/employee-manager/employee-detail/employee-detail.component';
+>>>>>>> 61727b26342a79732cd03931f5ff5c9fcaa7a7f3
 
 
 const routes: Routes = [
@@ -13,7 +17,8 @@ const routes: Routes = [
     children: [
       {path: 'list-account', component: ListAccountComponent, canActivate: [AuthGuard]},
       {path: 'access-times', component: AccessTimesComponent},
-      {path: 'list-account/:accountName', component: ListAccountComponent}
+      {path: 'list-account/:accountName', component: ListAccountComponent},
+      {path: 'employee-manager/detail', component: EmployeeDetailComponent},
     ]
   },
 ];
