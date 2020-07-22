@@ -10,7 +10,8 @@ import {Employees} from '../../../models/employees';
 import {Pay} from '../../../models/pay';
 import {TypeBill} from '../../../models/type-bill';
 import {NotificationService} from '../../../services/notification.service';
-import {Product} from '../../../models/product';
+import {CustomPaginationService} from '../../../services/pagination/custom-pagination.service';
+import {Page} from '../../../models/pagination/page';
 
 @Component({
   selector: 'app-bill',
@@ -21,6 +22,7 @@ export class BillComponent implements OnInit {
   @ViewChild('closeEditModal') closeEditModal;
   @ViewChild('closeDeleteModal') closeDeleteModal;
   @ViewChild('closeCreateModal') closeCreateModal;
+  page: Page<Bill> = new Page();
   billList: Bill[];
   wareHouseList: WareHouse[];
   transportationList: Transportation[];
@@ -35,15 +37,18 @@ export class BillComponent implements OnInit {
   createForm: FormGroup;
   editForm: FormGroup;
   p = 1;
+  today: string;
   filter: any;
 
   constructor(private billService: ServiceBillService,
               private ref: ChangeDetectorRef,
               private fb: FormBuilder,
+              private paginationService: CustomPaginationService,
               private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    this.getAllBills();
+    this.today = new Date().toISOString().split('T')[0];
+    this.getData();
     this.buildEditForm();
     this.initCreateForm();
   }
@@ -156,6 +161,7 @@ export class BillComponent implements OnInit {
         next => {
           this.closeEditModal.nativeElement.click();
           this.notificationService.edit('Chỉnh sửa thành công');
+          this.getData();
         },
         error => console.log(error));
     }
@@ -178,6 +184,7 @@ export class BillComponent implements OnInit {
         this.closeDeleteModal.nativeElement.click();
         this.notificationService.delete('Xóa thành công');
         this.billList = this.billList.filter(bill => bill.id !== id);
+        this.getData();
       },
       error => console.log(error)
     );
@@ -195,6 +202,7 @@ export class BillComponent implements OnInit {
           this.closeCreateModal.nativeElement.click();
           this.notificationService.create('Tạo mới thành công');
           window.location.reload();
+          this.getData();
         },
         error => console.log(error)
       );
@@ -242,5 +250,25 @@ export class BillComponent implements OnInit {
       }),
       deleteFlag: [0]
     });
+  }
+  private getData(): void {
+    this.billService.getPage(this.page.pageable)
+      .subscribe(page => {
+        this.page = page;
+      });
+  }
+  public getNextPage(): void {
+    this.page.pageable = this.paginationService.getNextPage(this.page);
+    this.getData();
+  }
+
+  public getPreviousPage(): void {
+    this.page.pageable = this.paginationService.getPreviousPage(this.page);
+    this.getData();
+  }
+
+  public getPageInNewSize(pageSize: number): void {
+    this.page.pageable = this.paginationService.getPageInNewSize(this.page, pageSize);
+    this.getData();
   }
 }
