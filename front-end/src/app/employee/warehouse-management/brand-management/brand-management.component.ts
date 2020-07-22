@@ -1,53 +1,58 @@
-import * as $ from 'jquery';
-import {Component, OnInit} from '@angular/core';
+// import * as $ from 'jquery';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {finalize} from 'rxjs/operators';
 import {Brand} from '../../../models/brand';
 import {BrandService} from '../../../services/brand.service';
-
+import {ToastrService} from 'ngx-toastr';
+declare var $: any;
 @Component({
   selector: 'app-brand-management',
   templateUrl: './brand-management.component.html',
   styleUrls: ['./brand-management.component.scss']
 })
 export class BrandManagementComponent implements OnInit {
-  listError: any = '';
+  @ViewChild('closeCreateModal') closeCreateModal;
   imgSrc = 'https://via.placeholder.com/150';
   selectedImage: any = null;
   downloadURL: Observable<string>;
   brandForm: FormGroup;
   brand: Brand;
   brandList: Brand[];
-  size = 2;
+  size = 5;
   pageClick = 0;
   pages = [];
   totalPages = 1;
   search = '';
   isSearch = false;
-  key = '';
+  key = 'id';
   reverse = false;
   brandName: string;
   brandEditForm: FormGroup;
+  deleteList = new Array();
+  WEBSITE_PATTERN = '^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+(\\.[a-z]{2,}){1,3}(#?\\/?[a-zA-Z0-9#]+)*\\/?(\\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$';
+
 
   constructor(
     private brandService: BrandService,
     private fb: FormBuilder,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private toastr: ToastrService
   ) {
     this.brandForm = this.fb.group({
       brandLogo: [''],
       brandName: ['', Validators.required],
       brandAddress: ['', Validators.required],
-      brandWebsite: ['', Validators.required]
+      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_PATTERN)]]
     });
     this.brandEditForm = this.fb.group({
       id: [''],
       brandLogo: ['', Validators.required],
       brandName: ['', Validators.required],
       brandAddress: ['', Validators.required],
-      brandWebsite: ['', Validators.required]
+      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_PATTERN)]]
     });
   }
 
@@ -57,6 +62,29 @@ export class BrandManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllBrand();
+    $('#checkAll').click(function() {
+      $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+  }
+  showCreateSuccess(): void {
+    this.toastr.success('Thêm mới thành công!');
+  }
+  showCreateError(): void {
+    this.toastr.error('Tên thương hiệu đã tồn tại!');
+  }
+  showCreateWarning(): void {
+    this.toastr.warning('Vui lòng nhập đầy đủ thông tin!');
+  }
+  showEditSuccess(): void {
+    this.toastr.success('Thay đổi thành công!');
+  }
+  initCreateForm(): void {
+    this.brandForm = this.fb.group({
+      brandLogo: [''],
+      brandName: ['', Validators.required],
+      brandAddress: ['', Validators.required],
+      brandWebsite: ['', Validators.required]
+    });
   }
 
   sort(key): void {
@@ -91,7 +119,6 @@ export class BrandManagementComponent implements OnInit {
   onSubmit(page): void {
     this.brandService.getAllBrand(page, this.size, this.search).subscribe(
       next => {
-        // console.log(next);
         this.pageClick = page;
         this.brandList = next.content;
         this.totalPages = next.totalPages;
@@ -116,18 +143,24 @@ export class BrandManagementComponent implements OnInit {
     if (this.brandForm.valid) {
       this.brandService.createBrand(this.brandForm.value).subscribe(
         next => {
-          alert('New brand has been added!');
-          window.location.reload();
+          this.showCreateSuccess();
+          this.closeCreateModal.nativeElement.click();
+          this.initCreateForm();
+          this.onSubmit(0);
         },
         error => {
           if (error.status === 500) {
-            alert("This brand is already exist!");
+            this.showCreateError();
           }
         }
       );
     } else {
-      alert('Please enter information!');
+      this.showCreateWarning();
     }
+  }
+
+  cancelCreateForm(): void {
+    this.initCreateForm();
   }
 
   onFileSelected(event: any): void {
@@ -177,21 +210,13 @@ export class BrandManagementComponent implements OnInit {
     );
   }
 
-  editId(id: number): void {
-    this.brandService.findById(id).subscribe(
-      next => {
-        this.brandEditForm.patchValue(next);
-
-      }
-    );
-  }
 
   // tslint:disable-next-line:typedef
   edit() {
     console.log(this.brandForm.value);
     this.brandService.editBrand(this.brandEditForm.value).subscribe(
       next => {
-        alert('Thay đổi thành công');
+        this.showEditSuccess();
       },
       error => console.log(error));
   }
@@ -206,6 +231,51 @@ export class BrandManagementComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  deleteCheckbox(event, id): void {
+    const indexOfId = this.deleteList.indexOf(id);
+    if (event.target.checked) {
+      if (indexOfId < 0) {
+        this.deleteList.push(id);
+        console.log(this.deleteList.indexOf(id));
+      }
+    } else {
+      this.deleteList.splice(indexOfId, 1);
+    }
+  }
+  deleteAllCheckbox(event): void {
+    if (event.target.checked) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.brandList.length; i++) {
+        this.deleteList.push(this.brandList[i].id);
+        console.log(this.brandList[i]);
+      }
+    } else {
+      this.deleteList.splice(0, this.deleteList.length);
+    }
+  }
+  deleteManyBrand(): void {
+    let deleteConfirm = false;
+    if (this.deleteList.length <= 0) {
+      // alert('Bạn chưa chọn thương hiệu nào để tiến hành xóa!');
+      this.toastr.error('Bạn chưa chọn thương hiệu nào để tiến hành xóa!');
+    } else {
+      deleteConfirm = confirm('Bạn có chắc chắn muốn xóa những thương hiệu này không?');
+    }
+    if (deleteConfirm) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.deleteList.length; i++) {
+        this.brandService.deleteBrandById(this.deleteList[i]).subscribe(
+          next => {
+            this.ngOnInit();
+            console.log(this.brandList[i]);
+          },
+          error => console.log(error)
+        );
+      }
+      this.ngOnInit();
+    }
   }
 
   switchEdit(brand: Brand): void {
