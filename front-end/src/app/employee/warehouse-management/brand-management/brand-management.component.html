@@ -10,135 +10,158 @@
   </div>
   <hr>
   <div class="row mt-3 px-3">
-      <button  class="btn pl-2 btn-custom" data-toggle="modal" data-target="#createBrand"><span
+    <div class="col-12">
+      <button class="btn pl-2 btn-custom" data-toggle="modal" data-target="#createBrand"><span
         class="fa fa-plus-square"></span> Thêm mới
       </button>
-  </div>
-  <div class="row px-3">
-      <form [formGroup]="brandEditForm" (ngSubmit)="edit()">
-        <table style="table-layout: fixed; width: 100%" class="table table-bordered mt-3 table-striped">
-          <thead class="table-header">
-          <tr>
-            <th class="sticky-top">Hình ảnh</th>
-            <th class="sticky-top" (click)="sort('id')">Mã Thương Hiệu
-              <i [class]="reverse ? 'fa fa-sort-asc' : 'fa fa-sort-desc'" aria-hidden="true"></i>
-            </th>
-            <th class="sticky-top">Tên Thương Hiệu</th>
-            <th class="sticky-top">Trụ sở</th>
-            <th class="sticky-top">Website</th>
-            <th class="sticky-top">Sửa | Xóa</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let brand of brandList | orderBy: key: reverse">
-            <td *ngIf="brand.isEditable">
-              <div>
-                <img class="brand-logo" [src]="imgSrc">
-              </div>
-              <div class="mt-1">
-                <input style="display: none" type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg"
-                       #fileInput
-                       (change)="onFileSelected($event)" formControlName="brandLogo">
-                <button type="button" class="btn btn-primary" (click)="fileInput.click()">Chọn ảnh</button>
-              </div>
-            </td>
-            <td *ngIf="!brand.isEditable">
-              <img class="brand-logo" [src]="brand.brandLogo">
-
-            </td>
-            <!--          <input formControlName="id" hidden>-->
-            <td>
-             {{brand.id}}
-            </td>
-            <td *ngIf="brand.isEditable">
-              <div class="input-group">
-                <input formControlName="brandName" type="text" class="form-control" placeholder="Tên thương hiệu (*)"
-                       [(ngModel)]="brand.brandName">
-              </div>
-              <p class="text-danger"
-                 *ngIf="brandEditForm.get('brandName').hasError('required') && brandEditForm.get('brandName').touched">
-                Tên thương hiệu không được để trống!
-              </p>
-            </td>
-            <td *ngIf="!brand.isEditable">
-              {{brand.brandName}}
-            </td>
-            <td *ngIf="brand.isEditable">
-              <!--            <input type="text" class="edit-input form-control" formControlName="brandAddress"-->
-              <!--                   [(ngModel)]="brand.brandAddress" [hidden]="!brand.isEditable"/>-->
-              <div class="input-group">
-                <input formControlName="brandAddress" type="text" class="form-control" placeholder="Trụ sở (*)"
-                       [(ngModel)]="brand.brandAddress">
-              </div>
-              <p class="text-danger"
-                 *ngIf="brandEditForm.get('brandAddress').hasError('required') && brandEditForm.get('brandAddress').touched">
-                Trụ sở thương hiệu không được để trống!
-              </p>
-            </td>
-            <td *ngIf="!brand.isEditable">
-            {{brand.brandAddress}}
-            </td>
-            <td *ngIf="brand.isEditable">
-              <div class="input-group">
-                <input formControlName="brandWebsite" type="text" class="form-control" placeholder="Website (*)"
-                       [(ngModel)]="brand.brandWebsite">
-              </div>
-              <p class="text-danger"
-                 *ngIf="brandEditForm.get('brandWebsite').hasError('required') && brandEditForm.get('brandWebsite').touched">
-                Website thương hiệu không được để trống!
-              </p>
-            </td>
-            <td *ngIf="!brand.isEditable">
-              {{brand.brandWebsite}}
-            </td>
-            <td>
-              <button class="mr-3 global-button fa fa-2x fa-pencil "
-                      (click)="brand.isEditable=!brand.isEditable; catchBrandId(brand.id)"
-                      *ngIf="!brand.isEditable"></button>
-              <button class="mr-3 global-button fa fa-2x fa-check"
-                      *ngIf="brand.isEditable" (click)="switchEdit(brand)"></button>
-              <button hidden type="submit" id="submit{{brand.id}}"
-              ></button>
-              <button type="button" class="global-button fa fa-2x fa-trash" data-toggle="modal"
-                      (click)="catchBrandId(brand.id)"
-                      data-target="#brandConfirmDelete"></button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </form>
-  </div>
-    <div class="row w-100 justify-content-center">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item" (click)="onFirst()"><a class="page-link">First</a></li>
-          <li class="page-item" (click)="onPrevious()" [ngClass]="pageClick==0?'disabled':''">
-            <a class="page-link">Previous</a>
-          </li>
-          <li *ngIf="pageClick != 0" class="page-item" (click)="onSubmit(pages[pageClick-1])">
-            <a class="page-link">{{pageClick}}</a>
-          </li>
-          <li [ngClass]="(pageClick == pages[pageClick]) ? 'active' : ''" class="page-item"
-              (click)="onSubmit(pages[pageClick])">
-            <a class="page-link">{{pageClick + 1}}</a>
-          </li>
-          <li *ngIf="pageClick < pages.length -1" class="page-item" (click)="onSubmit(pages[pageClick+1])">
-            <a class="page-link">{{pageClick + 2}}</a>
-          </li>
-          <li *ngIf="pageClick < pages.length -2" class="page-item">
-            <a class="page-link">...</a>
-          </li>
-          <li *ngIf="pageClick < pages.length-2" class="page-item" (click)="onLast()">
-            <a class="page-link">{{pages[pages.length - 1] + 1}}</a>
-          </li>
-          <li class="page-item" (click)="onNext()" [ngClass]="pageClick==totalPages-1?'disabled':''">
-            <a class="page-link">Next</a>
-          </li>
-          <li class="page-item" (click)="onLast()"><a class="page-link">Last</a></li>
-        </ul>
-      </nav>
+      <button type="button" class="btn btn-custom float-right" (click)="deleteManyBrand()">Xóa những
+        thương hiệu đã chọn
+      </button>
     </div>
   </div>
+  <div class="row px-3">
+    <form [formGroup]="brandEditForm" (ngSubmit)="edit()">
+      <table style="table-layout: fixed; width: 100%" class="table table-bordered mt-3 table-striped">
+        <thead class="table-header">
+        <tr>
+          <th class="sticky-top">Hình ảnh</th>
+          <th class="sticky-top" (click)="sort('id')">Mã Thương Hiệu
+            <i [class]="reverse ? 'fa fa-sort-asc' : 'fa fa-sort-desc'" aria-hidden="true"></i>
+          </th>
+          <th class="sticky-top">Tên Thương Hiệu</th>
+          <th class="sticky-top">Trụ sở</th>
+          <th class="sticky-top">Website</th>
+          <th class="sticky-top">Sửa | Xóa</th>
+          <th class="sticky-top" scope="col">
+            <div class="custom-control custom-checkbox" style="margin: 0 36%;">
+              <input type="checkbox" name="checkbox" (click)="deleteAllCheckbox($event)" class="custom-control-input"
+                     id="checkAll">
+              <label class="custom-control-label" for="checkAll"></label>
+            </div>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let brand of brandList | orderBy: key: reverse">
+          <td *ngIf="brand.isEditable">
+            <div>
+              <img class="brand-logo" [src]="imgSrc">
+            </div>
+            <div class="mt-1">
+              <input style="display: none" type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg"
+                     #fileInput
+                     (change)="onFileSelected($event)" formControlName="brandLogo">
+              <button type="button" class="btn btn-primary" (click)="fileInput.click()">Chọn ảnh</button>
+            </div>
+          </td>
+          <td *ngIf="!brand.isEditable">
+            <img class="brand-logo" [src]="brand.brandLogo">
+
+          </td>
+          <!--          <input formControlName="id" hidden>-->
+          <td>
+            {{brand.id}}
+          </td>
+          <td *ngIf="brand.isEditable">
+            <div class="input-group">
+              <input formControlName="brandName" type="text" class="form-control" placeholder="Tên thương hiệu (*)"
+                     [(ngModel)]="brand.brandName">
+            </div>
+            <p class="text-danger"
+               *ngIf="brandEditForm.get('brandName').hasError('required') && brandEditForm.get('brandName').touched">
+              Tên thương hiệu không được để trống!
+            </p>
+          </td>
+          <td *ngIf="!brand.isEditable">
+            {{brand.brandName}}
+          </td>
+          <td *ngIf="brand.isEditable">
+            <!--            <input type="text" class="edit-input form-control" formControlName="brandAddress"-->
+            <!--                   [(ngModel)]="brand.brandAddress" [hidden]="!brand.isEditable"/>-->
+            <div class="input-group">
+              <input formControlName="brandAddress" type="text" class="form-control" placeholder="Trụ sở (*)"
+                     [(ngModel)]="brand.brandAddress">
+            </div>
+            <p class="text-danger"
+               *ngIf="brandEditForm.get('brandAddress').hasError('required') && brandEditForm.get('brandAddress').touched">
+              Trụ sở thương hiệu không được để trống!
+            </p>
+          </td>
+          <td *ngIf="!brand.isEditable">
+            {{brand.brandAddress}}
+          </td>
+          <td *ngIf="brand.isEditable">
+            <div class="input-group">
+              <input formControlName="brandWebsite" type="text" class="form-control" placeholder="Website (*)"
+                     [(ngModel)]="brand.brandWebsite">
+            </div>
+            <p class="text-danger"
+               *ngIf="brandEditForm.get('brandWebsite').hasError('required') && brandEditForm.get('brandWebsite').touched">
+              Website thương hiệu không được để trống!
+            </p>
+            <p class="text-danger"
+               *ngIf="brandEditForm.get('brandWebsite').hasError('pattern') && brandEditForm.get('brandWebsite').touched">
+              Website sai định dạng!
+            </p>
+          </td>
+          <td *ngIf="!brand.isEditable">
+            {{brand.brandWebsite}}
+          </td>
+          <td>
+            <button class="mr-3 global-button fa fa-2x fa-pencil "
+                    (click)="brand.isEditable=!brand.isEditable; catchBrandId(brand.id)"
+                    *ngIf="!brand.isEditable"></button>
+            <button class="mr-3 global-button fa fa-2x fa-check"
+                    *ngIf="brand.isEditable" (click)="switchEdit(brand)"></button>
+            <button hidden type="submit" id="submit{{brand.id}}"
+            ></button>
+            <button type="button" class="global-button fa fa-2x fa-trash" data-toggle="modal"
+                    (click)="catchBrandId(brand.id)"
+                    data-target="#brandConfirmDelete"></button>
+          </td>
+          <td class="">
+            <div class="custom-control custom-checkbox" style="margin: 0 34%;">
+              <input type="checkbox" name="checkbox" [value]="brand.id" (change)="deleteCheckbox($event,brand.id)"
+                     class="custom-control-input" id="{{brand.id}}">
+              <label class="custom-control-label" for="{{brand.id}}"></label>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+  <div class="row w-100 justify-content-center">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item" (click)="onFirst()"><a class="page-link">First</a></li>
+        <li class="page-item" (click)="onPrevious()" [ngClass]="pageClick==0?'disabled':''">
+          <a class="page-link">Previous</a>
+        </li>
+        <li *ngIf="pageClick != 0" class="page-item" (click)="onSubmit(pages[pageClick-1])">
+          <a class="page-link">{{pageClick}}</a>
+        </li>
+        <li [ngClass]="(pageClick == pages[pageClick]) ? 'active' : ''" class="page-item"
+            (click)="onSubmit(pages[pageClick])">
+          <a class="page-link">{{pageClick + 1}}</a>
+        </li>
+        <li *ngIf="pageClick < pages.length -1" class="page-item" (click)="onSubmit(pages[pageClick+1])">
+          <a class="page-link">{{pageClick + 2}}</a>
+        </li>
+        <li *ngIf="pageClick < pages.length -2" class="page-item">
+          <a class="page-link">...</a>
+        </li>
+        <li *ngIf="pageClick < pages.length-2" class="page-item" (click)="onLast()">
+          <a class="page-link">{{pages[pages.length - 1] + 1}}</a>
+        </li>
+        <li class="page-item" (click)="onNext()" [ngClass]="pageClick==totalPages-1?'disabled':''">
+          <a class="page-link">Next</a>
+        </li>
+        <li class="page-item" (click)="onLast()"><a class="page-link">Last</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
 
 
 <!-- Modal Create Brand -->
@@ -218,7 +241,8 @@
             <button type="submit" class="btn btn-warning #createBrand ">
               Xác nhận
             </button>
-            <button class="btn btn-secondary" #closeCreateModal (click)="cancelCreateForm()" data-dismiss="modal">Hủy</button>
+            <button class="btn btn-secondary" #closeCreateModal (click)="cancelCreateForm()" data-dismiss="modal">Hủy
+            </button>
 
           </div>
         </form>
@@ -241,7 +265,7 @@
         </button>
       </div>
       <p class="modal-body" style="text-align: center">
-        Bạn có chắc chắn xóa thương hiệu <span class="btn btn-danger">{{brandName}}</span> không?
+        Bạn có chắc chắn xóa thương hiệu <span class="text-danger font-weight-bold">{{brandName}}</span> không?
       </p>
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn btn-danger" (click)="delete()">Xác Nhận</button>

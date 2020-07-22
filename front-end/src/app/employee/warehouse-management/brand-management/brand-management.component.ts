@@ -1,4 +1,4 @@
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
@@ -7,7 +7,7 @@ import {finalize} from 'rxjs/operators';
 import {Brand} from '../../../models/brand';
 import {BrandService} from '../../../services/brand.service';
 import {ToastrService} from 'ngx-toastr';
-
+declare var $: any;
 @Component({
   selector: 'app-brand-management',
   templateUrl: './brand-management.component.html',
@@ -31,6 +31,7 @@ export class BrandManagementComponent implements OnInit {
   reverse = false;
   brandName: string;
   brandEditForm: FormGroup;
+  deleteList = new Array();
   WEBSITE_PATTERN = '^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+(\\.[a-z]{2,}){1,3}(#?\\/?[a-zA-Z0-9#]+)*\\/?(\\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$';
 
 
@@ -51,7 +52,7 @@ export class BrandManagementComponent implements OnInit {
       brandLogo: ['', Validators.required],
       brandName: ['', Validators.required],
       brandAddress: ['', Validators.required],
-      brandWebsite: ['', Validators.required]
+      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_PATTERN)]]
     });
   }
 
@@ -61,6 +62,9 @@ export class BrandManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllBrand();
+    $('#checkAll').click(function() {
+      $('input:checkbox').not(this).prop('checked', this.checked);
+    });
   }
   showCreateSuccess(): void {
     this.toastr.success('Thêm mới thành công!');
@@ -70,6 +74,9 @@ export class BrandManagementComponent implements OnInit {
   }
   showCreateWarning(): void {
     this.toastr.warning('Vui lòng nhập đầy đủ thông tin!');
+  }
+  showEditSuccess(): void {
+    this.toastr.success('Thay đổi thành công!');
   }
   initCreateForm(): void {
     this.brandForm = this.fb.group({
@@ -203,21 +210,13 @@ export class BrandManagementComponent implements OnInit {
     );
   }
 
-  editId(id: number): void {
-    this.brandService.findById(id).subscribe(
-      next => {
-        this.brandEditForm.patchValue(next);
-
-      }
-    );
-  }
 
   // tslint:disable-next-line:typedef
   edit() {
     console.log(this.brandForm.value);
     this.brandService.editBrand(this.brandEditForm.value).subscribe(
       next => {
-        alert('Thay đổi thành công');
+        this.showEditSuccess();
       },
       error => console.log(error));
   }
@@ -232,6 +231,51 @@ export class BrandManagementComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  deleteCheckbox(event, id): void {
+    const indexOfId = this.deleteList.indexOf(id);
+    if (event.target.checked) {
+      if (indexOfId < 0) {
+        this.deleteList.push(id);
+        console.log(this.deleteList.indexOf(id));
+      }
+    } else {
+      this.deleteList.splice(indexOfId, 1);
+    }
+  }
+  deleteAllCheckbox(event): void {
+    if (event.target.checked) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.brandList.length; i++) {
+        this.deleteList.push(this.brandList[i].id);
+        console.log(this.brandList[i]);
+      }
+    } else {
+      this.deleteList.splice(0, this.deleteList.length);
+    }
+  }
+  deleteManyBrand(): void {
+    let deleteConfirm = false;
+    if (this.deleteList.length <= 0) {
+      // alert('Bạn chưa chọn thương hiệu nào để tiến hành xóa!');
+      this.toastr.error('Bạn chưa chọn thương hiệu nào để tiến hành xóa!');
+    } else {
+      deleteConfirm = confirm('Bạn có chắc chắn muốn xóa những thương hiệu này không?');
+    }
+    if (deleteConfirm) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.deleteList.length; i++) {
+        this.brandService.deleteBrandById(this.deleteList[i]).subscribe(
+          next => {
+            this.ngOnInit();
+            console.log(this.brandList[i]);
+          },
+          error => console.log(error)
+        );
+      }
+      this.ngOnInit();
+    }
   }
 
   switchEdit(brand: Brand): void {
