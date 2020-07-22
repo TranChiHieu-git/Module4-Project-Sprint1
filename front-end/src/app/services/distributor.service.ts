@@ -62,4 +62,7 @@ export class DistributorService {
     }
     return this.httpClient.post<any>(this.MY_API_URL + '/distributor/deleteAll', sendList);
   }
+  isExistDistributorName(name: string): Observable<Distributor> {
+    return this.httpClient.get<Distributor>(this.MY_API_URL + '/distributor/exist/' + name);
+  }
 }
