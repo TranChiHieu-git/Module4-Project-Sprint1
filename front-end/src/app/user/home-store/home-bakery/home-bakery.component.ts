@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {ProductService} from '../../../services/product.service';
 
 @Component({
-  selector: 'app-home-cake',
-  templateUrl: './home-cake.component.html',
-  styleUrls: ['./home-cake.component.scss']
+  selector: 'app-home-bakery',
+  templateUrl: './home-bakery.component.html',
+  styleUrls: ['./home-bakery.component.scss']
 })
-export class HomeCakeComponent implements OnInit {
-  cakeList = [];
+export class HomeBakeryComponent implements OnInit {
+  public productList = [];
   reverse = false;
   key = 'amount_sold';
   p = 1;
@@ -20,7 +20,8 @@ export class HomeCakeComponent implements OnInit {
   constructor(public productService: ProductService) { }
 
   ngOnInit(): void {
-    this.productService.getAllProductByCategory(1).subscribe(next => this.cakeList = next,
-        error => console.log(error));
+    this.productService.getAllProduct().subscribe(next => {
+        this.productList = next;
+      }, error => console.log(error));
   }
 }

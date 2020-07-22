@@ -6,6 +6,7 @@ import {Brand} from '../models/brand';
 @Injectable()
 export class BrandService {
   private API_URL = 'http://localhost:8080/warehouse-management/brand';
+  API_URL_1 = 'http://localhost:8080/user/home-store/all-brand';
 
   constructor(private http: HttpClient) {
   }
@@ -31,5 +32,9 @@ export class BrandService {
   }
   deleteBrandById(id: number): Observable<void> {
     return this.http.delete<void>(this.API_URL + '/' + id);
+  }
+
+  getAllBrandToOption(): Observable<any> {
+    return this.http.get(this.API_URL_1);
   }
 }
