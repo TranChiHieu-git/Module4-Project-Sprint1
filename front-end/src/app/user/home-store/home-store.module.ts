@@ -15,6 +15,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [HomeStoreComponent, HomeCakeComponent, HomeCandyComponent, DetailComponent, HomeBakeryComponent],
+  exports: [
+    HomeStoreComponent
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -24,5 +27,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     FormsModule,
     ReactiveFormsModule
   ]
+
 })
 export class HomeStoreModule { }

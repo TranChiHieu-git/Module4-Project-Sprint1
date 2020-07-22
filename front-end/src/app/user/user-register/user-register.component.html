@@ -1,56 +1,90 @@
-<div >
-  <form class="register text-dark p-3">
-    <h1 class="text-center pt-2">Đăng Ký</h1>
-    <div class="form-group mb-3">
+<div>
+  <form class="register text-dark p-2" [formGroup]="registerForm">
+    <h2 class="text-center pt-1">Đăng Ký</h2>
+
+    <!-- fullName -->
+    <div class="form-group mb-2">
       <div class="form-row d-flex align-items-center ">
-        <div class="col-md-4">
-          <label>
-            Họ Tên:
-          </label>
+        <div class="col-md-2 d-flex align-items-center pr-2 ">
+          <span class="material-icons">perm_identity</span>(<i class="star">*</i>):
         </div>
-        <div class="col-md-8">
-          <input type="text" class="form-control">
+        <div class="col-md-10">
+          <input type="text" class="form-control" formControlName="user_name" placeholder=" Họ Tên">
+        </div>
+      </div>
+      <div *ngFor="let validation of validation_messages.user_name">
+        <div class="text-danger"
+             *ngIf="registerForm.get('user_name').hasError(validation.type) && (registerForm.get('user_name').dirty ||
+             registerForm.get('user_name').touched)">
+          {{validation.message}}
         </div>
       </div>
     </div>
-    <div class="form-group mb-3">
+
+
+    <!-- accountName -->
+    <div class="form-group mb-2">
       <div class="form-row d-flex align-items-center ">
-        <div class="col-md-4">
-          <label>
-            Email:
-          </label>
+        <div class="col-md-2 d-flex align-items-center ">
+          <span class="material-icons">account_circle</span> (<i class="star">*</i>):
         </div>
-        <div class="col-md-8">
-          <input type="email" class="form-control" id="inputEmail2" placeholder="Email">
+        <div class="col-md-10">
+          <input type="text" class="form-control" id="accountName" placeholder="Tên đăng nhập"
+                 formControlName="accountName">
+        </div>
+      </div>
+      <div *ngFor="let validation of validation_messages.accountName">
+        <div class="text-danger"
+             *ngIf="registerForm.get('accountName').hasError(validation.type) && (registerForm.get('accountName').dirty || registerForm.get('accountName').touched)">
+          {{validation.message}}
         </div>
       </div>
     </div>
-    <div class="form-group mb-3">
+
+    <!-- Email -->
+    <div class="form-group mb-2">
       <div class="form-row d-flex align-items-center ">
-        <div class="col-md-4">
-          <label>
-            Số Điện Thoại:
-          </label>
+        <div class="col-md-2 d-flex align-items-center ">
+          <span class="material-icons">email</span> (<i class="star">*</i>):
         </div>
-        <div class="col-md-8">
-          <input type="text" class="form-control">
+        <div class="col-md-10">
+          <input type="email" class="form-control" id="inputEmail2" placeholder="Email"
+                 formControlName="email"
+                 required>
         </div>
       </div>
+      <div *ngFor="let validation of validation_messages.email">
+        <div class="text-danger"
+             *ngIf="registerForm.get('email').hasError(validation.type) && (registerForm.get('email').dirty || registerForm.get('email').touched)">
+          {{validation.message}}</div>
+      </div>
     </div>
-    <div class="form-group mb-1">
+
+    <!-- phone -->
+    <div class="form-group mb-2">
       <div class="form-row d-flex align-items-center ">
-        <div class="col-md-4">
-          <label>
-            Ngày Sinh:
-          </label>
+        <div class="col-md-2 d-flex align-items-center ">
+          <span class="material-icons">settings_phone</span> (<i class="star">*</i>):
         </div>
-        <div class="col-md-8">
-          <!--          <mat-form-field class="text-danger" appearance="fill">-->
-          <!--            <mat-label >Chọn Ngày</mat-label>-->
-          <!--            <input matInput [matDatepicker]="picker">-->
-          <!--            <mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle>-->
-          <!--            <mat-datepicker #picker></mat-datepicker>-->
-          <!--          </mat-form-field>-->
+        <div class="col-md-10">
+          <input type="text" class="form-control" placeholder="Số Điện Thoại" formControlName="phone"
+                 required>
+        </div>
+      </div>
+      <div *ngFor="let validation of validation_messages.phoneNumber">
+        <div class="text-danger"
+             *ngIf="registerForm.get('phone').hasError(validation.type) && (registerForm.get('phone').dirty || registerForm.get('phone').touched)">
+          {{validation.message}}</div>
+      </div>
+    </div>
+
+    <!-- birthday -->
+    <div class="form-group mb-2">
+      <div class="form-row d-flex align-items-center ">
+        <div class="col-md-2 d-flex align-items-center ">
+          <span class="material-icons">cake</span> (<i class="star">*</i>):
+        </div>
+        <div class="col-md-10 mt-1">
           <mat-form-field appearance="fill">
             <mat-label class=" mb-2">Chọn Ngày</mat-label>
             <input matInput [matDatepicker]="dp3" (dateInput)="dp3">
@@ -59,52 +93,83 @@
           </mat-form-field>
         </div>
       </div>
-    </div>
-    <div class="form-group mb-2 ">
-      <div class="form-row d-flex align-items-center ">
-        <div class="col-md-4 d-flex align-items-center">
-          <label>
-            Mật Khẩu:
-          </label>
-        </div>
-        <div class="col-md-8">
-          <input type="password" class="form-control" id="inputPassword4" placeholder=" Mật Khẩu">
-        </div>
+      <div *ngFor="let validation of validation_messages.birthday">
+        <div class="text-danger"
+             *ngIf="registerForm.get('birthday').hasError(validation.type) && (registerForm.get('birthday').dirty || registerForm.get('birthday').touched)">
+          {{validation.message}}</div>
       </div>
     </div>
-    <div class="form-group mb-2 ">
-      <div class="form-row d-flex align-items-center ">
-        <div class="col-md-4 d-flex align-items-center">
-          <label>
-            Nhập Lại Mật Khẩu:
-          </label>
+
+
+    <!-- Password -->
+    <fieldset>
+      <div class="form-group mb-2 ">
+        <div class="form-row d-flex align-items-center ">
+          <div class="col-md-2 d-flex align-items-center">
+            <span class="material-icons">vpn_key</span> (<i class="star">*</i>):
+          </div>
+          <div class="col-md-10">
+            <input type="password" class="form-control" placeholder="Mật Khẩu" formControlName="accountPassword" required>
+          </div>
         </div>
-        <div class="col-md-8">
-          <input type="password" class="form-control" id="inputPasswordAgain" placeholder="  Nhập Lại Mật Khẩu">
+        <div *ngFor="let validation of validation_messages.password">
+          <div class="text-danger"
+               *ngIf="registerForm.get('accountPassword').hasError(validation.type) &&(registerForm.get('accountPassword').dirty ||
+               registerForm.get('accountPassword').touched)">
+            {{validation.message}}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="form-row mb-3 ">
-      <div class="col-md-4">
-        <label>Giới Tính:</label></div>
-      <div class="form-check col-md-4 text-center">
-        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-        <label class="form-check-label" for="exampleRadios1">
-          Nam
-        </label>
+
+      <!-- Password Confirm -->
+      <div class="form-group mb-2 ">
+        <div class="form-row d-flex align-items-center ">
+          <div class="col-md-2 d-flex align-items-center">
+            <span class="material-icons">done_all</span><span class="material-icons">vpn_key</span>(<i class="star">*</i>):
+          </div>
+          <div class="col-md-10">
+            <input type="password" class="form-control" placeholder="Nhập Lại Mật Khẩu" formControlName="confirmPassword" required>
+          </div>
+          <div *ngFor="let validation of validation_messages.confirmPassword">
+            <div class="text-danger" *ngIf="registerForm.hasError('passwordnotmatch') ">
+              {{validation.message}}
+            </div>
+          </div>
+        </div>
+        <div *ngFor="let validation of validation_messages.confirmPassword">
+          <div class="text-danger"
+               *ngIf="registerForm.get('confirmPassword').hasError(validation.type) && (registerForm.get('confirmPassword').dirty ||
+                       registerForm.get('confirmPassword').touched)">
+            {{validation.message}}
+          </div>
+        </div>
       </div>
-      <div class="form-check col-md-4 text-center">
-        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-        <label class="form-check-label" for="exampleRadios2">
-          Nữ
-        </label>
+
+    </fieldset>
+
+    <div class="form-row mb-3 align-items-center ">
+      <div class="col-md-2 align-items-center">
+        <span class="material-icons">wc</span>
+      </div>
+      <div class="form-check col-md-5 text-center">
+        <label><input type="radio" formControlName="gender" value="Nam"> Nam</label>
+      </div>
+      <div class="form-check col-md-5 text-center">
+        <label><input type="radio" formControlName="gender" value="Nữ"> Nữ</label>
+      </div>
+      <div *ngFor="let validation of validation_messages.gender">
+        <div class="error-message"
+             *ngIf="registerForm.get('gender').hasError(validation.type) && (registerForm.get('gender').dirty || registerForm.get('gender').touched)">
+          {{validation.message}}</div>
       </div>
     </div>
     <div class="text-center mt-3">
-      <button type="submit" class="btn-sm btn-warning submitButton mr-3 w-25" [routerLink]="'/user-manage/user-detail'">
+      <button type="button"
+              class="btn-sm btn-warning submitButton mr-3 w-25"
+              (click)="onSubmitRegisters()">
         Đăng Ký
       </button>
-      <button href="" class="btn-sm btn-outline-secondary  w-25" data-dismiss="modal"> Hủy</button>
+      <button class="btn-sm btn-outline-secondary  w-25" data-dismiss="modal"> Hủy</button>
     </div>
   </form>
 </div>
