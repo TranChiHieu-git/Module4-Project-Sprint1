@@ -46,11 +46,12 @@
           <td *ngIf="brand.isEditable">
             <div>
               <img class="brand-logo" [src]="imgSrc">
+              <input formControlName="brandLogo" type="text" hidden [(ngModel)]="imgSrc">
             </div>
             <div class="mt-1">
               <input style="display: none" type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg"
                      #fileInput
-                     (change)="onFileSelected($event)" formControlName="brandLogo">
+                     (change)="onFileSelected($event)">
               <button type="button" class="btn btn-primary" (click)="fileInput.click()">Chọn ảnh</button>
             </div>
           </td>

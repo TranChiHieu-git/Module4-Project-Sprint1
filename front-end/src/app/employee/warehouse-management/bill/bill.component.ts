@@ -44,7 +44,8 @@ export class BillComponent implements OnInit {
               private ref: ChangeDetectorRef,
               private fb: FormBuilder,
               private paginationService: CustomPaginationService,
-              private notificationService: NotificationService) { }
+              private notificationService: NotificationService) {
+  }
 
   ngOnInit(): void {
     this.today = new Date().toISOString().split('T')[0];
@@ -52,7 +53,8 @@ export class BillComponent implements OnInit {
     this.buildEditForm();
     this.initCreateForm();
   }
-  buildEditForm(): void{
+
+  buildEditForm(): void {
     this.editForm = this.fb.group({
       id: [''],
       billName: ['', Validators.required],
@@ -100,42 +102,50 @@ export class BillComponent implements OnInit {
     this.getAllPay();
     this.getAllTypeBill();
   }
+
   private getAllWareHouse(): void {
     this.billService.findAllWarehouse().subscribe(data => {
       this.wareHouseList = data;
     });
   }
+
   private getAllTransportation(): void {
     this.billService.findAllTransportation().subscribe(data => {
       this.transportationList = data;
     });
   }
+
   private getAllStorageLocation(): void {
     this.billService.findAllStorageLocation().subscribe(data => {
       this.storageLocationList = data;
     });
   }
+
   private getAllDistributors(): void {
     this.billService.findAllDistributors().subscribe(data => {
       this.distributorList = data;
     });
   }
+
   private getAllEmployee(): void {
     this.billService.findAllEmployee().subscribe(data => {
       this.employeeList = data;
     });
   }
+
   private getAllPay(): void {
     this.billService.findAllPay().subscribe(data => {
       this.payList = data;
     });
   }
+
   private getAllTypeBill(): void {
     this.billService.findAllTypeBill().subscribe(data => {
       this.typeBillList = data;
     });
   }
-  getAllBills(): void{
+
+  getAllBills(): void {
     this.billService.findAllBill().subscribe(
       next => this.billList = next,
       error => {
@@ -146,10 +156,11 @@ export class BillComponent implements OnInit {
 
   editBill(id: number): void {
     this.billService.findByIdBill(id).subscribe(next => {
-      this.editForm.patchValue(next);
+        this.editForm.patchValue(next);
       },
       error => console.log('error'));
   }
+
   onSubmitEdit(): void {
     if (this.editForm.valid) {
       const {value} = this.editForm;
@@ -164,8 +175,7 @@ export class BillComponent implements OnInit {
           this.getData();
         },
         error => console.log(error));
-    }
-    else {
+    } else {
       this.notificationService.edit('Xin lỗi! Bạn chưa chỉnh sửa xong');
     }
   }
@@ -206,8 +216,7 @@ export class BillComponent implements OnInit {
         },
         error => console.log(error)
       );
-    }
-    else {
+    } else {
       this.notificationService.create('Xin lỗi! Bạn chưa thể thêm phiếu. Xin hãy xem lại!!');
     }
   }
@@ -251,12 +260,14 @@ export class BillComponent implements OnInit {
       deleteFlag: [0]
     });
   }
+
   private getData(): void {
     this.billService.getPage(this.page.pageable)
       .subscribe(page => {
         this.page = page;
       });
   }
+
   public getNextPage(): void {
     this.page.pageable = this.paginationService.getNextPage(this.page);
     this.getData();

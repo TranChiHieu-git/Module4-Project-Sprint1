@@ -30,8 +30,7 @@ import {HomeStoreComponent} from './home-store/home-store.component';
     UserLoginComponent,
     UserForgetpasswordComponent,
     UserDetailComponent,
-    UserOderDetailComponent,
-    HomeStoreComponent,
+    UserOderDetailComponent
   ],
   imports: [
     CommonModule,
