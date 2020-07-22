@@ -38,7 +38,6 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {FacebookModule} from 'ngx-facebook';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatSortModule} from '@angular/material/sort';
 import {FilterUniquePipe} from './warehouse-management/product/filter-unique.pipe';
 import {BillComponent} from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
@@ -89,7 +88,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 providers: [
   {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
   BrandService
-],
+]
 })
 
 export class EmployeeModule {

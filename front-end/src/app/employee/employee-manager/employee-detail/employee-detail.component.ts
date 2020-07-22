@@ -1,4 +1,5 @@
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
+declare var $: any;
 import {Component, OnInit} from '@angular/core';
 import {Employee} from '../../employee';
 import {EmployeeService} from '../../../services/employee.service';
@@ -11,6 +12,7 @@ import {Router} from '@angular/router';
 import {TokenStorageService} from '../../../auth/token-storage.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Tempjwtemp} from '../../../models/tempjwtemp';
+import {ToastrService} from 'ngx-toastr';
 // tslint:disable-next-line:typedef
 function comparePassword(c: AbstractControl) {
   const v = c.value;
@@ -33,12 +35,12 @@ function checkCurrentPassword(c: AbstractControl): { [key: string]: any } {
   styleUrls: ['./employee-detail.component.scss']
 })
 export class EmployeeDetailComponent implements OnInit {
-
   constructor(private employeeService: EmployeeService,
               private fb: FormBuilder,
               private afStorage: AngularFireStorage,
               private router: Router,
-              private loginAccount: TokenStorageService) {
+              private loginAccount: TokenStorageService,
+              private toastr: ToastrService) {
   }
 
   url: any;
@@ -53,13 +55,14 @@ export class EmployeeDetailComponent implements OnInit {
   maxDate: Date;
   oldPassword;
   currentPass;
-
+  listError: any = '';
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
   src: any;
   token: any;
   decode = new JwtHelperService();
   tempJwt = new Tempjwtemp();
+
   private uploadFireBaseAndSubmit(): void {
     const target: any = document.getElementById('image');
     const id = Math.random().toString(36).substring(2);
@@ -84,11 +87,16 @@ export class EmployeeDetailComponent implements OnInit {
       gender: new FormControl('', [Validators.required]),
       birthday: new FormControl(''),
       address: new FormControl('', [Validators.required, Validators.pattern(/^(([A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặẹẻẽềềếểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)(\s[A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặếẹẻẽềềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)*)(,\s(([A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặẹẻẽềềểễệỉịọỏếốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)(\s[A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặẹẻếẽềềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)*))*$/)]),
-      position: new FormControl(''),
-      department: new FormControl(''),
+      position: this.fb.group({
+        name: [],
+        id: []
+      }),
+      department: this.fb.group({
+        id: [],
+        name: []
+      }),
       phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^\+84\d{9,10}$/)]),
-      email: new FormControl('', [Validators.required, ]),
-      // Validators.pattern(/^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$/)
+      email: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(.[A-Za-z0-9]+)$/)]),
       image: new FormControl('')
     });
     this.employeeService.findEmployeeByAccountName(this.accountName).subscribe(
@@ -98,14 +106,13 @@ export class EmployeeDetailComponent implements OnInit {
       },
       error => console.log(error)
     );
-    // this.oldPassword = this.employee.account.accountPassword;
-    // console.log(this.oldPassword);
   }
 
   onSubmit1(): void {
     this.editForm.patchValue({
-      image: this.src
+      image: this.src,
     });
+    console.log(this.editForm);
     if (this.editForm.valid) {
       const {value} = this.editForm;
       const data = {
@@ -114,12 +121,21 @@ export class EmployeeDetailComponent implements OnInit {
       };
       this.employeeService.editEmployeeById(data).subscribe(
         next => {
+          $('#editModal').modal('hide');
           console.log(next);
+          this.ngOnInit();
+          this.toastr.success('Chỉnh sửa thông tin thành công');
         },
-        error => console.log(error)
+        error => {
+          if (error.status === 400) {
+            this.listError = error.error;
+          }
+          $('#DeleteModal').modal('hide');
+          this.ngOnInit();
+          this.toastr.error('Có lỗi xảy ra!');
+        }
       );
     }
-    // window.location.reload();
   }
 
   loadEditForm(): void {
@@ -142,7 +158,7 @@ export class EmployeeDetailComponent implements OnInit {
   loadPasswordForm(): void {
     this.editPasswordForm = this.fb.group({
       accountName: new FormControl(''),
-      // oldPassword: new FormControl('', [Validators.required, checkCurrentPassword]),
+      oldPassword: new FormControl('', [Validators.required]),
       pwGroup: this.fb.group({
           password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern('^[a-zA-Z0-9]{1,}$')]),
           confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
@@ -151,16 +167,18 @@ export class EmployeeDetailComponent implements OnInit {
       accountPassword: new FormControl('')
     });
     this.employeeService.findAccountByName(this.accountName).subscribe(
-      next => this.account = next,
+      next => {
+        this.account = next;
+        console.log(next);
+      },
       error => console.log(error)
     );
-    this.currentPass = this.account.accountPassword;
   }
 
   onSubmit2(): void {
     this.editPasswordForm.patchValue({
       accountName: this.accountName,
-      accountPassword: this.editPasswordForm.get('pwGroup.password').value
+      accountPassword: this.editPasswordForm.get('pwGroup.password').value,
     });
     if (this.editPasswordForm.valid) {
       const {value} = this.editPasswordForm;
@@ -171,12 +189,22 @@ export class EmployeeDetailComponent implements OnInit {
       console.log(data);
       this.employeeService.editAccountByName(data).subscribe(
         next => {
+          $('#DeleteModal').modal('hide');
           console.log(next);
+          this.ngOnInit();
+          this.toastr.success('Chỉnh sửa mật khẩu thành công');
         },
-        error => console.log(error)
+        error => {
+          console.log(error);
+          if (error.status === 400) {
+            this.listError = error.error;
+          }
+          $('#DeleteModal').modal('hide');
+          this.ngOnInit();
+          this.toastr.error('Mật khẩu cũ chưa chính xác!');
+        }
       );
     }
-    window.location.reload();
   }
 
   readURL(target: EventTarget): void {
