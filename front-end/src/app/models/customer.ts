@@ -1,3 +1,5 @@
+import {Account} from './account';
+
 export class Customer {
   id: number;
   userName: string;
@@ -8,7 +10,8 @@ export class Customer {
   gender: string;
   imageUrl: string;
   deleteFlag: boolean;
-  account: null;
+  account: Account;
+
   constructor() {
   }
 }

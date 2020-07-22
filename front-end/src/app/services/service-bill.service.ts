@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Bill} from './bill';
-import {Distributor} from '../../../models/distributor';
-import {Employee} from '../../employee';
-import {Pay} from '../../../models/pay';
-import {StorageLocation} from '../../../models/storage-location';
-import {TypeBill} from '../../../models/type-bill';
-import {WareHouse} from '../../../models/ware-house';
-import {Transportation} from '../../../models/transportation';
+import {Bill} from '../models/bill';
+import {Distributor} from '../models/distributor';
+import {Pay} from '../models/pay';
+import {StorageLocation} from '../models/storage-location';
+import {TypeBill} from '../models/type-bill';
+import {WareHouse} from '../models/ware-house';
+import {Transportation} from '../models/transportation';
+import {Employees} from '../models/employees';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceBillService {
-  // API_URL_CREATE = API_URL_USER + '/create_bill';
-  API_URL_USER = 'http://localhost:8080/bills';
+  API_URL_BILL = 'http://localhost:8080/bills';
   API_URL_WAREHOUSE = 'http://localhost:8080/wareHouses/';
   API_URL_TRANS = 'http://localhost:8080/transportations/';
   API_URL_TYPE_BILL = 'http://localhost:8080/typeBills/';
@@ -25,16 +24,16 @@ export class ServiceBillService {
   API_URL_DIST = 'http://localhost:8080/dist/list';
   constructor(private httpClient: HttpClient) { }
   create(bill: Partial<Bill>): Observable<Bill> {
-    return this.httpClient.post<Bill>(this.API_URL_USER + '/create-bill', bill);
+    return this.httpClient.post<Bill>(this.API_URL_BILL + '/create-bill', bill);
   }
-  findAllUser(): Observable<Bill[]> {
-    return this.httpClient.get<Bill[]>(this.API_URL_USER);
+  findAllBill(): Observable<Bill[]> {
+    return this.httpClient.get<Bill[]>(this.API_URL_BILL);
   }
   findAllDistributors(): Observable<Distributor[]> {
     return this.httpClient.get<Distributor[]>(this.API_URL_DIST);
   }
-  findAllEmployee(): Observable<Employee[]> {
-    return this.httpClient.get<Employee[]>(this.API_URL_EMPLOYEE);
+  findAllEmployee(): Observable<Employees[]> {
+    return this.httpClient.get<Employees[]>(this.API_URL_EMPLOYEE);
   }
   findAllPay(): Observable<Pay[]> {
     return this.httpClient.get<Pay[]>(this.API_URL_PAY);
@@ -52,17 +51,17 @@ export class ServiceBillService {
     return this.httpClient.get<Transportation[]>(this.API_URL_TRANS);
   }
   updateBill(post: Bill): Observable<Bill> {
-    return this.httpClient.patch<Bill>(this.API_URL_USER + '/update/' + post.id, post);
+    return this.httpClient.patch<Bill>(this.API_URL_BILL + '/update/' + post.id, post);
   }
   findByIdBill(id: number): Observable<Bill> {
-    return this.httpClient.get<Bill>(this.API_URL_USER + '/' + id);
+    return this.httpClient.get<Bill>(this.API_URL_BILL + '/' + id);
   }
   findByIdWareHouse(id: number): Observable<WareHouse> {
     return this.httpClient.get<WareHouse>(this.API_URL_WAREHOUSE + '/' + id);
   }
   deleteById(id: number): Observable<void> {
     // @ts-ignore
-    return this.httpClient.patch<void>(this.API_URL_USER + '/delete/' + id);
+    return this.httpClient.patch<void>(this.API_URL_BILL + '/delete/' + id);
   }
 
 }

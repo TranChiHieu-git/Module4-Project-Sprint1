@@ -30,9 +30,7 @@ export class ProductComponent implements OnInit {
   public productName;
   key: string;
   reverse = false;
-
   public minDate = new Date();
-
   searchProductName: string;
 
 
@@ -114,6 +112,7 @@ export class ProductComponent implements OnInit {
 
   editProduct(id: number): void {
     this.productService.findProductById(id).subscribe(next => {
+
          console.log(next);
          this.productForm.patchValue(next);
          $('#edit1').click();
@@ -122,9 +121,8 @@ export class ProductComponent implements OnInit {
                 this.getData();
     });
   }
-
   onSubmitEdit(): void {
-    if (this.productForm.valid){
+    if (this.productForm.valid) {
       this.productService.updateProduct(this.productForm.value).subscribe(
         next => {
           this.closeEditModal.nativeElement.click();
@@ -140,7 +138,7 @@ export class ProductComponent implements OnInit {
       next => {
         this.closeCreateModal.nativeElement.click();
         this.notificationService.create('Tạo mới thành công');
-        // this.createProductForm.reset();
+        this.createProductForm.reset();
         this.initCreateForm();
         this.getData();
       },
@@ -149,16 +147,18 @@ export class ProductComponent implements OnInit {
 
   deleteProduct(id: number): void {
     this.productService.findProductById(id).subscribe(next => {
+
       this.productName = next.productName;
       this.product = next;
       $('#delete1').click();
     },
-      error =>  {this.notificationService.edit('Mặt hàng này đã bị xóa');
-                 this.getData();
+      error => {
+        this.notificationService.edit('Mặt hàng này đã bị xóa');
+        this.getData();
       });
   }
 
-  OnDelete(): void {
+OnDelete(): void {
     this.productService.deleteProduct(this.product).subscribe(
       next => {
         this.closeDeleteModal.nativeElement.click();
@@ -169,13 +169,13 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  OnCancelCreateForm(): void {
-    // this.closeCreateModal.nativeElement.click();
+OnCancelCreateForm(): void {
+    this.closeCreateModal.nativeElement.click();
     this.initCreateForm();
   }
 
-  OnCancelEditForm(): void {
-    // this.closeCreateModal.nativeElement.click();
+OnCancelEditForm(): void {
+    this.closeCreateModal.nativeElement.click();
     this.productForm.reset();
   }
 
