@@ -363,7 +363,7 @@ export class ListDistributorComponent implements OnInit {
   pages = [];
   search = '';
   isSearch = false;
-
+  idHasModifined: number;
   totalPages = 1;
   listError: any = '';
   // Thach
@@ -394,13 +394,14 @@ export class ListDistributorComponent implements OnInit {
       numberPhone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_\\.]{5,}@[a-z0-9]{1,}(\\.[a-z0-9]{2,4}){1,2}$')]],
       address: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\-\\/\\sÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế]+$')]],
-      fax: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
-      website: ['', [Validators.required, Validators.pattern('^((http://)|https://)+[a-zA-Z]{1}[a-zA-Z0-9\\_]{1,100}\\.[a-zA-Z]{3,10}$')]],
+      fax: ['', [Validators.pattern('^[0-9]{9}$')]],
+      website: ['', [Validators.pattern('^((http:\/\/www\.)|(https:\/\/www\.))([a-zA-Z0-9]+\.){1,2}[a-zA-Z0-9]+$')]],
       img: [''],
       typeOfDistributor: [''],
       deleted: ['false']
     });
   }
+
   // tslint:disable-next-line:typedef
   // existAccountName(c: AbstractControl) {
   //   const v = c.value;
@@ -558,6 +559,7 @@ export class ListDistributorComponent implements OnInit {
           this.myForm.value.typeOfDistributor = value;
           this.distributorService.create(this.myForm.value).subscribe(
             res => {
+              this.idHasModifined = this.myForm.value.id;
               this.showNotications('Chỉnh sửa thành công');
               this.resetList();
               this.isSubmiting = true;
@@ -571,6 +573,7 @@ export class ListDistributorComponent implements OnInit {
       } else {
         this.distributorService.create(this.myForm.value).subscribe(
           res => {
+            this.idHasModifined = this.myForm.value.id;
             this.showNotications('Chỉnh sửa thành công');
             this.resetList();
             this.isSubmiting = true;
@@ -701,6 +704,7 @@ export class ListDistributorComponent implements OnInit {
     this.isChangedImg = false;
     this.distributorService.findById(id).subscribe(
       res => {
+        this.myDistributor = res;
         this.myForm.patchValue(res);
         if (this.myForm.value.img !== '') {
           this.src = this.myForm.value.img;
@@ -857,29 +861,32 @@ export class ListDistributorComponent implements OnInit {
     this.router.navigate(['employee/partner-management/list-distributor']);
   }
 
-// FILL LIST DU 5 DOI TUONG (CAC DOI TUONG TRONG DE TABLE CHUAN)========================================================
-//   fillListToSize(): void {
-//
-//     if (this.distributorList === null) {
-//       // @ts-ignore
-//       this.distributorList[0] = new Distributor();
-//     }
-//     if (this.distributorList.length < this.size) {
-//       let i = this.distributorList.length;
-//       while (i < this.size) {
-//         // @ts-ignore
-//         this.distributorList[i] = new Distributor();
-//         i++;
-//       }
-//       console.log(this.distributorList);
-//     }
-//   }
 
 // GET MESS VALIDATE ========================================================
   getErrorMessage(field: string): string {
     const isFormField = this.myForm.get(field);
     if (isFormField.hasError('required') && isFormField.touched) {
-      return 'Xin hãy điền đầy đủ thông tin!';
+      switch (field) {
+        case ('email'):
+          return 'Email nhà phân phối không được trống!';
+          break;
+        case ('numberPhone'):
+          return 'SĐT nhà phân phối không được trống!';
+          break;
+        case ('name'):
+          return 'Tên nhà phân phối không được trống!';
+          break;
+        case ('address'):
+          return 'Địa chỉ nhà phân phối không được trống!';
+          break;
+        case 'typeOfDistributor' : {
+          return 'Bạn chưa lựa chọn loại phân phối';
+          break;
+        }
+        default:
+          return '';
+      }
+
     }
     if (isFormField.hasError('pattern') && isFormField.touched) {
       switch (field) {
@@ -899,12 +906,24 @@ export class ListDistributorComponent implements OnInit {
           return 'Số fax gồm 9 số';
           break;
         case ('website'):
-          return 'Website phải đúng định dạng :';
+          return 'Website phải đúng định dạng : http(s)://www.abc.def(.hjk)';
           break;
         default:
           return '';
       }
     }
+    if (isFormField.hasError('exist') && isFormField.touched) {
+      switch (field) {
+        case 'name': {
+          return 'Nhà phân phối đã tồn tại trong dữ liệu';
+          break;
+        }
+        default : {
+
+        }
+      }
+    }
+
   }
 
   addToListDelete(id: any, name: string): void {
@@ -993,6 +1012,28 @@ export class ListDistributorComponent implements OnInit {
       for (let i = 0; i < this.distributorList.length; i++) {
         $('#checkbox' + i).prop('checked', false);
       }
+    }
+  }
+
+  validateDistributorIsExist(): void {
+    const searchName = this.myForm.value.name;
+    if (searchName !== '') {
+      this.distributorService.isExistDistributorName(searchName).subscribe(
+        res => {
+          console.log(searchName + '  ' + this.myDistributor.name);
+          if (res !== null && searchName !== this.myDistributor.name) {
+            this.myForm.get('name').setErrors({exist: true});
+          } else {
+
+            this.myForm.get('name').setErrors(null);
+          }
+
+        },
+        error => {
+          this.myForm.get('name').setErrors(null);
+          console.log(error);
+        }
+      );
     }
   }
 }

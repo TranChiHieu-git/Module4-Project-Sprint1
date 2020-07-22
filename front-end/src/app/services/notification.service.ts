@@ -14,6 +14,10 @@ export class NotificationService {
     horizontalPosition: 'right',
     verticalPosition: 'top'
   };
+  confirmProductDeleted(msg): void {
+    this.config.panelClass = ['notification', 'confirmDelete'];
+    this.snackBar.open(msg, '', this.config);
+  }
 
   edit(msg): void {
     this.config.panelClass = ['notification', 'edit'];

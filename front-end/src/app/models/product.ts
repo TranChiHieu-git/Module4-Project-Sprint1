@@ -9,9 +9,8 @@ export class Product {
   unit: string;
   brand: Brand;
   price: number;
-
-  constructor(productId: number, productName: string, category: string,
-              expiryDate: string, quantity: number, unit: string, brand: Brand, price: number) {
+constructor(productId: number, productName: string, category: string,
+            expiryDate: string, quantity: number, unit: string, brand: Brand, price: number) {
     this.productId = productId;
     this.productName = productName;
     this.category = category;

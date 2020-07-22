@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Product} from '../../../models/product';
 import {ProductService} from '../../../services/product.service';
 import {Page} from '../../../models/pagination/page';
@@ -30,6 +30,7 @@ export class ProductComponent implements OnInit {
   public productName;
   key: string;
   reverse = false;
+  public minDate = new Date();
   searchProductName: string;
 
 
@@ -43,10 +44,10 @@ export class ProductComponent implements OnInit {
 
     this.productForm = this.fb.group({
       productId: [''],
-      productName: [''],
-      price: [''],
+      productName: ['', [Validators.required]],
+      price: ['', [Validators.required, Validators.pattern('^[0-9]*[1-9][0-9]*$')]],
       expiryDate: [''],
-      quantity: [''],
+      quantity: ['', [Validators.required, Validators.pattern('^[0-9]*[1-9][0-9]*$')]],
       deleteFlag: [''],
       category: this.fb.group({
         categoryId: [''],
@@ -69,7 +70,6 @@ export class ProductComponent implements OnInit {
     this.getBrand();
     this.getCategory();
   }
-
   private getData(): void {
     this.productService.getPage(this.page.pageable)
       .subscribe(page => {
@@ -112,22 +112,25 @@ export class ProductComponent implements OnInit {
 
   editProduct(id: number): void {
     this.productService.findProductById(id).subscribe(next => {
-        // this.getUnit();
-        // this.getBrand();
-        // this.getCategory();
-        this.productForm.patchValue(next);
-      },
-      error => console.log('error'));
-  }
 
-  onSubmitEdit(): void {
-    this.productService.updateProduct(this.productForm.value).subscribe(
-      next => {
-        this.closeEditModal.nativeElement.click();
-        this.notificationService.edit('Chỉnh sửa thành công');
-        this.getData();
+         console.log(next);
+         this.productForm.patchValue(next);
+         $('#edit1').click();
       },
-      error => console.log(error));
+      error => {this.notificationService.edit('Mặt hàng này đã bị xóa');
+                this.getData();
+    });
+  }
+  onSubmitEdit(): void {
+    if (this.productForm.valid) {
+      this.productService.updateProduct(this.productForm.value).subscribe(
+        next => {
+          this.closeEditModal.nativeElement.click();
+          this.notificationService.edit('Chỉnh sửa thành công');
+          this.getData();
+        },
+        error => console.log(error));
+    }
   }
 
   onCreate(): void {
@@ -135,7 +138,7 @@ export class ProductComponent implements OnInit {
       next => {
         this.closeCreateModal.nativeElement.click();
         this.notificationService.create('Tạo mới thành công');
-        // this.createProductForm.reset();
+        this.createProductForm.reset();
         this.initCreateForm();
         this.getData();
       },
@@ -144,12 +147,18 @@ export class ProductComponent implements OnInit {
 
   deleteProduct(id: number): void {
     this.productService.findProductById(id).subscribe(next => {
+
       this.productName = next.productName;
       this.product = next;
-    });
+      $('#delete1').click();
+    },
+      error => {
+        this.notificationService.edit('Mặt hàng này đã bị xóa');
+        this.getData();
+      });
   }
 
-  OnDelete(): void {
+OnDelete(): void {
     this.productService.deleteProduct(this.product).subscribe(
       next => {
         this.closeDeleteModal.nativeElement.click();
@@ -160,13 +169,13 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  OnCancelCreateForm(): void {
-    // this.closeCreateModal.nativeElement.click();
+OnCancelCreateForm(): void {
+    this.closeCreateModal.nativeElement.click();
     this.initCreateForm();
   }
 
-  OnCancelEditForm(): void {
-    // this.closeCreateModal.nativeElement.click();
+OnCancelEditForm(): void {
+    this.closeCreateModal.nativeElement.click();
     this.productForm.reset();
   }
 
@@ -178,9 +187,9 @@ export class ProductComponent implements OnInit {
   initCreateForm(): void {
     this.createProductForm = this.fb.group({
       productName: ['', Validators.required],
-      price: [''],
+      price: ['', [Validators.required, Validators.pattern('^[0-9]*[1-9][0-9]*$')]],
       expiryDate: [''],
-      quantity: [''],
+      quantity: ['', [Validators.required, Validators.pattern('^[0-9]*[1-9][0-9]*$')]],
       deleteFlag: [0],
       category: this.fb.group({
         categoryId: ['']

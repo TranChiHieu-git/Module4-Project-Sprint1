@@ -364,19 +364,22 @@ i:hover {
   position: fixed; /* Sit on top of the screen */
   z-index: 1; /* Add a z-index if needed */
   left: 50%; /* Center the snackbar */
-  bottom: 30px; /* 30px from the bottom */
+  bottom: 20px; /* 30px from the bottom */
   font-size: 15px;
 }
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
 .showSnackbar {
   visibility: visible !important; /* Show the snackbar */
-  z-index: 10;
+  z-index: 2;
 
   /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
   However, delay the fade out process for 2.5 seconds */
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+ul{
+  z-index: 0;
 }
 
 /* Animations to fade the snackbar in and out */
@@ -616,6 +619,7 @@ i:hover {
   position: absolute;
   margin-left: 650px;
   margin-top: -85px;
+  z-index: -1;
 }
 .customButton{
   font-size: 20px;
