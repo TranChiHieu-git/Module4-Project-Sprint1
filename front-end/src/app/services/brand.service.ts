@@ -29,4 +29,7 @@ export class BrandService {
   deleteBrand(brand): Observable<Brand> {
     return this.http.patch<Brand>(this.API_URL + '/delete/' + brand.id, brand);
   }
+  deleteBrandById(id: number): Observable<void> {
+    return this.http.delete<void>(this.API_URL + '/' + id);
+  }
 }

@@ -38,9 +38,14 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {FacebookModule} from 'ngx-facebook';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToastrModule} from 'ngx-toastr';
 import { BillComponent } from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
-import { FilterWareHousePipe } from './warehouse-management/bill/filter-ware-house.pipe';
+import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToastrModule} from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
@@ -81,7 +86,13 @@ import { FilterWareHousePipe } from './warehouse-management/bill/filter-ware-hou
     AngularFireAuthModule,
     FacebookModule.forRoot(),
     MatProgressBarModule,
-    NgSelectModule
+    NgSelectModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-top-center',
+      preventDuplicates: true
+    })
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
