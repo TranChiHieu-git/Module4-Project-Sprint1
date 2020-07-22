@@ -1,5 +1,6 @@
 import {Position} from './position';
 import {Account} from './account';
+import {Department} from './department';
 
 export class Employee {
   id: number;
@@ -8,8 +9,8 @@ export class Employee {
   gender: string;
   birthday: string;
   address: string;
-  position: string;
   department: string;
+  position: string;
   phoneNumber: string;
   email: string;
   account: Account;

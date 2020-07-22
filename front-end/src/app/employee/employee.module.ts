@@ -6,7 +6,6 @@ import {PartnerManagementComponent} from './partner-management/partner-managemen
 import {WarehouseManagementComponent} from './warehouse-management/warehouse-management.component';
 import {HomeComponent} from './warehouse-management/home/home.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
-import {Ng2OrderModule} from 'ng2-order-pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ProductComponent} from './warehouse-management/product/product.component';
 import {MaterialModule} from '../shares/material.module';
@@ -59,7 +58,6 @@ import {ToastrModule} from 'ngx-toastr';
     RouterModule,
     ReactiveFormsModule,
     Ng2SearchPipeModule,
-    Ng2OrderModule,
     HttpClientModule,
     NgbModule,
     MaterialModule,

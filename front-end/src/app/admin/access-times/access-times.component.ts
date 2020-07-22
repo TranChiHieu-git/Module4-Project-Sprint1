@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AccessTimesService} from '../../services/access-times.service';
 import {Accesstimes} from '../../models/accesstimes';
 
+
 @Component({
   selector: 'app-access-times',
   templateUrl: './access-times.component.html',
@@ -11,11 +12,16 @@ export class AccessTimesComponent implements OnInit {
   type = 'msline';
   dataFormat = 'json';
   data: any;
-  dataSource = new Object();
+  dataSource = {};
   accessTimes: Accesstimes[];
+<<<<<<< HEAD
   typeDate = '';
+=======
+>>>>>>> 4750d5ac93897f23a971e4f22dcf85336d374b23
 
   constructor(private accessTimesService: AccessTimesService) {
+
+
   }
 
   ngOnInit(): void {
@@ -116,6 +122,7 @@ export class AccessTimesComponent implements OnInit {
             ]
           }
         ]
+
       };
       this.dataSource = this.data;
     });
