@@ -9,8 +9,6 @@ import {Brand} from '../../../models/brand';
 import {Category} from '../../../models/category';
 import {NotificationService} from '../../../services/notification.service';
 
-declare const dataTable: any;
-
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -20,6 +18,7 @@ export class ProductComponent implements OnInit {
   @ViewChild('closeEditModal') closeEditModal;
   @ViewChild('closeCreateModal') closeCreateModal;
   @ViewChild('closeDeleteModal') closeDeleteModal;
+  @ViewChild('filterForm') filterForm;
   page: Page<Product> = new Page();
   productForm: FormGroup;
   createProductForm: FormGroup;
@@ -31,7 +30,9 @@ export class ProductComponent implements OnInit {
   key: string;
   reverse = false;
   searchProductName: string;
-
+  listBrand: any;
+  categoryNameFromSelect: string;
+  brandArray = [];
 
   constructor(private fb: FormBuilder,
               private productService: ProductService,
@@ -170,7 +171,7 @@ export class ProductComponent implements OnInit {
     this.productForm.reset();
   }
 
-  sort(key): void {
+  sortName(key): void {
     this.key = key;
     this.reverse = !this.reverse;
   }
@@ -193,5 +194,47 @@ export class ProductComponent implements OnInit {
       }),
       imageUrl: ['']
     });
+  }
+
+  onOptionSelected(categoryId: string): void {
+    if (categoryId === '') {
+      this.brandArray = [];
+    } else {
+      this.productService.findBrandByCategoryId(categoryId)
+        .subscribe(data => {
+          this.listBrand = data;
+        }, () => {
+          console.log('error');
+        }, () => {
+          this.brandArray = [];
+          for (const product of this.listBrand) {
+            this.brandArray.push(product.brand);
+          }
+        });
+    }
+
+  }
+
+  findProductByCategoryAndBrand(categoryId: string, brandId: string): void {
+    if (categoryId === '' && brandId === '') {
+      this.getData();
+    }
+    else if (categoryId !== '' && brandId === ''){
+      this.productService.findAllProductByCategory(categoryId, this.page.pageable).subscribe(
+        data => {
+          this.page = data;
+        }, () => {
+          console.log('can not get product');
+        }
+      );
+    }
+    else {
+      this.productService.findAllProductByCategoryAndBrand(categoryId, brandId, this.page.pageable).subscribe(
+        data => {
+          this.page = data;
+        }, () => {
+          console.log('can not get product');
+        });
+    }
   }
 }
