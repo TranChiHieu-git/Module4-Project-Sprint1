@@ -156,7 +156,7 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getAllSubmitAdmin(page) {
-    this.adminService.getAllCourseAdmin(page, this.size, this.search).subscribe(
+    this.adminService.getAllCourseAdmin(page, this.size).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
@@ -168,7 +168,7 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getAllSubmitWarehouse(page) {
-    this.adminService.getAllCourseWarhouse(page, this.size, this.search).subscribe(
+    this.adminService.getAllCourseWarhouse(page, this.size).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
@@ -180,7 +180,7 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getAllSubmitPartner(page) {
-    this.adminService.getAllCoursePartner(page, this.size, this.search).subscribe(
+    this.adminService.getAllCoursePartner(page, this.size).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
@@ -192,7 +192,7 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getAllSubmitUser(page) {
-    this.adminService.getAllCourseUser(page, this.size, this.search).subscribe(
+    this.adminService.getAllCourseUser(page, this.size).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;

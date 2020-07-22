@@ -21,22 +21,22 @@ export class AdminService {
     return this.httpClient.get(this.API_URL + '?page=' + currentPage + '&size=' + size + '&search=' + search + '&role=' + nameRole);
   }
 
-  getAllCourseAdmin(currentPage, size, search): Observable<any> {
+  getAllCourseAdmin(currentPage, size): Observable<any> {
     return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_ADMIN',
       this.httpOptions);
   }
 
-  getAllCoursePartner(currentPage, size, search): Observable<any> {
+  getAllCoursePartner(currentPage, size): Observable<any> {
     return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_PARTNER',
       this.httpOptions);
   }
 
-  getAllCourseWarhouse(currentPage, size, search): Observable<any> {
+  getAllCourseWarhouse(currentPage, size): Observable<any> {
     return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_WAREHOUSE',
       this.httpOptions);
   }
 
-  getAllCourseUser(currentPage, size, search): Observable<any> {
+  getAllCourseUser(currentPage, size): Observable<any> {
     return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_MEMBER',
       this.httpOptions);
   }
