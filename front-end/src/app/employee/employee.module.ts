@@ -43,6 +43,8 @@ import {ToastrModule} from 'ngx-toastr';
 import { BillComponent } from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToastrModule} from 'ngx-toastr';
 
 
 @NgModule({
@@ -84,12 +86,13 @@ import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house
     AngularFireAuthModule,
     FacebookModule.forRoot(),
     MatProgressBarModule,
+    NgSelectModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
+      timeOut: 2000,
       positionClass: 'toast-top-center',
-      preventDuplicates: true,
-    }),
-    NgSelectModule
+      preventDuplicates: true
+    })
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
