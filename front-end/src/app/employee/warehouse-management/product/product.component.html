@@ -61,8 +61,7 @@
       </tr>
       </thead>
       <tbody *ngIf="page">
-      <tr
-        *ngFor="let product of page.content | orderBy: key : reverse | filterProduct: searchProductName">
+      <tr *ngFor="let product of page.content | orderBy: key : reverse | filterProduct: searchProductName">
         <td>
           <span>{{product.productName}}</span>
         </td>
