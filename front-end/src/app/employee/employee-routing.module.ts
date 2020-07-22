@@ -6,7 +6,6 @@ import {PartnerManagementComponent} from './partner-management/partner-managemen
 import {WarehouseManagementComponent} from './warehouse-management/warehouse-management.component';
 import {TestPartnerComponent} from './partner-management/test-partner/test-partner.component';
 import {HomeComponent} from './warehouse-management/home/home.component';
-import {BillComponent} from './warehouse-management/bill/bill.component';
 import {BrandManagementComponent} from './warehouse-management/brand-management/brand-management.component';
 import {ProductComponent} from './warehouse-management/product/product.component';
 import {EmployeeManagerComponent} from './employee-manager/employee-manager.component';
@@ -14,7 +13,7 @@ import {EmployeeDetailComponent} from './employee-manager/employee-detail/employ
 import {ListDistributorComponent} from './partner-management/list-distributor/list-distributor.component';
 import {CustomerManagementComponent} from './partner-management/customer-management/customer-management.component';
 import {AuthGuard} from '../auth/auth.guard';
-
+import {BillComponent} from './warehouse-management/bill/bill.component';
 const routes: Routes = [{
   path: 'employee', component: EmployeeComponent, canActivate: [AuthGuard],
   children: [

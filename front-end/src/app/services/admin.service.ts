@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {Account} from '../models/account';
-import {Employee} from '../employee/employee';
 import {Employees} from '../models/employees';
 import {Role} from '../models/role';
 import {TokenStorageService} from '../auth/token-storage.service';
+import {Customer} from '../models/customer';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +31,26 @@ export class AdminService {
     return this.httpClient.get(this.API_URL + '?page=' + currentPage + '&size=' + size + '&search=' + search, this.httpOptions2);
   }
 
+  getAllCourseAdmin(currentPage, size, search): Observable<any> {
+    return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_ADMIN',
+      this.httpOptions);
+  }
+
+  getAllCoursePartner(currentPage, size, search): Observable<any> {
+    return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_PARTNER',
+      this.httpOptions);
+  }
+
+  getAllCourseWarhouse(currentPage, size, search): Observable<any> {
+    return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_WAREHOUSE',
+      this.httpOptions);
+  }
+
+  getAllCourseUser(currentPage, size, search): Observable<any> {
+    return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_MEMBER',
+      this.httpOptions);
+  }
+
   findAll(): Observable<Account[]> {
     return this.httpClient.get<Account[]>(this.API_URL);
   }
@@ -47,6 +67,10 @@ export class AdminService {
     return this.httpClient.get<Employees>(this.API_URL + '/employee/' + accountId);
   }
 
+  findByInfoUserId(accountId: number): Observable<Customer> {
+    return this.httpClient.get<Customer>(this.API_URL + '/user/' + accountId);
+  }
+
   findAccountById(accountId: number): Observable<Account> {
     return this.httpClient.get<Account>(this.API_URL + '/' + accountId);
   }
@@ -55,9 +79,11 @@ export class AdminService {
     return this.httpClient.post<Account>(this.API_URL + '/create', account, this.httpOptions);
   }
 
-  deleteById(id: number): Observable<void> {
+
+  delete(account: Account): Observable<Account> {
+    // return this.httpClient.delete<void>(this.API_URL + '/delete/' + account.accountId, account);
     // @ts-ignore
-    return this.httpClient.delete<void>(this.API_URL + '/delete/' + id);
+    return this.httpClient.request('delete', this.API_URL + '/delete/' + account.accountId, {body: account});
   }
 
   edit(account: Account): Observable<Account> {

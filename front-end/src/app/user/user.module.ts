@@ -12,11 +12,11 @@ import {UserLoginComponent} from './user-login/user-login.component';
 import {UserRegisterComponent} from './user-register/user-register.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
 import {UserManageComponent} from './user-manage/user-manage.component';
-import {MatListModule} from '@angular/material/list';
 import {UserOdersComponent} from './user-oders/user-oders.component';
 import {UserDetailComponent} from './user-detail/user-detail.component';
 import {UserOderDetailComponent} from './user-oder-detail/user-oder-detail.component';
 import {MatIconModule} from '@angular/material/icon';
+import {HomeStoreComponent} from './home-store/home-store.component';
 
 
 @NgModule({
@@ -31,6 +31,7 @@ import {MatIconModule} from '@angular/material/icon';
     UserForgetpasswordComponent,
     UserDetailComponent,
     UserOderDetailComponent,
+    HomeStoreComponent,
   ],
   imports: [
     CommonModule,
