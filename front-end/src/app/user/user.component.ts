@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
 import {AccountService} from '../services/account.service';
 import {TokenStorageService} from '../auth/token-storage.service';
-import {Router} from '@angular/router';
+import {CustomerService} from '../services/customer.service';
+import {OrderService} from '../services/order.service';
 
 @Component({
   selector: 'app-user',
@@ -11,33 +12,27 @@ import {Router} from '@angular/router';
 })
 export class UserComponent implements OnInit {
   userDisplayName = '';
+  idUser: number;
 
   constructor(private accountService: AccountService,
               private tokenStorage: TokenStorageService,
-              private router: Router,
+              private customerService: CustomerService,
+              private orderService: OrderService
   ) {
   }
-  // showLogout() {
-  //   $('#myModalLogout').modal('show');
-  // }
-
   ngOnInit(): void {
     this.userDisplayName = sessionStorage.getItem('loggedUser');
     console.log(this.userDisplayName);
+    this.customerService.getCustomerByAccountName(this.userDisplayName).subscribe(next => {
+      this.idUser = next.id;
+      this.orderService.chanceIdUser(this.idUser);
+    });
   }
 
   // tslint:disable-next-line:typedef
   signOut() {
     this.tokenStorage.signOut();
     window.location.reload();
-    this.router.navigateByUrl('');
   }
-  // tslint:disable-next-line:typedef
-  reload1(){
-    this.router.navigateByUrl('/user-manage/user-detail');
-  }
-  // tslint:disable-next-line:typedef
-  reload2(){
-    this.router.navigateByUrl('/user-manage/user-oder/1');
-  }
+
 }
