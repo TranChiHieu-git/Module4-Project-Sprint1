@@ -2,17 +2,6 @@
       integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <div class="container-oders">
   <div class="user-oder-container">
-    <nav>
-      <div class="nav nav-tabs font-weight-bold" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-           aria-controls="nav-home" aria-selected="true">Bánh</a>
-        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-           aria-controls="nav-profile" aria-selected="false">Kẹo</a>
-        <a class="nav-item nav-link" id="nav-all-product-tab" data-toggle="tab" href="#nav-all-product" role="tab"
-           aria-controls="nav-all-product" aria-selected="false">Tất cả</a>
-
-      </div>
-    </nav>
     <div class="container-fluid user-oder">
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
@@ -36,81 +25,93 @@
 
             <tbody>
             <tr *ngFor="let order of orders">
-<!--              <td><a (click)="goToDetailOrder(order.orderId)">{{order.orderId}}</a></td>-->
+              <!--              <td><a (click)="goToDetailOrder(order.orderId)">{{order.orderId}}</a></td>-->
               <td><a [routerLink]="['/user-manage/order-detail',order.orderId]">{{order.orderId}}</a></td>
               <td>{{order.orderDate|date:'dd/MM/yyyy'}}</td>
               <td style="width: 40%">{{order.orderDetailList[0].id.product.productName}} và {{order.orderDetailList.length - 1}} sản phẩm
                 khác
               </td>
-              <td>{{order.totalMoney|currency}}</td>
+              <td>{{order.totalMoney|currency: 'VND'}}</td>
               <td>{{order.orderStatus}}</td>
             </tr>
             </tbody>
           </table>
         </div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-          <br>
-          <h5 class="title">Đơn hàng của tôi</h5>
-          <a href=""><i class="fa fa-chevron-circle-left"></i>Về trang chủ</a>
-          <br>
-          <br>
-          <table class="table">
-            <thead>
-            <tr>
-              <th>Mã đơn hàng</th>
-              <th>Ngày đặt hàng</th>
-              <th>Sản phẩm</th>
-              <th>Tổng tiền</th>
-              <th>Trạng thái đơn hàng</th>
+<!--    <nav>-->
+<!--      <div class="nav nav-tabs font-weight-bold" id="nav-tab" role="tablist">-->
+<!--        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"-->
+<!--           aria-controls="nav-home" aria-selected="true">Bánh</a>-->
+<!--        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"-->
+<!--           aria-controls="nav-profile" aria-selected="false">Kẹo</a>-->
+<!--        <a class="nav-item nav-link" id="nav-all-product-tab" data-toggle="tab" href="#nav-all-product" role="tab"-->
+<!--           aria-controls="nav-all-product" aria-selected="false">Tất cả</a>-->
 
-            </tr>
-            </thead>
+<!--      </div>-->
+<!--    </nav>-->
+<!--  -->
+<!--        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">-->
+<!--          <br>-->
+<!--          <h5 class="title">Đơn hàng của tôi</h5>-->
+<!--          <a href=""><i class="fa fa-chevron-circle-left"></i>Về trang chủ</a>-->
+<!--          <br>-->
+<!--          <br>-->
+<!--          <table class="table">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--              <th>Mã đơn hàng</th>-->
+<!--              <th>Ngày đặt hàng</th>-->
+<!--              <th>Sản phẩm</th>-->
+<!--              <th>Tổng tiền</th>-->
+<!--              <th>Trạng thái đơn hàng</th>-->
 
-            <tbody>
-            <tr *ngFor="let order of orders">
-              <td><a [routerLink]="['/user-manage/order-detail',order.orderId]">{{order.orderId}}</a></td>
-              <td>{{order.orderDate|date:'dd/MM/yyyy'}}</td>
-              <td>{{order.orderDetailList[0].id.product.productName}} và {{order.orderDetailList.length - 1}} sản phẩm
-                khác
-              </td>
-              <td>{{order.totalMoney|currency}}</td>
-              <td>{{order.orderStatus}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="tab-pane fade" id="nav-all-product" role="tabpanel" aria-labelledby="nav-all-product-tab">
-          <br>
-          <h5 class="title">Đơn hàng của tôi</h5>
+<!--            </tr>-->
+<!--            </thead>-->
 
-          <a href=""><i class="fa fa-chevron-circle-left"></i>Về trang chủ</a>
-          <br>
-          <br>
-          <table class="table">
-            <thead>
-            <tr>
-              <th>Mã đơn hàng</th>
-              <th>Ngày đặt hàng</th>
-              <th>Sản phẩm</th>
-              <th>Tổng tiền</th>
-              <th>Trạng thái đơn hàng</th>
+<!--            <tbody>-->
+<!--            <tr *ngFor="let order of orders">-->
+<!--              <td><a [routerLink]="['/user-manage/order-detail',order.orderId]">{{order.orderId}}</a></td>-->
+<!--              <td>{{order.orderDate|date:'dd/MM/yyyy'}}</td>-->
+<!--              <td>{{order.orderDetailList[0].id.product.productName}} và {{order.orderDetailList.length - 1}} sản phẩm-->
+<!--                khác-->
+<!--              </td>-->
+<!--              <td>{{order.totalMoney|currency}}</td>-->
+<!--              <td>{{order.orderStatus}}</td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--          </table>-->
+<!--        </div>-->
+<!--        <div class="tab-pane fade" id="nav-all-product" role="tabpanel" aria-labelledby="nav-all-product-tab">-->
+<!--          <br>-->
+<!--          <h5 class="title">Đơn hàng của tôi</h5>-->
 
-            </tr>
-            </thead>
+<!--          <a href=""><i class="fa fa-chevron-circle-left"></i>Về trang chủ</a>-->
+<!--          <br>-->
+<!--          <br>-->
+<!--          <table class="table">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--              <th>Mã đơn hàng</th>-->
+<!--              <th>Ngày đặt hàng</th>-->
+<!--              <th>Sản phẩm</th>-->
+<!--              <th>Tổng tiền</th>-->
+<!--              <th>Trạng thái đơn hàng</th>-->
 
-            <tbody>
-            <tr *ngFor="let order of orders">
-              <td><a [routerLink]="['/user-manage/order-detail',order.orderId]">{{order.orderId}}</a></td>
-              <td>{{order.orderDate|date:'dd/MM/yyyy'}}</td>
-              <td>{{order.orderDetailList[0].id.product.productName}} và {{order.orderDetailList.length - 1}} sản phẩm
-                khác
-              </td>
-              <td>{{order.totalMoney|currency}}</td>
-              <td>{{order.orderStatus}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+<!--            </tr>-->
+<!--            </thead>-->
+
+<!--            <tbody>-->
+<!--            <tr *ngFor="let order of orders">-->
+<!--              <td><a [routerLink]="['/user-manage/order-detail',order.orderId]">{{order.orderId}}</a></td>-->
+<!--              <td>{{order.orderDate|date:'dd/MM/yyyy'}}</td>-->
+<!--              <td>{{order.orderDetailList[0].id.product.productName}} và {{order.orderDetailList.length - 1}} sản phẩm-->
+<!--                khác-->
+<!--              </td>-->
+<!--              <td>{{order.totalMoney|currency}}</td>-->
+<!--              <td>{{order.orderStatus}}</td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--          </table>-->
+<!--        </div>-->
       </div>
     </div>
   </div>

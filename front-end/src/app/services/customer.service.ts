@@ -10,9 +10,10 @@ import {TokenStorageService} from '../auth/token-storage.service';
 export class CustomerService {
 
   public readonly API_URL = 'http://localhost:8080/customers';
+  private httpOptions: any;
+
   public readonly API_URL_ACCOUNT = 'http://localhost:8080/customer-account';
 
-  httpOptions: any;
 
   constructor(private httpClient: HttpClient, private tokenStorage: TokenStorageService) {
     this.httpOptions = {
@@ -40,6 +41,10 @@ export class CustomerService {
   deleteCustomerById(id: number): Observable<void> {
     return this.httpClient.delete<void>(this.API_URL + '/' + id);
   }
+
+  // deleteAllCustomer(): Observable<void> {
+  //   return this.httpClient.delete<void>(this.API_URL + '/' + id);
+  // }
 
   editCustomer(customer: Customer): Observable<Customer> {
     return this.httpClient.patch<Customer>(this.API_URL + '/' + customer.id, customer);
