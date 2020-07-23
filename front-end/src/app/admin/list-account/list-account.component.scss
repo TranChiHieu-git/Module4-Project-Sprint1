@@ -145,9 +145,21 @@ input[type=text]:focus {
   margin-left: 48%;
 }
 
-.width-search-custom{
+.width-search-custom {
   width: 250px !important;
 }
-.width-password{
+
+.width-password {
   width: 540px !important;
+}
+
+.w-input-custom {
+  width: 20vh !important;
+}
+
+.w-combobox.custom {
+  width: 10vh !important;
+}
+.mat-checkbox {
+  width: 10px !important;
 }

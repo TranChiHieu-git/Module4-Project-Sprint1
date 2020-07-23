@@ -40,6 +40,7 @@ export class ListAccountComponent implements OnInit {
   accountlist: Account[] = [];
   roleList: Role[];
   accountForm: FormGroup;
+  accountForm2 = new Array<FormGroup>();
   editAccountForm: FormGroup;
   deleteAccountForm: FormGroup;
   infoAccountById: Employees = new Employees();
@@ -55,9 +56,10 @@ export class ListAccountComponent implements OnInit {
   promiseAccount: any;
   private sumVal = 0;
   employeeList: Employee[];
-
+  counts = new Array<Number>();
 
   ngOnInit(): void {
+
     this.employeeService.findAll().subscribe(next => {
       this.employeeList = next;
     });
@@ -72,6 +74,7 @@ export class ListAccountComponent implements OnInit {
       console.log(error);
     });
     this.getAll();
+
     this.accountForm = this.formBuilder.group({
       accountId: [''],
       accountName: ['', [Validators.required]],
@@ -101,6 +104,20 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
+  addMore() {
+    this.accountForm2.push(this.formBuilder.group({
+      accountId: [''],
+      accountName: ['', [Validators.required]],
+      accountPassword: [''],
+      pwGroup: this.formBuilder.group({
+        accountPassword: ['', [Validators.required]],
+        confirmPassword: ['', [Validators.required]],
+      }, {validator: comparePassword}),
+      deleteFlag: [''],
+      role: ['', [Validators.required]],
+    }));
+  }
+
   // tslint:disable-next-line:typedef
   existAccountName(c: AbstractControl) {
     const v = c.value;
@@ -123,6 +140,17 @@ export class ListAccountComponent implements OnInit {
   existAccountName2() {
     this.getListAccount();
     let accountName = this.accountForm.get('accountName').value;
+    for (const acc of this.accountlist) {
+      if (acc.accountName === accountName && accountName !== this.AccountById.accountName) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  existAccountName3(index) {
+    this.getListAccount();
+    let accountName = this.accountForm2[index].get('accountName').value;
     for (const acc of this.accountlist) {
       if (acc.accountName === accountName && accountName !== this.AccountById.accountName) {
         return false;
@@ -415,6 +443,40 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
+  create2() {
+    for (let i = 0; i < this.accountForm2.length; i++) {
+      if (this.existAccountName3(i)) {
+        this.accountForm2[i].patchValue({
+          accountPassword: this.accountForm2[i].get('pwGroup.accountPassword').value
+        });
+        this.adminService.findRoleById(this.accountForm2[i].get('role').value).subscribe(
+          next => {
+            this.promiseAccount = new Promise(resolve => resolve(next));
+            this.promiseAccount.then((value) => {
+                this.accountForm2[i].value.role = value;
+                if (this.accountForm2[i].valid) {
+                  this.adminService.create(this.accountForm2[i].value).subscribe(
+                    () => {
+                      this.getAll();
+                      this.accountForm2[i].reset();
+                      this.showCreated();
+                   this.accountForm2.splice(i,1)
+                    },
+                    error => console.log(error)
+                  );
+                }
+              }
+            );
+          }
+        );
+      } else {
+        this.toastrService.error('Tên tài khoản đã tồn tại', '', {
+          positionClass: 'toast-top-center'
+        });
+      }
+    }
+  }
+
   showCreated() {
     this.toastrService.success('Bạn đã thêm mới thành công', 'Thông báo');
   }
@@ -474,5 +536,15 @@ export class ListAccountComponent implements OnInit {
         this.getAllSubmitUser(0);
         break;
     }
+  }
+
+  checkInvalidForm2() {
+    let check = false;
+    for (let i = 0; i < this.accountForm2.length; i++) {
+      if (this.accountForm2[i].invalid) {
+        check = true;
+      }
+    }
+    return check;
   }
 }
