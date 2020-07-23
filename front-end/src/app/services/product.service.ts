@@ -82,9 +82,8 @@ export class ProductService {
     const url = this.productByCategoryUrl + categoryId + '/'
       + '?page=' + pageable.pageNumber
       + '&size=' + pageable.pageSize;
-    return this.httpClient.get<Page<Product>>(url, httpOptions);
-  }
-  getAllProduct(): Observable<any> {
+    return this.httpClient.get<Page<Product>>(url , httpOptions);}
+    getAllProduct(): Observable <any> {
     return this.httpClient.get(this.API_URL + '/products');
   }
 

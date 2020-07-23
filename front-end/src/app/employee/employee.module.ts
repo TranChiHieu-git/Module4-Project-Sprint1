@@ -41,6 +41,7 @@ import {FilterUniquePipe} from './warehouse-management/product/filter-unique.pip
 import {BillComponent} from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
+
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 

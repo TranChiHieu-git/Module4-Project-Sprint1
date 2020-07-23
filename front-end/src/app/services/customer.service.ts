@@ -10,9 +10,10 @@ import {TokenStorageService} from '../auth/token-storage.service';
 export class CustomerService {
 
   public readonly API_URL = 'http://localhost:8080/customers';
+  private httpOptions: any;
+
   public readonly API_URL_ACCOUNT = 'http://localhost:8080/customer-account';
 
-  httpOptions: any;
 
   constructor(private httpClient: HttpClient, private tokenStorage: TokenStorageService) {
     this.httpOptions = {
