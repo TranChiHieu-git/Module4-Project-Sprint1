@@ -57,6 +57,7 @@ export class BrandManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllBrand();
+    // tslint:disable-next-line:typedef
     $('#checkAll').click(function() {
       $('input:checkbox').not(this).prop('checked', this.checked);
     });
@@ -66,9 +67,10 @@ export class BrandManagementComponent implements OnInit {
       brandLogo: [''],
       brandName: ['', Validators.required],
       brandAddress: ['', Validators.required],
-      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_PATTERN)]]
+      brandWebsite: ['', Validators.required]
     });
   }
+
 
   showCreateSuccess(): void {
     this.toastr.success('Thêm mới thành công!');
@@ -86,6 +88,9 @@ export class BrandManagementComponent implements OnInit {
     this.toastr.success('Thay đổi thành công!');
   }
 
+  showDeleteSuccsess(): void {
+    this.toastr.success('Xóa thành công!');
+  }
 
   sort(key): void {
     this.key = key;
@@ -225,6 +230,7 @@ export class BrandManagementComponent implements OnInit {
   delete(): void {
     this.brandService.deleteBrand(this.brand).subscribe(
       next => {
+        this.showDeleteSuccsess();
         this.ngOnInit();
         $('#close').click();
       },

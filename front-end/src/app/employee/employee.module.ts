@@ -38,19 +38,20 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import {FacebookModule} from 'ngx-facebook';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FilterUniquePipe} from './warehouse-management/product/filter-unique.pipe';
 import {BillComponent} from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
-
 
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
-    WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BrandManagementComponent,
-    CustomerManagementComponent, CustomPaginationComponent, FilterProductPipe, FilterMultiplePipe, BillComponent, FilterWareHousePipe],
+    WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent,
+    BillComponent, BrandManagementComponent, CustomerManagementComponent, CustomPaginationComponent,
+    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent
   ],
+
   imports: [
     CommonModule,
     EmployeeRoutingModule,
@@ -89,6 +90,8 @@ import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
     BrandService
   ]
+
 })
+
 export class EmployeeModule {
 }
