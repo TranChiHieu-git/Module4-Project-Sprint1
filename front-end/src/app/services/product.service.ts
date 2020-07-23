@@ -26,6 +26,11 @@ export class ProductService {
   private categoryUrl = BASE_API_URL + '/listCategory';
   private brandUrl = BASE_API_URL + '/brand';
 
+  private brandByCategoryIdUrl = BASE_API_URL + '/listBrandByCategory/';
+  private productByCategoryAndBrandUrl = BASE_API_URL + '/listProductByCategoryAndBrand/';
+  private productByCategoryUrl = BASE_API_URL + '/listProductByCategory/';
+  private API_URL = 'http://localhost:8080/user/home-store';
+
   constructor(private httpClient: HttpClient) {
   }
 
@@ -62,6 +67,33 @@ export class ProductService {
 
   updateProduct(product: Product): Observable<Product> {
     return this.httpClient.patch<Product>(this.updateUrl + product.productId, product);
+  }
+
+  findBrandByCategoryId(id: string): Observable<Product> {
+    return this.httpClient.get<Product>(this.brandByCategoryIdUrl + id);
+  }
+  findAllProductByCategoryAndBrand(categoryId: string, brandId: string, pageable: Pageable): Observable<Page<Product>> {
+    const url = this.productByCategoryAndBrandUrl + categoryId + '/' + brandId + '/'
+      + '?page=' + pageable.pageNumber
+      + '&size=' + pageable.pageSize;
+    return this.httpClient.get<Page<Product>>(url , httpOptions);
+  }
+  findAllProductByCategory(categoryId: string, pageable: Pageable): Observable<Page<Product>> {
+    const url = this.productByCategoryUrl + categoryId + '/'
+      + '?page=' + pageable.pageNumber
+      + '&size=' + pageable.pageSize;
+    return this.httpClient.get<Page<Product>>(url, httpOptions);
+  }
+  getAllProduct(): Observable<any> {
+    return this.httpClient.get(this.API_URL + '/products');
+  }
+
+  getProductById(productId: number): Observable<any> {
+    return this.httpClient.get(this.API_URL + '/products/' + productId);
+  }
+
+  getAllProductByCategory(categoryId: number): Observable<any> {
+    return this.httpClient.get(this.API_URL + '/' + categoryId);
   }
 }
 

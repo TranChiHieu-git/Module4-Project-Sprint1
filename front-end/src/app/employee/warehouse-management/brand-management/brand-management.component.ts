@@ -7,7 +7,9 @@ import {finalize} from 'rxjs/operators';
 import {Brand} from '../../../models/brand';
 import {BrandService} from '../../../services/brand.service';
 import {ToastrService} from 'ngx-toastr';
+
 declare var $: any;
+
 @Component({
   selector: 'app-brand-management',
   templateUrl: './brand-management.component.html',
@@ -62,22 +64,32 @@ export class BrandManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllBrand();
+    // tslint:disable-next-line:typedef
     $('#checkAll').click(function() {
       $('input:checkbox').not(this).prop('checked', this.checked);
     });
   }
+
   showCreateSuccess(): void {
     this.toastr.success('Thêm mới thành công!');
   }
+
   showCreateError(): void {
     this.toastr.error('Tên thương hiệu đã tồn tại!');
   }
+
   showCreateWarning(): void {
     this.toastr.warning('Vui lòng nhập đầy đủ thông tin!');
   }
+
   showEditSuccess(): void {
     this.toastr.success('Thay đổi thành công!');
   }
+
+  showDeleteSuccsess(): void {
+    this.toastr.success('Xóa thành công!');
+  }
+
   initCreateForm(): void {
     this.brandForm = this.fb.group({
       brandLogo: [''],
@@ -224,6 +236,7 @@ export class BrandManagementComponent implements OnInit {
   delete(): void {
     this.brandService.deleteBrand(this.brand).subscribe(
       next => {
+        this.showDeleteSuccsess();
         this.ngOnInit();
         $('#close').click();
       },
@@ -244,6 +257,7 @@ export class BrandManagementComponent implements OnInit {
       this.deleteList.splice(indexOfId, 1);
     }
   }
+
   deleteAllCheckbox(event): void {
     if (event.target.checked) {
       // tslint:disable-next-line:prefer-for-of
@@ -255,6 +269,7 @@ export class BrandManagementComponent implements OnInit {
       this.deleteList.splice(0, this.deleteList.length);
     }
   }
+
   deleteManyBrand(): void {
     let deleteConfirm = false;
     if (this.deleteList.length <= 0) {
