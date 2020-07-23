@@ -19,7 +19,7 @@
             <li class="nav-item">
               <div class="main pt-1 ml-3">
                 <div class="form-group has-search mt-2">
-                  <form (ngSubmit)="search()">
+                  <form (keyup.enter)="search()">
                     <span class="fa fa-search form-control-feedback"></span>
                     <input [(ngModel)]="userName" name='userName' type="text" class="form-control" placeholder="Search">
                   </form>

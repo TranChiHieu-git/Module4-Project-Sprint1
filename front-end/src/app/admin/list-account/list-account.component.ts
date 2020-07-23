@@ -105,15 +105,11 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getAllSubmit(page) {
-    const md5 = new Md5();
     this.adminService.getAllCourse(page, this.size, this.search).subscribe(
       data => {
+        console.log(data.content);
         this.pageClicked = page;
         this.accountList = data.content;
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.accountList.length; i++) {
-          this.accountList[i].accountPassword = md5.appendAsciiStr(this.accountList[i].accountPassword as string).end();
-        }
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
@@ -122,15 +118,10 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getAllSubmitAdmin(page) {
-    const md5 = new Md5();
     this.adminService.getAllCourseAdmin(page, this.size, this.search).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.accountList.length; i++) {
-          this.accountList[i].accountPassword = md5.appendAsciiStr(this.accountList[i].accountPassword as string).end();
-        }
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
@@ -139,15 +130,10 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getAllSubmitWarehouse(page) {
-    const md5 = new Md5();
     this.adminService.getAllCourseWarhouse(page, this.size, this.search).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.accountList.length; i++) {
-          this.accountList[i].accountPassword = md5.appendAsciiStr(this.accountList[i].accountPassword as string).end();
-        }
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
@@ -156,15 +142,10 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getAllSubmitPartner(page) {
-    const md5 = new Md5();
     this.adminService.getAllCoursePartner(page, this.size, this.search).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.accountList.length; i++) {
-          this.accountList[i].accountPassword = md5.appendAsciiStr(this.accountList[i].accountPassword as string).end();
-        }
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
@@ -173,15 +154,10 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getAllSubmitUser(page) {
-    const md5 = new Md5();
     this.adminService.getAllCourseUser(page, this.size, this.search).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.accountList.length; i++) {
-          this.accountList[i].accountPassword = md5.appendAsciiStr(this.accountList[i].accountPassword as string).end();
-        }
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
@@ -408,7 +384,7 @@ export class ListAccountComponent implements OnInit {
         this.ngOnInit();
         $('.destroyDelete').click();
       }, error => {
-        this.toastrService.success('', 'Xóa tài khoản thất bại');
+        this.toastrService.error('', 'Xóa tài khoản thất bại');
       });
     });
   }
@@ -429,7 +405,7 @@ export class ListAccountComponent implements OnInit {
         this.ngOnInit();
         $('.destroy').click();
       }, error => {
-        this.toastrService.success('', 'Chỉnh sửa thông tin thất bại');
+        this.toastrService.error('', 'Chỉnh sửa thông tin thất bại');
       });
     });
   }
