@@ -20,22 +20,22 @@
         <div class="input-group-prepend">
           <label class="input-group-text font-weight-bold text-dark" for="inputGroupSelect01">Tên Danh Mục</label>
         </div>
-        <select class="custom-select" #selectedCategory id="inputGroupSelect01">
-          <option selected value="">All</option>
+        <select #categorySelected (change)="onOptionSelected(categorySelected.value)" class="custom-select"  id="inputGroupSelect01">
+          <option selected value="">Tất Cả</option>
           <ng-container *ngFor="let category of categoryList">
-            <option [value]="category.categoryName">{{category.categoryName}}</option>
+            <option [value]="category.categoryId">{{category.categoryName}}</option>
           </ng-container>
         </select>
         <div class="input-group-prepend">
           <label class="input-group-text font-weight-bold text-dark" for="inputGroupSelect02">Tên Thương Hiệu</label>
         </div>
-        <select class="custom-select" #selectedBrand id="inputGroupSelect02">
-          <option selected value="">All</option>
-          <ng-container *ngFor="let brand of brandList">
-            <option [value]="brand.brandName">{{brand.brandName}}</option>
+        <select class="custom-select" #brandSelected id="inputGroupSelect02">
+          <option selected value="">Tất Cả</option>
+          <ng-container *ngFor="let brands of brandArray | filterUnique">
+            <option [value]="brands.id">{{brands.brandName}}</option>
           </ng-container>
         </select>
-        <button class="btn btn-primary btn-filter-custom"><span
+        <button (click)="findProductByCategoryAndBrand(categorySelected.value, brandSelected.value)"  class="btn btn-primary btn-filter-custom"><span
           class="fa fa-filter"></span>Lọc
         </button>
       </div>
@@ -49,31 +49,30 @@
     <table class="table table-bordered table-striped mt-3">
       <thead class="table-header">
       <tr>
-        <th class="sticky-top-custom sort-product-name" (click)="sort('productName')">Tên Sản Phẩm</th>
+        <th class="sticky-top-custom sort-product-name" (click)="sortName('productName')">Tên Sản Phẩm</th>
         <th class="sticky-top-custom">Giá Thành(VND)</th>
         <th class="sticky-top-custom">Tên Danh Mục</th>
-        <th class="sticky-top-custom">Hạn Sử Dụng</th>
+        <th class="sticky-top-custom">Tên Thương Hiệu</th>
         <th class="sticky-top-custom">Số Lượng</th>
         <th class="sticky-top-custom">Đơn Vị</th>
-        <th class="sticky-top-custom">Tên Thương Hiệu</th>
+        <th class="sticky-top-custom">Hạn Sử Dụng</th>
         <th class="sticky-top-custom">Sửa</th>
         <th class="sticky-top-custom">Xóa</th>
       </tr>
       </thead>
       <tbody *ngIf="page">
-      <tr
-        *ngFor="let product of page.content | orderBy: key : reverse | filterProduct: searchProductName | filter: selectedCategory.value | filter: selectedBrand.value">
+      <tr *ngFor="let product of page.content | orderBy: key : reverse | filterProduct: searchProductName">
         <td>
           <span>{{product.productName}}</span>
         </td>
         <td>
-          <span>{{product.price}}</span>
+          <span>{{product.price | number}}</span>
         </td>
         <td>
           <span>{{product.category.categoryName}}</span>
         </td>
         <td>
-          <span>{{product.expiryDate | date: "dd/MM/yyyy"}}</span>
+          <span>{{product.brand.brandName}}</span>
         </td>
         <td>
           <span>{{product.quantity}}</span>
@@ -82,7 +81,7 @@
           <span>{{product.unit.unitName}}</span>
         </td>
         <td>
-          <span>{{product.brand.brandName}}</span>
+          <span>{{product.expiryDate | date: "dd/MM/yyyy"}}</span>
         </td>
         <td>
 
