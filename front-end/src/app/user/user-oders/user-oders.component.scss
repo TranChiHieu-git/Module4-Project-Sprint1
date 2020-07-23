@@ -1,7 +1,6 @@
 .title {
   text-align: center;
-  color: rgb(201, 91, 61);;}
-
+}
 i {
   font-size: 120%;
 }
@@ -22,10 +21,12 @@ i {
 //  background-color: rgba(245, 205, 121,1.0) !important;
 //}
 .container-oders {
+  background-color:rgba(236, 233, 228, 0.7);
   min-height: 80vh;
-  background-color: rgb(236, 233, 228);
-  border: rgb(201, 91, 61) solid 2px;
-
+  position: relative;
+  top: 50px;
+  border-radius: 10px;
+  border: rgba(255, 165, 2,1.0)solid 2px;
 }
 
 //.user-oder{
