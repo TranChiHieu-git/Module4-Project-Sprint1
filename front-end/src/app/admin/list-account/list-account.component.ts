@@ -6,7 +6,6 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Account} from '../../models/account';
 import {Employees} from '../../models/employees';
 import {Role} from '../../models/role';
-import {Md5} from 'ts-md5';
 import {CustomerService} from '../../services/customer.service';
 import {Customer} from '../../models/customer';
 import {ToastrService} from 'ngx-toastr';
@@ -107,9 +106,8 @@ export class ListAccountComponent implements OnInit {
   getAllSubmit(page) {
     this.adminService.getAllCourse(page, this.size, this.search).subscribe(
       data => {
-        console.log(data.content);
         this.pageClicked = page;
-        this.accountList = data.content;
+        this.accountList = data;
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
@@ -121,7 +119,7 @@ export class ListAccountComponent implements OnInit {
     this.adminService.getAllCourseAdmin(page, this.size, this.search).subscribe(
       data => {
         this.pageClicked = page;
-        this.accountList = data.content;
+        this.accountList = data;
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
@@ -133,7 +131,7 @@ export class ListAccountComponent implements OnInit {
     this.adminService.getAllCourseWarhouse(page, this.size, this.search).subscribe(
       data => {
         this.pageClicked = page;
-        this.accountList = data.content;
+        this.accountList = data;
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
@@ -145,7 +143,7 @@ export class ListAccountComponent implements OnInit {
     this.adminService.getAllCoursePartner(page, this.size, this.search).subscribe(
       data => {
         this.pageClicked = page;
-        this.accountList = data.content;
+        this.accountList = data;
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
@@ -157,7 +155,7 @@ export class ListAccountComponent implements OnInit {
     this.adminService.getAllCourseUser(page, this.size, this.search).subscribe(
       data => {
         this.pageClicked = page;
-        this.accountList = data.content;
+        this.accountList = data;
         this.totalPages = data.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
