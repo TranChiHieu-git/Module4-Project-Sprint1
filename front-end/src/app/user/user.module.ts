@@ -32,8 +32,7 @@ registerLocaleData(localeGB);
     UserLoginComponent,
     UserForgetpasswordComponent,
     UserDetailComponent,
-    UserOderDetailComponent,
-    HomeStoreComponent,
+    UserOderDetailComponent
   ],
   imports: [
     CommonModule,

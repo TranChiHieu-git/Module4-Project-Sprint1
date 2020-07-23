@@ -5,15 +5,29 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterProductPipe implements PipeTransform {
 
-  transform(items: any[], value: string): any[] {
-    // return value ? items.filter(item => item.productName === value) : items;
-    if (!items) { return []; }
-    if (!value) { return items; }
+  // transform(items: any[], value: string): any[] {
+  //   if (!items) { return []; }
+  //   if (!value) { return items; }
+  //
+  //   return items.filter(singleItem =>
+  //     singleItem.productName.toLowerCase().includes(value.toLowerCase())
+  //   );
+  //
+  // }
 
-    return items.filter(singleItem =>
-      singleItem.productName.toLowerCase().includes(value.toLowerCase())
-    );
+  transform(value: any[], searchString: string ): any[]{
 
+    if (!searchString){
+      console.log('no search');
+      return value;
+    }
+
+    return value.filter(it => {
+      const productName = it.productName.toLowerCase().includes(searchString);
+      const price = it.price.toString().includes(searchString.toLowerCase());
+      console.log( productName + price);
+      return (productName + price);
+    });
   }
 
 }

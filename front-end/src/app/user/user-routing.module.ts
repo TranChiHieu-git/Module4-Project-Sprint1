@@ -14,6 +14,7 @@ import {DetailComponent} from './home-store/detail/detail.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
 import {UserLoginComponent} from './user-login/user-login.component';
 import {OrderFolowComponent} from './order-folow/order-folow.component';
+import {HomeBakeryComponent} from './home-store/home-bakery/home-bakery.component';
 import {AuthGuard} from '../auth/auth.guard';
 import {ShoppingCardComponent} from './shopping-card/shopping-card.component';
 
@@ -59,11 +60,11 @@ const routes: Routes = [{
       {path: '', component: OrderButtonComponent}
       ,
       {
-        path: 'home-store', component: HomeStoreComponent,
-        children: [
-          {path: 'cake', component: HomeCakeComponent},
-          {path: 'candy', component: HomeCandyComponent},
-          {path: 'detail', component: DetailComponent}
+        path: 'home-store', component: HomeStoreComponent, children: [
+          {path: 'products/:id', component: DetailComponent},
+          {path: 'home-bakery', component: HomeBakeryComponent},
+          {path: 'home-bakery1', component: HomeCakeComponent},
+          {path: 'home-bakery2', component: HomeCandyComponent}
         ]
       },
 

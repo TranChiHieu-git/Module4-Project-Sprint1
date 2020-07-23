@@ -1,7 +1,5 @@
 //myCSS
-.container-fluid{
-  zoom: 75%;
-}
+
 fieldset, img {
   border: 0
 }
@@ -465,12 +463,10 @@ ul{
   margin: 30px 0px 10px 10px;
   float: left;
 }
-//td{
-//////  vertical-align: middle;
-//////  height: 90px;
-//////}
-//---------------------------------------------------------------------
-
+td{
+  word-wrap: break-word;
+  word-break: break-all;
+}
 
 
 
