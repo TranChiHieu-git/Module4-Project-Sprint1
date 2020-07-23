@@ -26,6 +26,7 @@ export class UserComponent implements OnInit {
     this.customerService.getCustomerByAccountName(this.userDisplayName).subscribe(next => {
       this.idUser = next.id;
       this.orderService.chanceIdUser(this.idUser);
+      console.log(this.idUser);
     });
   }
 

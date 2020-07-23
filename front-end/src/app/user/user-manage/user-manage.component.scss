@@ -1,65 +1,79 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
-.left-menu{
-  background-color:rgb(236, 233, 228);
+
+.left-menu {
+  background-color: rgba(236, 233, 228, 0.7);
   //height: 100%;
   //border: white solid 1px;
   padding: 0;
-  border: rgb(201, 91, 61) solid 2px;
-
+  border: rgba(255, 165, 2, 1.0) solid 2px;
+  position: relative;
+  top: 50px;
+  border-radius: 10px;
 
 }
 
 
-.list-menu li{
+.list-menu li {
   padding: 10px;
   border-bottom: black solid 0.5px;
 
 }
 
-li{
+li {
   list-style-type: none;
 }
 
-.title{
+.title {
   margin: 0;
-  background:#d1af9b;
+  background: transparent;
   line-height: 250%;
+  border-radius: 10px;
 }
-i{
+
+i {
   padding-right: 20px;
   padding-left: 20px;
 }
-.list-group-item{
+
+.list-group-item {
   border: white solid 1px;
-  background-color:transparent;
-//color: rgb(146, 103, 96);
+  background-color: transparent;
+  color: black;
   border-radius: 0;
+  font-weight: 500;
 }
-.list-group-item:hover{
-  //background-color: rgb(235, 209, 174);
+
+.list-group-item:hover {
+  background-color: rgb(235, 209, 174);
 
 }
-.list-group-item:hover i{
+
+.list-group-item:hover i {
   color: orange;
 
 }
-.list-group{
+
+.list-group {
   border-radius: 0;
 }
-.content{
+
+.content {
   margin: 0;
-  background-color:transparent;
+  background-color: transparent;
 
 
 }
-.list-group-item.active{
-  background-color: rgb(235, 209, 174);
-  border: rgba(255, 165, 2,1.0);
-  color: black;
+
+.list-group-item.active {
+  background-color: rgb(238, 159, 31);
+  border: rgba(255, 165, 2, 1.0);
+  color: white;
+  font-weight: 500;
 }
-.user-manage{
- background-color: transparent;
-min-height: 100vh;
+
+.user-manage {
+  background-color: transparent;
+  min-height: 100vh;
 
 
 }

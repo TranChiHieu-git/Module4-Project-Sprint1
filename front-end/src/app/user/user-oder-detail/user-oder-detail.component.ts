@@ -40,6 +40,7 @@ export class UserOderDetailComponent implements OnInit {
             if (this.isCurrentOrder) {
               this.orderService.findOrderById(idOrder).subscribe(next => {
                   this.order = next;
+                  console.log(this.order);
                   this.orderDetails = this.order.orderDetailList;
                   this.orderDetails.forEach(product => {
                     product.temMoney = product.orderQuantity * product.id.product.price;
