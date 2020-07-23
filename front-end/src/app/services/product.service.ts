@@ -83,7 +83,7 @@ export class ProductService {
       + '?page=' + pageable.pageNumber
       + '&size=' + pageable.pageSize;
     return this.httpClient.get<Page<Product>>(url , httpOptions);}
-    getAllProduct(): Observable <any> {
+  getAllProduct(): Observable <any> {
     return this.httpClient.get(this.API_URL + '/products');
   }
 
@@ -95,4 +95,3 @@ export class ProductService {
     return this.httpClient.get(this.API_URL + '/' + categoryId);
   }
 }
-
