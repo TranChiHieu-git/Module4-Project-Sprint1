@@ -30,7 +30,6 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 // @ts-ignore
 import {AngularFireDatabaseModule} from '@angular/fire/database';
-import {environment} from '../../environments/environment';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {FilterProductPipe} from './warehouse-management/product/filter-product.pipe';
 import {FilterMultiplePipe} from './warehouse-management/product/filter-multiple.pipe';
@@ -39,8 +38,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import {FacebookModule} from 'ngx-facebook';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ToastrModule} from 'ngx-toastr';
-import { BillComponent } from './warehouse-management/bill/bill.component';
+import {BillComponent} from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
 
@@ -85,10 +83,6 @@ import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house
     FacebookModule.forRoot(),
     MatProgressBarModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot({
-      positionClass: 'toast-top-center',
-      preventDuplicates: true,
-    }),
     NgSelectModule
   ],
   providers: [

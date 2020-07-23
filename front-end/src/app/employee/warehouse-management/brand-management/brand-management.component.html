@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row justify-content-between m-3">
     <h2><span class="fa fa-bars"></span> Danh sách thương hiệu</h2>
     <div class="form-group has-search mr-2">
@@ -21,19 +21,19 @@
   </div>
   <div class="row px-3">
     <form [formGroup]="brandEditForm" (ngSubmit)="edit()">
-      <table style="table-layout: fixed; width: 100%" class="table table-bordered mt-3 table-striped">
+      <table class="table table-bordered mt-3 table-striped">
         <thead class="table-header">
         <tr>
           <th class="sticky-top">Hình ảnh</th>
           <th class="sticky-top" (click)="sort('id')">Mã Thương Hiệu
-            <i [class]="reverse ? 'fa fa-sort-asc' : 'fa fa-sort-desc'" aria-hidden="true"></i>
+            <i [class]="reverse ? 'fa fa-sort-desc' : 'fa fa-sort-asc'" aria-hidden="true"></i>
           </th>
           <th class="sticky-top">Tên Thương Hiệu</th>
           <th class="sticky-top">Trụ sở</th>
           <th class="sticky-top">Website</th>
           <th class="sticky-top">Sửa | Xóa</th>
-          <th class="sticky-top" scope="col">
-            <div class="custom-control custom-checkbox" style="margin: 0 36%;">
+          <th class="sticky-top">
+            <div class="custom-control custom-checkbox">
               <input type="checkbox" name="checkbox" (click)="deleteAllCheckbox($event)" class="custom-control-input"
                      id="checkAll">
               <label class="custom-control-label" for="checkAll"></label>
@@ -108,14 +108,14 @@
             {{brand.brandWebsite}}
           </td>
           <td>
-            <button class="mr-3 global-button fa fa-2x fa-pencil "
+            <button class="mr-3 global-button fa fa-pencil"
                     (click)="brand.isEditable=!brand.isEditable; catchBrandId(brand.id)"
                     *ngIf="!brand.isEditable"></button>
-            <button class="mr-3 global-button fa fa-2x fa-check"
+            <button class="mr-3 global-button fa fa-check"
                     *ngIf="brand.isEditable" (click)="switchEdit(brand)"></button>
             <button hidden type="submit" id="submit{{brand.id}}"
             ></button>
-            <button type="button" class="global-button fa fa-2x fa-trash" data-toggle="modal"
+            <button type="button" class="global-button fa fa-trash" data-toggle="modal"
                     (click)="catchBrandId(brand.id)"
                     data-target="#brandConfirmDelete"></button>
           </td>
@@ -134,9 +134,9 @@
   <div class="row w-100 justify-content-center">
     <nav aria-label="Page navigation example">
       <ul class="pagination">
-        <li class="page-item" (click)="onFirst()"><a class="page-link">First</a></li>
+        <li class="page-item" (click)="onFirst()"><a class="page-link">Đầu</a></li>
         <li class="page-item" (click)="onPrevious()" [ngClass]="pageClick==0?'disabled':''">
-          <a class="page-link">Previous</a>
+          <a class="page-link">Trước</a>
         </li>
         <li *ngIf="pageClick != 0" class="page-item" (click)="onSubmit(pages[pageClick-1])">
           <a class="page-link">{{pageClick}}</a>
@@ -155,9 +155,9 @@
           <a class="page-link">{{pages[pages.length - 1] + 1}}</a>
         </li>
         <li class="page-item" (click)="onNext()" [ngClass]="pageClick==totalPages-1?'disabled':''">
-          <a class="page-link">Next</a>
+          <a class="page-link">Sau</a>
         </li>
-        <li class="page-item" (click)="onLast()"><a class="page-link">Last</a></li>
+        <li class="page-item" (click)="onLast()"><a class="page-link">Cuối</a></li>
       </ul>
     </nav>
   </div>

@@ -35,7 +35,7 @@ import {ToastrModule} from 'ngx-toastr';
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 10000,
-      positionClass: 'toast-center-center'
+      positionClass: 'toast-top-center'
     })
   ],
   providers: [{
