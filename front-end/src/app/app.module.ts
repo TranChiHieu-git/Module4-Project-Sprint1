@@ -33,8 +33,8 @@ import {HomeStoreModule} from './user/home-store/home-store.module';
     UserModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 10000,
-      positionClass: 'toast-top-center'
+      timeOut: 2000,
+      positionClass: 'toast-center-center'
     }),
     HomeStoreModule
   ],

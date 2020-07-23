@@ -1,3 +1,4 @@
+
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {EmployeeRoutingModule} from './employee-routing.module';
@@ -37,10 +38,13 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {FacebookModule} from 'ngx-facebook';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FilterUniquePipe} from './warehouse-management/product/filter-unique.pipe';
 import {BillComponent} from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
+import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
+
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
