@@ -16,13 +16,13 @@ export class AdminService {
   httpOptions: any;
   httpOptions2: any;
 
-  constructor(private httpClient: HttpClient, private tokenStorage: TokenStorageService ) {
-    // this.httpOptions = {
-    //   headers: new HttpHeaders({ 'Content-Type': 'application/json'})
-    //   , 'Access-Control-Allow-Origin': 'http://localhost:4200/create', 'Access-Control-Allow-Methods': 'GET,PUT,POST'
-    // };
+  constructor(private httpClient: HttpClient, private tokenStorage: TokenStorageService) {
+    this.httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+      , 'Access-Control-Allow-Origin': 'http://localhost:4200/create', 'Access-Control-Allow-Methods': 'GET,PUT,POST'
+    };
     this.httpOptions2 = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: `Bearer ` + this.tokenStorage.getToken()})
+      headers: new HttpHeaders({'Content-Type': 'application/json', Authorization: `Bearer ` + this.tokenStorage.getToken()})
       , 'Access-Control-Allow-Origin': 'http://localhost:4200/admin', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
     };
   }
@@ -33,22 +33,22 @@ export class AdminService {
 
   getAllCourseAdmin(currentPage, size): Observable<any> {
     return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_ADMIN',
-      this.httpOptions);
+      this.httpOptions2);
   }
 
   getAllCoursePartner(currentPage, size): Observable<any> {
     return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_PARTNER',
-      this.httpOptions);
+      this.httpOptions2);
   }
 
   getAllCourseWarhouse(currentPage, size): Observable<any> {
     return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_WAREHOUSE',
-      this.httpOptions);
+      this.httpOptions2);
   }
 
   getAllCourseUser(currentPage, size): Observable<any> {
     return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_MEMBER',
-      this.httpOptions);
+      this.httpOptions2);
   }
 
   findAll(): Observable<Account[]> {
@@ -76,7 +76,7 @@ export class AdminService {
   }
 
   create(account: Account): Observable<any> {
-    return this.httpClient.post<Account>(this.API_URL + '/create', account, this.httpOptions);
+    return this.httpClient.post<Account>(this.API_URL + '/create', account, this.httpOptions2);
   }
 
 

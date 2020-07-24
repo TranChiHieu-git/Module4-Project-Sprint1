@@ -16,4 +16,8 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.userName = this.tokenStorageService.getUsername();
   }
+
+  // tslint:disable-next-line:typedef
+  search() {
+  }
 }

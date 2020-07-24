@@ -6,13 +6,13 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Account} from '../../models/account';
 import {Employees} from '../../models/employees';
 import {Role} from '../../models/role';
-import {Md5} from 'ts-md5';
 import {CustomerService} from '../../services/customer.service';
 import {Customer} from '../../models/customer';
 import {ToastrService} from 'ngx-toastr';
 import {EmployeeService} from '../../services/employee.service';
 import {Employee} from '../../models/employee';
 
+// tslint:disable-next-line:typedef
 function comparePassword(c: AbstractControl) {
   const v = c.value;
   return (v.accountPassword === v.confirmPassword) ? null : {
@@ -56,6 +56,7 @@ export class ListAccountComponent implements OnInit {
   promiseAccount: any;
   private sumVal = 0;
   employeeList: Employee[];
+  // tslint:disable-next-line:ban-types
   counts = new Array<Number>();
 
   ngOnInit(): void {
@@ -104,6 +105,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
+  // tslint:disable-next-line:typedef
   addMore() {
     this.accountForm2.push(this.formBuilder.group({
       accountId: [''],
@@ -129,6 +131,7 @@ export class ListAccountComponent implements OnInit {
     return null;
   }
 
+  // tslint:disable-next-line:typedef
   getListAccount() {
     this.adminService.findAll().subscribe(next => {
       this.accountlist = next;
@@ -137,9 +140,10 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
+  // tslint:disable-next-line:typedef
   existAccountName2() {
     this.getListAccount();
-    let accountName = this.accountForm.get('accountName').value;
+    const accountName = this.accountForm.get('accountName').value;
     for (const acc of this.accountlist) {
       if (acc.accountName === accountName && accountName !== this.AccountById.accountName) {
         return false;
@@ -148,9 +152,10 @@ export class ListAccountComponent implements OnInit {
     return true;
   }
 
+  // tslint:disable-next-line:typedef
   existAccountName3(index) {
     this.getListAccount();
-    let accountName = this.accountForm2[index].get('accountName').value;
+    const accountName = this.accountForm2[index].get('accountName').value;
     for (const acc of this.accountlist) {
       if (acc.accountName === accountName && accountName !== this.AccountById.accountName) {
         return false;
@@ -201,7 +206,6 @@ export class ListAccountComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getAllSubmitPartner(page) {
-    const md5 = new Md5();
     this.adminService.getAllCoursePartner(page, this.size).subscribe(
       data => {
         this.pageClicked = page;
@@ -443,6 +447,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line:typedef
   create2() {
     for (let i = 0; i < this.accountForm2.length; i++) {
       if (this.existAccountName3(i)) {
@@ -460,7 +465,7 @@ export class ListAccountComponent implements OnInit {
                       this.getAll();
                       this.accountForm2[i].reset();
                       this.showCreated();
-                   this.accountForm2.splice(i,1)
+                      this.accountForm2.splice(i, 1);
                     },
                     error => console.log(error)
                   );
@@ -477,6 +482,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line:typedef
   showCreated() {
     this.toastrService.success('Bạn đã thêm mới thành công', 'Thông báo');
   }
@@ -490,7 +496,7 @@ export class ListAccountComponent implements OnInit {
         this.ngOnInit();
         $('.destroyDelete').click();
       }, error => {
-        this.toastrService.success('', 'Xóa tài khoản thất bại');
+        this.toastrService.error('', 'Xóa tài khoản thất bại');
       });
     });
   }
@@ -511,7 +517,7 @@ export class ListAccountComponent implements OnInit {
         this.ngOnInit();
         $('.destroy').click();
       }, error => {
-        this.toastrService.success('', 'Chỉnh sửa thông tin thất bại');
+        this.toastrService.error('', 'Chỉnh sửa thông tin thất bại');
       });
     });
   }
@@ -538,8 +544,10 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line:typedef
   checkInvalidForm2() {
     let check = false;
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.accountForm2.length; i++) {
       if (this.accountForm2[i].invalid) {
         check = true;
