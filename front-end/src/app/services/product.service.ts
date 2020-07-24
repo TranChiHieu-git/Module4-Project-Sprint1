@@ -72,12 +72,14 @@ export class ProductService {
   findBrandByCategoryId(id: string): Observable<Product> {
     return this.httpClient.get<Product>(this.brandByCategoryIdUrl + id);
   }
+
   findAllProductByCategoryAndBrand(categoryId: string, brandId: string, pageable: Pageable): Observable<Page<Product>> {
     const url = this.productByCategoryAndBrandUrl + categoryId + '/' + brandId + '/'
       + '?page=' + pageable.pageNumber
       + '&size=' + pageable.pageSize;
-    return this.httpClient.get<Page<Product>>(url , httpOptions);
+    return this.httpClient.get<Page<Product>>(url, httpOptions);
   }
+
   findAllProductByCategory(categoryId: string, pageable: Pageable): Observable<Page<Product>> {
     const url = this.productByCategoryUrl + categoryId + '/'
       + '?page=' + pageable.pageNumber
