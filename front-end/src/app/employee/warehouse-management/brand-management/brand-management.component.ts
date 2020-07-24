@@ -1,4 +1,3 @@
-// import * as $ from 'jquery';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
@@ -34,21 +33,15 @@ export class BrandManagementComponent implements OnInit {
   brandName: string;
   brandEditForm: FormGroup;
   deleteList = new Array();
+  listError: any = {};
   WEBSITE_PATTERN = '^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+(\\.[a-z]{2,}){1,3}(#?\\/?[a-zA-Z0-9#]+)*\\/?(\\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$';
-
-
   constructor(
     private brandService: BrandService,
     private fb: FormBuilder,
     private storage: AngularFireStorage,
     private toastr: ToastrService
   ) {
-    this.brandForm = this.fb.group({
-      brandLogo: [''],
-      brandName: ['', Validators.required],
-      brandAddress: ['', Validators.required],
-      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_PATTERN)]]
-    });
+    this.initCreateForm();
     this.brandEditForm = this.fb.group({
       id: [''],
       brandLogo: ['', Validators.required],
@@ -69,6 +62,15 @@ export class BrandManagementComponent implements OnInit {
       $('input:checkbox').not(this).prop('checked', this.checked);
     });
   }
+  initCreateForm(): void {
+    this.brandForm = this.fb.group({
+      brandLogo: [''],
+      brandName: ['', Validators.required],
+      brandAddress: ['', Validators.required],
+      brandWebsite: ['', Validators.required]
+    });
+  }
+
 
   showCreateSuccess(): void {
     this.toastr.success('Thêm mới thành công!');
@@ -88,15 +90,6 @@ export class BrandManagementComponent implements OnInit {
 
   showDeleteSuccsess(): void {
     this.toastr.success('Xóa thành công!');
-  }
-
-  initCreateForm(): void {
-    this.brandForm = this.fb.group({
-      brandLogo: [''],
-      brandName: ['', Validators.required],
-      brandAddress: ['', Validators.required],
-      brandWebsite: ['', Validators.required]
-    });
   }
 
   sort(key): void {
@@ -161,6 +154,9 @@ export class BrandManagementComponent implements OnInit {
           this.onSubmit(0);
         },
         error => {
+          if (error.status === 400){
+            this.listError = error.error;
+          }
           if (error.status === 500) {
             this.showCreateError();
           }
@@ -222,9 +218,7 @@ export class BrandManagementComponent implements OnInit {
     );
   }
 
-
-  // tslint:disable-next-line:typedef
-  edit() {
+  edit(): void {
     console.log(this.brandForm.value);
     this.brandService.editBrand(this.brandEditForm.value).subscribe(
       next => {

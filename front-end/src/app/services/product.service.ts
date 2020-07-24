@@ -88,6 +88,7 @@ export class ProductService {
   }
 
   getAllProduct(): Observable<any> {
+
     return this.httpClient.get(this.API_URL + '/products');
   }
 
@@ -99,4 +100,3 @@ export class ProductService {
     return this.httpClient.get(this.API_URL + '/' + categoryId);
   }
 }
-
