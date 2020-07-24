@@ -14,4 +14,10 @@ export class AccessTimesService {
   findAll(): Observable<Accesstimes[]> {
     return this.httpClient.get<Accesstimes[]>(this.API_URL);
   }
+  findAllMonth(): Observable<Accesstimes[]>{
+    return this.httpClient.get<Accesstimes[]>(this.API_URL + '-month')
+  }
+  findAllYear(): Observable<Accesstimes[]>{
+    return this.httpClient.get<Accesstimes[]>(this.API_URL + '-year')
+  }
 }

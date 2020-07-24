@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {ListAccountComponent} from './list-account/list-account.component';
 import {AccessTimesComponent} from './access-times/access-times.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {FusionChartsModule} from 'angular-fusioncharts';
@@ -21,7 +21,8 @@ FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
-    FusionChartsModule
+    FusionChartsModule,
+    FormsModule
   ]
 })
 export class AdminModule {
