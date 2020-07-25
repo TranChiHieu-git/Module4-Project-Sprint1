@@ -17,6 +17,8 @@ import {OrderFolowComponent} from './order-folow/order-folow.component';
 import {HomeBakeryComponent} from './home-store/home-bakery/home-bakery.component';
 import {AuthGuard} from '../auth/auth.guard';
 import {ShoppingCardComponent} from './shopping-card/shopping-card.component';
+import {ShippingComponent} from './shipping/shipping.component';
+import {PaymentComponent} from './payment/payment.component';
 
 const routes: Routes = [{
   path: '', component: UserComponent,
@@ -48,6 +50,14 @@ const routes: Routes = [{
     {
       path: 'checkout/card',
       component: ShoppingCardComponent
+    },
+    {
+      path: 'checkout/shipping',
+      component: ShippingComponent
+    },
+    {
+      path: 'checkout/payment',
+      component: PaymentComponent
     }
   ],
 },

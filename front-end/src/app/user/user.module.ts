@@ -19,13 +19,17 @@ import {OrderFolowComponent} from './order-folow/order-folow.component';
 import {HomeStoreComponent} from './home-store/home-store.component';
 import localeGB from '@angular/common/locales/vi';
 import { ShoppingCardComponent } from './shopping-card/shopping-card.component';
+import { ShippingComponent } from './shipping/shipping.component';
+import { PaymentComponent } from './payment/payment.component';
 registerLocaleData(localeGB);
 @NgModule({
   declarations: [TestComponent, UserManageComponent, OrderButtonComponent,
     UserRegisterComponent, UserLoginComponent, UserForgetpasswordComponent, UserManageComponent,
     UserOdersComponent, UserDetailComponent, UserOderDetailComponent, OrderFolowComponent,
     OrderFolowComponent,
-    ShoppingCardComponent],
+    ShoppingCardComponent,
+    ShippingComponent,
+    PaymentComponent],
   exports: [
     OrderButtonComponent,
     UserRegisterComponent,
