@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {EMPTY, Observable, throwError} from 'rxjs';
 import {Account} from '../models/account';
 import {Employees} from '../models/employees';
 import {Role} from '../models/role';
 import {TokenStorageService} from '../auth/token-storage.service';
 import {Customer} from '../models/customer';
-import {catchError, retry} from 'rxjs/operators';
+import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +60,7 @@ export class AdminService {
   }
 
   findByInfoUserId(accountId: number): Observable<Customer> {
+
     return this.httpClient.get<Customer>(this.API_URL + '/user/' + accountId)
       .pipe(catchError(this.handleError))
       ;
