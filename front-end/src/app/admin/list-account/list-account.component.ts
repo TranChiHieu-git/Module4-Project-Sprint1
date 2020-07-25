@@ -181,72 +181,29 @@ export class ListAccountComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  getAllSubmitAdmin(page) {
-    this.adminService.getAllCourseAdmin(page, this.size).subscribe(
-      data => {
-        this.pageClicked = page;
-        this.accountList = data.content;
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-      }, error => console.log(error)
-    );
-  }
-
-  // tslint:disable-next-line:typedef
-  getAllSubmitWarehouse(page) {
-    this.adminService.getAllCourseWarhouse(page, this.size).subscribe(
-      data => {
-        this.pageClicked = page;
-        this.accountList = data.content;
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-      }, error => console.log(error)
-    );
-  }
-
-  // tslint:disable-next-line:typedef
-  getAllSubmitPartner(page) {
-    this.adminService.getAllCoursePartner(page, this.size).subscribe(
-      data => {
-        this.pageClicked = page;
-        this.accountList = data.content;
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-      }, error => console.log(error)
-    );
-  }
-
-  // tslint:disable-next-line:typedef
-  getAllSubmitUser(page) {
-    this.adminService.getAllCourseUser(page, this.size).subscribe(
-      data => {
-        this.pageClicked = page;
-        this.accountList = data.content;
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-      }, error => console.log(error)
-    );
-  }
-
-  // tslint:disable-next-line:typedef
   onPrevious() {
     if (this.pageClicked > 0) {
       this.pageClicked--;
       switch (this.sumVal) {
         case 0:
+          this.nameRole = '';
           this.getAllSubmit(this.pageClicked);
           break;
         case 1:
-          this.getAllSubmitAdmin(this.pageClicked);
+          this.nameRole = 'ROLE_ADMIN';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 2:
-          this.getAllSubmitPartner(this.pageClicked);
+          this.nameRole = 'ROLE_PARTNER';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 3:
-          this.getAllSubmitWarehouse(this.pageClicked);
+          this.nameRole = 'ROLE_WAREHOUSE';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 4:
-          this.getAllSubmitUser(this.pageClicked);
+          this.nameRole = 'ROLE_MEMBER';
+          this.getAllSubmit(this.pageClicked);
           break;
       }
     }
@@ -258,19 +215,24 @@ export class ListAccountComponent implements OnInit {
       this.pageClicked++;
       switch (this.sumVal) {
         case 0:
+          this.nameRole = '';
           this.getAllSubmit(this.pageClicked);
           break;
         case 1:
-          this.getAllSubmitAdmin(this.pageClicked);
+          this.nameRole = 'ROLE_ADMIN';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 2:
-          this.getAllSubmitPartner(this.pageClicked);
+          this.nameRole = 'ROLE_PARTNER';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 3:
-          this.getAllSubmitWarehouse(this.pageClicked);
+          this.nameRole = 'ROLE_WAREHOUSE';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 4:
-          this.getAllSubmitUser(this.pageClicked);
+          this.nameRole = 'ROLE_MEMBER';
+          this.getAllSubmit(this.pageClicked);
           break;
       }
     }
@@ -281,19 +243,24 @@ export class ListAccountComponent implements OnInit {
     this.pageClicked = 0;
     switch (this.sumVal) {
       case 0:
+        this.nameRole = '';
         this.getAllSubmit(this.pageClicked);
         break;
       case 1:
-        this.getAllSubmitAdmin(this.pageClicked);
+        this.nameRole = 'ROLE_ADMIN';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 2:
-        this.getAllSubmitPartner(this.pageClicked);
+        this.nameRole = 'ROLE_PARTNER';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 3:
-        this.getAllSubmitWarehouse(this.pageClicked);
+        this.nameRole = 'ROLE_WAREHOUSE';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 4:
-        this.getAllSubmitUser(this.pageClicked);
+        this.nameRole = 'ROLE_MEMBER';
+        this.getAllSubmit(this.pageClicked);
         break;
     }
   }
@@ -303,19 +270,24 @@ export class ListAccountComponent implements OnInit {
     this.pageClicked = this.totalPages - 1;
     switch (this.sumVal) {
       case 0:
+        this.nameRole = '';
         this.getAllSubmit(this.pageClicked);
         break;
       case 1:
-        this.getAllSubmitAdmin(this.pageClicked);
+        this.nameRole = 'ROLE_ADMIN';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 2:
-        this.getAllSubmitPartner(this.pageClicked);
+        this.nameRole = 'ROLE_PARTNER';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 3:
-        this.getAllSubmitWarehouse(this.pageClicked);
+        this.nameRole = 'ROLE_WAREHOUSE';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 4:
-        this.getAllSubmitUser(this.pageClicked);
+        this.nameRole = 'ROLE_MEMBER';
+        this.getAllSubmit(this.pageClicked);
         break;
     }
   }
@@ -527,19 +499,24 @@ export class ListAccountComponent implements OnInit {
     this.sumVal = val;
     switch (val) {
       case 0:
+        this.nameRole = '';
         this.getAllSubmit(0);
         break;
       case 1:
-        this.getAllSubmitAdmin(0);
+        this.nameRole = 'ROLE_ADMIN';
+        this.getAllSubmit(0);
         break;
       case 2:
-        this.getAllSubmitPartner(0);
+        this.nameRole = 'ROLE_PARTNER';
+        this.getAllSubmit(0);
         break;
       case 3:
-        this.getAllSubmitWarehouse(0);
+        this.nameRole = 'ROLE_WAREHOUSE';
+        this.getAllSubmit(0);
         break;
       case 4:
-        this.getAllSubmitUser(0);
+        this.nameRole = 'ROLE_MEMBER';
+        this.getAllSubmit(0);
         break;
     }
   }
