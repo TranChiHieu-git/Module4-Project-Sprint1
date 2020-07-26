@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, Subscription} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {EMPTY, Observable, throwError} from 'rxjs';
 import {Account} from '../models/account';
 import {Employees} from '../models/employees';
 import {Role} from '../models/role';
 import {TokenStorageService} from '../auth/token-storage.service';
 import {Customer} from '../models/customer';
+import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -31,26 +32,6 @@ export class AdminService {
     return this.httpClient.get(this.API_URL + '?page=' + currentPage + '&size=' + size + '&search=' + search + '&role=' + nameRole);
   }
 
-  getAllCourseAdmin(currentPage, size): Observable<any> {
-    return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_ADMIN',
-      this.httpOptions2);
-  }
-
-  getAllCoursePartner(currentPage, size): Observable<any> {
-    return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_PARTNER',
-      this.httpOptions2);
-  }
-
-  getAllCourseWarhouse(currentPage, size): Observable<any> {
-    return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_WAREHOUSE',
-      this.httpOptions2);
-  }
-
-  getAllCourseUser(currentPage, size): Observable<any> {
-    return this.httpClient.get('http://localhost:8080/accountrole?page=' + currentPage + '&size=' + size + '&search=' + 'ROLE_MEMBER',
-      this.httpOptions2);
-  }
-
   findAll(): Observable<Account[]> {
     return this.httpClient.get<Account[]>(this.API_URL);
   }
@@ -67,8 +48,22 @@ export class AdminService {
     return this.httpClient.get<Employees>(this.API_URL + '/employee/' + accountId);
   }
 
+  // tslint:disable-next-line:typedef
+  handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Unknown error!';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = '';
+    } else {
+      errorMessage = '';
+    }
+    return throwError(errorMessage);
+  }
+
   findByInfoUserId(accountId: number): Observable<Customer> {
-    return this.httpClient.get<Customer>(this.API_URL + '/user/' + accountId);
+
+    return this.httpClient.get<Customer>(this.API_URL + '/user/' + accountId)
+      .pipe(catchError(this.handleError))
+      ;
   }
 
   findAccountById(accountId: number): Observable<Account> {
@@ -81,7 +76,6 @@ export class AdminService {
 
 
   delete(account: Account): Observable<Account> {
-    // return this.httpClient.delete<void>(this.API_URL + '/delete/' + account.accountId, account);
     // @ts-ignore
     return this.httpClient.request('delete', this.API_URL + '/delete/' + account.accountId, {body: account});
   }
