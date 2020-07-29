@@ -21,6 +21,7 @@ import localeGB from '@angular/common/locales/vi';
 import { ShoppingCardComponent } from './shopping-card/shopping-card.component';
 import { ShippingComponent } from './shipping/shipping.component';
 import { PaymentComponent } from './payment/payment.component';
+import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 registerLocaleData(localeGB);
 @NgModule({
   declarations: [TestComponent, UserManageComponent, OrderButtonComponent,
@@ -29,7 +30,8 @@ registerLocaleData(localeGB);
     OrderFolowComponent,
     ShoppingCardComponent,
     ShippingComponent,
-    PaymentComponent],
+    PaymentComponent,
+    PaymentSuccessComponent],
   exports: [
     OrderButtonComponent,
     UserRegisterComponent,

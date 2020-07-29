@@ -39,6 +39,18 @@ vertical-align: top;
   margin-top: 20px;
 
 }
+.card-product table .quantity button {
+  border:rgba(236, 233, 228, 1.0) solid 1px;
+  border-radius: 0;
+}
+
+.card-product table .money label {
+  margin-top: 10px;
+
+}
+.card-product table .quantity {
+  padding-top: 20px;
+}
 .image-product{
   width: 20%;
 }
