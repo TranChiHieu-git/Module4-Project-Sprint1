@@ -85,7 +85,7 @@ export class ListAccountComponent implements OnInit {
         confirmPassword: ['', [Validators.required]],
       }, {validator: comparePassword}),
       deleteFlag: [''],
-      role: ['', [Validators.required]],
+      role: ['', [Validators.required]]
     });
     this.editAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
@@ -93,7 +93,7 @@ export class ListAccountComponent implements OnInit {
       accountPassword: ['', [Validators.pattern('^[a-zA-Z0-9]{1,}$')]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]],
-      reason: [''],
+      reason: ['']
     });
     this.deleteAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
@@ -101,7 +101,7 @@ export class ListAccountComponent implements OnInit {
       accountPassword: ['', [Validators.required]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]],
-      reason: ['', [Validators.required]],
+      reason: ['', [Validators.required]]
     });
   }
 
@@ -181,72 +181,29 @@ export class ListAccountComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  getAllSubmitAdmin(page) {
-    this.adminService.getAllCourseAdmin(page, this.size).subscribe(
-      data => {
-        this.pageClicked = page;
-        this.accountList = data.content;
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-      }, error => console.log(error)
-    );
-  }
-
-  // tslint:disable-next-line:typedef
-  getAllSubmitWarehouse(page) {
-    this.adminService.getAllCourseWarhouse(page, this.size).subscribe(
-      data => {
-        this.pageClicked = page;
-        this.accountList = data.content;
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-      }, error => console.log(error)
-    );
-  }
-
-  // tslint:disable-next-line:typedef
-  getAllSubmitPartner(page) {
-    this.adminService.getAllCoursePartner(page, this.size).subscribe(
-      data => {
-        this.pageClicked = page;
-        this.accountList = data.content;
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-      }, error => console.log(error)
-    );
-  }
-
-  // tslint:disable-next-line:typedef
-  getAllSubmitUser(page) {
-    this.adminService.getAllCourseUser(page, this.size).subscribe(
-      data => {
-        this.pageClicked = page;
-        this.accountList = data.content;
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-      }, error => console.log(error)
-    );
-  }
-
-  // tslint:disable-next-line:typedef
   onPrevious() {
     if (this.pageClicked > 0) {
       this.pageClicked--;
       switch (this.sumVal) {
         case 0:
+          this.nameRole = '';
           this.getAllSubmit(this.pageClicked);
           break;
         case 1:
-          this.getAllSubmitAdmin(this.pageClicked);
+          this.nameRole = 'ROLE_ADMIN';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 2:
-          this.getAllSubmitPartner(this.pageClicked);
+          this.nameRole = 'ROLE_PARTNER';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 3:
-          this.getAllSubmitWarehouse(this.pageClicked);
+          this.nameRole = 'ROLE_WAREHOUSE';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 4:
-          this.getAllSubmitUser(this.pageClicked);
+          this.nameRole = 'ROLE_MEMBER';
+          this.getAllSubmit(this.pageClicked);
           break;
       }
     }
@@ -258,19 +215,24 @@ export class ListAccountComponent implements OnInit {
       this.pageClicked++;
       switch (this.sumVal) {
         case 0:
+          this.nameRole = '';
           this.getAllSubmit(this.pageClicked);
           break;
         case 1:
-          this.getAllSubmitAdmin(this.pageClicked);
+          this.nameRole = 'ROLE_ADMIN';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 2:
-          this.getAllSubmitPartner(this.pageClicked);
+          this.nameRole = 'ROLE_PARTNER';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 3:
-          this.getAllSubmitWarehouse(this.pageClicked);
+          this.nameRole = 'ROLE_WAREHOUSE';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 4:
-          this.getAllSubmitUser(this.pageClicked);
+          this.nameRole = 'ROLE_MEMBER';
+          this.getAllSubmit(this.pageClicked);
           break;
       }
     }
@@ -281,19 +243,24 @@ export class ListAccountComponent implements OnInit {
     this.pageClicked = 0;
     switch (this.sumVal) {
       case 0:
+        this.nameRole = '';
         this.getAllSubmit(this.pageClicked);
         break;
       case 1:
-        this.getAllSubmitAdmin(this.pageClicked);
+        this.nameRole = 'ROLE_ADMIN';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 2:
-        this.getAllSubmitPartner(this.pageClicked);
+        this.nameRole = 'ROLE_PARTNER';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 3:
-        this.getAllSubmitWarehouse(this.pageClicked);
+        this.nameRole = 'ROLE_WAREHOUSE';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 4:
-        this.getAllSubmitUser(this.pageClicked);
+        this.nameRole = 'ROLE_MEMBER';
+        this.getAllSubmit(this.pageClicked);
         break;
     }
   }
@@ -303,19 +270,24 @@ export class ListAccountComponent implements OnInit {
     this.pageClicked = this.totalPages - 1;
     switch (this.sumVal) {
       case 0:
+        this.nameRole = '';
         this.getAllSubmit(this.pageClicked);
         break;
       case 1:
-        this.getAllSubmitAdmin(this.pageClicked);
+        this.nameRole = 'ROLE_ADMIN';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 2:
-        this.getAllSubmitPartner(this.pageClicked);
+        this.nameRole = 'ROLE_PARTNER';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 3:
-        this.getAllSubmitWarehouse(this.pageClicked);
+        this.nameRole = 'ROLE_WAREHOUSE';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 4:
-        this.getAllSubmitUser(this.pageClicked);
+        this.nameRole = 'ROLE_MEMBER';
+        this.getAllSubmit(this.pageClicked);
         break;
     }
   }
@@ -328,7 +300,7 @@ export class ListAccountComponent implements OnInit {
     });
     if (this.infoAccountById.position === null) {
       this.adminService.findByInfoUserId(id).subscribe(next => {
-        if (next.imageUrl === '') {
+        if (next.imageUrl === '' || next.imageUrl === null || next.imageUrl === undefined) {
           next.imageUrl = '../../../assets/photo/avatadefault.png';
         }
         this.infoAccountById2 = next;
@@ -362,7 +334,9 @@ export class ListAccountComponent implements OnInit {
     this.adminService.findAccountById(id).subscribe(next => {
       this.AccountById = next;
     }, error => {
-      console.log(error);
+      this.toastrService.error('', 'tài khoản đã bị xóa');
+      this.ngOnInit();
+      $('.destroy').click();
     });
     this.adminService.findAccountById(id).subscribe(next => {
       this.editAccountForm.patchValue({
@@ -371,7 +345,7 @@ export class ListAccountComponent implements OnInit {
         accountPassword: '',
         deleteFlag: next.deleteFlag,
         role: next.role.roleId,
-        reason: ''
+        reason: '',
       });
     }, error => {
       console.log(error);
@@ -396,7 +370,7 @@ export class ListAccountComponent implements OnInit {
         accountPassword: next.accountPassword,
         deleteFlag: next.deleteFlag,
         role: next.role.roleId,
-        reason: ''
+        reason: '',
       });
       this.AccountById = next;
     }, error => {
@@ -510,15 +484,23 @@ export class ListAccountComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     this.editResuilt.accountPassword = this.editAccountForm.value.accountPassword !== '' ? this.editAccountForm.value.accountPassword : this.AccountById.accountPassword;
     this.editResuilt.deleteFlag = this.editAccountForm.value.deleteFlag;
-    this.adminService.findRoleById(this.editAccountForm.value.role).subscribe(next => {
-      this.editResuilt.role = next;
-      this.adminService.edit(this.editResuilt).subscribe(next2 => {
-        this.toastrService.success('Chỉnh sửa thông tin thành công');
-        this.ngOnInit();
-        $('.destroy').click();
-      }, error => {
-        this.toastrService.error('', 'Chỉnh sửa thông tin thất bại');
-      });
+    this.adminService.findAccountById(this.editResuilt.accountId).subscribe(next => {
+      if (next !== null) {
+        this.adminService.findRoleById(this.editAccountForm.value.role).subscribe(next2 => {
+          this.editResuilt.role = next2;
+          this.adminService.edit(this.editResuilt).subscribe(next3 => {
+            this.toastrService.success('Chỉnh sửa thông tin thành công');
+            this.ngOnInit();
+            $('.destroy').click();
+          }, error => {
+            this.toastrService.error('', 'Chỉnh sửa thông tin thất bại');
+          });
+        });
+      }
+    }, error => {
+      this.toastrService.error('', 'tài khoản đã bị xóa. Không thể chỉnh sửa');
+      this.ngOnInit();
+      $('.destroy').click();
     });
   }
 
@@ -527,19 +509,24 @@ export class ListAccountComponent implements OnInit {
     this.sumVal = val;
     switch (val) {
       case 0:
+        this.nameRole = '';
         this.getAllSubmit(0);
         break;
       case 1:
-        this.getAllSubmitAdmin(0);
+        this.nameRole = 'ROLE_ADMIN';
+        this.getAllSubmit(0);
         break;
       case 2:
-        this.getAllSubmitPartner(0);
+        this.nameRole = 'ROLE_PARTNER';
+        this.getAllSubmit(0);
         break;
       case 3:
-        this.getAllSubmitWarehouse(0);
+        this.nameRole = 'ROLE_WAREHOUSE';
+        this.getAllSubmit(0);
         break;
       case 4:
-        this.getAllSubmitUser(0);
+        this.nameRole = 'ROLE_MEMBER';
+        this.getAllSubmit(0);
         break;
     }
   }

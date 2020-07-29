@@ -7,7 +7,7 @@ import {Brand} from '../../../models/brand';
 import {BrandService} from '../../../services/brand.service';
 import {ToastrService} from 'ngx-toastr';
 
-declare var $: any;
+declare const checkAll: any;
 
 @Component({
   selector: 'app-brand-management',
@@ -35,6 +35,7 @@ export class BrandManagementComponent implements OnInit {
   deleteList = new Array();
   listError: any = {};
   WEBSITE_PATTERN = '^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+(\\.[a-z]{2,}){1,3}(#?\\/?[a-zA-Z0-9#]+)*\\/?(\\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$';
+
   constructor(
     private brandService: BrandService,
     private fb: FormBuilder,
@@ -57,17 +58,15 @@ export class BrandManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllBrand();
-    // tslint:disable-next-line:typedef
-    $('#checkAll').click(function() {
-      $('input:checkbox').not(this).prop('checked', this.checked);
-    });
+    checkAll();
   }
+
   initCreateForm(): void {
     this.brandForm = this.fb.group({
       brandLogo: [''],
       brandName: ['', Validators.required],
       brandAddress: ['', Validators.required],
-      brandWebsite: ['', Validators.required]
+      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_PATTERN)]]
     });
   }
 
@@ -154,7 +153,7 @@ export class BrandManagementComponent implements OnInit {
           this.onSubmit(0);
         },
         error => {
-          if (error.status === 400){
+          if (error.status === 400) {
             this.listError = error.error;
           }
           if (error.status === 500) {
@@ -166,6 +165,7 @@ export class BrandManagementComponent implements OnInit {
       this.showCreateWarning();
     }
   }
+
 
   cancelCreateForm(): void {
     this.initCreateForm();

@@ -160,6 +160,12 @@ input[type=text]:focus {
 .w-combobox.custom {
   width: 10vh !important;
 }
+
 .mat-checkbox {
   width: 10px !important;
+}
+
+.dropdown-toggle {
+  text-decoration: none;
+  color: black;
 }
