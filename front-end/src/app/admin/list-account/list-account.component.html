@@ -17,8 +17,8 @@
   </div>
   <div class="row px-0 py-0">
     <div class="col-md-12">
-      <table class="table table-borderless">
-        <thead>
+      <table class="table">
+        <thead class="thead">
         <tr>
           <th scope="col">#</th>
           <th scope="col">Tên tài khoản</th>
@@ -38,10 +38,13 @@
             </div>
           </th>
           <th></th>
-          <th><input class="mat-checkbox " type="checkbox"></th>
+          <th>
+            <a class="details" data-target="#deleteListAccount" data-toggle="modal"
+               *ngIf="deleteChose.length > 1">Xóa</a>
+          </th>
         </tr>
         </thead>
-        <tbody class="border border-dark"
+        <tbody class=""
                *ngFor="let account of accountList">
         <tr>
           <th scope="row">{{account.accountId}}</th>
@@ -49,12 +52,19 @@
               data-target="#infor">{{account.accountName}}</td>
           <td><label class="pw">{{account.role.roleName}}</label></td>
           <td>
-            <button class="border-0 mr-5 bg-transparent fas fa-pencil-alt"
-                    (click)="edit(account.accountId)" data-toggle="modal" data-target="#edit"></button>
-            <button class="border-0 bg-transparent	fa fa-trash "
-                    (click)="delete(account.accountId)" data-toggle="modal" data-target="#delete"></button>
+            <button class="border-0 mr-5 bg-transparent edit"
+                    (click)="edit(account.accountId)" data-toggle="modal" data-target="#edit">
+              <img class="icon" width="25px" height="auto"
+                   src="https://cdn4.iconfinder.com/data/icons/eldorado-education/40/291332-pencil-256.png">
+            </button>
+            <button class="border-0 bg-transparent delete"
+                    (click)="delete(account.accountId)" data-toggle="modal" data-target="#delete">
+              <img class="icon" width="25px" height="auto"
+                   src="https://cdn4.iconfinder.com/data/icons/vectory-basic/40/recycle_bin_full-256.png">
+            </button>
           </td>
-          <td><input class="mat-checkbox " type="checkbox"></td>
+          <td><input id="{{account.accountId}}" class="checkbox" type="checkbox"
+                     (change)="checkChose()" [checked]="tickForCheckBox(account.accountId)"/></td>
         </tr>
         </tbody>
       </table>
@@ -515,9 +525,6 @@
             <input type="text" class="form-control" formControlName="reason"
                    aria-label="Username" aria-describedby="basic-addon1" disabled
                    hidden>
-            <input type="text" class="form-control" formControlName="timeDelete"
-                   aria-label="Username" aria-describedby="basic-addon1" disabled
-                   hidden>
             <tr>Tên Tài Khoản:</tr>
             <tr>
               <div class="input-group mb-3">
@@ -642,9 +649,6 @@
             <input type="text" class="form-control" formControlName="role"
                    aria-label="role" aria-describedby="basic-addon1" disabled
                    hidden>
-            <input type="text" class="form-control" formControlName="timeDelete"
-                   aria-label="Username" aria-describedby="basic-addon1" disabled
-                   hidden>
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -673,6 +677,63 @@
                   <div class="col-2">
                     <button class="btn btn-danger" [disabled]="deleteAccountForm.invalid"
                             (click)="deleted(AccountById.accountId)">Xóa
+                    </button>
+                  </div>
+                  <div class="col-1"></div>
+                  <div class="col-5">
+                    <button class="btn btn-secondary destroyDelete" data-dismiss="modal">Hủy</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--delete List modal-->
+<div class="modal" tabindex="-1" role="dialog" id="deleteListAccount">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form [formGroup]="deleteListAccountForm">
+          <table class="w-100">
+            <tr>
+              <th colspan="2" class="deleteTitle">
+                <h5><img src="https://image.flaticon.com/icons/png/512/63/63436.png" width="22px" height="auto"> Bạn có
+                  muốn xóa những tài khoản này không ?</h5>
+              </th>
+            </tr>
+            <br>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text fa fa-trash-o prefix"></span>
+              </div>
+              <input type="text" class="form-control" formControlName="reason" aria-label="Username"
+                     aria-describedby="basic-addon1" placeholder="Vui lòng nhập lý do muốn xóa">
+            </div>
+            <tr>
+              <div class="alert alert-danger" role="alert"
+                   *ngIf="deleteListAccountForm.get('reason').invalid && deleteListAccountForm.get('reason').touched">
+                <span
+                  *ngIf="deleteListAccountForm.get('reason').hasError('require')">
+            lý do không được bỏ trống</span>
+              </div>
+            </tr>
+          </table>
+          <br>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-8"></div>
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-3"></div>
+                  <div class="col-2">
+                    <button class="btn btn-danger" [disabled]="deleteListAccountForm.invalid"
+                            (click)="deleteListAccount()">Xóa
                     </button>
                   </div>
                   <div class="col-1"></div>

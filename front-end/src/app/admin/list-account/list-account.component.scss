@@ -161,11 +161,24 @@ input[type=text]:focus {
   width: 10vh !important;
 }
 
-.mat-checkbox {
+.checkbox {
   width: 10px !important;
+  border-radius: 50%;
 }
 
 .dropdown-toggle {
   text-decoration: none;
-  color: black;
+  color: #581008;
 }
+
+.thead {
+  background-color: rgb(238, 159, 31) !important;
+  color: #581008 !important;
+}
+
+.edit, .delete {
+  background: rgb(238, 159, 31) !important;
+  border: none;
+  border-radius: 10px;
+}
+

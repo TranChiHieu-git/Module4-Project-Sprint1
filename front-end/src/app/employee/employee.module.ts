@@ -45,12 +45,13 @@ import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house
 
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { SaleManagementComponent } from './partner-management/sale-management/sale-management.component';
 
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
     WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent,
     BillComponent, BrandManagementComponent, CustomerManagementComponent, CustomPaginationComponent,
-    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe],
+    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent
