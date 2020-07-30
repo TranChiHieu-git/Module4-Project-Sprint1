@@ -38,8 +38,6 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {FacebookModule} from 'ngx-facebook';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ToastrModule} from 'ngx-toastr';
 import { BillComponent } from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
