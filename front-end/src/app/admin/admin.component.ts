@@ -17,7 +17,11 @@ export class AdminComponent implements OnInit {
     this.userName = this.tokenStorageService.getUsername();
   }
 
-  // tslint:disable-next-line:typedef
   search() {
+  }
+
+  logout() {
+    this.tokenStorageService.signOut();
+    window.location.reload();
   }
 }

@@ -11,8 +11,10 @@ import {Customer} from '../../models/customer';
 import {ToastrService} from 'ngx-toastr';
 import {EmployeeService} from '../../services/employee.service';
 import {Employee} from '../../models/employee';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import {Tempjwtemp} from '../../models/tempjwtemp';
+import {TokenStorageService} from '../../auth/token-storage.service';
 
-// tslint:disable-next-line:typedef
 function comparePassword(c: AbstractControl) {
   const v = c.value;
   return (v.accountPassword === v.confirmPassword) ? null : {
@@ -33,7 +35,8 @@ export class ListAccountComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private customerService: CustomerService,
               private toastrService: ToastrService,
-              private employeeService: EmployeeService) {
+              private employeeService: EmployeeService,
+              private loginAccount: TokenStorageService) {
   }
 
   accountList: Account[] = [];
@@ -43,6 +46,7 @@ export class ListAccountComponent implements OnInit {
   accountForm2 = new Array<FormGroup>();
   editAccountForm: FormGroup;
   deleteAccountForm: FormGroup;
+  deleteListAccountForm: FormGroup;
   infoAccountById: Employees = new Employees();
   infoAccountById2: Customer = new Customer();
   AccountById: Account = new Account();
@@ -56,11 +60,15 @@ export class ListAccountComponent implements OnInit {
   promiseAccount: any;
   private sumVal = 0;
   employeeList: Employee[];
-  // tslint:disable-next-line:ban-types
-  counts = new Array<Number>();
+  deleteChose = [];
+  token: any;
+  decode = new JwtHelperService();
+  tempJwt = new Tempjwtemp();
+  accountName = '';
 
   ngOnInit(): void {
-
+    this.tempJwt = this.decode.decodeToken(this.loginAccount.getToken());
+    this.accountName = this.tempJwt.sub;
     this.employeeService.findAll().subscribe(next => {
       this.employeeList = next;
     });
@@ -75,7 +83,6 @@ export class ListAccountComponent implements OnInit {
       console.log(error);
     });
     this.getAll();
-
     this.accountForm = this.formBuilder.group({
       accountId: [''],
       accountName: ['', [Validators.required]],
@@ -103,9 +110,11 @@ export class ListAccountComponent implements OnInit {
       role: ['', [Validators.required]],
       reason: ['', [Validators.required]]
     });
+    this.deleteListAccountForm = this.formBuilder.group({
+      reason: ['', [Validators.required]]
+    });
   }
 
-  // tslint:disable-next-line:typedef
   addMore() {
     this.accountForm2.push(this.formBuilder.group({
       accountId: [''],
@@ -120,7 +129,6 @@ export class ListAccountComponent implements OnInit {
     }));
   }
 
-  // tslint:disable-next-line:typedef
   existAccountName(c: AbstractControl) {
     const v = c.value;
     for (const acc of this.accountlist) {
@@ -131,7 +139,6 @@ export class ListAccountComponent implements OnInit {
     return null;
   }
 
-  // tslint:disable-next-line:typedef
   getListAccount() {
     this.adminService.findAll().subscribe(next => {
       this.accountlist = next;
@@ -140,7 +147,6 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:typedef
   existAccountName2() {
     this.getListAccount();
     const accountName = this.accountForm.get('accountName').value;
@@ -152,7 +158,6 @@ export class ListAccountComponent implements OnInit {
     return true;
   }
 
-  // tslint:disable-next-line:typedef
   existAccountName3(index) {
     this.getListAccount();
     const accountName = this.accountForm2[index].get('accountName').value;
@@ -168,7 +173,6 @@ export class ListAccountComponent implements OnInit {
     this.getAllSubmit(0);
   }
 
-  // tslint:disable-next-line:typedef
   getAllSubmit(page) {
     this.adminService.getAllCourse(page, this.size, this.userName, this.nameRole).subscribe(
       data => {
@@ -180,7 +184,6 @@ export class ListAccountComponent implements OnInit {
     );
   }
 
-  // tslint:disable-next-line:typedef
   onPrevious() {
     if (this.pageClicked > 0) {
       this.pageClicked--;
@@ -209,7 +212,6 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  // tslint:disable-next-line:typedef
   onNext() {
     if (this.pageClicked < this.totalPages - 1) {
       this.pageClicked++;
@@ -238,7 +240,6 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  // tslint:disable-next-line:typedef
   onFirst() {
     this.pageClicked = 0;
     switch (this.sumVal) {
@@ -265,7 +266,6 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  // tslint:disable-next-line:typedef
   onLast() {
     this.pageClicked = this.totalPages - 1;
     switch (this.sumVal) {
@@ -292,7 +292,6 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  // tslint:disable-next-line:typedef
   info(id) {
     this.infoAccountById.position = null;
     this.adminService.findByInfoId(id).subscribe(next => {
@@ -308,13 +307,11 @@ export class ListAccountComponent implements OnInit {
     } else {
     }
     $('#infor').show();
-    // tslint:disable-next-line:only-arrow-functions typedef
     $('.close').click(function() {
       $('#infor').hide();
     });
   }
 
-  // tslint:disable-next-line:typedef
   edit(id) {
     this.infoAccountById = new Employees();
     this.adminService.findByInfoId(id).subscribe(next => {
@@ -322,7 +319,6 @@ export class ListAccountComponent implements OnInit {
     });
     this.customerService.getCustomerById(id).subscribe(next => {
       this.infoAccountById2 = next;
-      // tslint:disable-next-line:no-shadowed-variable
     }, error => {
       console.log(error);
     });
@@ -351,17 +347,14 @@ export class ListAccountComponent implements OnInit {
       console.log(error);
     });
     $('#edit').show();
-    // tslint:disable-next-line:only-arrow-functions typedef
     $('.close').click(function() {
       $('#edit').hide();
     });
-    // tslint:disable-next-line:only-arrow-functions typedef
     $('.destroy').click(function() {
       $('#edit').hide();
     });
   }
 
-// tslint:disable-next-line:typedef
   delete(id) {
     this.adminService.findAccountById(id).subscribe(next => {
       this.deleteAccountForm.patchValue({
@@ -377,18 +370,14 @@ export class ListAccountComponent implements OnInit {
       console.log(error);
     });
     $('#delete').show();
-    // tslint:disable-next-line:only-arrow-functions typedef
     $('.close').click(function() {
       $('#delete').hide();
     });
-    // tslint:disable-next-line:only-arrow-functions typedef
     $('.destroy').click(function() {
       $('#delete').hide();
     });
-    // tslint:disable-next-line:only-arrow-functions typedef
   }
 
-  // tslint:disable-next-line:typedef
   create() {
     if (this.existAccountName2()) {
       this.accountForm.patchValue({
@@ -421,7 +410,6 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  // tslint:disable-next-line:typedef
   create2() {
     for (let i = 0; i < this.accountForm2.length; i++) {
       if (this.existAccountName3(i)) {
@@ -456,32 +444,32 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  // tslint:disable-next-line:typedef
   showCreated() {
     this.toastrService.success('Bạn đã thêm mới thành công', 'Thông báo');
   }
 
-  // tslint:disable-next-line:typedef
   deleted(accountId) {
     this.adminService.findAccountById(accountId).subscribe(next => {
-      next.reason = this.deleteAccountForm.value.reason;
-      this.adminService.delete(next).subscribe(next2 => {
-        this.toastrService.success('Xóa tài khoản thành công');
-        this.ngOnInit();
-        $('.destroyDelete').click();
-      }, error => {
+      if (next.accountName !== this.accountName) {
+        next.reason = this.deleteAccountForm.value.reason;
+        this.adminService.delete(next).subscribe(next2 => {
+          this.toastrService.success('Xóa tài khoản thành công');
+          this.ngOnInit();
+          $('.destroyDelete').click();
+        }, error => {
+          this.toastrService.error('', 'Xóa tài khoản thất bại');
+        });
+      } else {
         this.toastrService.error('', 'Xóa tài khoản thất bại');
-      });
+        $('.destroyDelete').click();
+      }
     });
   }
 
-  // tslint:disable-next-line:typedef
   edited() {
     this.editResuilt = new Account();
     this.editResuilt.accountId = this.editAccountForm.value.accountId;
-    // tslint:disable-next-line:max-line-length
     this.editResuilt.accountName = this.editAccountForm.value.accountName !== '' ? this.editAccountForm.value.accountName : this.AccountById.accountName;
-    // tslint:disable-next-line:max-line-length
     this.editResuilt.accountPassword = this.editAccountForm.value.accountPassword !== '' ? this.editAccountForm.value.accountPassword : this.AccountById.accountPassword;
     this.editResuilt.deleteFlag = this.editAccountForm.value.deleteFlag;
     this.adminService.findAccountById(this.editResuilt.accountId).subscribe(next => {
@@ -504,7 +492,6 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:typedef
   filterTypeRole(val: number) {
     this.sumVal = val;
     switch (val) {
@@ -531,15 +518,71 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  // tslint:disable-next-line:typedef
   checkInvalidForm2() {
     let check = false;
-    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.accountForm2.length; i++) {
       if (this.accountForm2[i].invalid) {
         check = true;
       }
     }
     return check;
+  }
+
+  checkChose() {
+    for (let i = 0; i < this.accountList.length; i++) {
+      let flag = true;
+      if ($('#' + this.accountList[i].accountId.toString()).is(':checked')) {
+        for (let j = 0; j < this.deleteChose.length; j++) {
+          if (this.deleteChose[j] === this.accountList[i].accountId) {
+            flag = false;
+            break;
+          }
+        }
+        if (flag) {
+          this.deleteChose.push(this.accountList[i].accountId);
+        }
+      } else {
+        for (let z = 0; z < this.deleteChose.length; z++) {
+          if (this.deleteChose[z] === this.accountList[i].accountId) {
+            this.deleteChose.splice(z, 1);
+          }
+        }
+      }
+    }
+  }
+
+  tickForCheckBox(id: number): boolean {
+    for (let i = 0; i < this.deleteChose.length; i++) {
+      if (
+        this.deleteChose[i] === id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  deleteListAccount() {
+    const reason = this.deleteListAccountForm.value.reason;
+    for (let i = 0; i < this.deleteChose.length; i++) {
+      this.adminService.findAccountById(this.deleteChose[i]).subscribe(
+        next => {
+          if (next.accountName !== this.accountName) {
+            next.reason = reason;
+            this.adminService.delete(next).subscribe(next2 => {
+            }, error => {
+              this.toastrService.error('', 'Xóa tài khoản ' + next.accountId + ' thất bại');
+              this.ngOnInit();
+              $('.destroyDelete').click();
+            });
+          } else {
+            this.toastrService.error('', 'Xóa tài khoản ' + next.accountId + ' thất bại');
+            $('.destroyDelete').click();
+          }
+        });
+    }
+    this.toastrService.success('Xóa tài khoản thành công');
+    this.ngOnInit();
+    $('.destroyDelete').click();
+    this.deleteChose = [];
   }
 }

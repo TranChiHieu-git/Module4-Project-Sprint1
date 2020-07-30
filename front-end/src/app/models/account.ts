@@ -7,5 +7,4 @@ export class Account {
   deleteFlag: boolean;
   role: Role;
   reason: string;
-  timeDelete: Date;
 }
