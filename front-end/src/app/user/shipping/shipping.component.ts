@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
@@ -8,9 +8,11 @@ import {Router} from '@angular/router';
   styleUrls: ['./shipping.component.scss']
 })
 export class ShippingComponent implements OnInit {
-shippingForm: FormGroup;
-  constructor( private fb: FormBuilder,
-               private router: Router) { }
+  shippingForm: FormGroup;
+
+  constructor(private fb: FormBuilder,
+              private router: Router) {
+  }
 
   ngOnInit(): void {
     this.shippingForm = this.fb.group({
@@ -19,9 +21,17 @@ shippingForm: FormGroup;
       phone: ['', [Validators.required]]
 
     });
+    $(document).ready(function() {
+      $('#other-address').click(function() {
+        $('#other-address-form').addClass('show');
+      });
+      $('#cancel').click(function() {
+        $('#other-address-form').removeClass('show');
+      });
+    });
   }
 
   onSubmit() {
-this.router.navigate(['checkout/payment']);
+    this.router.navigate(['checkout/payment']);
   }
 }

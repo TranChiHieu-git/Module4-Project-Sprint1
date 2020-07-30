@@ -19,6 +19,7 @@ import {AuthGuard} from '../auth/auth.guard';
 import {ShoppingCardComponent} from './shopping-card/shopping-card.component';
 import {ShippingComponent} from './shipping/shipping.component';
 import {PaymentComponent} from './payment/payment.component';
+import {PaymentSuccessComponent} from './payment-success/payment-success.component';
 
 const routes: Routes = [{
   path: '', component: UserComponent,
@@ -58,6 +59,10 @@ const routes: Routes = [{
     {
       path: 'checkout/payment',
       component: PaymentComponent
+    },
+    {
+      path: 'checkout/payment-success',
+      component: PaymentSuccessComponent
     }
   ],
 },

@@ -1,216 +1,199 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
       integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col col-2 col-sm-12"></div>
-    <div class="col col-8 -col-sm-12 card-detail">
-      <div class="row">
-        <div class="col-12 ">
-          <div class=" card-product">
-            <div class="row">
-              <div class="progress">
-                <div class="step current" id="1">
-                  <span>1</span>
-                  <span>Đăng nhập</span>
+
+    <div class="col-12 card-detail">
+
+      <div class=" card-product">
+        <div class="row">
+          <div class="progress">
+            <div class="step current" id="1">
+              <span>1</span>
+              <span>Đăng nhập</span>
+            </div>
+            <div class="current"></div>
+            <div class="step current" id="2">
+              <span>2</span>
+              <span>Địa chỉ giao hàng</span>
+            </div>
+            <div class="current"></div>
+            <div class="step current" id="3">
+              <span>3</span>
+              <span>Thanh toán và đặt mua</span>
+            </div>
+          </div>
+
+        </div>
+        <br>
+        <div class="row">
+          <p style="margin-bottom: 5px" class="font-weight-bolder">1.Chọn hình thức giao hàng</p>
+        </div>
+        <div class="row">
+          <div class="col-md-8" style="padding: 0">
+            <!--                  <p style="margin-bottom: 5px" class="font-weight-bolder">1.Chọn hình thức giao hàng</p>-->
+            <div class="payment-method">
+              <div>
+                <div class="row">
+                  <div class="col">
+                    <div class="custom-control custom-radio">
+                      <input id="shipping-now" name="shipping-method" type="radio" class="custom-control-input"
+                             [(ngModel)]="shippingMethod" (change)="oncheck('shipping-now')"
+                             required>
+                      <label class="custom-control-label" for="shipping-now">Giao ngay (2H - 3H)
+                        <span
+                          class="statusShippingNow"
+                          style="visibility:visible"></span></label> <img
+                      src="https://res-3.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/v1429107810/bfifoxufdoyn686etnzv.png"
+                      alt=""
+                      style="width: 40px; position: relative;left: 10px;bottom: 10px">
+                    </div>
+                    <div id="divShippingNow" class="collapse fade paypall">
+                      <p class="shipping-method">Giao trước 12:00 hôm nay</p>
+                      <span>Phí giao hàng: </span>
+                      <span style="color: red; font-style: italic">  25.000đ</span>
+
+                    </div>
+                    <br>
+                    <div class="custom-control custom-radio">
+                      <input id="shipping-standard" name="shipping-method" type="radio" class="custom-control-input"
+                             value="shipping-standard" [(ngModel)]="shippingMethod" (change)="oncheck('shipping-standard')"
+                             required>
+                      <label class="custom-control-label" for="shipping-standard">Giao tiêu chuẩn <span
+                        class="statusShippingStandard"
+                        style="visibility:visible"></span></label>
+                    </div>
+                    <div id="divShippingStandard" class="collapse fade paypall">
+                      <p class="shipping-method">Giao 3 ngày sau khi đặt hàng</p>
+                      <span>Phí giao hàng: </span>
+                      <span style="color: red; font-style: italic">  14.000đ</span></div>
+                  </div>
                 </div>
-                <div class="current"></div>
-                <div class="step current" id="2">
-                  <span>2</span>
-                  <span>Địa chỉ giao hàng</span>
-                </div>
-                <div class="current"></div>
-                <div class="step current" id="3">
-                  <span>3</span>
-                  <span>Thanh toán và đặt mua</span>
-                </div>
+
+
               </div>
+
 
             </div>
             <br>
-            <div class="row">
-              <p style="margin-bottom: 5px" class="font-weight-bolder">1.Chọn hình thức giao hàng</p>
-            </div>
-            <div class="row">
-              <div class="col-md-8 col-sm-12" style="padding: 0">
-                <!--                  <p style="margin-bottom: 5px" class="font-weight-bolder">1.Chọn hình thức giao hàng</p>-->
-                <div class="payment-method">
-                  <div>
-                    <div class="row">
-                      <div class="col">
-                        <div class="custom-control custom-radio">
-                          <input id="shipping-now" name="shipping-method" type="radio" class="custom-control-input"
-                                 value="shipping-now"
-                                 required>
-                          <label class="custom-control-label" for="shipping-now">Giao ngay (2H - 3H)
-                            <span
-                              class="statusShippingNow"
-                              style="visibility:visible"></span></label> <img
-                          src="https://res-3.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/v1429107810/bfifoxufdoyn686etnzv.png"
-                          alt=""
-                          style="width: 40px; position: relative;left: 10px;bottom: 10px">
-                        </div>
-                        <div id="divShippingNow" class="collapse fade paypall">
-                          <p class="shipping-method">Giao trước 12:00 hôm nay</p>
-                          <span>Phí giao hàng: </span>
-                          <span style="color: red; font-style: italic">  25.000d</span>
+            <p style="margin-bottom: 5px" class="font-weight-bolder">2.Chọn hình thức thanh toán</p>
 
-                        </div>
-                        <br>
-                        <div class="custom-control custom-radio">
-                          <input id="shipping-standard" name="shipping-method" type="radio" class="custom-control-input"
-                                 value="shipping-standard"
-                                 required>
-                          <label class="custom-control-label" for="shipping-standard">Giao tiêu chuẩn <span
-                            class="statusShippingStandard"
-                            style="visibility:visible"></span></label>
-                        </div>
-                        <div id="divShippingStandard" class="collapse fade paypall">
-                          <p class="shipping-method">Giao 3 ngày sau khi đặt hàng</p>
-                          <span>Phí giao hàng: </span>
-                          <span style="color: red; font-style: italic">  25.000d</span></div>
-                      </div>
+            <div class="payment-method">
+              <div>
+                <div class="row">
+                  <div class="col">
+                    <div class="custom-control custom-radio">
+                      <input id="traditional" name="Regarding" type="radio" class="custom-control-input"
+                             value="traditional" checked
+                             required>
+                      <label class="custom-control-label" for="traditional">Thanh toán bằng tiền mặt khi nhận
+                        hàng<span class="statusOther"
+                                  style="visibility:visible"></span></label>
                     </div>
-
-
-                  </div>
-
-
-                </div>
-                <br>
-                <p style="margin-bottom: 5px" class="font-weight-bolder">2.Chọn hình thức thanh toán</p>
-
-                <div class="payment-method">
-                  <div>
-                    <div class="row">
-                      <div class="col">
-                        <div class="custom-control custom-radio">
-                          <input id="traditional" name="Regarding" type="radio" class="custom-control-input"
-                                 value="traditional"
-                                 required>
-                          <label class="custom-control-label" for="traditional">Thanh toán bằng tiền mặt khi nhận
-                            hàng<span class="statusOther"
-                                      style="visibility:visible"></span></label>
-                        </div>
-                        <br>
-                        <div class="custom-control custom-radio">
-                          <input id="paypal" name="Regarding" type="radio" class="custom-control-input" value="paypal"
-                                 required>
-                          <label class="custom-control-label" for="paypal">Thanh toán bằng PayPal <span
-                            class="statusOther"
-                            style="visibility:visible"></span></label>
-                        </div>
-                        <div id="divPaypal" class="collapse fade paypall">
-                          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                            <input type="hidden" name="cmd" value="_xclick">
-                            <input type="hidden" name="business" value="tranvanthanh.trt@gmail.com">
-                            <input type="hidden" name="lc" value="US">
-                            <input type="hidden" name="item_name" value="xe dap">
-                            <input type="hidden" name="amount" value="30.00">
-                            <input type="hidden" name="currency_code" value="USD">
-                            <input type="hidden" name="button_subtype" value="services">
-                            <input type="hidden" name="no_note" value="0">
-                            <input type="hidden" name="tax_rate" value="0.000">
-                            <input type="hidden" name="shipping" value="0.00">
-                            <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHostedGuest">
-                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif"
-                                   border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1"
-                                 height="1">
-                          </form>
-
-
-                        </div>
-                        <br>
-                        <div class="custom-control custom-radio">
-                          <input id="other2" name="Regarding" type="radio" class="custom-control-input" value="Other"
-                                 required>
-                          <label class="custom-control-label" for="other2">Thanh toán bằng thẻ ngân hàng <span
-                            class="statusOther"
-                            style="visibility:visible"></span></label>
-                        </div>
-                        <div id="divOther2" class="collapse fade paypall">
-                          <label>Chưa có chức năng này</label>
-                        </div>
-                      </div>
+                    <br>
+                    <div class="custom-control custom-radio">
+                      <input id="paypal" name="Regarding" type="radio" class="custom-control-input" value="paypal"
+                             required>
+                      <label class="custom-control-label" for="paypal">Thanh toán bằng PayPal <span
+                        class="statusOther"
+                        style="visibility:visible"></span></label>
                     </div>
+                    <div id="divPaypal" class="collapse fade paypall">
+                      <div [hidden]="paidFor" id="paypal-container"></div>
 
 
+                    </div>
+                    <br>
+                    <div class="custom-control custom-radio">
+                      <input id="other2" name="Regarding" type="radio" class="custom-control-input" value="Other"
+                             required>
+                      <label class="custom-control-label" for="other2">Thanh toán bằng thẻ ngân hàng <span
+                        class="statusOther"
+                        style="visibility:visible"></span></label>
+                    </div>
+                    <div id="divOther2" class="collapse fade paypall">
+                      <label>Chưa có chức năng này</label>
+                    </div>
                   </div>
-
-
                 </div>
-                <br>
-                <button class="btn btn-shipping">THANH TOÁN</button>
+
+
               </div>
-              <div class="col-md-4 col-sm-12" style="padding: 0">
-                <div class="row">
-                  <div class="card order-info">
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item">Địa chỉ giao hàng</li>
-                      <li class="list-group-item">
-                        <h5 class="font-weight-bolder">Trần Văn Thanh</h5>
-                        <p style="font-size: 15px">158 Hai Bà Trưng, Ba Đình, Hà Nội,158 Hai Bà Trưng, Ba Đình, Hà
-                          Nội</p>
-                        <p style="font-size: 15px">SĐT: 0123456789</p>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="card order-info">
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item">
-                        Đơn hàng (3 sản phẩm)
-                        <table class="table">
 
-                          <tr>
-                            <td style="width: 70%;font-size: 15px"><label style="font-size: 20px;color: red">2 </label>
-                              x Angelina Jolie - Nhật Kí Những Chuyến Đi - Những Cuộc Gặp Gỡ Với Người Tị Nạn ở Châu
-                              Phi, Campuchia, Pakistan Và Ecuador
-                            </td>
-                            <td style="font-size: 15px;text-align: right;vertical-align: top">94.000d</td>
-                          </tr>
-                          <tr>
-                            <td style="width: 70%;font-size: 15px"><label style="font-size: 20px;color: red">2 </label>
-                              x Angelina Jolie - Nhật Kí Những Chuyến Đi - Những Cuộc Gặp Gỡ Với Người Tị Nạn ở Châu
-                              Phi, Campuchia, Pakistan Và Ecuador
-                            </td>
-                            <td style="font-size: 15px;text-align: right;vertical-align: top">94.000d</td>
-                          </tr>
-                          <tr>
-                            <td style="font-size: 15px">
-                              <p>Tạm tính</p>
-                              Phí vận chuyển
-                            </td>
-                            <td style="font-size: 15px;text-align: right">
-                              <p>94.000d</p>
-                              <p>94.000d</p>
-                            </td>
 
-                          </tr>
-                        </table>
-                      </li>
-                      <li class="list-group-item">
-                        <div style="width:100px;float: left; font-weight: bold">
-                          Tổng tiền
-                        </div>
-                        <div style="float: right">
-                          <span style="font-size: 20px;color: red; font-weight: bold">123.000d</span>
-                          <p style="font-size: 15px; font-style: italic">(Đã bao gồm VAT)</p>
-                        </div>
-                      </li>
-
-                    </ul>
-                  </div>
-                </div>
+            </div>
+            <br>
+            <button (click)="order()" class="btn btn-shipping">ĐẶT MUA</button>
+          </div>
+          <div class="col-md-4" style="padding: 0">
+            <div class="row">
+              <div class="card order-info">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Địa chỉ giao hàng</li>
+                  <li class="list-group-item">
+                    <h5 class="font-weight-bolder">Trần Văn Thanh</h5>
+                    <p style="font-size: 15px">158 Hai Bà Trưng, Ba Đình, Hà Nội,158 Hai Bà Trưng, Ba Đình, Hà
+                      Nội</p>
+                    <p style="font-size: 15px">SĐT: 0123456789</p>
+                  </li>
+                </ul>
               </div>
             </div>
+            <div class="row">
+              <div class="card order-info">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    Đơn hàng (3 sản phẩm)
+                    <table class="table">
 
+                      <tr>
+                        <td style="width: 70%;font-size: 15px"><label style="font-size: 20px;color: red">2 </label>
+                          x Angelina Jolie - Nhật Kí Những Chuyến Đi - Những Cuộc Gặp Gỡ Với Người Tị Nạn ở Châu
+                          Phi, Campuchia, Pakistan Và Ecuador
+                        </td>
+                        <td style="font-size: 15px;text-align: right;vertical-align: top">94.000d</td>
+                      </tr>
+                      <tr>
+                        <td style="width: 70%;font-size: 15px"><label style="font-size: 20px;color: red">2 </label>
+                          x Angelina Jolie - Nhật Kí Những Chuyến Đi - Những Cuộc Gặp Gỡ Với Người Tị Nạn ở Châu
+                          Phi, Campuchia, Pakistan Và Ecuador
+                        </td>
+                        <td style="font-size: 15px;text-align: right;vertical-align: top">94.000d</td>
+                      </tr>
+                      <tr>
+                        <td style="font-size: 15px">
+                          <p>Tạm tính</p>
+                          Phí vận chuyển
+                        </td>
+                        <td style="font-size: 15px;text-align: right">
+                          <p>{{tempMoney|currency:'VND'}}</p>
+                          <p>{{shippingCost|currency:'VND'}}</p>
+                        </td>
+
+                      </tr>
+                    </table>
+                  </li>
+                  <li class="list-group-item">
+                    <div style="width:100px;float: left; font-weight: bold">
+                      Tổng tiền
+                    </div>
+                    <div style="float: right">
+                      <span style="font-size: 20px;color: red; font-weight: bold">{{totalMoney|currency:'VND'}}</span>
+                      <span style="font-size: 15px"> ({{totalUSD|currency:'$'}})</span>
+
+                      <p style="font-size: 15px; font-style: italic">(Đã bao gồm VAT)</p>
+                    </div>
+                  </li>
+
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
-    <div class="col-2"></div>
   </div>
 </div>
+
