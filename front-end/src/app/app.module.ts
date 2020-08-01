@@ -34,7 +34,7 @@ import {HomeStoreModule} from './user/home-store/home-store.module';
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 2000,
-      positionClass: 'toast-center-center'
+      positionClass: 'toast-top-center'
     }),
     HomeStoreModule
   ],
