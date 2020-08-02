@@ -67,11 +67,11 @@
 <!--          <a data-toggle="modal" data-target="#editModal" (click)="editModel(cus)">-->
           <a (click)="editModelTest(i)">
             <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button m-1"><i
-              class="icon-pencil"></i></button>
+              class="fa fa-pencil"></i></button>
           </a>
           <a data-toggle="modal" data-target="#DeleteModal" (click)="deleteModel(cus)">
             <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button"><i
-              class="icon-trash"></i></button>
+              class="fa fa-trash"></i></button>
           </a>
         </td>
         <td class="col-md-1" [ngStyle]="{'background-color':edited[i] ? 'rgba(238, 159, 31,.4)' : 'none' }">
@@ -161,9 +161,9 @@
                     <mat-datepicker #picker></mat-datepicker>
                   </div>
                 </div>
-                <p class="global-content-popup-validate customer-validate" *ngIf="dateRequired[customerEditList[i][0].id]" style="clear: both;">Ngày sinh không được để trống!</p>
-                <p class="global-content-popup-validate customer-validate" *ngIf="dateRegex[customerEditList[i][0].id]" style="clear: both;">Ngày sinh sai cú pháp hoặc ngày sinh không chính xác (Ví dụ: dd/MM/yyyy)</p>
-                <p class="global-content-popup-validate customer-validate" *ngIf="dateOutRange[customerEditList[i][0].id]" style="clear: both;">Ngày sinh vượt quá giới hạn tuổi(từ 2-120 tuổi)</p>
+                <p class="global-content-popup-validate customer-validate" *ngIf="dateRequired[customerEditList[i][0].id]" style="clear: both;width: 72%;">Ngày sinh không được để trống!</p>
+                <p class="global-content-popup-validate customer-validate" *ngIf="dateRegex[customerEditList[i][0].id]" style="clear: both;width: 72%;">Ngày sinh sai cú pháp hoặc ngày sinh không chính xác (Ví dụ: dd/MM/yyyy)</p>
+                <p class="global-content-popup-validate customer-validate" *ngIf="dateOutRange[customerEditList[i][0].id]" style="clear: both;width: 72%;">Ngày sinh vượt quá giới hạn tuổi(từ 2-120 tuổi)</p>
               </div>
 <!--              phone-->
               <div class="col-md-4 moreInfor-inline">
