@@ -1,0 +1,69 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<div class="container">
+  <div class="row">
+    <div class="col-12 card-detail">
+      <div class=" card-product">
+        <div class="row">
+          <div class="progress">
+            <div class="step current" id="1">
+              <span>1</span>
+              <span>Đăng nhập</span>
+            </div>
+            <div class="current"></div>
+            <div class="step current" id="2">
+              <span>2</span>
+              <span>Địa chỉ giao hàng</span>
+            </div>
+            <div></div>
+            <div class="step" id="3">
+              <span>3</span>
+              <span>Thanh toán và đặt mua</span>
+            </div>
+          </div>
+
+        </div>
+        <br>
+        <div class="row">
+          <p class="font-weight-bolder">Địa chỉ giao hàng</p>
+        </div>
+        <div class="row">
+          <div class="address-shipping">
+            <p class="font-weight-bolder">Trần Văn Thanh</p>
+            <p> Địa chỉ: 157 I Hoàng Văn Thái, Quận Liên Chiểu Thành Phố Đà Nẵng</p>
+            <p>Số điện thoại: 0123456789</p>
+            <button (click)="onSubmit()" class="btn btn-shipping">Giao đến địa chỉ này</button>
+            <button class="btn btn-outline-primary" id="other-address" style="float: right">Giao đến địa chỉ khác
+            </button>
+          </div>
+        </div>
+        <br>
+        <div class="row collapse" id="other-address-form">
+          <div class="address-shipping">
+            <div [formGroup]="shippingForm">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Họ và tên</label>
+                <input type="text" class="form-control" formControlName="name" id="exampleInputEmail1"
+                       aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                  else.</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Địa chỉ</label>
+                <input type="text" class="form-control" formControlName="address" id="exampleInputPassword1">
+              </div>
+              <div class="form-group">
+                <label for="phone">Số điện thoại</label>
+                <input type="text" class="form-control" formControlName="phone" id="phone">
+              </div>
+              <button (click)="onSubmit()" class="btn btn-shipping">Giao đến địa chỉ này</button>
+              <button style="margin-left: 20px" class="btn btn-secondary" id="cancel">Hủy bỏ</button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -20,9 +20,9 @@ export class UserComponent implements OnInit {
               private orderService: OrderService
   ) {
   }
+
   ngOnInit(): void {
     this.userDisplayName = sessionStorage.getItem('loggedUser');
-    console.log(this.userDisplayName);
     this.customerService.getCustomerByAccountName(this.userDisplayName).subscribe(next => {
       this.idUser = next.id;
       this.orderService.chanceIdUser(this.idUser);
