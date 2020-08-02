@@ -11,8 +11,10 @@
 .card{
   width: 28%;
   height: 57%;
-  position: absolute;
-  top: 3%;
+}
+.card-editInline{
+  width: 145px;
+  height: 145px;
 }
 .modal-body table{
   float: right;
@@ -77,12 +79,22 @@
   font-weight: 700;
 }
 .global-content-popup-input{
+  word-spacing: -4px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
   height: 40px;
-  border-radius: 0 5px 5px 0;
+  border-radius: 5px;
   float: right;
   box-sizing: border-box;
-  border: solid 0.25px;
+  border: none;
   box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.31);
+}
+.content-popup-input-inline{
+  height: 40px;
+  float: left;
+  box-sizing: border-box;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.31);
+  border: none;
 }
 .global-content-popup-icon{
   float: left;
@@ -115,9 +127,9 @@
 }
 ::ng-deep .mat-datepicker-popup{
 }
-.delete-selected{
+.button-selected{
   padding: 1%;
-  float: right;
+  margin: 1%;
 }
 
 
@@ -188,13 +200,13 @@ img {
     margin-top: 100px;
 }
 mat-progress-bar {
-  top: 94%;
+  bottom: -3%;
   position: absolute;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   width: 100%;
-  height: 6%;
+  height: 4%;
 }
 mat-progress-bar[value]::-webkit-progress-value {
   background-image:
@@ -214,9 +226,20 @@ mat-progress-bar[value]::-webkit-progress-value {
   left: 26%;
   margin-top: 30%;
 }
+.editInline-moreInfor{
+  position: relative;
+  width: 100%;
+  height: 150px;
+  border: 1px solid #dee2e6;
+}
+.moreInfor-inline{
+  float: left;
+  margin: 0;
+  padding: 4% 1%;
+}
+[id^="edit-inline-animate1"] {
+  height: 120px;
+}
 
 
-//::ng-deep .toast-success {
-//  background-color: #FCBC53 !important;
-//}
 
