@@ -30,8 +30,6 @@
   <button *ngIf="editMultiCheck()" data-toggle="modal" data-target="#editMultiModal" type="button" class="global-button button-selected float-left" (click)="editMultiModel()">Cập nhật thông tin khách hàng</button>
   <button *ngIf="editMultiCheck()" type="button" class="global-button button-selected float-left" (click)="editMultiCancel()">Hủy</button>
 
-  <button data-toggle="modal" data-target="#DeleteSelectedModal" type="button" class="global-button button-selected float-right" (click)="deleteSelectedModel()">Xóa khách hàng đã chọn</button>
-
   <table class="table table-bordered" style="font-size: 12px;">
     <thead class="bg-secondary">
     <tr class="row px-3">
@@ -183,7 +181,6 @@
                 </select>
                 <label class="global-content-popup-icon" for="gender"><i class="fa fa-venus-mars"></i></label>
               </div>
-
             </div>
 
 
@@ -211,9 +208,10 @@
     </tr>
     </tbody>
   </table>
+  <button data-toggle="modal" data-target="#DeleteSelectedModal" data-backdrop="static" type="button" class="global-button button-selected float-right" (click)="deleteSelectedModel()">Xóa khách hàng đã chọn</button>
   <mat-paginator [length]="10"
                  [pageSize]="10"
-                 [pageSizeOptions]="[5, 10, 25, 100]">
+                 [pageSizeOptions]="[5, 10, 25, 100]" style="clear: both;">
   </mat-paginator>
 </div>
 <div class="modal fade " id="addModel" tabindex="-1" role="dialog"
@@ -453,15 +451,35 @@
       <div class="modal-header">
         <h5 class="modal-title modal-titles" id="DeleteSelectedModalLabel">Xóa thông tin khách hàng</h5>
       </div>
-      <div class="modal-body" *ngIf="deleteList.length!==0">
+      <div class="modal-body" *ngIf="deleteList.length!==0 && cantDeleteList.length!==0">
+        <div style="float: left;clear: both;width: 100%">
+          <span>Có {{deleteList.length}} khách hàng có thể xóa và {{cantDeleteList.length}} khách hàng không thể xóa (đang trong quá trình đặt hàng)</span>
+          <br>
+          <span>Bạn có chắc chắn muốn xóa những khách hàng không trong quá trình đặt hàng?</span>
+        </div>
+        <input style="margin-left: 30%;" (click)="delete()" class="global-button edit-customer-btn2" type="button" data-dismiss="modal" value="Đồng ý">
+        <input class="global-button-cancel edit-customer-btn2" type="button" data-dismiss="modal" value="Hủy">
+      </div>
+
+      <div class="modal-body" *ngIf="deleteList.length!==0 && cantDeleteList.length==0">
         <div style="float: left;clear: both;width: 100%">
           <span>Bạn có chắc chắn muốn xóa {{deleteList.length}} khách hàng đã chọn không?</span>
         </div>
         <input style="margin-left: 30%;" (click)="delete()" class="global-button edit-customer-btn2" type="button" data-dismiss="modal" value="Đồng ý">
         <input class="global-button-cancel edit-customer-btn2" type="button" data-dismiss="modal" value="Hủy">
       </div>
-      <div class="modal-body" *ngIf="deleteList.length==0">
-        <span>Bạn chưa chọn khách hàng nào để tiến hành xóa!</span>
+
+      <div class="modal-body" *ngIf="deleteList.length==0 && cantDeleteList.length!==0">
+        <div style="float: left;clear: both;width: 100%">
+          <span>Những khách hàng bạn chọn không thể xóa vì đang trong quá trình đặt hàng!</span>
+        </div>
+        <input style="margin-left:45%;"class="global-button-cancel edit-customer-btn2" type="button" data-dismiss="modal" value="Hủy">
+      </div>
+
+      <div class="modal-body" *ngIf="deleteList.length==0 && cantDeleteList.length==0">
+        <div style="float: left;clear: both;width: 100%">
+          <span>Bạn chưa chọn khách hàng nào để tiến hành xóa!</span>
+        </div>
         <input style="margin-left:45%;"class="global-button-cancel edit-customer-btn2" type="button" data-dismiss="modal" value="Hủy">
       </div>
 
