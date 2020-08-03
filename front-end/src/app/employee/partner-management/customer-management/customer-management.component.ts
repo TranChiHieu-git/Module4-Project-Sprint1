@@ -30,6 +30,7 @@ export class CustomerManagementComponent implements OnInit {
   filter;
   date = new Array<any>();
   deleteList = new Array();
+  cantDeleteList = new Array();
   selectedFile = null;
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
@@ -296,25 +297,47 @@ export class CustomerManagementComponent implements OnInit {
   }
 
   deleteCheckbox(event, id): void {
-    const indexOfId = this.deleteList.indexOf(id);
-
+    this.orders = null;
+    const indexOfIdTrue = this.deleteList.indexOf(id);
+    const indexOfIdFalse = this.cantDeleteList.indexOf(id);
     if (event.target.checked) {
-      if (indexOfId < 0) {
-        this.deleteList.push(id);
+      if (indexOfIdTrue < 0 || indexOfIdFalse < 0) {
+        this.orderService.findAllOrderByUserId(id).subscribe((next: any) => {
+            this.orders = next.content;
+            if (this.checkDeleteOrder()) {
+              this.cantDeleteList.push(id);
+            } else {
+              this.deleteList.push(id);
+            }
+            ;
+          },
+          error => {
+            console.log(error);
+            this.orders = null;
+            this.deleteList.push(id);
+          });
+        // this.deleteList.push(id);
       }
     } else {
-      this.deleteList.splice(indexOfId, 1);
+      if (indexOfIdTrue>=0){
+        this.deleteList.splice(indexOfIdTrue, 1);
+      }
+      if (indexOfIdFalse>=0){
+        this.cantDeleteList.splice(indexOfIdFalse,1);
+      }
     }
+
   }
 
   deleteAllCheckbox(event): void {
     if (event.target.checked) {
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.customers.length; i++) {
-        this.deleteList.push(this.customers[i].id);
+        this.deleteCheckbox(event, this.customers[i].id);
       }
     } else {
       this.deleteList.splice(0, this.deleteList.length);
+      this.cantDeleteList.splice(0,this.cantDeleteList.length);
     }
   }
 
@@ -324,6 +347,7 @@ export class CustomerManagementComponent implements OnInit {
     for (let i = 0; i < this.deleteList.length; i++) {
       this.customerService.deleteCustomerById(this.deleteList[i]).subscribe(
         next => {
+          $('#checkAll').prop('checked',false);
           this.ngOnInit();
           this.customers = [];
           this.deleteList = [];
@@ -331,7 +355,10 @@ export class CustomerManagementComponent implements OnInit {
         error => console.log(error)
       );
     }
-    this.toastr.success('Xóa thành công ' + this.deleteList.length + 'khách hàng !');
+    this.toastr.success('Xóa thành công ' + this.deleteList.length + ' khách hàng !');
+    if (this.cantDeleteList.length>0){
+      this.toastr.error('Có '+this.cantDeleteList.length+' khách hàng không thể xóa!');
+    }
   }
 
   // tslint:disable-next-line:typedef
