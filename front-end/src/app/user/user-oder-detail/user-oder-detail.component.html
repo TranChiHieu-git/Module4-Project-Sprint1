@@ -80,7 +80,7 @@
         <td></td>
         <td></td>
         <td>
-          <button *ngIf="order.orderStatus=='Đang xử lý'" class="btn btn-secondary" data-toggle="modal"
+          <button *ngIf="order.orderStatus=='Đang xử lý'" class="btn btn-danger" data-toggle="modal"
                   data-target="#staticBackdrop">Hủy đơn hàng
           </button>
         </td>
@@ -107,8 +107,8 @@
         Mã đơn hàng:{{order.orderId}}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary submitButton" data-dismiss="modal">Đóng</button>
-        <button type="button" class="btn btn-danger submitButton" (click)="cancelOrder(order.orderId)"
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-danger" (click)="cancelOrder(order.orderId)"
                 data-dismiss="modal">Hủy đơn hàng
         </button>
       </div>

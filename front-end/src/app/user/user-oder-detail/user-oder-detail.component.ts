@@ -24,7 +24,7 @@ export class UserOderDetailComponent implements OnInit {
       }
 
   ngOnInit(): void {
-    this.orderService.curentIdUser.subscribe(message => {
+    this.orderService.currentIdUser.subscribe(message => {
       this.idUser = message;
       this.orderService.findAllOrderByUserId(this.idUser).subscribe((next: any) => {
           this.orders = next.content;
@@ -38,8 +38,8 @@ export class UserOderDetailComponent implements OnInit {
               }
             });
             if (this.isCurrentOrder) {
-              this.orderService.findOrderById(idOrder).subscribe(next => {
-                  this.order = next;
+              this.orderService.findOrderById(idOrder).subscribe(res => {
+                  this.order = res;
                   console.log(this.order);
                   this.orderDetails = this.order.orderDetailList;
                   this.orderDetails.forEach(product => {

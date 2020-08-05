@@ -28,114 +28,111 @@
         </div>
         <br>
         <div class="row">
-          <p style="margin-bottom: 5px" class="font-weight-bolder">1.Chọn hình thức giao hàng</p>
+          <p style="margin-bottom: 5px" class="font-weight-bolder">1. Chọn hình thức giao hàng</p>
         </div>
         <div class="row">
           <div class="col-md-8" style="padding: 0">
             <!--                  <p style="margin-bottom: 5px" class="font-weight-bolder">1.Chọn hình thức giao hàng</p>-->
             <div class="payment-method">
-              <div>
-                <div class="row">
-                  <div class="col">
-                    <div class="custom-control custom-radio">
-                      <input id="shipping-now" name="shipping-method" type="radio" class="custom-control-input"
-                             [(ngModel)]="shippingMethod" (change)="oncheck('shipping-now')"
-                             required>
-                      <label class="custom-control-label" for="shipping-now">Giao ngay (2H - 3H)
-                        <span
-                          class="statusShippingNow"
-                          style="visibility:visible"></span></label> <img
-                      src="https://res-3.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/v1429107810/bfifoxufdoyn686etnzv.png"
-                      alt=""
-                      style="width: 40px; position: relative;left: 10px;bottom: 10px">
-                    </div>
-                    <div id="divShippingNow" class="collapse fade paypall">
-                      <p class="shipping-method">Giao trước 12:00 hôm nay</p>
-                      <span>Phí giao hàng: </span>
-                      <span style="color: red; font-style: italic">  25.000đ</span>
-
-                    </div>
-                    <br>
-                    <div class="custom-control custom-radio">
-                      <input id="shipping-standard" name="shipping-method" type="radio" class="custom-control-input"
-                             value="shipping-standard" [(ngModel)]="shippingMethod" (change)="oncheck('shipping-standard')"
-                             required>
-                      <label class="custom-control-label" for="shipping-standard">Giao tiêu chuẩn <span
-                        class="statusShippingStandard"
-                        style="visibility:visible"></span></label>
-                    </div>
-                    <div id="divShippingStandard" class="collapse fade paypall">
-                      <p class="shipping-method">Giao 3 ngày sau khi đặt hàng</p>
-                      <span>Phí giao hàng: </span>
-                      <span style="color: red; font-style: italic">  14.000đ</span></div>
+              <div class="row">
+                <div class="col">
+                  <div class="custom-control custom-radio">
+                    <input id="shipping-now" name="shipping-method" type="radio" class="custom-control-input"
+                           [(ngModel)]="shippingMethod" (change)="onChecked('shipping-now')"
+                           required>
+                    <label class="custom-control-label" for="shipping-now">Giao ngay (2H - 3H)
+                      <span
+                        class="statusShippingNow"
+                        style="visibility:visible"></span></label> <img
+                    src="https://res-3.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/v1429107810/bfifoxufdoyn686etnzv.png"
+                    alt=""
+                    style="width: 40px; position: relative;left: 10px;bottom: 10px">
                   </div>
+                  <div id="divShippingNow" class="collapse fade paypall">
+                    <p class="shipping-method">Giao trước 12:00 hôm nay</p>
+                    <span>Phí giao hàng: </span>
+                    <span style="color: red; font-style: italic">  25.000đ</span>
+
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input id="shipping-standard" name="shipping-method" type="radio" class="custom-control-input"
+                           value="shipping-standard" [(ngModel)]="shippingMethod"
+                           (change)="onChecked('shipping-standard')"
+                           required>
+                    <label class="custom-control-label" for="shipping-standard">Giao tiêu chuẩn <span
+                      class="statusShippingStandard"
+                      style="visibility:visible"></span></label>
+                  </div>
+                  <div id="divShippingStandard" class="collapse fade paypall">
+                    <p class="shipping-method">Giao 3 ngày sau khi đặt hàng</p>
+                    <span>Phí giao hàng: </span>
+                    <span style="color: red; font-style: italic">  14.000đ</span></div>
                 </div>
-
-
               </div>
 
 
             </div>
             <br>
-            <p style="margin-bottom: 5px" class="font-weight-bolder">2.Chọn hình thức thanh toán</p>
+            <p style="margin-bottom: 5px" class="font-weight-bolder">2. Chọn hình thức thanh toán</p>
 
             <div class="payment-method">
-              <div>
-                <div class="row">
-                  <div class="col">
-                    <div class="custom-control custom-radio">
-                      <input id="traditional" name="Regarding" type="radio" class="custom-control-input"
-                             value="traditional" checked
-                             required>
-                      <label class="custom-control-label" for="traditional">Thanh toán bằng tiền mặt khi nhận
-                        hàng<span class="statusOther"
-                                  style="visibility:visible"></span></label>
-                    </div>
-                    <br>
-                    <div class="custom-control custom-radio">
-                      <input id="paypal" name="Regarding" type="radio" class="custom-control-input" value="paypal"
-                             required>
-                      <label class="custom-control-label" for="paypal">Thanh toán bằng PayPal <span
-                        class="statusOther"
-                        style="visibility:visible"></span></label>
-                    </div>
-                    <div id="divPaypal" class="collapse fade paypall">
-                      <div [hidden]="paidFor" id="paypal-container"></div>
+              <div class="row">
+                <div class="col">
+                  <div class="custom-control custom-radio">
+                    <input id="traditional" name="Regarding" type="radio" class="custom-control-input"
+                           value="traditional" checked
+                           required>
+                    <label class="custom-control-label" for="traditional">Thanh toán bằng tiền mặt khi nhận
+                      hàng<span class="statusOther"
+                                style="visibility:visible"></span></label>
+                  </div>
+                  <br>
+                  <div class="custom-control custom-radio">
+                    <input id="paypal" name="Regarding" type="radio" class="custom-control-input" value="paypal"
+                           required>
+                    <label class="custom-control-label" for="paypal">Thanh toán bằng PayPal <span
+                      class="statusOther"
+                      style="visibility:visible"></span></label>
+                  </div>
+                  <div id="divPaypal" class="collapse fade paypall">
+                    <div [hidden]="paidFor" id="paypal-container"></div>
 
 
-                    </div>
-                    <br>
-                    <div class="custom-control custom-radio">
-                      <input id="other2" name="Regarding" type="radio" class="custom-control-input" value="Other"
-                             required>
-                      <label class="custom-control-label" for="other2">Thanh toán bằng thẻ ngân hàng <span
-                        class="statusOther"
-                        style="visibility:visible"></span></label>
-                    </div>
-                    <div id="divOther2" class="collapse fade paypall">
-                      <label>Chưa có chức năng này</label>
-                    </div>
+                  </div>
+                  <br>
+                  <div class="custom-control custom-radio">
+                    <input id="other2" name="Regarding" type="radio" class="custom-control-input" value="Other"
+                           required>
+                    <label class="custom-control-label" for="other2">Thanh toán bằng thẻ ngân hàng <span
+                      class="statusOther"
+                      style="visibility:visible"></span></label>
+                  </div>
+                  <div id="divOther2" class="collapse fade paypall">
+                    <label>Chưa có chức năng này</label>
                   </div>
                 </div>
-
-
               </div>
-
 
             </div>
             <br>
-            <button (click)="order()" class="btn btn-shipping">ĐẶT MUA</button>
+            <button (click)="ordered()" class="btn btn-shipping">ĐẶT MUA</button>
           </div>
           <div class="col-md-4" style="padding: 0">
             <div class="row">
               <div class="card order-info">
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Địa chỉ giao hàng</li>
                   <li class="list-group-item">
-                    <h5 class="font-weight-bolder">Trần Văn Thanh</h5>
-                    <p style="font-size: 15px">158 Hai Bà Trưng, Ba Đình, Hà Nội,158 Hai Bà Trưng, Ba Đình, Hà
-                      Nội</p>
-                    <p style="font-size: 15px">SĐT: 0123456789</p>
+                    <div>
+                      <label class="title" style="margin-bottom: 0">Địa chỉ giao hàng</label>
+                      <a href="" [routerLink]="['/checkout/shipping']">
+                        <button style="float: right" class="btn btn-outline-secondary">Sửa</button>
+                      </a>
+                    </div>
+                  </li>
+                  <li *ngIf="order" class="list-group-item">
+                    <h5 class="font-weight-bolder">{{order.receiver}}</h5>
+                    <p style="font-size: 15px">Địa chỉ:  {{order.orderAddress}}</p>
+                    <p style="font-size: 15px">SĐT: {{order.deliveryPhoneNumber}}</p>
                   </li>
                 </ul>
               </div>
@@ -144,33 +141,33 @@
               <div class="card order-info">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">
-                    Đơn hàng (3 sản phẩm)
-                    <table class="table">
-
-                      <tr>
-                        <td style="width: 70%;font-size: 15px"><label style="font-size: 20px;color: red">2 </label>
-                          x Angelina Jolie - Nhật Kí Những Chuyến Đi - Những Cuộc Gặp Gỡ Với Người Tị Nạn ở Châu
-                          Phi, Campuchia, Pakistan Và Ecuador
+                    <div>
+                      <label> Đơn hàng (<span *ngIf="orderNow" style="color: red"
+                                              class="font-weight-bolder">{{totalProduct}}</span> sản phẩm)</label>
+                      <a href="" [routerLink]="['/checkout/card']">
+                        <button style="float: right" class="btn btn-outline-secondary">Sửa</button>
+                      </a>
+                    </div>
+                    <br>
+                    <table *ngIf="orderNow" style="margin-bottom: 0;" class="table">
+                      <tr *ngFor="let cart of orderNow">
+                        <td style="width: 70%;font-size: 15px"><label
+                          style="font-size: 15px;color: red">{{cart.quantity}} </label> x
+                          <label style="color: dodgerblue">  {{cart.id.product.productName}}</label><br>
+                          Cung cấp bởi: <span class="font-weight-bolder">{{cart.id.product.brand.brandName}}</span>
                         </td>
-                        <td style="font-size: 15px;text-align: right;vertical-align: top">94.000d</td>
-                      </tr>
-                      <tr>
-                        <td style="width: 70%;font-size: 15px"><label style="font-size: 20px;color: red">2 </label>
-                          x Angelina Jolie - Nhật Kí Những Chuyến Đi - Những Cuộc Gặp Gỡ Với Người Tị Nạn ở Châu
-                          Phi, Campuchia, Pakistan Và Ecuador
-                        </td>
-                        <td style="font-size: 15px;text-align: right;vertical-align: top">94.000d</td>
+                        <td
+                          style="font-size: 15px;text-align: right;vertical-align: top">{{cart.id.product.price|currency:'VND'}}</td>
                       </tr>
                       <tr>
                         <td style="font-size: 15px">
                           <p>Tạm tính</p>
-                          Phí vận chuyển
+                          Phí giao hàng
                         </td>
                         <td style="font-size: 15px;text-align: right">
                           <p>{{tempMoney|currency:'VND'}}</p>
-                          <p>{{shippingCost|currency:'VND'}}</p>
+                          <p>{{typeOfShipping.cost|currency:'VND'}}</p>
                         </td>
-
                       </tr>
                     </table>
                   </li>

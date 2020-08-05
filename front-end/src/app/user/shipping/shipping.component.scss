@@ -1,32 +1,34 @@
-.card-detail{
-  background-color:rgba(236, 233, 228, 1.0);
+.card-detail {
+  background-color: rgba(236, 233, 228, 1.0);
   position: relative;
   top: 20px;
   min-height: 100vh;
-  padding-left: 20px;
+padding-top: 15px;
 }
-.card-product{
-  //background-color: red;
-  width: 98%;
+
+
+.card-payment-box {
+  width: 94%;
   margin: 10px;
 }
-.card-payment-box{
-  width: 94%;
-  margin: 10px;}
-table{
+
+table {
   background-color: white;
   border-radius: 5px;
   position: relative;
 }
-.table-product{
+
+.table-product {
 }
+
 .box-detail {
   background-color: white;
   border-radius: 5px;
 }
+
 .progress {
   height: 110px;
-  padding:2%  20%;
+  padding: 2% 20%;
   background-color: white;
   border-radius: 10px;
   width: 100%;
@@ -102,8 +104,10 @@ table{
   border-color: rgb(201, 91, 61);
   color: black;
 }
+
 .progress div.step.current span i:first-child {
 }
+
 .checkout-progress-indicator .button {
   margin: 0 auto;
   display: block;
@@ -116,10 +120,12 @@ section {
 section h3 {
   color: #666;
 }
+
 .title {
   text-align: center;
 
 }
+
 /* text styles */
 
 
@@ -129,32 +135,30 @@ span {
   color: #254356;
 }
 
-.address-shipping{
+.address-shipping {
   background-color: white;
-  width: 60%;
+  width: 100%;
   padding: 10px;
   border-radius: 10px;
-//  position: absolute;
-//left: 20%;
+  border: orange dashed 1px;
 }
-.btn-shipping{
+
+.address-shipping-other {
+  background-color: rgb(247, 247, 247);
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: gainsboro solid 1px;
+}
+
+.btn-shipping {
   position: relative;
-  right:0;
-  top: 5%;
-  background-color: #ffe673;
-  border:rgb(201, 91, 61) solid 2px;
+  right: 0;
+  background-color: #ffda28;
   color: black;
   margin: 0;
-  height:40px;
 }
-.btn-shipping:hover{
-
+.btn-shipping:hover {
   background-color: orange;
-  border:rgb(201, 91, 61) solid 2px;
-  color: white;
-
+  color: black;
 }
-.address-shipping .btn-shipping{
-  //float: right;
-}
-

@@ -1,10 +1,8 @@
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <div class="container">
   <div class="row">
     <div class="col-12 card-detail">
-      <div class=" card-product">
-        <div class="row">
+      <div class="row">
+        <div class="col-12">
           <div class="progress">
             <div class="step current" id="1">
               <span>1</span>
@@ -21,47 +19,140 @@
               <span>Thanh toán và đặt mua</span>
             </div>
           </div>
-
         </div>
-        <br>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-12 font-weight-bolder"><p>Địa chỉ giao hàng</p></div>
+      </div>
+      <div class=" address-shipping">
         <div class="row">
-          <p class="font-weight-bolder">Địa chỉ giao hàng</p>
-        </div>
-        <div class="row">
-          <div class="address-shipping">
-            <p class="font-weight-bolder">Trần Văn Thanh</p>
-            <p> Địa chỉ: 157 I Hoàng Văn Thái, Quận Liên Chiểu Thành Phố Đà Nẵng</p>
-            <p>Số điện thoại: 0123456789</p>
-            <button (click)="onSubmit()" class="btn btn-shipping">Giao đến địa chỉ này</button>
-            <button class="btn btn-outline-primary" id="other-address" style="float: right">Giao đến địa chỉ khác
-            </button>
-          </div>
-        </div>
-        <br>
-        <div class="row collapse" id="other-address-form">
-          <div class="address-shipping">
-            <div [formGroup]="shippingForm">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Họ và tên</label>
-                <input type="text" class="form-control" formControlName="name" id="exampleInputEmail1"
-                       aria-describedby="emailHelp">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                  else.</small>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Địa chỉ</label>
-                <input type="text" class="form-control" formControlName="address" id="exampleInputPassword1">
-              </div>
-              <div class="form-group">
-                <label for="phone">Số điện thoại</label>
-                <input type="text" class="form-control" formControlName="phone" id="phone">
-              </div>
+          <div class=" col-8">
+            <div>
+              <p *ngIf="customer" class="font-weight-bolder">Người nhận: {{customer.userName}}</p>
+              <p *ngIf="customer">Địa chỉ: {{customer.address}}</p>
+              <p *ngIf="customer">Số điện thoại: {{customer.phone}}</p>
               <button (click)="onSubmit()" class="btn btn-shipping">Giao đến địa chỉ này</button>
-              <button style="margin-left: 20px" class="btn btn-secondary" id="cancel">Hủy bỏ</button>
+              <button class="btn btn-outline-primary" id="other-address" style="margin-left: 15px">Giao đến địa chỉ
+                khác
+              </button>
             </div>
-
           </div>
 
+          <div class="col-4">
+            <div>
+              <img style="width: 70%" src="https://www.legalforms.ng/wp-content/uploads/2016/07/address.png" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-12">
+          <div class="address-shipping-other collapse" id="other-address-form">
+            <div [formGroup]="shippingForm" class="col-8 offset-2">
+              <div class="form-group row ">
+                <label class="col-4" for="name">Họ và tên người nhận (<span
+                  style="color: red">*</span>)</label>
+                <div class="col-8">
+                  <input type="text" class="form-control" formControlName="name" id="name"
+                         aria-describedby="emailHelp">
+                  <small id="emailHelp">We'll never share your email with anyone
+                    else.</small>
+                </div>
+
+              </div>
+
+              <div class="form-group row">
+                <label class="col-4" for="phone">Số điện thoại(<span style="color: red">*</span>)</label>
+                <div class="col-8">
+                  <input type="text" class="form-control" formControlName="phone" id="phone">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-4" for="city">Tỉnh/Thành phố(<span style="color: red">*</span>)</label>
+                <div class="col-8">
+                  <select style="height: 200px" class="form-control" name="" id="city">
+                    <option value="">Select a state...</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-4" for="district">Quận/Huyện(<span style="color: red">*</span>)</label>
+                <div class="col-8">
+                  <select class="form-control" name="" id="district">
+                    <option value="">Select a state...</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-4" for="ward">Phường/Xã(<span style="color: red">*</span>)</label>
+                <div class="col-8">
+                  <select class="form-control" name="" id="ward">
+                    <option value="">Select a state...</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-4" for="exampleInputPassword1">Địa chỉ(<span style="color: red">*</span>)</label>
+                <div class="col-8">
+                  <textarea type="text" class="form-control" formControlName="address"
+                            id="exampleInputPassword1"></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4"></div>
+                <div class="col-8">
+                  <button (click)="onSubmitOther()" class="btn btn-shipping">Giao đến địa chỉ này</button>
+                  <button style="margin-left: 20px" class="btn btn-secondary" id="cancel">Hủy bỏ</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

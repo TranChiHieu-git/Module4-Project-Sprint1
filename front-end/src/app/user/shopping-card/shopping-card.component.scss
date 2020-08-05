@@ -36,7 +36,8 @@ vertical-align: top;
 }
 
 .card-product table .money p {
-  margin-top: 20px;
+  margin-top: 10px;
+
 
 }
 .card-product table .quantity button {
@@ -49,7 +50,7 @@ vertical-align: top;
 
 }
 .card-product table .quantity {
-  padding-top: 20px;
+  padding-top: 10px;
 }
 .image-product{
   width: 20%;
@@ -65,22 +66,19 @@ vertical-align: top;
   color: red;
   font-size: 20px;
 }
-.btn-payment button{
+.btn-payment{
   position: relative;
   right:0;
   top: 5%;
-  background-color: #ffe673;
-  border:rgb(201, 91, 61) solid 2px;
+  background-color: #ffda28;
   color: black;
   margin: 0;
   width: 100%;
   height:50px;
 }
-.btn-payment button:hover{
+.btn-payment:hover{
 
   background-color: orange;
-  border:rgb(201, 91, 61) solid 2px;
-  color: white;
-  font-size: 110%;
+  color: black;
 
 }

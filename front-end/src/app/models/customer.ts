@@ -1,4 +1,5 @@
 import {Account} from './account';
+import {Cart} from './cart';
 
 export class Customer {
   id: number;
@@ -11,6 +12,7 @@ export class Customer {
   imageUrl: string;
   deleteFlag: boolean;
   account: Account;
+  cartList: Cart[];
 
   constructor() {
   }

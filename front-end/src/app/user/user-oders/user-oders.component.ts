@@ -17,7 +17,7 @@ export class UserOdersComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private orderService: OrderService,
               private router: Router) {
-    this.orderService.curentIdUser.subscribe(message => {
+    this.orderService.currentIdUser.subscribe(message => {
       this.idUser = message;
       this.orderService.currentPage.subscribe(page => {
         this.currentPage = page;
