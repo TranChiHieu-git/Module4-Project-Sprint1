@@ -96,8 +96,8 @@ export class ListAccountComponent implements OnInit {
     });
     this.editAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
-      accountName: ['', [Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,}$'), this.existAccountName.bind(this)]],
-      accountPassword: ['', [Validators.pattern('^[a-zA-Z0-9]{1,}$')]],
+      accountName: ['', [Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,100}$'), this.existAccountName.bind(this)]],
+      accountPassword: ['', [Validators.pattern('^[a-zA-Z0-9]{1,100}$')]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]],
       reason: ['']
@@ -108,10 +108,10 @@ export class ListAccountComponent implements OnInit {
       accountPassword: ['', [Validators.required]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]],
-      reason: ['', [Validators.required]]
+      reason: ['', [Validators.required, Validators.maxLength(255)]]
     });
     this.deleteListAccountForm = this.formBuilder.group({
-      reason: ['', [Validators.required]]
+      reason: ['', [Validators.required, Validators.maxLength(255)]]
     });
   }
 

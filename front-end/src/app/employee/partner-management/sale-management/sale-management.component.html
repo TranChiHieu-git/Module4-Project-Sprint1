@@ -4,11 +4,11 @@
       <i class="fa fa-bars pt-2 dsp"></i><span class="dsp"> Danh sách phiếu </span>
     </div>
     <div class="form-group has-search mt-2 col-6">
-      <form>
-        <span class="fa fa-search form-control-feedback"></span>
-        <input [(ngModel)]="userName" name='userName' type="text" class="form-control"
-               placeholder="Nhập tên nhân viên">
-      </form>
+      <!--      <form>-->
+      <!--        <span class="fa fa-search form-control-feedback"></span>-->
+      <!--        <input [(ngModel)]="userName" name='userName' type="text" class="form-control"-->
+      <!--               placeholder="Nhập tên nhân viên">-->
+      <!--      </form>-->
     </div>
     <div class="col-2">
       <button class="btn btn-addnew mt-2">Thêm mới</button>
@@ -33,10 +33,18 @@
           <label>Ngày Nhập Từ:</label>
         </td>
         <td>
-          <input type="date" class="form-control" formControlName="createDateFrom">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <input class="form-control"
+                     formControlName="createDateFrom" matInput [matDatepicker]="picker">
+              <span class="datePicker-div">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker class=""></mat-datepicker>
+                </span>
+            </div>
+          </div>
         </td>
-        <td><label class="ml-3"> </label></td>
-        <td><label class="ml-5"> </label></td>
+        <td><label class="ml-4"> </label></td>
         <td><label class="ml-5"> </label></td>
         <td colspan="2" rowspan="2">
           <button class="btn btn-addnew btn-loc ml-5" (click)="search()">Tìm Kiếm</button>
@@ -58,77 +66,91 @@
           <label>Ngày Nhập đến:</label>
         </td>
         <td>
-          <input type="date" class="form-control" formControlName="createDateTo">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <input class="form-control"
+                     formControlName="createDateTo" matInput [matDatepicker]="picker2">
+              <span class="datePicker-div">
+                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <mat-datepicker #picker2 class=""></mat-datepicker>
+                </span>
+            </div>
+          </div>
         </td>
       </tr>
     </table>
   </form>
   <hr>
   <div>
-    <table class="table">
-      <thead class="thead">
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Ngày Tạo Phiếu</th>
-        <th scope="col">Tên Nhân Viên</th>
-        <th scope="col">Tên Khách Hàng</th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-      </tr>
-      </thead>
-      <tbody *ngFor="let coupon of couponList">
-      <tr>
-        <th scope="row">{{coupon.couponId}}</th>
-        <td>{{coupon.createDate | date:'dd/MM/yyy'}}</td>
-        <td>{{coupon.employee.name}}</td>
-        <td>{{coupon.user.userName}}</td>
-        <td>
-          <button class="feature">
-            <img class="icon" width="25px" height="auto"
-                 src="https://cdn4.iconfinder.com/data/icons/eldorado-education/40/291332-pencil-256.png">
-          </button>
-        </td>
-        <td>
-          <button class="feature">
-            <img class="icon" width="25px" height="auto"
-                 src="https://cdn4.iconfinder.com/data/icons/vectory-basic/40/recycle_bin_full-256.png">
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <div class="row">
-      <div class="col-6"></div>
-      <div class="col-6">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination float-right mr-5">
-            <!--          <li *ngIf="pageClicked>0" class="page-item" (click)="onFirst()"><a class="page-link">First</a></li>-->
-            <li class="page-item" (click)="onPrevious()" [ngClass]="pageClicked==0?'disabled':''">
-              <a class="page-link">Trang trước</a>
-            </li>
-            <li *ngIf="pageClicked != 0" class="page-item" (click)="getAllCoupon(pages[pageClicked-1])">
-              <a class="page-link">{{pageClicked}}</a>
-            </li>
-            <li [ngClass]="(pageClicked == pages[pageClicked]) ? 'active' : ''" class="page-item"
-                (click)="getAllCoupon(pages[pageClicked])">
-              <a class="page-link">{{pageClicked + 1}}</a>
-            </li>
-            <li *ngIf="pageClicked < pages.length -1" class="page-item" (click)="getAllCoupon(pages[pageClicked+1])">
-              <a class="page-link">{{pageClicked + 2}}</a>
-            </li>
-            <li *ngIf="pageClicked < pages.length -3" class="page-item">
-              <a class="page-link">...</a>
-            </li>
-            <li *ngIf="pageClicked < pages.length-2" class="page-item" (click)="onLast()">
-              <a class="page-link">{{pages[pages.length - 1] + 1}}</a>
-            </li>
-            <li class="page-item" (click)="onNext()" [ngClass]="pageClicked==totalPages-1?'disabled':''">
-              <a class="page-link">Trang kế</a>
-            </li>
-            <!--          <li class="page-item" (click)="onLast()"><a class="page-link">Last</a></li>-->
-          </ul>
-        </nav>
+    <ng-container *ngIf="couponList !== null">
+      <table class="table">
+        <thead class="thead">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Ngày Tạo Phiếu</th>
+          <th scope="col">Tên Nhân Viên</th>
+          <th scope="col">Tên Khách Hàng</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let coupon of couponList">
+        <tr>
+          <th scope="row">{{coupon.couponId}}</th>
+          <td>{{coupon.createDate | date:'dd/MM/yyy'}}</td>
+          <td>{{coupon.employee.name}}</td>
+          <td>{{coupon.user.userName}}</td>
+          <td>
+            <button class="feature">
+              <img class="icon" width="25px" height="auto"
+                   src="https://cdn4.iconfinder.com/data/icons/eldorado-education/40/291332-pencil-256.png">
+            </button>
+          </td>
+          <td>
+            <button class="feature">
+              <img class="icon" width="25px" height="auto"
+                   src="https://cdn4.iconfinder.com/data/icons/vectory-basic/40/recycle_bin_full-256.png">
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <div class="col-6"></div>
+        <div class="col-6">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination float-right mr-5">
+              <!--          <li *ngIf="pageClicked>0" class="page-item" (click)="onFirst()"><a class="page-link">First</a></li>-->
+              <li class="page-item" (click)="onPrevious()" [ngClass]="pageClicked==0?'disabled':''">
+                <a class="page-link">Trang trước</a>
+              </li>
+              <li *ngIf="pageClicked != 0" class="page-item" (click)="getAllCoupon(pages[pageClicked-1])">
+                <a class="page-link">{{pageClicked}}</a>
+              </li>
+              <li [ngClass]="(pageClicked == pages[pageClicked]) ? 'active' : ''" class="page-item"
+                  (click)="getAllCoupon(pages[pageClicked])">
+                <a class="page-link">{{pageClicked + 1}}</a>
+              </li>
+              <li *ngIf="pageClicked < pages.length -1" class="page-item" (click)="getAllCoupon(pages[pageClicked+1])">
+                <a class="page-link">{{pageClicked + 2}}</a>
+              </li>
+              <li *ngIf="pageClicked < pages.length -3" class="page-item">
+                <a class="page-link">...</a>
+              </li>
+              <li *ngIf="pageClicked < pages.length-2" class="page-item" (click)="onLast()">
+                <a class="page-link">{{pages[pages.length - 1] + 1}}</a>
+              </li>
+              <li class="page-item" (click)="onNext()" [ngClass]="pageClicked==totalPages-1?'disabled':''">
+                <a class="page-link">Trang kế</a>
+              </li>
+              <!--          <li class="page-item" (click)="onLast()"><a class="page-link">Last</a></li>-->
+            </ul>
+          </nav>
+        </div>
       </div>
-    </div>
+    </ng-container>
+    <ng-container *ngIf="couponList === null">
+      <p class="text-center">Không tìm thấy phiếu nào phù hợp với dữ liệu nhập vào!</p>
+    </ng-container>
   </div>
 </div>

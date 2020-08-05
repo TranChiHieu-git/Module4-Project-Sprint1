@@ -181,4 +181,10 @@ input[type=text]:focus {
   border: none;
   border-radius: 10px;
 }
+#editBtn, #deleteBtn, #deleteMultiBtn {
+  background-color:rgb(238, 159, 31) !important;
+}
+.igt{
+  background-color:rgb(238, 159, 31) !important;
+}
 
