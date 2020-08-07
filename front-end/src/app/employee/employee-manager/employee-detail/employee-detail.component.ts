@@ -1,4 +1,6 @@
 // import * as $ from 'jquery';
+import {PositionEmp} from "../../../models/position";
+
 declare var $: any;
 import {Component, OnInit} from '@angular/core';
 import {Employee} from '../../employee';
@@ -35,6 +37,8 @@ function checkCurrentPassword(c: AbstractControl): { [key: string]: any } {
   styleUrls: ['./employee-detail.component.scss']
 })
 export class EmployeeDetailComponent implements OnInit {
+  uploadStatus = true;
+  uploadProgressStatus = false;
   constructor(private employeeService: EmployeeService,
               private fb: FormBuilder,
               private afStorage: AngularFireStorage,
@@ -46,7 +50,7 @@ export class EmployeeDetailComponent implements OnInit {
   url: any;
   employee = new Employee();
   editForm: FormGroup;
-  positionList: Position[];
+  positionList: PositionEmp[];
   departmentList: Department[];
   accountName = '';
   account = new Account();
@@ -95,7 +99,7 @@ export class EmployeeDetailComponent implements OnInit {
         id: [],
         name: []
       }),
-      phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^\+84\d{9,10}$/)]),
+      phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^90\d{8,9}$/)]),
       email: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(.[A-Za-z0-9]+)$/)]),
       image: new FormControl('')
     });
@@ -207,8 +211,18 @@ export class EmployeeDetailComponent implements OnInit {
     }
   }
 
-  readURL(target: EventTarget): void {
-    this.uploadFireBaseAndSubmit();
+  readURL(target: EventTarget & HTMLInputElement ): void {
+    this.uploadStatus = false;
+    this.uploadProgressStatus = true;
+    if (target.files && target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // @ts-ignore
+        $('#avatar').attr('src', e.target.result);
+      };
+      reader.readAsDataURL(target.files[0]);
+      this.uploadFireBaseAndSubmit();
+    }
   }
 
   selectFile(): void {

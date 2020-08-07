@@ -4,6 +4,7 @@ import {Employee} from '../models/employee';
 import {Observable} from 'rxjs';
 import {Department} from '../models/department';
 import {Account} from '../models/account';
+import {PositionEmp} from '../models/position';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,8 @@ export class EmployeeService {
   findEmployeeByAccountName(name: string): Observable<Employee> {
     return this.httpClient.get<Employee>(this.API_URL_EMPLOYEE + '/name' + '/' + name);
   }
-  findAllPosition(): Observable<Position[]> {
-    return this.httpClient.get<Position[]>(this.API_URL_POSITION);
+  findAllPosition(): Observable<PositionEmp[]> {
+    return this.httpClient.get<PositionEmp[]>(this.API_URL_POSITION);
   }
   findAllDepartment(): Observable<Department[]> {
     return this.httpClient.get<Department[]>(this.API_URL_DEPARTMENT);

@@ -10,7 +10,6 @@
         <mat-card class="mat-card-img"
                   (click)="selectFile()">
           <img class="imageEmp" id="avatar" src="{{employee['image']}}" onerror="this.src = 'https://firebasestorage.googleapis.com/v0/b/webapp-1b736.appspot.com/o/58hvov18b5f?alt=media&token=bd216998-70e7-4c1b-9127-9cc1b1127278' ">
-          <input formControlName="id" readonly hidden>
           <input class="file-upload-input" type='file'
                  (change)="readURL($event.target);" accept="image/*"
                  hidden id="image"/>
