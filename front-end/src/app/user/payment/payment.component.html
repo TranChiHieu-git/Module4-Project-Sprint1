@@ -32,13 +32,13 @@
         </div>
         <div class="row">
           <div class="col-md-8" style="padding: 0">
-            <!--                  <p style="margin-bottom: 5px" class="font-weight-bolder">1.Chọn hình thức giao hàng</p>-->
             <div class="payment-method">
               <div class="row">
                 <div class="col">
                   <div class="custom-control custom-radio">
-                    <input id="shipping-now" name="shipping-method" type="radio" class="custom-control-input"
-                           [(ngModel)]="shippingMethod" (change)="onChecked('shipping-now')"
+                    <input id="shipping-now" name="shipping-method" value="shipping-now" type="radio"
+                           class="custom-control-input"
+                           (change)="onChecked('shipping-now')"
                            required>
                     <label class="custom-control-label" for="shipping-now">Giao ngay (2H - 3H)
                       <span
@@ -56,7 +56,7 @@
                   </div>
                   <div class="custom-control custom-radio">
                     <input id="shipping-standard" name="shipping-method" type="radio" class="custom-control-input"
-                           value="shipping-standard" [(ngModel)]="shippingMethod"
+                           value="shipping-standard" checked
                            (change)="onChecked('shipping-standard')"
                            required>
                     <label class="custom-control-label" for="shipping-standard">Giao tiêu chuẩn <span
@@ -80,16 +80,17 @@
                 <div class="col">
                   <div class="custom-control custom-radio">
                     <input id="traditional" name="Regarding" type="radio" class="custom-control-input"
-                           value="traditional" checked
-                           required>
+                           value="Thanh toán bằng tiền mặt khi nhận hàng"
+                           [(ngModel)]="paymentMethod">
                     <label class="custom-control-label" for="traditional">Thanh toán bằng tiền mặt khi nhận
                       hàng<span class="statusOther"
                                 style="visibility:visible"></span></label>
                   </div>
                   <br>
                   <div class="custom-control custom-radio">
-                    <input id="paypal" name="Regarding" type="radio" class="custom-control-input" value="paypal"
-                           required>
+                    <input id="paypal" name="Regarding" type="radio" class="custom-control-input"
+                           value="Đã thanh toán bằng PayPal"
+                           [(ngModel)]="paymentMethod">
                     <label class="custom-control-label" for="paypal">Thanh toán bằng PayPal <span
                       class="statusOther"
                       style="visibility:visible"></span></label>
@@ -115,7 +116,7 @@
 
             </div>
             <br>
-            <button (click)="ordered()" class="btn btn-shipping">ĐẶT MUA</button>
+            <button [hidden]="tempMoney===0" (click)="ordered()" class="btn btn-shipping">ĐẶT MUA</button>
           </div>
           <div class="col-md-4" style="padding: 0">
             <div class="row">
@@ -125,14 +126,14 @@
                     <div>
                       <label class="title" style="margin-bottom: 0">Địa chỉ giao hàng</label>
                       <a href="" [routerLink]="['/checkout/shipping']">
-                        <button style="float: right" class="btn btn-outline-secondary">Sửa</button>
+                        <button id="editAddress" style="float: right" class="btn btn-outline-secondary">Sửa</button>
                       </a>
                     </div>
                   </li>
-                  <li *ngIf="order" class="list-group-item">
-                    <h5 class="font-weight-bolder">{{order.receiver}}</h5>
-                    <p style="font-size: 15px">Địa chỉ:  {{order.orderAddress}}</p>
-                    <p style="font-size: 15px">SĐT: {{order.deliveryPhoneNumber}}</p>
+                  <li *ngIf="guestOrder" class="list-group-item">
+                    <h5 class="font-weight-bolder">{{guestOrder.receiver}}</h5>
+                    <p style="font-size: 15px">Địa chỉ:  {{guestOrder.orderAddress}}</p>
+                    <p style="font-size: 15px">SĐT: {{guestOrder.deliveryPhoneNumber}}</p>
                   </li>
                 </ul>
               </div>

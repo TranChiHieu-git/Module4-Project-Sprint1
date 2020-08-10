@@ -5,6 +5,8 @@ import {Order} from '../models/order';
 import {TokenStorageService} from '../auth/token-storage.service';
 import {Customer} from '../models/customer';
 import {OrderDetail} from '../models/order-detail';
+import {Cart} from '../models/cart';
+import {UserKey} from '../models/userKey';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class OrderService {
   ORDER_CANCEL_API_URL = 'http://localhost:8080/order-cancel';
   ORDER_CREATE_API_URL = 'http://localhost:8080/order-create';
   ORDER_DETAIL_CREATE_API_URL = 'http://localhost:8080/order-detail-create';
+  CART_DELETE_API_URL = 'http://localhost:8080/cart-delete';
   idUserSource = new BehaviorSubject<number>(0);
   currentIdUser = this.idUserSource.asObservable();
   customerSource = new BehaviorSubject<Customer>(null);
@@ -54,7 +57,7 @@ export class OrderService {
 
 
   findAllOrderByUserIdOnPage(id: number, page: number): Observable<any> {
-    return this.httpClient.get<Order[]>(this.ORDER_API_URL + '/' + id + '/?page=' + page + '&size=5', this.httpOptions);
+    return this.httpClient.get<Order[]>(this.ORDER_API_URL + '/' + id + '/?page=' + page + '&size=8', this.httpOptions);
   }
 
   findOrderById(id: number): Observable<any> {
@@ -71,5 +74,21 @@ export class OrderService {
 
   createOrderDetail(orderDetail: OrderDetail): Observable<any> {
     return this.httpClient.post<OrderDetail>(this.ORDER_DETAIL_CREATE_API_URL, orderDetail, this.httpOptions);
+  }
+
+  deleteCart(cart: Cart, customer: Customer): Observable<any> {
+    const userKey = new UserKey();
+    userKey.account = customer.account;
+    userKey.address = customer.address;
+    userKey.birthday = customer.birthday;
+    userKey.deleteFlag = customer.deleteFlag;
+    userKey.email = customer.email;
+    userKey.gender = customer.gender;
+    userKey.id = customer.id;
+    userKey.imageUrl = customer.imageUrl;
+    userKey.phone = customer.phone;
+    userKey.userName = customer.userName;
+    cart.id.user = userKey;
+    return this.httpClient.post<Cart>(this.CART_DELETE_API_URL, cart, this.httpOptions);
   }
 }

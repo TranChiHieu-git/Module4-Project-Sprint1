@@ -30,7 +30,6 @@ export class UserComponent implements OnInit {
       this.orderService.chanceCustomer(this.customer);
       this.idUser = this.customer.id;
       this.orderService.chanceIdUser(this.idUser);
-      console.log(this.customer);
     });
   }
 

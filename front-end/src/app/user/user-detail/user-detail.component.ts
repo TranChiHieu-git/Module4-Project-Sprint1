@@ -31,5 +31,4 @@ export class UserDetailComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

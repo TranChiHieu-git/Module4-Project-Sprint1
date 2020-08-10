@@ -1,5 +1,5 @@
 import {Product} from './product';
-import {Customer} from './customer';
+import {UserKey} from './userKey';
 
 export class Cart {
   id: CartId;
@@ -8,5 +8,5 @@ export class Cart {
 }
 export class CartId {
   product: Product;
-  user: Customer;
+  user: UserKey;
 }

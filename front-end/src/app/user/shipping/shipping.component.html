@@ -50,108 +50,87 @@
       <div class="row">
         <div class="col-12">
           <div class="address-shipping-other collapse" id="other-address-form">
-            <div [formGroup]="shippingForm" class="col-8 offset-2">
-              <div class="form-group row ">
+            <form [formGroup]="shippingForm" (ngSubmit)="onSubmitOther()" class="col-8 offset-2">
+              <div style="margin-bottom: 15px" class="form-group row ">
                 <label class="col-4" for="name">Họ và tên người nhận (<span
                   style="color: red">*</span>)</label>
                 <div class="col-8">
-                  <input type="text" class="form-control" formControlName="name" id="name"
-                         aria-describedby="emailHelp">
-                  <small id="emailHelp">We'll never share your email with anyone
-                    else.</small>
+                  <input type="text" class="form-control" formControlName="name" id="name">
+                  <div *ngIf="submitted">
+                    <small *ngIf="shippingForm.get('name').hasError('required')" class="text-danger font-italic">Vui
+                      lòng nhập họ và tên người nhận.</small>
+                  </div>
                 </div>
-
               </div>
 
-              <div class="form-group row">
+              <div style="margin-bottom: 15px" class="form-group row">
                 <label class="col-4" for="phone">Số điện thoại(<span style="color: red">*</span>)</label>
                 <div class="col-8">
                   <input type="text" class="form-control" formControlName="phone" id="phone">
+                  <div *ngIf="submitted">
+                    <small *ngIf="shippingForm.get('phone').hasError('required')" class="text-danger font-italic">Vui
+                      lòng nhập số điện thoại người nhận.</small>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-4" for="city">Tỉnh/Thành phố(<span style="color: red">*</span>)</label>
                 <div class="col-8">
-                  <select style="height: 200px" class="form-control" name="" id="city">
-                    <option value="">Select a state...</option>
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="DC">District of Columbia</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>
+                  <select class="form-control" formControlName="city" name="city" id="city">
+                    <option value="">Chọn tỉnh/thành phố</option>
                   </select>
+                  <div *ngIf="submitted">
+                    <small *ngIf="shippingForm.get('city').hasError('required')" class="text-danger font-italic">Vui
+                      lòng chọn tỉnh/thành phố.</small>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-4" for="district">Quận/Huyện(<span style="color: red">*</span>)</label>
                 <div class="col-8">
-                  <select class="form-control" name="" id="district">
-                    <option value="">Select a state...</option>
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="DC">District of Columbia</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>                  </select>
+                  <select class="form-control" formControlName="district" name="district" id="district">
+                    <option value="">Chọn quận/huyện</option>
+                  </select>
+                  <div *ngIf="submitted">
+                    <small *ngIf="shippingForm.get('district').hasError('required')" class="text-danger font-italic">Vui
+                      lòng chọn quận/huyện.</small>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-4" for="ward">Phường/Xã(<span style="color: red">*</span>)</label>
+                <label class="col-4" for="commune">Phường/Xã(<span style="color: red">*</span>)</label>
                 <div class="col-8">
-                  <select class="form-control" name="" id="ward">
-                    <option value="">Select a state...</option>
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="DC">District of Columbia</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>                  </select>
+                  <select class="form-control" formControlName="commune" name="commune" id="commune">
+                    <option value="">Chọn phường/xã</option>
+                  </select>
+                  <div *ngIf="submitted">
+                    <small *ngIf="shippingForm.get('commune').hasError('required')" class="text-danger font-italic">Vui
+                      lòng chọn xã/phường.</small>
+                  </div>
                 </div>
               </div>
 
               <div class="form-group row">
-                <label class="col-4" for="exampleInputPassword1">Địa chỉ(<span style="color: red">*</span>)</label>
+                <label class="col-4" for="address">Địa chỉ(<span style="color: red">*</span>)</label>
                 <div class="col-8">
                   <textarea type="text" class="form-control" formControlName="address"
-                            id="exampleInputPassword1"></textarea>
+                            id="address"></textarea>
+                  <div *ngIf="submitted">
+                    <small *ngIf="shippingForm.get('address').hasError('required')"
+                           class="text-danger font-italic">
+                      Vui lòng nhập địa chỉ.</small>
+                  </div>
                 </div>
+
               </div>
               <div class="row">
                 <div class="col-4"></div>
                 <div class="col-8">
-                  <button (click)="onSubmitOther()" class="btn btn-shipping">Giao đến địa chỉ này</button>
+                  <button class="btn btn-shipping">Giao đến địa chỉ này</button>
                   <button style="margin-left: 20px" class="btn btn-secondary" id="cancel">Hủy bỏ</button>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

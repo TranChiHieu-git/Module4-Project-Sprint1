@@ -1,7 +1,6 @@
 .card-detail{
   background-color:rgba(236, 233, 228, 1.0);
   position: relative;
-  top: 20px;
   min-height: 85vh;
 }
 .card-product{
@@ -82,3 +81,11 @@ vertical-align: top;
   color: black;
 
 }
+.no-cart{
+  background-color: white;
+  border-radius: 5px;
+  padding:5px;
+  margin: 10px;
+  box-sizing: content-box;
+}
+

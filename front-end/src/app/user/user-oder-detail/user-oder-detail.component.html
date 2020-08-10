@@ -5,13 +5,14 @@
 <div *ngIf="order" class="container-fluid user-oder-detail " id="nav-tabContent">
 
   <h5 class="title font-weight-bold">Thông tin đơn hàng</h5>
-  <p>Mã đơn hàng: #{{order.orderId}}</p>
+  <p>Mã đơn hàng: CODEBAKERY{{order.orderId}}</p>
 
   <div class="row ">
     <div class="col-md-4 ">
       <div class="info-oder">
-        Ngày đặt hàng: {{order.orderDate|date: 'dd/MM/yyyy'}}<br>
-        Tình trạng: {{order.orderStatus}}
+        Đặt vào: <span
+        style="color: dodgerblue">{{order.orderDate|date: 'EEEE, dd/MM/yyyy, hh:mm:ss'}}</span><br>
+        Tình trạng: <span class="font-weight-bolder">{{order.orderStatus}}</span>
       </div>
     </div>
     <div class=" col-md-4">
@@ -22,7 +23,9 @@
     </div>
     <div class="col-md-4">
       <div class="info-oder">
-        Hình thức thanh toán: <br>Thanh toán sau khi nhân hàng<br>
+        Giao vào: <span style="color: dodgerblue">{{order.expectedDeliveryDate|date:'EEEE, dd/MM/yyyy'}}</span><br>
+        Phí vận chuyển: {{order.typeOfShipping.cost|currency:'VND'}} <br>
+        Hình thức thanh toán: {{order.typeOfPayment}}
       </div>
     </div>
   </div>
@@ -34,7 +37,7 @@
         <th>Sản phẩm</th>
         <th>Giá</th>
         <th>Số lượng</th>
-        <th>Tạm tính</th>
+        <th><div style="width: 60%"><span class="float-right">Tạm tính</span></div></th>
       </tr>
       </thead>
 
@@ -54,6 +57,8 @@
                 <p class="name-product">{{detail.id.product.productName}}</p>
                 <p>Nhà phân phối:{{detail.id.product.brand.brandName}}</p>
                 <p>Mã sản phẩm: {{detail.id.product.productId}}</p>
+                <button *ngIf="order.orderStatus=='Giao hàng thành công'" class="btn btn-outline-primary">Đánh giá
+                </button>
               </div>
             </div>
 
@@ -61,21 +66,29 @@
         </td>
         <td>{{detail.id.product.price|currency:'VND'}}</td>
         <td>{{detail.orderQuantity}}</td>
-        <td>{{detail.temMoney|currency: 'VND'}}</td>
+        <td><div style="width: 60%"><span class="float-right">{{detail.temMoney|currency: 'VND'}}</span></div></td>
       </tr>
       </tbody>
       <tr>
         <td></td>
         <td></td>
-        <td class="font-weight-bolder">Tổng tiền:</td>
-        <td class="font-weight-bolder">{{totalMoney|currency:'VND'}}</td>
+        <td>Tạm tính: <br>
+          Phí vận chuyển: <br>
+          <span class="font-weight-bolder">Tổng tiền:</span></td>
+        <td>
+          <div style="width:60%">
+            <span class="float-right">{{order.totalMoney - order.typeOfShipping.cost|currency:'VND'}}</span> <br>
+            <span class="float-right">{{order.typeOfShipping.cost|currency:'VND'}}</span><br>
+            <span class="font-weight-bolder text-danger float-right">{{order.totalMoney|currency:'VND'}}</span>
+          </div>
+        </td>
       </tr>
       <tr>
         <td>
           <a *ngIf="(order.orderStatus!='Đã hủy') && (order.orderStatus!='Đang xử lý')"
-               [routerLink]="['/user-manage/order-follow',order.orderId]">
-          <button class="btn btn-follow-oder">Theo dõi đơn hàng</button>
-        </a>
+             [routerLink]="['/user-manage/order-follow',order.orderId]">
+            <button class="btn btn-follow-oder">Theo dõi đơn hàng</button>
+          </a>
         </td>
         <td></td>
         <td></td>
@@ -104,7 +117,7 @@
         </button>
       </div>
       <div *ngIf="order" class="modal-body">
-        Mã đơn hàng:{{order.orderId}}
+        Mã đơn hàng:CODEBAKERY{{order.orderId}}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
