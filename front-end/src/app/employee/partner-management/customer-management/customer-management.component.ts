@@ -660,6 +660,7 @@ export class CustomerManagementComponent implements OnInit {
   // editMultiCancel() {
   //   this.ngOnInit();
   // }
+  user: Customer;
 
 
   searchName(): void {
@@ -731,7 +732,16 @@ export class CustomerManagementComponent implements OnInit {
     this.onSubmit(0);
   }
 
+
   onDateSelect($event: NgbDate) {
+  }
+
+  addCheckModal() {
 
   }
+
+  leaveUploadPic_() {
+
+
+  
 }

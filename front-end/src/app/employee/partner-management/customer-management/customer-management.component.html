@@ -19,7 +19,7 @@
     <input class="form-control mr-3 search " type="text" [(ngModel)]="search" placeholder="Search..."
            style="width: 400px; height: 100%">
     <button class="btn btn-outline-primary search-input" (click)="searchName()">Tìm kiếm</button>
-    <button *ngIf="hasSearch === true" class="btn btn-outline-danger ml-1" (click)="backToSearch()">Quay về</button>
+<!--    <button *ngIf="hasSearch === true" class="btn btn-outline-danger ml-1" (click)="backToSearch()">Quay về</button>-->
   </div>
   <form>
     <div class=" ">
@@ -30,13 +30,16 @@
         </div>
         <div id="datepicker" data-date-format="dd-mm-yyyy">
           <input class="form-control" type="text" [(ngModel)]="value1" ngbDatepicker #d="ngbDatepicker">
+
           <button class="btn button-can" (click)="d.toggle()" type="button"><i class="fa fa-calendar-o fa-2x"></i>
           </button>
+
 
         </div>
         <label class=" font-weight-bold text-dark" for="datepicker" style="margin-left: 10%;">Đến
           ngày: </label>
         <div id="datepicker1" class=" " data-date-format="dd-mm-yyyy">
+
           <input class="form-control date" type="text" [(ngModel)]="value2" ngbDatepicker #e="ngbDatepicker">
           <button  class="btn button-can" (click)="e.toggle()" type="button"><i
             class="fa fa-calendar-o fa-2x"></i></button>
@@ -102,10 +105,13 @@
             <div class="col-xl-4 form-group">
               <mat-card (mouseover)="hoverUploadPicture()" class="" (mouseleave)="leaveUploadPic_()"
                         (click)="selectAvatar_()">
+
                 <img class="avatar" id="avatar" src="src/assets/photo/avt.jpeg"
                      alt="avatar">
                 <input type='file' (change)="readURL($event.target);" accept="image/*" hidden
                        id="myAvatar"/>
+
+
 
                 <i class="img"
                    style="font-size: 100px; color: blue; position: absolute; left: 60px; top:60px ; opacity: 0.1"
@@ -250,8 +256,8 @@
                       (click)="selectAvatar_()">
               <img class="avatar" id="avatar" src="src/assets/photo/avt.jpeg"
                    alt="avatar">
-              <input type='file' (change)="readURL($event.target);" accept="image/*" hidden
-                     id="myAvatar"/>
+<!--              <input type='file' (change)="readURL($event.target);" accept="image/*" hidden-->
+<!--                     id="myAvatar"/>-->
 
               <i class="img"
                  style="font-size: 100px; color: blue; position: absolute; left: 60px; top:60px ; opacity: 0.1"

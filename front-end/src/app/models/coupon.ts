@@ -6,4 +6,5 @@ export class Coupon {
   createDate: Date;
   employee: Employees;
   customer: Customer;
+  deleteFlag: boolean;
 }

@@ -22,7 +22,13 @@ export class CustomerService {
     };
   }
 
-  getAllCustomerWithSearchAndPageAndFilter(page, size, search , value1, value2): Observable<any> {
+
+  
+
+  getAllCustomers(): Observable<any> {
+    return this.httpClient.get<Customer[]>(this.API_URL, this.httpOptions);
+  }
+ getAllCustomerWithSearchAndPageAndFilter(page, size, search , value1, value2): Observable<any> {
     return this.httpClient.get(this.API_URL +
       '?page=' + page  + '&size=' + size + '&search='
       + search + '&value1=' + value1 + ' &value2=' + value2, this.httpOptions);
