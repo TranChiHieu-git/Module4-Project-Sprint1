@@ -10,6 +10,7 @@ import {} from '../../../../assets/js/fb.js';
 import {ToastrService} from 'ngx-toastr';
 import {OrderService} from '../../../services/order.service';
 import {Order} from '../../../models/order';
+import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 
 declare var $: any;
@@ -20,7 +21,7 @@ declare var $: any;
   styleUrls: ['./customer-management.component.scss']
 })
 export class CustomerManagementComponent implements OnInit {
-  p = 1;
+   p = 1;
   size = 5;
   search = '';
   value1 = '';
@@ -123,7 +124,7 @@ export class CustomerManagementComponent implements OnInit {
     });
     this.onSubmit(0);
     // tslint:disable-next-line:typedef
-    $('#checkAll').click(function () {
+    $('#checkAll').click(function() {
       $('input:checkbox').not(this).prop('checked', this.checked);
     });
     // this.editUser = this.formBuilder.group({
@@ -173,7 +174,7 @@ export class CustomerManagementComponent implements OnInit {
     // this.minDate.setFullYear(this.curentDay.getFullYear() - 120);
 
     // tslint:disable-next-line:typedef
-    $('#checkAll').click(function () {
+    $('#checkAll').click(function() {
       $('input:checkbox').not(this).prop('checked', this.checked);
     });
     this.addUser = this.formBuilder.group({
@@ -206,31 +207,28 @@ export class CustomerManagementComponent implements OnInit {
         };
 
         // tslint:disable-next-line:typedef
-        $('#custom-file-input').on('change', function () {
+        $('#custom-file-input').on('change', function() {
           readURL(this);
         });
 
         // tslint:disable-next-line:only-arrow-functions typedef
-        $('#upload-button').on('click', function () {
+        $('#upload-button').on('click', function() {
           $('#file-upload').click();
         });
-        $('#datepicker').datepicker({
-          autoclose: true,
-          todayHighlight: true
-        });
+
       });
 
     })(jQuery);
     $('.icon-upload-alt').css('opacity', '-1');
     // tslint:disable-next-line:typedef
-    $('.button').click(function () {
+    $('.button').click(function() {
       const buttonId = $(this).attr('id');
       $('#modal-container').removeAttr('class').addClass(buttonId);
       $('body').addClass('modal-active');
     });
 
     // tslint:disable-next-line:typedef
-    $('#modal-container').click(function () {
+    $('#modal-container').click(function() {
       $(this).addClass('out');
       $('body').removeClass('modal-active');
     });
