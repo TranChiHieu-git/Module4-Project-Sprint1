@@ -10,7 +10,7 @@ import {} from '../../../../assets/js/fb.js';
 import {ToastrService} from 'ngx-toastr';
 import {OrderService} from '../../../services/order.service';
 import {Order} from '../../../models/order';
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDate, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 
 declare var $: any;
@@ -24,6 +24,8 @@ export class CustomerManagementComponent implements OnInit {
    p = 1;
   size = 5;
   search = '';
+  // tslint:disable-next-line:variable-name
+  birthday_value: NgbDateStruct;
   value1 = '';
   value2 = '';
   pageClicked = 0;
@@ -273,10 +275,8 @@ export class CustomerManagementComponent implements OnInit {
   addCheckModel(element: Customer): void {
     $('#addCheckModal').modal('show');
   }
-
-  // tslint:disable-next-line:typedef
-  onSubmit(page) {
-    this.customerService.getAllCustomer(page, this.size, this.search, this.value1, this.value2).subscribe(
+  onSubmit(page): void {
+    this.customerService.getAllCustomerWithSearchAndPageAndFilter(page, this.size, this.search, this.value1, this.value2).subscribe(
       data => {
         // console.log(data);
         this.pageClicked = page;
@@ -660,7 +660,8 @@ export class CustomerManagementComponent implements OnInit {
   // editMultiCancel() {
   //   this.ngOnInit();
   // }
-  user: Customer;
+  // user: Customer;
+
 
   searchName(): void {
     if (this.search === '') {
@@ -731,11 +732,16 @@ export class CustomerManagementComponent implements OnInit {
     this.onSubmit(0);
   }
 
+
+  onDateSelect($event: NgbDate) {
+  }
+
   addCheckModal() {
 
   }
 
   leaveUploadPic_() {
+
 
   }
 }

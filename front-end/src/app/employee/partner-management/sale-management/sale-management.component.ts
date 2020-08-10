@@ -44,6 +44,15 @@ export class SaleManagementComponent implements OnInit {
       console.log(error);
     });
 
+
+    this.customerService.getAllCustomers().subscribe(next => {
+      this.customerList = next.content;
+    }, error => {
+      console.log(error);
+    });
+    this.getAllCoupon(0);
+
+
     this.customerService.getAllCustomers().subscribe(next => {
       this.customerList = next.content;
     }, error => {
@@ -51,6 +60,7 @@ export class SaleManagementComponent implements OnInit {
     });
     this.getAllCoupon(0);
   }
+
 
   getAllCoupon(page) {
     this.couponService.getAllCourse(page, this.size, this.createDateFrom, this.createDateTo, this.employee,
