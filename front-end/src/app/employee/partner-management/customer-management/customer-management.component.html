@@ -28,15 +28,16 @@
           <label class=" font-weight-bold text-dark" for="datepicker">Từ
             ngày</label>
         </div>
-        <div id="datepicker" class=" " data-date-format="dd-mm-yyyy">
-          <input class="form-control date" type="text" [(ngModel)]="value1">
-          <span class="span-icon"><i class="fa fa-calendar-o icon-can"></i></span>
+        <div id="datepicker" data-date-format="dd-mm-yyyy">
+          <input class="form-control" type="text"  [(ngModel)]="value1" ngbDatepicker #d="ngbDatepicker">
+          <button #buttonEl class="btn button-can" (click)="d.toggle()" type="button"><i class="fa fa-calendar-o fa-2x"></i></button>
+
         </div>
         <label class=" font-weight-bold text-dark" for="datepicker" style="margin-left: 10%;">Đến
           ngày: </label>
         <div id="datepicker1" class=" " data-date-format="dd-mm-yyyy">
-          <input class="form-control date" type="text" [(ngModel)]="value2">
-          <span class="span-icon"><i class="fa fa-calendar-o icon-can"></i></span>
+          <input class="form-control date" type="text" ngbDatepicker [(ngModel)]="value2">
+          <button #buttonEl class="btn button-can" (click)="d.toggle()" type="button"><i class="fa fa-calendar-o fa-2x"></i></button>
         </div>
         <button class="btn btn-primary btn-filter-custom loc"><span><i class="fa fa-filter"></i></span>Lọc
         </button>

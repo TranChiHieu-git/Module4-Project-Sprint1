@@ -22,8 +22,10 @@ export class CustomerService {
     };
   }
 
-  getAllCustomer(): Observable<any> {
-    return this.httpClient.get<Customer[]>(this.API_URL, this.httpOptions);
+  getAllCustomer(page, size, search , value1, value2): Observable<any> {
+    return this.httpClient.get(this.API_URL +
+      '?page=' + page  + '&size=' + size + '&search='
+      + search + '&value1=' + value1 + ' &value2=' + value2, this.httpOptions);
   }
 
   getCustomerById(id: number): Observable<any> {
