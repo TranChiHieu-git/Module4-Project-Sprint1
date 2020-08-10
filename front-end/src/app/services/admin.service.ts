@@ -29,28 +29,29 @@ export class AdminService {
   }
 
   getAllCourse(currentPage, size, search, nameRole): Observable<any> {
-    return this.httpClient.get(this.API_URL + '?page=' + currentPage + '&size=' + size + '&search=' + search + '&role=' + nameRole);
+    return this.httpClient.get(this.API_URL + '?page=' + currentPage + '&size=' + size + '&search=' + search + '&role=' + nameRole)
+      .pipe(catchError(this.handleError));
   }
 
   findAll(): Observable<Account[]> {
-    return this.httpClient.get<Account[]>(this.API_URL);
+    return this.httpClient.get<Account[]>(this.API_URL).pipe(catchError(this.handleError));
   }
 
   findAllRole(): Observable<Role[]> {
-    return this.httpClient.get<Role[]>(this.API_ROLE_URL);
+    return this.httpClient.get<Role[]>(this.API_ROLE_URL).pipe(catchError(this.handleError));
   }
 
   findRoleById(roleId: number): Observable<any> {
-    return this.httpClient.get<Role>(this.API_ROLE_URL + '/' + roleId, this.httpOptions2);
+    return this.httpClient.get<Role>(this.API_ROLE_URL + '/' + roleId, this.httpOptions2).pipe(catchError(this.handleError));
   }
 
   findByInfoId(accountId: number): Observable<Employees> {
-    return this.httpClient.get<Employees>(this.API_URL + '/employee/' + accountId);
+    return this.httpClient.get<Employees>(this.API_URL + '/employee/' + accountId).pipe(catchError(this.handleError));
   }
 
   // tslint:disable-next-line:typedef
   handleError(error: HttpErrorResponse) {
-    let errorMessage = 'Unknown error!';
+    let errorMessage;
     if (error.error instanceof ErrorEvent) {
       errorMessage = '';
     } else {
@@ -62,25 +63,27 @@ export class AdminService {
   findByInfoUserId(accountId: number): Observable<Customer> {
 
     return this.httpClient.get<Customer>(this.API_URL + '/user/' + accountId)
-      .pipe(catchError(this.handleError))
-      ;
+      .pipe(catchError(this.handleError));
   }
 
   findAccountById(accountId: number): Observable<Account> {
-    return this.httpClient.get<Account>(this.API_URL + '/' + accountId);
+    return this.httpClient.get<Account>(this.API_URL + '/' + accountId)
+      .pipe(catchError(this.handleError));
   }
 
   create(account: Account): Observable<any> {
-    return this.httpClient.post<Account>(this.API_URL + '/create', account, this.httpOptions2);
+    return this.httpClient.post<Account>(this.API_URL + '/create', account, this.httpOptions2)
+      .pipe(catchError(this.handleError));
   }
-
 
   delete(account: Account): Observable<Account> {
     // @ts-ignore
-    return this.httpClient.request('delete', this.API_URL + '/delete/' + account.accountId, {body: account});
+    return this.httpClient.request('delete', this.API_URL + '/delete/' + account.accountId, {body: account})
+      .pipe(catchError(this.handleError));
   }
 
   edit(account: Account): Observable<Account> {
-    return this.httpClient.put<Account>(this.API_URL + '/update/' + account.accountId, account);
+    return this.httpClient.put<Account>(this.API_URL + '/update/' + account.accountId, account)
+      .pipe(catchError(this.handleError));
   }
 }

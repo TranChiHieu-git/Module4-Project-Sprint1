@@ -583,7 +583,8 @@
                 <div class="input-group-prepend">
                   <span class=" igt input-group-text fas fa-user prefix"></span>
                 </div>
-                <ng-container *ngIf="infoAccountById.name !== undefined; else elseBlock">
+                <ng-container
+                  *ngIf="infoAccountById.name != null; else elseBlock">
                   <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                          value="{{infoAccountById.name}}">
                 </ng-container>
@@ -635,37 +636,27 @@
               </th>
             </tr>
             <br>
-            <input class="form-control" formControlName="accountId" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled hidden>
-            <input class="form-control" formControlName="deleteFlag"
-                   aria-label="Username" aria-describedby="basic-addon1" disabled
-                   hidden>
-            <input class="form-control" formControlName="accountName" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled hidden>
-            <input class="form-control" formControlName="accountPassword"
-                   aria-label="Username" aria-describedby="basic-addon1" disabled
-                   hidden>
-            <input class="form-control" formControlName="role"
-                   aria-label="role" aria-describedby="basic-addon1" disabled
-                   hidden>
+            <input class="form-control" formControlName="accountId" disabled hidden>
+            <input class="form-control" formControlName="deleteFlag" disabled hidden>
+            <input class="form-control" formControlName="accountName" disabled hidden>
+            <input class="form-control" formControlName="accountPassword" disabled hidden>
+            <input class="form-control" formControlName="role" disabled hidden>
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="igt input-group-text fa fa-trash-o prefix"></span>
                 </div>
-                <input class="form-control" formControlName="reason" aria-label="Username"
-                       aria-describedby="basic-addon1" placeholder="Vui lòng nhập lý do muốn xóa">
+                <input class="form-control" formControlName="reason" placeholder="Vui lòng nhập lý do muốn xóa">
               </div>
             </tr>
             <tr>
               <div class="alert alert-danger" role="alert"
                    *ngIf="deleteAccountForm.get('reason').invalid && deleteAccountForm.get('reason').touched">
                 <span
-                  *ngIf="deleteAccountForm.get('reason').hasError('require')">
+                  *ngIf="deleteAccountForm.get('reason').hasError('required')">
             lý do không được bỏ trống</span>
-                <span
-                  *ngIf="deleteListAccountForm.get('reason').hasError('maxlength')">
-            lý do không được quá 255 từ</span>
+                <span *ngIf="deleteAccountForm.get('reason').hasError('pattern')">
+                            lý do chỉ bao gồm chữ, số và không được quá 255 từ</span>
               </div>
             </tr>
           </table>
@@ -721,11 +712,11 @@
               <div class="alert alert-danger" role="alert"
                    *ngIf="deleteListAccountForm.get('reason').invalid && deleteListAccountForm.get('reason').touched">
                 <span
-                  *ngIf="deleteListAccountForm.get('reason').hasError('require')">
+                  *ngIf="deleteListAccountForm.get('reason').hasError('required')">
             lý do không được bỏ trống</span>
                 <span
-                  *ngIf="deleteListAccountForm.get('reason').hasError('maxlength')">
-            lý do không được quá 255 từ</span>
+                  *ngIf="deleteListAccountForm.get('reason').hasError('pattern')">
+                            lý do chỉ bao gồm chữ, số và không được quá 255 từ</span>
               </div>
             </tr>
           </table>

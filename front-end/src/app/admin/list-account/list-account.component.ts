@@ -28,7 +28,6 @@ function comparePassword(c: AbstractControl) {
   styleUrls: ['./list-account.component.scss']
 })
 export class ListAccountComponent implements OnInit {
-
   constructor(private adminService: AdminService,
               private route: Router,
               private formBuilder: FormBuilder,
@@ -65,6 +64,7 @@ export class ListAccountComponent implements OnInit {
   decode = new JwtHelperService();
   tempJwt = new Tempjwtemp();
   accountName = '';
+  utf8 = 'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế';
 
   ngOnInit(): void {
     this.tempJwt = this.decode.decodeToken(this.loginAccount.getToken());
@@ -108,10 +108,10 @@ export class ListAccountComponent implements OnInit {
       accountPassword: ['', [Validators.required]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]],
-      reason: ['', [Validators.required, Validators.maxLength(255)]]
+      reason: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\s' + this.utf8 + ']{1,255}$')]]
     });
     this.deleteListAccountForm = this.formBuilder.group({
-      reason: ['', [Validators.required, Validators.maxLength(255)]]
+      reason: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\s' + this.utf8 + ']{1,255}$')]]
     });
   }
 
@@ -300,11 +300,10 @@ export class ListAccountComponent implements OnInit {
     if (this.infoAccountById.position === null) {
       this.adminService.findByInfoUserId(id).subscribe(next => {
         if (next.imageUrl === '' || next.imageUrl === null || next.imageUrl === undefined) {
-          next.imageUrl = '../../../assets/photo/avatadefault.png';
+          next.imageUrl = '../../../assets/photo/customer-avatar.png';
         }
         this.infoAccountById2 = next;
       });
-    } else {
     }
     $('#infor').show();
     $('.close').click(function() {
@@ -317,10 +316,8 @@ export class ListAccountComponent implements OnInit {
     this.adminService.findByInfoId(id).subscribe(next => {
       this.infoAccountById = next;
     });
-    this.customerService.getCustomerById(id).subscribe(next => {
+    this.adminService.findByInfoUserId(id).subscribe(next => {
       this.infoAccountById2 = next;
-    }, error => {
-      console.log(error);
     });
     this.adminService.findAllRole().subscribe(next => {
       this.roleList = next;
