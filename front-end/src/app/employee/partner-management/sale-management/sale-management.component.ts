@@ -44,7 +44,7 @@ export class SaleManagementComponent implements OnInit {
       console.log(error);
     });
 
-    this.customerService.getAllCustomer().subscribe(next => {
+    this.customerService.getAllCustomers().subscribe(next => {
       this.customerList = next.content;
     }, error => {
       console.log(error);

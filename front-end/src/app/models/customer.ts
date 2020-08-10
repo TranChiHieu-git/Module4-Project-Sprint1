@@ -11,6 +11,8 @@ export class Customer {
   imageUrl: string;
   deleteFlag: boolean;
   account: Account;
+  listOrder: any;
+  total: any;
 
   constructor() {
   }

@@ -19,7 +19,7 @@
     <input class="form-control mr-3 search " type="text" [(ngModel)]="search" placeholder="Search..."
            style="width: 400px; height: 100%">
     <button class="btn btn-outline-primary search-input" (click)="searchName()">Tìm kiếm</button>
-    <button *ngIf="hasSearch === true" class="btn btn-outline-danger ml-1" (click)="backToSearch()">Quay về</button>
+<!--    <button *ngIf="hasSearch === true" class="btn btn-outline-danger ml-1" (click)="backToSearch()">Quay về</button>-->
   </div>
   <form>
     <div class=" ">
@@ -29,15 +29,17 @@
             ngày</label>
         </div>
         <div id="datepicker" data-date-format="dd-mm-yyyy">
-          <input class="form-control" type="text"  [(ngModel)]="value1" ngbDatepicker #d="ngbDatepicker">
-          <button #buttonEl class="btn button-can" (click)="d.toggle()" type="button"><i class="fa fa-calendar-o fa-2x"></i></button>
+          <input class="form-control" type="text" [(ngModel)]="value1" ngbDatepicker #d="ngbDatepicker">
+          <button #buttonEl class="btn button-can" (click)="d.toggle()" type="button"><i
+            class="fa fa-calendar-o fa-2x"></i></button>
 
         </div>
         <label class=" font-weight-bold text-dark" for="datepicker" style="margin-left: 10%;">Đến
           ngày: </label>
         <div id="datepicker1" class=" " data-date-format="dd-mm-yyyy">
           <input class="form-control date" type="text" ngbDatepicker [(ngModel)]="value2">
-          <button #buttonEl class="btn button-can" (click)="d.toggle()" type="button"><i class="fa fa-calendar-o fa-2x"></i></button>
+          <button #buttonEl class="btn button-can" (click)="d.toggle()" type="button"><i
+            class="fa fa-calendar-o fa-2x"></i></button>
         </div>
         <button class="btn btn-primary btn-filter-custom loc"><span><i class="fa fa-filter"></i></span>Lọc
         </button>
@@ -103,9 +105,9 @@
                         (click)="selectAvatar_()">
                 <img class="avatar" id="avatar1" src="img/avt.jpeg"
                      alt="avatar" style="margin-left: 24%">
-                <input type='file' (change)="readURL($event.target);" accept="image/*"
-                       hidden
-                       id="myAvatar1"/>
+<!--                <input type='file' (change)="readURL($event.target);" accept="image/*"-->
+<!--                       hidden-->
+<!--                       id="myAvatar1"/>-->
 
                 <i class="img"
                    style="font-size: 100px; color: blue; position: absolute; left: 60px; top:60px ; opacity: 0.1;"
@@ -261,8 +263,8 @@
                       (click)="selectAvatar_()">
               <img class="avatar" id="avatar" src="img/avt.jpeg"
                    alt="avatar">
-              <input type='file' (change)="readURL($event.target);" accept="image/*" hidden
-                     id="myAvatar"/>
+<!--              <input type='file' (change)="readURL($event.target);" accept="image/*" hidden-->
+<!--                     id="myAvatar"/>-->
 
               <i class="img"
                  style="font-size: 100px; color: blue; position: absolute; left: 60px; top:60px ; opacity: 0.1"
@@ -325,7 +327,7 @@
             <input class="global-content-popup-input customer-input form-control" type="text" id="nameadd4"
                    formControlName="phone" placeholder="Số điện thoại"/>
 
-            <label class="global-content-popup-icon" for="name4"><i class="icon-phone"></i></label>
+            <label class="global-content-popup-icon"><i class="icon-phone"></i></label>
             <div *ngFor="let validation of validationMessages.phone">  <span
               class="global-content-popup-validate customer-validate"
               *ngIf="addUser.get('phone').hasError(validation.type) && (addUser.get('phone').dirty || addUser.get('phone').touched)">
