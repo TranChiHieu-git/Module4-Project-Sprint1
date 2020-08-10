@@ -10,7 +10,7 @@ import {} from '../../../../assets/js/fb.js';
 import {ToastrService} from 'ngx-toastr';
 import {OrderService} from '../../../services/order.service';
 import {Order} from '../../../models/order';
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDate, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 
 declare var $: any;
@@ -25,7 +25,7 @@ export class CustomerManagementComponent implements OnInit {
   size = 5;
   search = '';
   // tslint:disable-next-line:variable-name
-  birthday_value = '';
+  birthday_value: NgbDateStruct;
   value1 = '';
   value2 = '';
   pageClicked = 0;
@@ -276,7 +276,7 @@ export class CustomerManagementComponent implements OnInit {
     $('#addCheckModal').modal('show');
   }
   onSubmit(page): void {
-    this.customerService.getAllCustomer(page, this.size, this.search, this.value1, this.value2).subscribe(
+    this.customerService.getAllCustomerWithSearchAndPageAndFilter(page, this.size, this.search, this.value1, this.value2).subscribe(
       data => {
         // console.log(data);
         this.pageClicked = page;
@@ -729,5 +729,9 @@ export class CustomerManagementComponent implements OnInit {
     this.search = '';
     this.hasSearch = false;
     this.onSubmit(0);
+  }
+
+  onDateSelect($event: NgbDate) {
+
   }
 }

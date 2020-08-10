@@ -29,15 +29,17 @@
             ngày</label>
         </div>
         <div id="datepicker" data-date-format="dd-mm-yyyy">
-          <input class="form-control" type="text"  [(ngModel)]="value1" ngbDatepicker #d="ngbDatepicker">
-          <button #buttonEl class="btn button-can" (click)="d.toggle()" type="button"><i class="fa fa-calendar-o fa-2x"></i></button>
+          <input class="form-control" type="text" [(ngModel)]="value1" ngbDatepicker #d="ngbDatepicker">
+          <button class="btn button-can" (click)="d.toggle()" type="button"><i class="fa fa-calendar-o fa-2x"></i>
+          </button>
 
         </div>
         <label class=" font-weight-bold text-dark" for="datepicker" style="margin-left: 10%;">Đến
           ngày: </label>
         <div id="datepicker1" class=" " data-date-format="dd-mm-yyyy">
-          <input class="form-control date" type="text" ngbDatepicker [(ngModel)]="value2">
-          <button #buttonEl class="btn button-can" (click)="d.toggle()" type="button"><i class="fa fa-calendar-o fa-2x"></i></button>
+          <input class="form-control date" type="text" [(ngModel)]="value2" ngbDatepicker #e="ngbDatepicker">
+          <button  class="btn button-can" (click)="e.toggle()" type="button"><i
+            class="fa fa-calendar-o fa-2x"></i></button>
         </div>
         <button class="btn btn-primary btn-filter-custom loc"><span><i class="fa fa-filter"></i></span>Lọc
         </button>
@@ -81,7 +83,7 @@
                                                         (click)="deleteModel(user)">Xóa</a></button>
         <button type="button" data-toggle="collapse"
                 aria-expanded="false"
-                data-target="#add" class="btn btn-success"><a>Thêm</a></button>
+                [attr.data-target]="'#addInline'+cus.id" class="btn btn-success"><a>Thêm</a></button>
       </td>
     </tr>
     <tr>
@@ -95,77 +97,67 @@
     </tr>
     <tr>
       <td colspan="5">
-        <div id="add" class="row-full collapse hiddenRow">
+        <div id="addInline{{cus.id}}" class="row-full collapse hiddenRow">
           <form (ngSubmit)="onSubmit(pages[pageClicked-1])" [formGroup]="addUser">
             <div class="col-xl-4 form-group">
-              <mat-card (mouseover)="hoverUploadPicture()" class=""
-                        (mouseleave)="leaveUploadPic_()"
+              <mat-card (mouseover)="hoverUploadPicture()" class="" (mouseleave)="leaveUploadPic_()"
                         (click)="selectAvatar_()">
-                <img class="avatar" id="avatar1" src="img/avt.jpeg"
-                     alt="avatar" style="margin-left: 24%">
-                <input type='file' (change)="readURL($event.target);" accept="image/*"
-                       hidden
-                       id="myAvatar1"/>
+                <img class="avatar" id="avatar" src="src/assets/photo/avt.jpeg"
+                     alt="avatar">
+                <input type='file' (change)="readURL($event.target);" accept="image/*" hidden
+                       id="myAvatar"/>
 
                 <i class="img"
-                   style="font-size: 100px; color: blue; position: absolute; left: 60px; top:60px ; opacity: 0.1;"
+                   style="font-size: 100px; color: blue; position: absolute; left: 60px; top:60px ; opacity: 0.1"
                    class="icon-upload-alt"></i>
               </mat-card>
             </div>
+            <!--          -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
             <div class="add-field-customer-tr">
-              <input class="global-content-popup-input customer-input form-control"
-                     id="name"
+              <input id="name11"
                      formControlName="userName"
                      type="text"
                      placeholder="Ten khach hang"/>
-              <label class="global-content-popup-icon" for="name"><i
-                class="icon-user"></i></label>
+              <label class="global-content-popup-icon" for="name11"><i class="icon-user"></i></label>
               <div *ngFor="let validation of validationMessages.fullName">
                     <span class="global-content-popup-validate customer-validate"
                           *ngIf="addUser.get('userName').hasError(validation.type) && (addUser.get('userName').dirty || addUser.get('userName').touched)">
-        {{validation.message}}</span>
+        Tên đăng ký không được để trống</span>
               </div>
 
             </div>
-            <div class="add-field-customer-tr ">
-              <label class="global-content-popup-icon"><i class="fa fa-mars"></i></label>
-              <div style="margin-left: 16%">
-                <div class="form-check-inline" style="margin-top: 3%">
-                  <label class="" for="nam"><input type="radio" id="nam" name="gender"
-                                                   class="form-check-input"
-                                                   formControlName="gender"
+            <div class="add-field-customer-tr" style="margin-top: 1%">
+              <label class="global-content-popup-icon" style="margin-right: 13%"><i class="fa fa-mars"></i></label>
+              <div>
+                <div class="form-check-inline">
+                  <label class="" for="namadd1"><input type="radio" id="namadd1" name="gender"
+                                                   class="form-check-input" formControlName="gender"
                                                    value="Nam" checked>Nam</label></div>
                 <div class="form-check-inline">
-                  <label class="" for="nu"><input type="radio" id="nu" name="gender"
-                                                  class="form-check-input"
-                                                  formControlName="gender"
+                  <label class="" for="nuadd1"><input type="radio" id="nuadd1" name="gender"
+                                                  class="form-check-input" formControlName="gender"
                                                   value="Nữ">Nữ</label></div>
               </div>
-
               <span class="global-content-popup-validate customer-validate"> Giới tính không được để trống</span>
             </div>
 
-            <div class="add-field-customer-tr">
-              <input class="global-content-popup-input customer-input "
-                     formControlName="address"
-                     id="diachi" type="text"
+            <div class="add-field-customer-tr" style="margin-top: 1%">
+              <input formControlName="address"
+                     id="diachi11" type="text"
                      placeholder="Địa chỉ"/>
-              <label class="global-content-popup-icon" for="diachi"><i
-                class="icon-map-marker"></i></label>
+              <label class="global-content-popup-icon" for="diachi11"><i class="icon-map-marker"></i></label>
               <span class="global-content-popup-validate customer-validate"
                     *ngIf="addUser.controls.address.errors?.required && addUser.controls.address.touched">Địa chỉ không được để trống</span>
             </div>
 
-            <div class="add-field-customer-tr">
-              <label class="global-content-popup-icon" for="ngaysinh"><i
-                class="fa fa-birthday-cake"
-                aria-hidden="true"></i></label>
-              <div class="input-group date " data-provide="datepicker" data-date-format="dd-mm-yyyy"
-                   style="margin-left: 0%;">
-                <input data-toggle="datepicker2" class="form-control" type="text" id="ngaysinh"
-                       placeholder="Ngày sinh">
-                <span class="input-group-addon"><i
-                  class="fa fa-calendar-o icon-can"></i></span>
+            <div class="add-field-customer-tr" style="margin-top: 1%;position: relative">
+              <label class="global-content-popup-icon"><i class="fa fa-birthday-cake"
+                                                          aria-hidden="true"></i></label>
+              <div>
+                <input class="form-control" style="width: 45%" type="text" [(ngModel)]="birthday_value" ngbDatepicker
+                       #f="ngbDatepicker">
+                <button class="btn button-can icon-can-add"  (click)="f.toggle()" type="button"><i
+                  class="fa fa-calendar-o fa-2x"></i></button>
               </div>
               <div *ngFor="let validation of validationMessages.birthday">
                                 <span class="global-content-popup-validate customer-validate"
@@ -174,33 +166,30 @@
               </div>
             </div>
 
-            <div class="add-field-customer-tr">
-              <input class="global-content-popup-input customer-input form-control"
-                     type="text" id="phone"
+            <div class="add-field-customer-tr" style="margin-top: 1%">
+              <input type="text" id="nameadd44"
                      formControlName="phone" placeholder="Số điện thoại"/>
 
-              <label class="global-content-popup-icon" for="phone"><i class="icon-phone"></i></label>
+              <label class="global-content-popup-icon" for="nameadd44"><i class="icon-phone"></i></label>
               <div *ngFor="let validation of validationMessages.phone">  <span
                 class="global-content-popup-validate customer-validate"
                 *ngIf="addUser.get('phone').hasError(validation.type) && (addUser.get('phone').dirty || addUser.get('phone').touched)">
-            {{validation.message}} </span></div>
+           {{validation.message}}</span></div>
             </div>
 
-            <div class="add-field-customer-tr">
-              <input class="global-content-popup-input customer-input form-control"
-                     type="text" id="email"
+            <div class="add-field-customer-tr" style="margin-top: 1%">
+              <input type="text" id="email22"
                      formControlName="email" placeholder="Email"/>
 
-              <label class="global-content-popup-icon" for="email"><i
-                class="icon-envelope-alt"></i></label>
+              <label class="global-content-popup-icon" for="email22"><i class="icon-envelope-alt"></i></label>
               <div *ngFor="let validation of validationMessages.email">    <span
                 class="global-content-popup-validate customer-validate"
                 *ngIf="addUser.get('email').hasError(validation.type) && (addUser.get('email').dirty || addUser.get('email').touched)">
           {{validation.message}}</span></div>
             </div>
           </form>
-          <button type="button" class="add-button"><a data-toggle="modal"
-                                                      (click)="addCheckModal()">Thêm</a>
+          <button type="button" class="global-button edit-customer-btn1" style="margin-left: 38%;padding: 17px 55px;"><a
+                                                                            (click)="addCheckModal()">Thêm</a>
           </button>
         </div>
 
@@ -259,7 +248,7 @@
           <div class="col-xl-4 form-group">
             <mat-card (mouseover)="hoverUploadPicture()" class="" (mouseleave)="leaveUploadPic_()"
                       (click)="selectAvatar_()">
-              <img class="avatar" id="avatar" src="img/avt.jpeg"
+              <img class="avatar" id="avatar" src="src/assets/photo/avt.jpeg"
                    alt="avatar">
               <input type='file' (change)="readURL($event.target);" accept="image/*" hidden
                      id="myAvatar"/>
@@ -269,8 +258,8 @@
                  class="icon-upload-alt"></i>
             </mat-card>
           </div>
-<!--          -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
-          <div class="add-field-customer" >
+          <!--          -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+          <div class="add-field-customer">
             <input id="name1"
                    formControlName="userName"
                    type="text"
@@ -285,8 +274,8 @@
           </div>
           <div class="add-field-customer" style="margin-top: 3%">
             <label class="global-content-popup-icon" style="margin-right: 13%"><i class="fa fa-mars"></i></label>
-            <div >
-              <div class="form-check-inline" >
+            <div>
+              <div class="form-check-inline">
                 <label class="" for="nam"><input type="radio" id="namadd" name="gender"
                                                  class="form-check-input" formControlName="gender"
                                                  value="Nam" checked>Nam</label></div>
@@ -299,7 +288,7 @@
           </div>
 
           <div class="add-field-customer">
-            <input  formControlName="address"
+            <input formControlName="address"
                    id="diachi1" type="text"
                    placeholder="Địa chỉ"/>
             <label class="global-content-popup-icon" for="diachi1"><i class="icon-map-marker"></i></label>
@@ -309,10 +298,12 @@
 
           <div class="add-field-customer" style="margin-top: 3%">
             <label class="global-content-popup-icon"><i class="fa fa-birthday-cake"
-                                                                        aria-hidden="true"></i></label>
-            <div  >
-              <input class="form-control" style="width: 45%" type="text"  [(ngModel)]="birthday_value" ngbDatepicker #d="ngbDatepicker">
-              <button #buttonEl class="btn button-can" style="    margin-left: 187px" (click)="d.toggle()" type="button"><i class="fa fa-calendar-o fa-2x"></i></button>
+                                                        aria-hidden="true"></i></label>
+            <div>
+              <input class="form-control" style="width: 45%" type="text" [(ngModel)]="birthday_value" ngbDatepicker
+                     #f="ngbDatepicker">
+              <button class="btn button-can" style="    margin-left: 187px" (click)="f.toggle()" type="button"><i
+                class="fa fa-calendar-o fa-2x"></i></button>
             </div>
             <div *ngFor="let validation of validationMessages.birthday">
                                 <span class="global-content-popup-validate customer-validate"
@@ -325,7 +316,7 @@
             <input type="text" id="nameadd4"
                    formControlName="phone" placeholder="Số điện thoại"/>
 
-            <label  class="global-content-popup-icon"><i class="icon-phone"></i></label>
+            <label class="global-content-popup-icon"><i class="icon-phone"></i></label>
             <div *ngFor="let validation of validationMessages.phone">  <span
               class="global-content-popup-validate customer-validate"
               *ngIf="addUser.get('phone').hasError(validation.type) && (addUser.get('phone').dirty || addUser.get('phone').touched)">
@@ -333,7 +324,7 @@
           </div>
 
           <div class="add-field-customer" style="margin-top: 3%">
-            <input  type="text" id="email2"
+            <input type="text" id="email2"
                    formControlName="email" placeholder="Email"/>
 
             <label class="global-content-popup-icon" for="email2"><i class="icon-envelope-alt"></i></label>

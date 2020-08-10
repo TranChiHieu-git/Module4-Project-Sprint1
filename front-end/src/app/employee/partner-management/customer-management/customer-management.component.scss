@@ -853,14 +853,6 @@ mat-progress-bar[value]::-webkit-progress-value {
   margin-left: 17%;
   margin-top: -14%;
 }
-.add-field-customer{
-  margin-left: 35%;
-  width: 59%;
-}
-.add-field-customer-tr{
-  margin-left: 25%;
-  margin-right: 51%;
-}
 .loc{
   position: relative;
   height: 0%;
@@ -900,4 +892,8 @@ mat-progress-bar[value]::-webkit-progress-value {
   margin-top: -54px;
   font-size: 24px;
 }
-
+.icon-can-add{
+  position: absolute;
+  margin-top: -10%;
+  margin-left: 228px;
+}
