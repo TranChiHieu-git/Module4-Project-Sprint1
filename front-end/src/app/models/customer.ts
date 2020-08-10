@@ -13,7 +13,8 @@ export class Customer {
   deleteFlag: boolean;
   account: Account;
   cartList: Cart[];
-
+  listOrder: any[];
+  total: any;
   constructor() {
   }
 

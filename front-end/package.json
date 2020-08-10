@@ -50,6 +50,7 @@
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.5",
     "selectize": "^0.12.6",
+    "rxjs-observable": "0.0.7",
     "ts-md5": "^1.2.7",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
