@@ -24,6 +24,8 @@ export class CustomerManagementComponent implements OnInit {
    p = 1;
   size = 5;
   search = '';
+  // tslint:disable-next-line:variable-name
+  birthday_value = '';
   value1 = '';
   value2 = '';
   pageClicked = 0;
@@ -273,9 +275,7 @@ export class CustomerManagementComponent implements OnInit {
   addCheckModel(element: Customer): void {
     $('#addCheckModal').modal('show');
   }
-
-  // tslint:disable-next-line:typedef
-  onSubmit(page) {
+  onSubmit(page): void {
     this.customerService.getAllCustomer(page, this.size, this.search, this.value1, this.value2).subscribe(
       data => {
         // console.log(data);
@@ -660,6 +660,7 @@ export class CustomerManagementComponent implements OnInit {
   // editMultiCancel() {
   //   this.ngOnInit();
   // }
+
 
   searchName(): void {
     if (this.search === '') {

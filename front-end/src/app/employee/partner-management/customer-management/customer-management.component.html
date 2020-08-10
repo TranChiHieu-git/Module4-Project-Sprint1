@@ -243,13 +243,13 @@
 
 <!--body----------------------------------------------------------->
 
-<!--Add Modal-->r
+<!--Add Modal-->
 <div class="modal fade " id="addModel" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title modal-titles" id="editModalLabel">Them thông tin khách hàng</h5>
+        <h5 class="modal-title" id="editModalLabel">Them thông tin khách hàng</h5>
         <button type="button" class="close " data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -269,8 +269,9 @@
                  class="icon-upload-alt"></i>
             </mat-card>
           </div>
-          <div class="add-field-customer">
-            <input class="global-content-popup-input customer-input form-control" id="name1"
+<!--          -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+          <div class="add-field-customer" >
+            <input id="name1"
                    formControlName="userName"
                    type="text"
                    placeholder="Ten khach hang"/>
@@ -282,10 +283,10 @@
             </div>
 
           </div>
-          <div class="add-field-customer ">
-            <label class="global-content-popup-icon"><i class="fa fa-mars"></i></label>
-            <div style="margin-left: 16%">
-              <div class="form-check-inline" style="margin-top: 3%">
+          <div class="add-field-customer" style="margin-top: 3%">
+            <label class="global-content-popup-icon" style="margin-right: 13%"><i class="fa fa-mars"></i></label>
+            <div >
+              <div class="form-check-inline" >
                 <label class="" for="nam"><input type="radio" id="namadd" name="gender"
                                                  class="form-check-input" formControlName="gender"
                                                  value="Nam" checked>Nam</label></div>
@@ -294,12 +295,11 @@
                                                 class="form-check-input" formControlName="gender"
                                                 value="Nữ">Nữ</label></div>
             </div>
-
             <span class="global-content-popup-validate customer-validate"> Giới tính không được để trống</span>
           </div>
 
           <div class="add-field-customer">
-            <input class="global-content-popup-input customer-input " formControlName="address"
+            <input  formControlName="address"
                    id="diachi1" type="text"
                    placeholder="Địa chỉ"/>
             <label class="global-content-popup-icon" for="diachi1"><i class="icon-map-marker"></i></label>
@@ -307,12 +307,12 @@
                   *ngIf="addUser.controls.address.errors?.required && addUser.controls.address.touched">Địa chỉ không được để trống</span>
           </div>
 
-          <div class="add-field-customer">
-            <label class="global-content-popup-icon" for="ngaysinh2"><i class="fa fa-birthday-cake"
+          <div class="add-field-customer" style="margin-top: 3%">
+            <label class="global-content-popup-icon"><i class="fa fa-birthday-cake"
                                                                         aria-hidden="true"></i></label>
-            <div id="datepicker3" data-provide="datepicker" class="input-group date " data-date-format="dd-mm-yyyy">
-              <input id="ngaysinh2" data-toggle="datepicker" class="form-control" type="text" placeholder="Ngày sinh">
-              <span class="input-group-addon"><i class="fa fa-calendar-o icon-can"></i></span>
+            <div  >
+              <input class="form-control" style="width: 45%" type="text"  [(ngModel)]="birthday_value" ngbDatepicker #d="ngbDatepicker">
+              <button #buttonEl class="btn button-can" style="    margin-left: 187px" (click)="d.toggle()" type="button"><i class="fa fa-calendar-o fa-2x"></i></button>
             </div>
             <div *ngFor="let validation of validationMessages.birthday">
                                 <span class="global-content-popup-validate customer-validate"
@@ -321,19 +321,19 @@
             </div>
           </div>
 
-          <div class="add-field-customer">
-            <input class="global-content-popup-input customer-input form-control" type="text" id="nameadd4"
+          <div class="add-field-customer" style="margin-top: 3%">
+            <input type="text" id="nameadd4"
                    formControlName="phone" placeholder="Số điện thoại"/>
 
-            <label class="global-content-popup-icon" for="name4"><i class="icon-phone"></i></label>
+            <label  class="global-content-popup-icon"><i class="icon-phone"></i></label>
             <div *ngFor="let validation of validationMessages.phone">  <span
               class="global-content-popup-validate customer-validate"
               *ngIf="addUser.get('phone').hasError(validation.type) && (addUser.get('phone').dirty || addUser.get('phone').touched)">
            {{validation.message}}</span></div>
           </div>
 
-          <div class="add-field-customer">
-            <input class="global-content-popup-input customer-input form-control" type="text" id="email2"
+          <div class="add-field-customer" style="margin-top: 3%">
+            <input  type="text" id="email2"
                    formControlName="email" placeholder="Email"/>
 
             <label class="global-content-popup-icon" for="email2"><i class="icon-envelope-alt"></i></label>
