@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EmployeeService} from '../../../services/employee.service';
 import {CustomerService} from '../../../services/customer.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {CouponService} from '../../../services/coupon.service';
 
 @Component({
@@ -44,7 +44,7 @@ export class SaleManagementComponent implements OnInit {
       console.log(error);
     });
 
-    this.customerService.getAllCustomer().subscribe(next => {
+    this.customerService.getAllCustomers().subscribe(next => {
       this.customerList = next.content;
     }, error => {
       console.log(error);
@@ -55,18 +55,35 @@ export class SaleManagementComponent implements OnInit {
   getAllCoupon(page) {
     this.couponService.getAllCourse(page, this.size, this.createDateFrom, this.createDateTo, this.employee,
       this.customer).subscribe(next => {
-      this.pageClicked = page;
-      this.totalPages = next.totalPages;
-      this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-      this.couponList = next.content;
+      if (next !== null) {
+        this.pageClicked = page;
+        this.totalPages = next.totalPages;
+        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
+        this.couponList = next.content;
+      } else {
+        this.pageClicked = 0;
+        this.totalPages = 1;
+        this.pages = [];
+        this.couponList = null;
+      }
     }, error => {
       console.log(error);
     });
   }
 
   search() {
-    this.createDateFrom = this.searchCouponForm.value.createDateFrom;
-    this.createDateTo = this.searchCouponForm.value.createDateTo;
+    if (this.searchCouponForm.value.createDateFrom !== '') {
+      this.createDateFrom =
+        this.searchCouponForm.value.createDateFrom.toLocaleDateString().split('/')[2]
+        + '-' + this.searchCouponForm.value.createDateFrom.toLocaleDateString().split('/')[1]
+        + '-' + this.searchCouponForm.value.createDateFrom.toLocaleDateString().split('/')[0];
+    }
+    if (this.searchCouponForm.value.createDateTo !== '') {
+      this.createDateTo =
+        this.searchCouponForm.value.createDateTo.toLocaleDateString().split('/')[2]
+        + '-' + this.searchCouponForm.value.createDateTo.toLocaleDateString().split('/')[1]
+        + '-' + this.searchCouponForm.value.createDateTo.toLocaleDateString().split('/')[0];
+    }
     this.employee = this.searchCouponForm.value.employee;
     this.customer = this.searchCouponForm.value.user;
     this.getAllCoupon(0);

@@ -660,6 +660,7 @@ export class CustomerManagementComponent implements OnInit {
   // editMultiCancel() {
   //   this.ngOnInit();
   // }
+  user: Customer;
 
   searchName(): void {
     if (this.search === '') {
@@ -728,5 +729,13 @@ export class CustomerManagementComponent implements OnInit {
     this.search = '';
     this.hasSearch = false;
     this.onSubmit(0);
+  }
+
+  addCheckModal() {
+
+  }
+
+  leaveUploadPic_() {
+
   }
 }
