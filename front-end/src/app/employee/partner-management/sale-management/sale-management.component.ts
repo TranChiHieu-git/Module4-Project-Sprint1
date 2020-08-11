@@ -133,7 +133,7 @@ export class SaleManagementComponent implements OnInit {
   }
 
   showDeleteSuccess(): void {
-    this.toastr.error('Xóa thành công!');
+    this.toastr.success('Xóa thành công!');
   }
 
   showDeleteWarning(): void {
