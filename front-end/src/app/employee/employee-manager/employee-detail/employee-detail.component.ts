@@ -1,4 +1,6 @@
 // import * as $ from 'jquery';
+import {PositionEmp} from '../../../models/position';
+
 declare var $: any;
 import {Component, OnInit} from '@angular/core';
 import {Employee} from '../../employee';
@@ -46,7 +48,7 @@ export class EmployeeDetailComponent implements OnInit {
   url: any;
   employee = new Employee();
   editForm: FormGroup;
-  positionList: Position[];
+  positionList: PositionEmp[];
   departmentList: Department[];
   accountName = '';
   account = new Account();

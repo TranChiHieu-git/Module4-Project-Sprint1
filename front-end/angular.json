@@ -32,7 +32,8 @@
               "src/styles.scss",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/slick-carousel/slick/slick.scss"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
@@ -41,7 +42,8 @@
               "src/assets/js/collapse_sidebar.js",
               "src/assets/js/show-info.js",
               "src/assets/js/fb.js",
-              "src/assets/js/customer-chat.js"
+              "src/assets/js/customer-chat.js",
+              "./node_modules/slick-carousel/slick/slick.js"
             ]
           },
           "configurations": {

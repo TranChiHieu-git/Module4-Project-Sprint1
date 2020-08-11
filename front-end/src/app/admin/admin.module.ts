@@ -10,20 +10,28 @@ import {FusionChartsModule} from 'angular-fusioncharts';
 import * as FusionCharts from 'fusioncharts';
 import * as charts from 'fusioncharts/fusioncharts.charts';
 import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MaterialModule} from '../shares/material.module';
+import {MatCardModule} from '@angular/material/card';
 
 FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
 
 @NgModule({
   declarations: [ListAccountComponent, AccessTimesComponent],
-  imports: [
-    CommonModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NgxPaginationModule,
-    FusionChartsModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        NgxPaginationModule,
+        FusionChartsModule,
+        FormsModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MaterialModule,
+        MatCardModule,
+    ]
 })
 export class AdminModule {
 }

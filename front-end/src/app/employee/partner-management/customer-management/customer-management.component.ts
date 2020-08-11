@@ -361,7 +361,7 @@ export class CustomerManagementComponent implements OnInit {
       if (order.orderStatus !== this.deleteCheckOrderValue[0] && order.orderStatus !== this.deleteCheckOrderValue[1]) {
         statusDelete = true;
       }
-    })
+    });
     return statusDelete;
   }
 
