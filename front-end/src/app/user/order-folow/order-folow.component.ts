@@ -17,7 +17,7 @@ export class OrderFolowComponent implements OnInit {
 
   constructor(private orderService: OrderService,
               private activatedRoute: ActivatedRoute) {
-    this.orderService.curentIdUser.subscribe(message => {
+    this.orderService.currentIdUser.subscribe(message => {
       this.idUser = message;
       this.orderService.findAllOrderByUserId(this.idUser).subscribe((next: any) => {
           this.orders = next.content;

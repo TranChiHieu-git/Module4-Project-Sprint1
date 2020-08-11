@@ -1,8 +1,6 @@
 .card-detail {
   background-color: rgba(236, 233, 228, 1.0);
   position: relative;
-  top: 20px;
-  min-height: 100vh;
   padding-left: 20px;
 }
 
@@ -161,32 +159,29 @@ span {
   position: relative;
   right: 0;
   top: 5%;
-  background-color: #ffe673;
-  border: rgb(201, 91, 61) solid 2px;
+  background-color: #ffda28;
   color: black;
   margin: 0;
-  height: 40px;
+  width:40%;
+  height: 50px;
 }
 
 .btn-shipping:hover {
-
   background-color: orange;
-  border: rgb(201, 91, 61) solid 2px;
-  color: white;
+  color: black;
 }
 .list-group-item{
   padding: 10px;
 }
+.list-group-item p {
+  margin-bottom: 0;
+}
+
 .paypall{
   border: #d5dfe2 solid 1px;
   margin: 10px 20px;
   padding: 10px ;
   min-height: 100px;
-}
-.btn-shipping{
-  width:40%;
-  height: 50px;
-
 }
 .shipping-method{
   color: green;
@@ -219,3 +214,4 @@ span {
 .custom-radio .custom-control-input:focus ~ .custom-control-label::before {
   box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem #ffe673; /* pink, 25% opacity */
 }
+

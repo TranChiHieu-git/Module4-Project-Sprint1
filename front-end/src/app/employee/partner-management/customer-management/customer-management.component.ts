@@ -660,7 +660,7 @@ export class CustomerManagementComponent implements OnInit {
   // editMultiCancel() {
   //   this.ngOnInit();
   // }
-  user: Customer;
+  // user: Customer;
 
 
   searchName(): void {
@@ -743,5 +743,5 @@ export class CustomerManagementComponent implements OnInit {
   leaveUploadPic_() {
 
 
-  
+  }
 }

@@ -21,11 +21,7 @@ export class CustomerService {
       , 'Access-Control-Allow-Origin': 'http://localhost:4200/', 'Access-Control-Allow-Methods': 'POST,GET',
     };
   }
-
-
-  
-
-  getAllCustomers(): Observable<any> {
+ getAllCustomers(): Observable<any> {
     return this.httpClient.get<Customer[]>(this.API_URL, this.httpOptions);
   }
  getAllCustomerWithSearchAndPageAndFilter(page, size, search , value1, value2): Observable<any> {
