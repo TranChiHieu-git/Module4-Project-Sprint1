@@ -42,7 +42,8 @@
               "src/assets/js/collapse_sidebar.js",
               "src/assets/js/addProductInRow.js",
               "src/assets/js/fb.js",
-              "src/assets/js/customer-chat.js"
+              "src/assets/js/customer-chat.js",
+              "src/assets/js/BrandJS.js"
             ]
           },
           "configurations": {

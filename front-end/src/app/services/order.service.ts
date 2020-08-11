@@ -34,12 +34,13 @@ chancePage(page){
     return this.httpClient.get<Order[]>(this.ORDER_API_URL + '/' + id, this.httpOptions);
   }
 
+
   findAllOrderByUserIdOnPage(id: number, page: number): Observable<any> {
     return this.httpClient.get<Order[]>(this.ORDER_API_URL + '/' + id + '/?page=' + page + '&size=2', this.httpOptions);
   }
 
-  findOrderById(id: number): Observable<Order> {
-    return this.httpClient.get<Order>(this.ORDER_DETAIL_API_URL + '/' + id), this.httpOptions;
+  findOrderById(id: number): Observable<any> {
+    return this.httpClient.get<Order>(this.ORDER_DETAIL_API_URL + '/' + id, this.httpOptions);
   }
 
   cancelOrder(id: number): Observable<Order> {

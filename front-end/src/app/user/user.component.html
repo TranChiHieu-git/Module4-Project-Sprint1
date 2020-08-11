@@ -16,7 +16,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link">Sản Phẩm</a>
+          <a class="nav-link" [routerLink]="'/home-store/home-bakery'">Sản Phẩm</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Tin Tức</a>
@@ -46,7 +46,7 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item account">San Pham 2</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item account" href="#">Thanh Toán</a>
+            <a class="dropdown-item account" [routerLink]="['/checkout/card']">Thanh Toán</a>
           </div>
         </div>
       </div>
@@ -123,9 +123,7 @@
   <!--  <app-orderbutton></app-orderbutton>-->
   <!--  </div>-->
 </div>
-<app-home-store>
   <router-outlet></router-outlet>
-</app-home-store>
 </body>
 
 

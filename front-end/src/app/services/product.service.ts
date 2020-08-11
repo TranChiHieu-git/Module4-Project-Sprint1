@@ -25,6 +25,7 @@ export class ProductService {
   private unitUrl = BASE_API_URL + '/listUnit';
   private categoryUrl = BASE_API_URL + '/listCategory';
   private brandUrl = BASE_API_URL + '/brand';
+
   private brandByCategoryIdUrl = BASE_API_URL + '/listBrandByCategory/';
   private productByCategoryAndBrandUrl = BASE_API_URL + '/listProductByCategoryAndBrand/';
   private productByCategoryUrl = BASE_API_URL + '/listProductByCategory/';
@@ -37,6 +38,7 @@ export class ProductService {
   private searchProductByCategoryNamePrice = BASE_API_URL + '/searchProductByCategoryNamePrice/';
   private searchProductByCategoryName = BASE_API_URL + '/searchProductByCategoryName/';
   private searchProductByCategoryPrice = BASE_API_URL + '/searchProductByCategoryPrice/';
+  private API_URL = 'http://localhost:8080/user/home-store';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -179,5 +181,17 @@ export class ProductService {
       + '&size=' + pageable.pageSize;
     return this.httpClient.get<Page<Product>>(url, httpOptions);
   }
-}
 
+  getAllProduct(): Observable<any> {
+
+    return this.httpClient.get(this.API_URL + '/products');
+  }
+
+  getProductById(productId: number): Observable<any> {
+    return this.httpClient.get(this.API_URL + '/products/' + productId);
+  }
+
+  getAllProductByCategory(categoryId: number): Observable<any> {
+    return this.httpClient.get(this.API_URL + '/' + categoryId);
+  }
+}

@@ -21,6 +21,9 @@ export class UserOderDetailComponent implements OnInit {
               private orderService: OrderService,
               private router: Router
   ) {
+      }
+
+  ngOnInit(): void {
     this.orderService.curentIdUser.subscribe(message => {
       this.idUser = message;
       this.orderService.findAllOrderByUserId(this.idUser).subscribe((next: any) => {
@@ -37,6 +40,7 @@ export class UserOderDetailComponent implements OnInit {
             if (this.isCurrentOrder) {
               this.orderService.findOrderById(idOrder).subscribe(next => {
                   this.order = next;
+                  console.log(this.order);
                   this.orderDetails = this.order.orderDetailList;
                   this.orderDetails.forEach(product => {
                     product.temMoney = product.orderQuantity * product.id.product.price;
@@ -57,17 +61,12 @@ export class UserOderDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-
-  }
-
   // tslint:disable-next-line:typedef
   cancelOrder(orderId: number) {
     this.orderService.cancelOrder(orderId).subscribe(
       res => {
         alert('Hủy đơn hàng thành công');
-       window.location.reload();
-
+        this.ngOnInit();
       },
       error => {
         console.log(error);

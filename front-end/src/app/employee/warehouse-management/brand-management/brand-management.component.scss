@@ -50,13 +50,19 @@
   align-items: center;
   border-right: 0;
 }
+table {
+  table-layout: fixed;
+  width: 100%;
+}
 td, th{
   text-align: center;
-  vertical-align: middle;
-  white-space: pre-wrap;
+  vertical-align: middle !important;
+  //white-space: pre-wrap;
   word-wrap:break-word
 }
-
+th {
+  background: #EE9F1F;
+}
 .edit-input{
   //width: 75% !important;
   border: none;
@@ -73,10 +79,7 @@ td, th{
 .add-brand-span {
   background-color: orange;
 }
-.table-header th {
-  background: #EE9F1F;
-  vertical-align: middle;
-}
+
 .add-brand-input {
   height: 65px;
   }
@@ -87,10 +90,9 @@ font-size: 14px;
 .global-button{
   background: transparent linear-gradient(38deg, #EE9F1F 0%, #FCBC53 100%) 0% 0% no-repeat padding-box;
   box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.31);
+  font-size: 20px;
   border: none;
   border-radius: 10px;
   padding: 2% 5%;
   color: #581008;
-  font-weight: 700;
-
 }

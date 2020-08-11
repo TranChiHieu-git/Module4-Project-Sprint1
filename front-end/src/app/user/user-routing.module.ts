@@ -13,7 +13,13 @@ import {HomeCandyComponent} from './home-store/home-candy/home-candy.component';
 import {DetailComponent} from './home-store/detail/detail.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
 import {UserLoginComponent} from './user-login/user-login.component';
+import {OrderFolowComponent} from './order-folow/order-folow.component';
+import {HomeBakeryComponent} from './home-store/home-bakery/home-bakery.component';
 import {AuthGuard} from '../auth/auth.guard';
+import {ShoppingCardComponent} from './shopping-card/shopping-card.component';
+import {ShippingComponent} from './shipping/shipping.component';
+import {PaymentComponent} from './payment/payment.component';
+import {PaymentSuccessComponent} from './payment-success/payment-success.component';
 
 const routes: Routes = [{
   path: '', component: UserComponent,
@@ -35,9 +41,29 @@ const routes: Routes = [{
         {
           path: 'order-detail/:idOrder',
           component: UserOderDetailComponent
+        },
+        {
+          path: 'order-follow/:idOrder',
+          component: OrderFolowComponent
         }
       ]
     },
+    {
+      path: 'checkout/card',
+      component: ShoppingCardComponent
+    },
+    {
+      path: 'checkout/shipping',
+      component: ShippingComponent
+    },
+    {
+      path: 'checkout/payment',
+      component: PaymentComponent
+    },
+    {
+      path: 'checkout/payment-success',
+      component: PaymentSuccessComponent
+    }
   ],
 },
   {
@@ -49,13 +75,14 @@ const routes: Routes = [{
       {path: '', component: OrderButtonComponent}
       ,
       {
-        path: 'home-store', component: HomeStoreComponent,
-        children: [
-          {path: 'cake', component: HomeCakeComponent},
-          {path: 'candy', component: HomeCandyComponent},
-          {path: 'detail', component: DetailComponent}
+        path: 'home-store', component: HomeStoreComponent, children: [
+          {path: 'products/:id', component: DetailComponent},
+          {path: 'home-bakery', component: HomeBakeryComponent},
+          {path: 'home-bakery1', component: HomeCakeComponent},
+          {path: 'home-bakery2', component: HomeCandyComponent}
         ]
       },
+
     ],
   }
 ];
