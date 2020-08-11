@@ -6,12 +6,14 @@ import {Employees} from '../models/employees';
 import {Role} from '../models/role';
 import {TokenStorageService} from '../auth/token-storage.service';
 import {Customer} from '../models/customer';
+import { SocialUser} from 'angularx-social-login';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
   API_URL = 'http://localhost:8080/account';
+  API_URL_MEMBERACCOUNT = 'http://localhost:8080/createMemberAccount';
   API_ROLE_URL = 'http://localhost:8080/role';
   httpOptions: any;
   httpOptions2: any;
@@ -78,7 +80,12 @@ export class AdminService {
   create(account: Account): Observable<any> {
     return this.httpClient.post<Account>(this.API_URL + '/create', account, this.httpOptions);
   }
-
+  createMemberAccount(account: Account): Observable<any> {
+    return this.httpClient.post<Account>(this.API_URL_MEMBERACCOUNT, account, this.httpOptions);
+  }
+  createSocialUser(socialUser: SocialUser): Observable<any> {
+    return this.httpClient.post<Account>(this.API_URL_MEMBERACCOUNT, socialUser, this.httpOptions);
+  }
 
   delete(account: Account): Observable<Account> {
     // return this.httpClient.delete<void>(this.API_URL + '/delete/' + account.accountId, account);
