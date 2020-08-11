@@ -55,7 +55,7 @@ export class SaleManagementComponent implements OnInit {
   }
 
 
-  getAllCoupon(page) {
+  getAllCoupon(page): void {
     this.couponService.getAllCourse(page, this.size, this.createDateFrom, this.createDateTo, this.employee,
       this.customer).subscribe(next => {
       if (next !== null) {
@@ -74,7 +74,7 @@ export class SaleManagementComponent implements OnInit {
     });
   }
 
-  search() {
+  search(): void {
     if (this.searchCouponForm.value.createDateFrom !== '') {
       this.createDateFrom =
         this.searchCouponForm.value.createDateFrom.toLocaleDateString().split('/')[2]
@@ -100,21 +100,21 @@ export class SaleManagementComponent implements OnInit {
     this.getAllCoupon(0);
   }
 
-  onPrevious() {
+  onPrevious(): void {
     if (this.pageClicked > 0) {
       this.pageClicked--;
       this.getAllCoupon(this.pageClicked);
     }
   }
 
-  onNext() {
+  onNext(): void {
     if (this.pageClicked < this.totalPages - 1) {
       this.pageClicked++;
       this.getAllCoupon(this.pageClicked);
     }
   }
 
-  onLast() {
+  onLast(): void {
     this.pageClicked = this.totalPages - 1;
     this.getAllCoupon(this.pageClicked);
   }
