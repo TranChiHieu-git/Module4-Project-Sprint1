@@ -21,7 +21,7 @@ declare var $: any;
   styleUrls: ['./customer-management.component.scss']
 })
 export class CustomerManagementComponent implements OnInit {
-   p = 1;
+  p = 1;
   size = 5;
   search = '';
   // tslint:disable-next-line:variable-name
@@ -275,6 +275,7 @@ export class CustomerManagementComponent implements OnInit {
   addCheckModel(element: Customer): void {
     $('#addCheckModal').modal('show');
   }
+
   onSubmit(page): void {
     this.customerService.getAllCustomerWithSearchAndPageAndFilter(page, this.size, this.search, this.value1, this.value2).subscribe(
       data => {
@@ -733,14 +734,14 @@ export class CustomerManagementComponent implements OnInit {
   }
 
 
-  onDateSelect($event: NgbDate) {
+  onDateSelect($event: NgbDate): void {
   }
 
-  addCheckModal() {
+  addCheckModal(): void {
 
   }
 
-  leaveUploadPic_() {
+  leaveUploadPic_(): void {
 
 
   }
