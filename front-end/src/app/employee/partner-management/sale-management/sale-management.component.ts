@@ -3,6 +3,7 @@ import {EmployeeService} from '../../../services/employee.service';
 import {CustomerService} from '../../../services/customer.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {CouponService} from '../../../services/coupon.service';
+import {AdminService} from '../../../services/admin.service';
 
 @Component({
   selector: 'app-sale-management',
@@ -26,6 +27,7 @@ export class SaleManagementComponent implements OnInit {
 
   constructor(private employeeService: EmployeeService,
               private customerService: CustomerService,
+              private adminService: AdminService,
               private couponService: CouponService,
               private formBuilder: FormBuilder) {
   }
@@ -44,76 +46,76 @@ export class SaleManagementComponent implements OnInit {
       console.log(error);
     });
 
-
-    this.customerService.getAllCustomer(0).subscribe(next => {
-      this.customerList = next.content;
+    this.customerService.getAllCustomer().subscribe(next => {
+      this.customerList = next;
     }, error => {
       console.log(error);
     });
     this.getAllCoupon(0);
   }
-  this.customerService.getAllCustomers().subscribe(next => {
-  this.customerList = next.content;
-}, error => {
-  console.log(error);
-});
-this.getAllCoupon(0);
-}
 
-getAllCoupon(page){
-  this.couponService.getAllCourse(page, this.size, this.createDateFrom, this.createDateTo, this.employee,
-    this.customer).subscribe(next => {
-    if (next !== null) {
-      this.pageClicked = page;
-      this.totalPages = next.totalPages;
-      this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-      this.couponList = next.content;
-    } else {
-      this.pageClicked = 0;
-      this.totalPages = 1;
-      this.pages = [];
-      this.couponList = null;
+
+  getAllCoupon(page): void {
+    this.couponService.getAllCourse(page, this.size, this.createDateFrom, this.createDateTo, this.employee,
+      this.customer).subscribe(next => {
+      if (next !== null) {
+        this.pageClicked = page;
+        this.totalPages = next.totalPages;
+        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
+        this.couponList = next.content;
+      } else {
+        this.pageClicked = 0;
+        this.totalPages = 1;
+        this.pages = [];
+        this.couponList = null;
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  search(): void {
+    if (this.searchCouponForm.value.createDateFrom !== '') {
+      this.createDateFrom =
+        this.searchCouponForm.value.createDateFrom.toLocaleDateString().split('/')[2]
+        + '-' + this.searchCouponForm.value.createDateFrom.toLocaleDateString().split('/')[1]
+        + '-' + this.searchCouponForm.value.createDateFrom.toLocaleDateString().split('/')[0];
     }
-  }, error => {
-    console.log(error);
-  });
-}
-
-search() {
-  if (this.searchCouponForm.value.createDateFrom !== '') {
-    this.createDateFrom =
-      this.searchCouponForm.value.createDateFrom.toLocaleDateString().split('/')[2]
-      + '-' + this.searchCouponForm.value.createDateFrom.toLocaleDateString().split('/')[1]
-      + '-' + this.searchCouponForm.value.createDateFrom.toLocaleDateString().split('/')[0];
+    if (this.searchCouponForm.value.createDateTo !== '') {
+      this.createDateTo =
+        this.searchCouponForm.value.createDateTo.toLocaleDateString().split('/')[2]
+        + '-' + this.searchCouponForm.value.createDateTo.toLocaleDateString().split('/')[1]
+        + '-' + this.searchCouponForm.value.createDateTo.toLocaleDateString().split('/')[0];
+    }
+    if (this.searchCouponForm.value.employee === 'Tất cả') {
+      this.employee = '';
+    } else {
+      this.employee = this.searchCouponForm.value.employee;
+    }
+    if (this.searchCouponForm.value.user === 'Tất cả') {
+      this.customer = '';
+    } else {
+      this.customer = this.searchCouponForm.value.user;
+    }
+    this.getAllCoupon(0);
   }
-  if (this.searchCouponForm.value.createDateTo !== '') {
-    this.createDateTo =
-      this.searchCouponForm.value.createDateTo.toLocaleDateString().split('/')[2]
-      + '-' + this.searchCouponForm.value.createDateTo.toLocaleDateString().split('/')[1]
-      + '-' + this.searchCouponForm.value.createDateTo.toLocaleDateString().split('/')[0];
-  }
-  this.employee = this.searchCouponForm.value.employee;
-  this.customer = this.searchCouponForm.value.user;
-  this.getAllCoupon(0);
-}
 
-onPrevious() {
-  if (this.pageClicked > 0) {
-    this.pageClicked--;
+  onPrevious(): void {
+    if (this.pageClicked > 0) {
+      this.pageClicked--;
+      this.getAllCoupon(this.pageClicked);
+    }
+  }
+
+  onNext(): void {
+    if (this.pageClicked < this.totalPages - 1) {
+      this.pageClicked++;
+      this.getAllCoupon(this.pageClicked);
+    }
+  }
+
+  onLast(): void {
+    this.pageClicked = this.totalPages - 1;
     this.getAllCoupon(this.pageClicked);
   }
 }
-
-onNext() {
-  if (this.pageClicked < this.totalPages - 1) {
-    this.pageClicked++;
-    this.getAllCoupon(this.pageClicked);
-  }
-}
-
-onLast() {
-  this.pageClicked = this.totalPages - 1;
-  this.getAllCoupon(this.pageClicked);
-}
-}
-

@@ -11,6 +11,7 @@ import {NotificationService} from '../../../services/notification.service';
 import * as $ from 'jquery';
 import {BsDatepickerConfig} from 'ngx-bootstrap/datepicker';
 
+
 declare const myjs: any;
 
 @Component({

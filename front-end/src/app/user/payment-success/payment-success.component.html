@@ -6,14 +6,14 @@
     <div class="col-8">
       <div class=" payment-success">
         <div class="img-success">
-          <img src="https://www.americanchecked.com/wp-content/uploads/2018/06/Checkmark-circle-dark-blue.png" alt="">
+          <img src="../../../assets/photo/payment-success.png" alt="">
         </div>
     <p> Bạn đã mua hàng thành công!</p>
     <p>Mã số đơn hàng của bạn</p>
 
-    <button class="btn btn-success">45568785321</button>
-    <p>Giao hàng vào : Thứ tư, 20/05/2020</p>
-    <span>Xem lại</span><a href=""> Đơn hàng của tôi</a>
+    <p class="btn btn-success">CODEBAKERY{{newOrderId}}</p>
+    <p>Giao hàng vào : {{newOrderReceiverDate|date:'EEEE dd/MM/yyyy'}}</p>
+    <span>Xem lại</span><a href="" [routerLink]="['/user-manage/user-order']"> Đơn hàng của tôi</a>
     </div>
     </div>
   </div>

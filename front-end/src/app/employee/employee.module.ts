@@ -44,8 +44,9 @@ import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house
 
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+
 import {SaleManagementComponent} from './partner-management/sale-management/sale-management.component';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
