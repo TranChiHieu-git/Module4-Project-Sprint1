@@ -41,11 +41,18 @@
       </div>
     </div>
   </form>
+
+  <div>   <button class="btn btn-primary btn-create-custom" data-toggle="modal" data-target="#modal-create-product"><span
+    class="fa fa-plus-square"></span> Thêm mới
+  </button>
+  </div>
+
   <div class="row mt-3 px-3">
+
     <!--  Table grid -->
-    <button class="btn btn-primary btn-create-custom" data-toggle="modal" data-target="#modal-create-product"><span
-      class="fa fa-plus-square"></span> Thêm mới
-    </button>
+
+
+    <form [formGroup]="productForm" (ngSubmit)="editProduct(product.productId)">
     <table class="table table-bordered table-striped mt-3">
       <thead class="table-header">
       <tr>
@@ -62,40 +69,148 @@
       </thead>
       <tbody *ngIf="page">
       <tr *ngFor="let product of page.content | orderBy: key : reverse | filterProduct: searchProductName">
-        <td>
+
+
+        <td *ngIf="product.isEditable">
+          <div class="input-group ">
+            <input formControlName="productName" type="text" class="form-control"
+                   [(ngModel)]="product.productName">
+          </div>
+          <p class="text-danger"
+             *ngIf="productForm.get('productName').hasError('required') && productForm.get('productName').touched">
+            Vui lòng nhập tên mặt hàng
+          </p>
+        </td>
+        <td *ngIf="!product.isEditable">
           <span>{{product.productName}}</span>
         </td>
-        <td>
+        <td *ngIf="product.isEditable">
+
+          <div class="input-group">
+            <input formControlName="price" type="text" class="form-control"
+                   [(ngModel)]="product.price">
+          </div>
+        </td>
+        <td *ngIf="!product.isEditable">
           <span>{{product.price | number}}</span>
         </td>
-        <td>
+        <td *ngIf="product.isEditable">
+          <div class="input-group">
+            <fieldset formGroupName="category">
+              <select class="form-control col-form-label"  formControlName="categoryId">
+                <option *ngFor="let category of categoryList" [ngValue]="category.categoryId"
+                        [selected]="category.categoryId === productForm.value.category.categoryId">{{category.categoryName}}</option>
+              </select>
+            </fieldset>
+
+          </div>
+
+        </td>
+        <td *ngIf="!product.isEditable">
           <span>{{product.category.categoryName}}</span>
         </td>
-        <td>
+
+        <td *ngIf="product.isEditable">
+          <div class="input-group">
+            <fieldset formGroupName="brand">
+              <select class="form-control col-form-label"  formControlName="id" >
+                <option *ngFor="let brand of brandList" [ngValue]="brand.id"
+                        [selected]="brand.id === productForm.value.brand.id">{{brand.brandName}}</option>
+              </select>
+            </fieldset>
+          </div>
+
+        </td>
+        <td *ngIf="!product.isEditable">
           <span>{{product.brand.brandName}}</span>
         </td>
-        <td>
+
+        <td *ngIf="product.isEditable">
+          <div class="input-group">
+            <input formControlName="quantity" type="text" class="form-control"
+                   [(ngModel)]="product.quantity">
+          </div>
+        </td>
+        <td *ngIf="!product.isEditable">
           <span>{{product.quantity}}</span>
         </td>
-        <td>
+
+        <td *ngIf="product.isEditable">
+          <div class="input-group">
+            <fieldset formGroupName="unit">
+              <select class="form-control col-form-label"  formControlName="unitId" >
+                <option *ngFor="let unit of unitList" [ngValue]="unit.unitId"
+                        [selected]="unit.unitId === productForm.value.unit.unitId">{{unit.unitName}}</option>
+              </select>
+            </fieldset>
+          </div>
+
+        </td>
+        <td *ngIf="!product.isEditable">
           <span>{{product.unit.unitName}}</span>
         </td>
-        <td>
+
+        <td *ngIf="product.isEditable">
+          <div class="input-group">
+            <mat-form-field>
+              <input  [min]="minDate" formControlName="expiryDate" matInput [matDatepicker]="picker2" [(ngModel)]="product.expiryDate">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </td>
+        <td *ngIf="!product.isEditable">
           <span>{{product.expiryDate | date: "dd/MM/yyyy"}}</span>
         </td>
+
+
+
         <td>
-
-          <a  (click)="editProduct(product.productId)">
-            <button  type="button" class="global-button m-1 button-edit-delete"><i
-              class="icon-pencil"></i></button>
-          </a>
-          <a data-toggle="modal"  data-target="#modal-edit-product" id="edit1" hidden>
-            <button  type="button" class="global-button m-1"><i
-              class="icon-pencil"></i></button>
-          </a>
-
+          <button class="global-button m-1 button-edit-delete fa fa-pencil"
+                  (click)="product.isEditable=!product.isEditable;catchProductId(product.productId) "
+                  *ngIf="!product.isEditable"></button>
+          <button class="global-button m-1 button-edit-delete fa fa-check"
+                  *ngIf="product.isEditable" (click)="switchEdit(product);onSubmitEdit()"></button>
+          <button hidden type="submit" id="submit{{product.productId}}"
+          ></button>
 
         </td>
+
+
+<!--        <td>-->
+
+<!--          <a >-->
+<!--            <button  type="button" class="global-button m-1 button-edit-delete" (click)="product.isEditable=!product.isEditable; catchProductId(product.productId)"-->
+<!--                     *ngIf="!product.isEditable">-->
+<!--              <i  class="fa fa-pencil"></i>-->
+<!--            </button>-->
+<!--          </a>-->
+<!--        -->
+<!--            <a >-->
+<!--              <button  type="button" class="global-button m-1 button-edit-delete" *ngIf="product.isEditable" (click)="switchEdit(product)" >-->
+
+<!--              </button > <i  class="fa fa-check"></i>-->
+<!--            </a>-->
+<!--            <a>-->
+<!--              <button hidden type="submit" id="submit{{product.productId}}"-->
+<!--              ></button>-->
+<!--            </a>-->
+<!--            <a>-->
+<!--              <button type="button" class="global-button fa fa-trash" data-toggle="modal"-->
+<!--                      (click)="catchProductId(product.productId)"-->
+<!--                      data-target="#brandConfirmDelete"></button>-->
+<!--            </a>-->
+<!--        </td>-->
+
+
+
+<!--          <a data-toggle="modal"  data-target="#modal-edit-product" id="edit1" hidden>-->
+<!--            <button  type="button" class="global-button m-1"><i-->
+<!--              class="icon-pencil"></i></button>-->
+<!--          </a>-->
+
+
+<!--        </td>-->
         <td>
           <a (click)="deleteProduct(product.productId)">
             <button  type="button" class="global-button button-edit-delete"><i
@@ -107,9 +222,33 @@
           </a>
 
         </td>
+
+
+
+
+
+
+
+<!--        <td>-->
+<!--          <button class="mr-3 global-button fa fa-pencil"-->
+<!--                  (click)="brand.isEditable=!brand.isEditable; catchBrandId(brand.id)"-->
+<!--                  *ngIf="!brand.isEditable"></button>-->
+<!--          <button class="mr-3 global-button fa fa-check"-->
+<!--                  *ngIf="brand.isEditable" (click)="switchEdit(brand)"></button>-->
+<!--          <button hidden type="submit" id="submit{{brand.id}}"-->
+<!--          ></button>-->
+<!--          <button type="button" class="global-button fa fa-trash" data-toggle="modal"-->
+<!--                  (click)="catchBrandId(brand.id)"-->
+<!--                  data-target="#brandConfirmDelete"></button>-->
+<!--        </td>-->
+
+
+
       </tr>
+
       </tbody>
     </table>
+    </form>
 
     <!--  Pagination component-->
     <div class="row w-100">
@@ -403,3 +542,4 @@
     </form>
   </div>
 </div>
+

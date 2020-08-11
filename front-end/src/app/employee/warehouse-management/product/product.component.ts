@@ -8,6 +8,8 @@ import {Unit} from '../../../models/unit';
 import {Brand} from '../../../models/brand';
 import {Category} from '../../../models/category';
 import {NotificationService} from '../../../services/notification.service';
+import {Customer} from '../../../models/customer';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-product',
@@ -23,6 +25,7 @@ export class ProductComponent implements OnInit {
   productForm: FormGroup;
   createProductForm: FormGroup;
   product: Product;
+  date = new Array<any>();
   unitList: Unit[];
   categoryList: Category[];
   brandList: Brand[];
@@ -38,7 +41,8 @@ export class ProductComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private productService: ProductService,
               private paginationService: CustomPaginationService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -126,7 +130,6 @@ export class ProductComponent implements OnInit {
     if (this.productForm.valid) {
       this.productService.updateProduct(this.productForm.value).subscribe(
         next => {
-          this.closeEditModal.nativeElement.click();
           this.notificationService.edit('Chỉnh sửa thành công');
           this.getData();
         },
@@ -245,5 +248,23 @@ OnCancelEditForm(): void {
           console.log('can not get product');
         });
     }
+  }
+
+  catchProductId(id: number): void {
+    this.productService.findProductById(id).subscribe(
+      res => {
+        this.product = res;
+        this.productName = res.productName;
+        this.productForm.patchValue(res);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  switchEdit(product: Product): void {
+    product.isEditable = !product.isEditable;
+    $('#submit' + product.productId).click();
   }
 }

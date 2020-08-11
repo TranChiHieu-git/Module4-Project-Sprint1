@@ -7,11 +7,11 @@ import {HttpClient} from '@angular/common/http';
 import {finalize, map} from 'rxjs/operators';
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
 import {} from '../../../../assets/js/fb.js';
-import {ToastrService} from "ngx-toastr";
-import {OrderService} from "../../../services/order.service";
-import {Order} from "../../../models/order";
-import {newArray} from "@angular/compiler/src/util";
-import {Observable} from "rxjs";
+import {ToastrService} from 'ngx-toastr';
+import {OrderService} from '../../../services/order.service';
+import {Order} from '../../../models/order';
+import {newArray} from '@angular/compiler/src/util';
+import {Observable} from 'rxjs';
 
 declare var $: any;
 
@@ -87,7 +87,7 @@ export class CustomerManagementComponent implements OnInit {
               gender: [''],
               imageUrl: ['']
             })
-          )
+          );
 
         }
       }, error => {
@@ -98,7 +98,7 @@ export class CustomerManagementComponent implements OnInit {
     this.maxDate.setFullYear(this.curentDay.getFullYear() - 2);
     this.minDate.setFullYear(this.curentDay.getFullYear() - 120);
 
-    $('#checkAll').click(function () {
+    $('#checkAll').click(function() {
       $('input:checkbox').not(this).prop('checked', this.checked);
     });
     this.addUser = this.formBuilder.group({
@@ -112,45 +112,45 @@ export class CustomerManagementComponent implements OnInit {
       imageUrl: ['']
     });
     // tslint:disable-next-line:only-arrow-functions typedef no-shadowed-variable
-    (function ($) {
-      // tslint:disable-next-line:only-arrow-functions typedef
-      $(document).ready(function () {
-        // tslint:disable-next-line:only-arrow-functions typedef
-        const readURL = function (input) {
-          if (input.files && input.files[0]) {
-            const reader = new FileReader();
-
+    (function($) {
             // tslint:disable-next-line:only-arrow-functions typedef
-            reader.onload = function (e) {
-              // @ts-ignore
-              $('.profile-pic').attr('src', e.target.result);
-            };
+            $(document).ready(function() {
+              // tslint:disable-next-line:only-arrow-functions typedef
+              const readURL = function(input) {
+                if (input.files && input.files[0]) {
+                  const reader = new FileReader();
 
-            reader.readAsDataURL(input.files[0]);
-          }
+                  // tslint:disable-next-line:only-arrow-functions typedef
+                  reader.onload = function(e) {
+                    // @ts-ignore
+                    $('.profile-pic').attr('src', e.target.result);
+                  };
+
+                  reader.readAsDataURL(input.files[0]);
+                }
         };
 
         // tslint:disable-next-line:typedef
-        $('#custom-file-input').on('change', function () {
+        $('#custom-file-input').on('change', function() {
           readURL(this);
         });
 
         // tslint:disable-next-line:only-arrow-functions typedef
-        $('#upload-button').on('click', function () {
+        $('#upload-button').on('click', function() {
           $('#file-upload').click();
         });
       });
     })(jQuery);
     $('.icon-upload-alt').css('opacity', '-1');
     // tslint:disable-next-line:typedef
-    $('.button').click(function () {
+    $('.button').click(function() {
       const buttonId = $(this).attr('id');
       $('#modal-container').removeAttr('class').addClass(buttonId);
       $('body').addClass('modal-active');
     });
 
     // tslint:disable-next-line:typedef
-    $('#modal-container').click(function () {
+    $('#modal-container').click(function() {
       $(this).addClass('out');
       $('body').removeClass('modal-active');
     });
@@ -213,7 +213,7 @@ export class CustomerManagementComponent implements OnInit {
         }
         this.customerService.editCustomer(this.addUser.value).subscribe(
           next => {
-            window.location.reload()
+            window.location.reload();
           },
           error => console.log(error)
         );
@@ -256,7 +256,7 @@ export class CustomerManagementComponent implements OnInit {
         } else {
           this.deleteSubmitConfirm(id, userName);
         }
-        ;
+
       },
       error => {
         console.log(error);
@@ -309,7 +309,7 @@ export class CustomerManagementComponent implements OnInit {
             } else {
               this.deleteList.push(id);
             }
-            ;
+
           },
           error => {
             console.log(error);
@@ -319,11 +319,11 @@ export class CustomerManagementComponent implements OnInit {
         // this.deleteList.push(id);
       }
     } else {
-      if (indexOfIdTrue>=0){
+      if (indexOfIdTrue >= 0){
         this.deleteList.splice(indexOfIdTrue, 1);
       }
-      if (indexOfIdFalse>=0){
-        this.cantDeleteList.splice(indexOfIdFalse,1);
+      if (indexOfIdFalse >= 0){
+        this.cantDeleteList.splice(indexOfIdFalse, 1);
       }
     }
 
@@ -337,17 +337,17 @@ export class CustomerManagementComponent implements OnInit {
       }
     } else {
       this.deleteList.splice(0, this.deleteList.length);
-      this.cantDeleteList.splice(0,this.cantDeleteList.length);
+      this.cantDeleteList.splice(0, this.cantDeleteList.length);
     }
   }
 
   delete(): void {
-    let deleteConfirm = false;
+    const deleteConfirm = false;
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.deleteList.length; i++) {
       this.customerService.deleteCustomerById(this.deleteList[i]).subscribe(
         next => {
-          $('#checkAll').prop('checked',false);
+          $('#checkAll').prop('checked', false);
           this.ngOnInit();
           this.customers = [];
           this.deleteList = [];
@@ -356,8 +356,8 @@ export class CustomerManagementComponent implements OnInit {
       );
     }
     this.toastr.success('Xóa thành công ' + this.deleteList.length + ' khách hàng !');
-    if (this.cantDeleteList.length>0){
-      this.toastr.error('Có '+this.cantDeleteList.length+' khách hàng không thể xóa!');
+    if (this.cantDeleteList.length > 0){
+      this.toastr.error('Có ' + this.cantDeleteList.length + ' khách hàng không thể xóa!');
     }
   }
 
@@ -371,6 +371,7 @@ export class CustomerManagementComponent implements OnInit {
     $('.icon-upload-alt' + id).css('opacity', '-1');
   }
 
+  // tslint:disable-next-line:typedef
   selectAvatar(id) {
     $('#myAvatar' + id).click();
     this.uploadProgressStatus[id] = true;
@@ -411,29 +412,30 @@ export class CustomerManagementComponent implements OnInit {
   }
 
   checkDeleteOrder(): boolean {
-    var statusDelete = false;
+    let statusDelete = false;
     this.orders.forEach(order => {
       if (order.orderStatus !== this.deleteCheckOrderValue[0] && order.orderStatus !== this.deleteCheckOrderValue[1]) {
         statusDelete = true;
       }
-    })
+    });
     return statusDelete;
   }
 
+  // tslint:disable-next-line:typedef
   dateValidate(event, id, index) {
     this.dateRequired[id] = false;
     this.dateRegex[id] = false;
     this.dateOutRange[id] = false;
     const eventString = event.toString();
-    const nullValue = "";
+    const nullValue = '';
     if (eventString == nullValue) {
       this.dateRequired[id] = true;
     } else {
-      let check = eventString.split('/');
+      const check = eventString.split('/');
       const checkDay = check[0].match('(0[1-9]|[1-2][0-9]|3[0-1])');
       const checkMonth = check[1]?.match('(0[0-9]|1[0-2])');
       const checkYear = check[2]?.match('[0-9]{4}');
-      var dateObject = new Date(+check[2], check[1] - 1, +check[0]);
+      const dateObject = new Date(+check[2], check[1] - 1, +check[0]);
       console.log(dateObject);
       const regExp = '^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$';
       if (eventString.match(regExp) && checkDay && checkMonth && checkYear) {
@@ -443,7 +445,7 @@ export class CustomerManagementComponent implements OnInit {
           this.date[id] = dateObject;
           this.editFormTest[index].patchValue({
             birthday: dateObject,
-          })
+          });
         }
       } else {
         if ((dateObject.getFullYear() <= this.minDate.getFullYear() || dateObject.getFullYear() >= this.maxDate.getFullYear()) && check[2] !== nullValue) {
@@ -462,7 +464,7 @@ export class CustomerManagementComponent implements OnInit {
     this.customerEditList[index][1] = true;
   }
 
-  changeTest(index) {
+  changeTest(index): void {
     this.editFormTest[index].patchValue({
       id: this.customerEditList[index][0].id,
       userName: this.customerEditList[index][0].userName,
@@ -475,7 +477,6 @@ export class CustomerManagementComponent implements OnInit {
       deleteFlag: this.customerEditList[index][0].deleteFlag,
     });
   }
-
   editSubmitTest(index, userName) {
     if (this.uploadStatus[this.customerEditList[index][0].id]) {
       if (this.date[this.customerEditList[index][0].id] !== undefined) {
