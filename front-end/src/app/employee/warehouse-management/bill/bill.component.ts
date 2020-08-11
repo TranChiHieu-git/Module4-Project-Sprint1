@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ServiceBillService} from '../../../services/service-bill.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Bill} from '../../../models/bill';
 import {WareHouse} from '../../../models/ware-house';
 import {Transportation} from '../../../models/transportation';
@@ -36,28 +36,35 @@ export class BillComponent implements OnInit {
   public createDate: Date;
   createForm: FormGroup;
   editForm: FormGroup;
+  form: FormGroup;
+  formArray: FormArray = new FormArray([]);
   p = 1;
   today: string;
   filter: any;
+  tipContent: any;
 
   constructor(private billService: ServiceBillService,
               private ref: ChangeDetectorRef,
               private fb: FormBuilder,
               private paginationService: CustomPaginationService,
-              private notificationService: NotificationService) { }
+              private notificationService: NotificationService) {
+  }
 
   ngOnInit(): void {
     this.today = new Date().toISOString().split('T')[0];
     this.getData();
     this.buildEditForm();
     this.initCreateForm();
+    this.createAddLiveForm();
+    this.form = this.fb.group({rows: new FormArray([])});
   }
-  buildEditForm(): void{
+
+  buildEditForm(): void {
     this.editForm = this.fb.group({
       id: [''],
       billName: ['', Validators.required],
-      createDate: ['', Validators.required],
-      editLatestDate: ['', Validators.required],
+      createDate: [''],
+      editLatestDate: [''],
       billStatus: ['', Validators.required],
       processingStatus: ['', Validators.required],
       shippingStatus: ['', Validators.required],
@@ -100,42 +107,50 @@ export class BillComponent implements OnInit {
     this.getAllPay();
     this.getAllTypeBill();
   }
+
   private getAllWareHouse(): void {
     this.billService.findAllWarehouse().subscribe(data => {
       this.wareHouseList = data;
     });
   }
+
   private getAllTransportation(): void {
     this.billService.findAllTransportation().subscribe(data => {
       this.transportationList = data;
     });
   }
+
   private getAllStorageLocation(): void {
     this.billService.findAllStorageLocation().subscribe(data => {
       this.storageLocationList = data;
     });
   }
+
   private getAllDistributors(): void {
     this.billService.findAllDistributors().subscribe(data => {
       this.distributorList = data;
     });
   }
+
   private getAllEmployee(): void {
     this.billService.findAllEmployee().subscribe(data => {
       this.employeeList = data;
     });
   }
+
   private getAllPay(): void {
     this.billService.findAllPay().subscribe(data => {
       this.payList = data;
     });
   }
+
   private getAllTypeBill(): void {
     this.billService.findAllTypeBill().subscribe(data => {
       this.typeBillList = data;
     });
   }
-  getAllBills(): void{
+
+  getAllBills(): void {
     this.billService.findAllBill().subscribe(
       next => this.billList = next,
       error => {
@@ -146,10 +161,11 @@ export class BillComponent implements OnInit {
 
   editBill(id: number): void {
     this.billService.findByIdBill(id).subscribe(next => {
-      this.editForm.patchValue(next);
+        this.editForm.patchValue(next);
       },
       error => console.log('error'));
   }
+
   onSubmitEdit(): void {
     if (this.editForm.valid) {
       const {value} = this.editForm;
@@ -164,8 +180,7 @@ export class BillComponent implements OnInit {
           this.getData();
         },
         error => console.log(error));
-    }
-    else {
+    } else {
       this.notificationService.edit('Xin lỗi! Bạn chưa chỉnh sửa xong');
     }
   }
@@ -206,8 +221,7 @@ export class BillComponent implements OnInit {
         },
         error => console.log(error)
       );
-    }
-    else {
+    } else {
       this.notificationService.create('Xin lỗi! Bạn chưa thể thêm phiếu. Xin hãy xem lại!!');
     }
   }
@@ -251,12 +265,14 @@ export class BillComponent implements OnInit {
       deleteFlag: [0]
     });
   }
+
   private getData(): void {
     this.billService.getPage(this.page.pageable)
       .subscribe(page => {
         this.page = page;
       });
   }
+
   public getNextPage(): void {
     this.page.pageable = this.paginationService.getNextPage(this.page);
     this.getData();
@@ -270,5 +286,78 @@ export class BillComponent implements OnInit {
   public getPageInNewSize(pageSize: number): void {
     this.page.pageable = this.paginationService.getPageInNewSize(this.page, pageSize);
     this.getData();
+  }
+  switchEdit(bill1: Bill): void {
+    bill1.isEditable = !bill1.isEditable;
+    $('#submit' + bill1.id).click();
+  }
+
+  cancelEdit(bill1: Bill): void {
+    bill1.isEditable = !bill1.isEditable;
+  }
+  get rows(): FormArray {
+    return this.form.get('rows') as FormArray;
+  }
+
+  addCity(): void {
+    this.rows.push(this.createAddLiveForm());
+  }
+  addRow(): void {
+    this.formArray.push(this.createAddLiveForm());
+  }
+
+  removeRow(index: number): void {
+    this.formArray.removeAt(index);
+  }
+  onSubmitSingleRow(formArray, index): void {
+    console.log('index cua form: ' + index);
+    console.log(formArray.at(index).value);
+    this.billService.create(formArray.at(index).value).subscribe(
+      () => {
+        this.removeRow(index);
+        this.notificationService.create('Tạo mới thành công');
+        this.getData();
+      },
+      error => console.log(error));
+  }
+  createAddLiveForm(): FormGroup {
+    return this.fb.group({
+      billName: ['', Validators.required],
+      createDate: [''],
+      editLatestDate: [''],
+      billStatus: ['', Validators.required],
+      processingStatus: ['', Validators.required],
+      shippingStatus: ['', Validators.required],
+      paymentStatus: ['', Validators.required],
+      idTypeBill: this.fb.group({
+        id: [''],
+        nameTypeBill: ['']
+      }),
+      idStorageLocation: this.fb.group({
+        id: [''],
+        nameStorageLocation: ['']
+      }),
+      idWareHouse: this.fb.group({
+        id: [''],
+        nameWareHouse: ['']
+      }),
+      idTransportation: this.fb.group({
+        id: [''],
+        nameTransportation: ['']
+      }),
+      idPay: this.fb.group({
+        id: [''],
+        namePay: ['']
+      }),
+      idDistributor: this.fb.group({
+        id: [''],
+        name: ['']
+      }),
+      idEmployee: this.fb.group({
+        id: [''],
+        name: ['']
+      }),
+      deleteFlag: [0]
+    });
   }
 }

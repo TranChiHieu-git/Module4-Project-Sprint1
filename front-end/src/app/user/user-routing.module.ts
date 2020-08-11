@@ -13,46 +13,75 @@ import {HomeCandyComponent} from './home-store/home-candy/home-candy.component';
 import {DetailComponent} from './home-store/detail/detail.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
 import {UserLoginComponent} from './user-login/user-login.component';
+import {OrderFolowComponent} from './order-folow/order-folow.component';
+import {HomeBakeryComponent} from './home-store/home-bakery/home-bakery.component';
+import {AuthGuard} from '../auth/auth.guard';
+import {ShoppingCardComponent} from './shopping-card/shopping-card.component';
+import {ShippingComponent} from './shipping/shipping.component';
+import {PaymentComponent} from './payment/payment.component';
 
 const routes: Routes = [{
-  path: 'home', component: UserComponent,
+  path: '', component: UserComponent,
   children: [
     {path: 'test', component: TestComponent},
-    {path: 'login', component: UserLoginComponent}
+    {path: 'login', component: UserLoginComponent},
+    {
+      path: 'user-manage',
+      component: UserManageComponent, canActivate: [AuthGuard],
+      children: [
+        {
+          path: 'user-detail',
+          component: UserDetailComponent,
+        },
+        {
+          path: 'user-order',
+          component: UserOdersComponent
+        },
+        {
+          path: 'order-detail/:idOrder',
+          component: UserOderDetailComponent
+        },
+        {
+          path: 'order-follow/:idOrder',
+          component: OrderFolowComponent
+        }
+      ]
+    },
+    {
+      path: 'checkout/card',
+      component: ShoppingCardComponent
+    },
+    {
+      path: 'checkout/shipping',
+      component: ShippingComponent
+    },
+    {
+      path: 'checkout/payment',
+      component: PaymentComponent
+    }
   ],
 },
-    {
+  {
+    path: 'home', component: UserComponent,
+  },
+  {
     path: '', component: UserComponent,
     children: [
       {path: '', component: OrderButtonComponent}
       ,
       {
         path: 'home-store', component: HomeStoreComponent, children: [
-          {path: 'cake', component: HomeCakeComponent},
-          {path: 'candy', component: HomeCandyComponent},
-          {path: 'detail', component: DetailComponent}
+          {path: 'products/:id', component: DetailComponent},
+          {path: 'home-bakery', component: HomeBakeryComponent},
+          {path: 'home-bakery1', component: HomeCakeComponent},
+          {path: 'home-bakery2', component: HomeCandyComponent}
         ]
       },
-      {
-        path: 'user-manage',
-        component: UserManageComponent,
-        children: [{
-          path: 'user-detail',
-          component: UserDetailComponent,
-        },
-          {
-            path: 'user-order',
-            component: UserOdersComponent
-          },
-          {
-            path: 'order-detail/:idOrder',
-            component: UserOderDetailComponent
-          }
-        ]
-      },
+
     ],
   }
 ];
+
 @NgModule({
   declarations: [],
   imports: [

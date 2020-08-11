@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {OrderService} from '../../services/order.service';
+
 import {Order} from '../../models/order';
+import {OrderService} from '../../services/order.service';
 
 @Component({
   selector: 'app-user-oders',

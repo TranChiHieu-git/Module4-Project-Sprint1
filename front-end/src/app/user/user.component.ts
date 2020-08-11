@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
 import {AccountService} from '../services/account.service';
 import {TokenStorageService} from '../auth/token-storage.service';
 import {CustomerService} from '../services/customer.service';
@@ -20,12 +20,13 @@ export class UserComponent implements OnInit {
               private orderService: OrderService
   ) {
   }
+
   ngOnInit(): void {
     this.userDisplayName = sessionStorage.getItem('loggedUser');
-    console.log(this.userDisplayName);
     this.customerService.getCustomerByAccountName(this.userDisplayName).subscribe(next => {
       this.idUser = next.id;
       this.orderService.chanceIdUser(this.idUser);
+      console.log(this.idUser);
     });
   }
 

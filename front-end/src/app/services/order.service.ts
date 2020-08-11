@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Order} from '../models/order';
+import {TokenStorageService} from '../auth/token-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,28 +16,34 @@ export class OrderService {
   page = new BehaviorSubject<number>(0);
   currentPage = this.page.asObservable();
 
-  constructor(private  httpClient: HttpClient) {
-  }
+  httpOptions: any;
 
+  constructor(private httpClient: HttpClient, private tokenStorage: TokenStorageService) {
+    this.httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json', Authorization: `Bearer ` + this.tokenStorage.getToken()})
+      , 'Access-Control-Allow-Origin': 'http://localhost:4200/', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+    };
+  }
   chanceIdUser(id) {
     this.idUserSource.next(id);
   }
 chancePage(page){
     this.page.next(page);
 }
-  findAllOrderByUserId(id: number): Observable<Order[]> {
-    return this.httpClient.get<Order[]>(this.ORDER_API_URL + '/' + id);
+  findAllOrderByUserId(id: number): Observable<any> {
+    return this.httpClient.get<Order[]>(this.ORDER_API_URL + '/' + id, this.httpOptions);
   }
 
-  findAllOrderByUserIdOnPage(id: number, page: number): Observable<Order[]> {
-    return this.httpClient.get<Order[]>(this.ORDER_API_URL + '/' + id + '/?page=' + page + '&size=2');
+
+  findAllOrderByUserIdOnPage(id: number, page: number): Observable<any> {
+    return this.httpClient.get<Order[]>(this.ORDER_API_URL + '/' + id + '/?page=' + page + '&size=2', this.httpOptions);
   }
 
-  findOrderById(id: number): Observable<Order> {
-    return this.httpClient.get<Order>(this.ORDER_DETAIL_API_URL + '/' + id);
+  findOrderById(id: number): Observable<any> {
+    return this.httpClient.get<Order>(this.ORDER_DETAIL_API_URL + '/' + id, this.httpOptions);
   }
 
   cancelOrder(id: number): Observable<Order> {
-    return this.httpClient.put<Order>(this.ORDER_CANCEL_API_URL + '/' + id, null);
+    return this.httpClient.put<Order>(this.ORDER_CANCEL_API_URL + '/' + id, this.httpOptions);
   }
 }

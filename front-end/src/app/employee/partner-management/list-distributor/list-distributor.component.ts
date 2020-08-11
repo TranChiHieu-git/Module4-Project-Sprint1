@@ -340,6 +340,7 @@
 // }
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+// @ts-ignore
 import {DeleteListDistributor, Distributor, TypeOfDistributor} from '../../../models/distributor';
 import {DistributorService} from '../../../services/distributor.service';
 import {Router} from '@angular/router';
@@ -961,11 +962,8 @@ export class ListDistributorComponent implements OnInit {
           console.log(this.deleteList);
         }
       }
-
-
     }
   }
-
 
   deleteAll(): void {
     if (this.deleteList.length === this.size) {
@@ -974,7 +972,6 @@ export class ListDistributorComponent implements OnInit {
           this.showNotications('Xóa tất cả thành công');
           this.resetList();
           $('#all').prop('checked', false);
-
         },
         error => {
           this.showNotications('Xóa thất bại');
@@ -986,7 +983,6 @@ export class ListDistributorComponent implements OnInit {
           this.showNotications('Xóa tất cả thành công');
           this.resetList();
           $('#all').prop('checked', false);
-
         },
         error => {
           this.showNotications('Xóa thất bại');
@@ -1027,7 +1023,6 @@ export class ListDistributorComponent implements OnInit {
 
             this.myForm.get('name').setErrors(null);
           }
-
         },
         error => {
           this.myForm.get('name').setErrors(null);

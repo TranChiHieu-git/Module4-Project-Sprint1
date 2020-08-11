@@ -3,26 +3,25 @@ body {
   //height: 900px;
   //background-size: cover;
   width: 100%;
-  height: 900px;
+ min-height: 100vh;
   //background-attachment: fixed;
-  background-color: #f8f7f2;
+  background-color: rgba(238, 159, 31, 0.5) !important;
   //rgba(238, 159, 31,0.5)!important;
   //background-size: 100%
   //color: rgba(181, 62, 58, 1) !important;
 }
 
 .collapse {
-  color: rgba(181, 62, 58, 1) !important;
+  color: white !important;
 }
 
 nav {
-  background-color: rgba(237, 232, 227, 1);
-  //rgba(238, 159, 31,0.8)!important;
-  color: rgba(181, 62, 58, 1)
+  background-color: #ee9f1f !important;
+  color: white !important;;
 }
 
 a {
-  color: rgba(181, 62, 58, 1) !important;;
+  color: white !important;;
 }
 
 
@@ -37,18 +36,10 @@ a {
   padding: 10px;
 }
 
-//.orderButton {
-//  text-align: center;
-//  position: relative;
-//  top: 500px;
-//  left: 500px;
-//}
-
 .searchInput {
-  background-color: rgba(255, 255, 255, 0.5);
-  border-color: black;
-  color: rgba(181, 62, 58, 1) !important;
-
+  background-color: rgba(255, 255, 255, 0.8);
+  border-color: white;
+  background-color: white !important;
 }
 
 .has-search .form-control-feedback {
@@ -66,6 +57,37 @@ a {
   padding-left: 2.375rem;
 }
 
+.account {
+  background-color: #ffdd59;
+  border-color: #FCBC53;
+  border-radius: 5px;
+  width: 90%;
+  margin: auto;
+  color: black !important;
+}
+
+.account:hover {
+  background-color: #ffd32a;
+}
+
+.signOut {
+  background-color: gray;
+  border-color: #FCBC53;
+  border-radius: 5px;
+  width: 90%;
+  margin: auto;
+  color: white !important;
+}
+
+.facebook {
+  color: white !important;
+  background-color: #3a57af;
+}
+
+.facebook:hover {
+  background-color: #3c40c6;
+}
+
 .button-user {
   color: black;
   border-color: black;
@@ -76,11 +98,14 @@ a {
 }
 
 .modal-content {
-  background-color: rgba(237, 232, 227, 0.5);
+  background-color: rgba(237, 232, 227, 0.8);
   padding: 11px;
 }
 
 .modal {
-  margin-top: 80px;
+  overflow: auto !important;
+  //margin-top: 80px;
+
+
 }
 

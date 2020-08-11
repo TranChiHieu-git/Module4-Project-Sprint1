@@ -1,5 +1,5 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {LOCALE_ID, NgModule} from '@angular/core';
+import {CommonModule, registerLocaleData} from '@angular/common';
 import {UserRoutingModule} from './user-routing.module';
 import {TestComponent} from './test/test.component';
 import {RouterModule} from '@angular/router';
@@ -11,21 +11,32 @@ import {UserForgetpasswordComponent} from './user-forgetpassword/user-forgetpass
 import {UserLoginComponent} from './user-login/user-login.component';
 import {UserRegisterComponent} from './user-register/user-register.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
-import { UserManageComponent } from './user-manage/user-manage.component';
-import {MatListModule} from '@angular/material/list';
+import {UserManageComponent} from './user-manage/user-manage.component';
 import {UserOdersComponent} from './user-oders/user-oders.component';
 import {UserDetailComponent} from './user-detail/user-detail.component';
 import {UserOderDetailComponent} from './user-oder-detail/user-oder-detail.component';
-
+import {OrderFolowComponent} from './order-folow/order-folow.component';
+import {HomeStoreComponent} from './home-store/home-store.component';
+import localeGB from '@angular/common/locales/vi';
+import { ShoppingCardComponent } from './shopping-card/shopping-card.component';
+import { ShippingComponent } from './shipping/shipping.component';
+import { PaymentComponent } from './payment/payment.component';
+registerLocaleData(localeGB);
 @NgModule({
   declarations: [TestComponent, UserManageComponent, OrderButtonComponent,
     UserRegisterComponent, UserLoginComponent, UserForgetpasswordComponent, UserManageComponent,
-  UserOdersComponent, UserDetailComponent, UserOderDetailComponent],
+    UserOdersComponent, UserDetailComponent, UserOderDetailComponent, OrderFolowComponent,
+    OrderFolowComponent,
+    ShoppingCardComponent,
+    ShippingComponent,
+    PaymentComponent],
   exports: [
     OrderButtonComponent,
     UserRegisterComponent,
     UserLoginComponent,
     UserForgetpasswordComponent,
+    UserDetailComponent,
+    UserOderDetailComponent
   ],
   imports: [
     CommonModule,
@@ -35,6 +46,9 @@ import {UserOderDetailComponent} from './user-oder-detail/user-oder-detail.compo
     HomeStoreModule,
     ShareModule,
     MaterialModule,
+  ], providers: [
+    {provide: LOCALE_ID, useValue: 'vi'}
+
   ]
 })
 export class UserModule {

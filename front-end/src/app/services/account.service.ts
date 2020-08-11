@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {TokenStorageService} from '../auth/token-storage.service';
 import {Observable} from 'rxjs';
+import {Customer} from '../models/customer';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import {Observable} from 'rxjs';
 export class AccountService {
 
   httpOptions: any;
+  registerUrl = 'http://localhost:8080/customers';
+
   baseURL = 'http://localhost:8080/';
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
@@ -17,7 +20,6 @@ export class AccountService {
       , 'Access-Control-Allow-Origin': 'http://localhost:4200/', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
     };
   }
-
   helloAdmin(): Observable<any> {
     return this.http.get(this.baseURL + 'admin', this.httpOptions);
   }

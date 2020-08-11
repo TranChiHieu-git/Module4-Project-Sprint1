@@ -1,6 +1,6 @@
-<body class="firstBlur">
-<div class="container-fluid pt-lg-5 px-0 font-weight-bolder" >
-  <nav class="navbar navbar-expand-lg navbar-light ">
+<body>
+<div class="container-fluid pt-lg-5 px-0 font-weight-bolder">
+  <nav class="navbar navbar-expand-lg navbar-light table-light ">
     <div class="navbar-brand codeBakery" href="#">
       <!--      <h2 class="">CODE BAKERY</h2>-->
     </div>
@@ -12,11 +12,11 @@
     <div class="collapse navbar-collapse text-danger" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto text-danger">
         <li class="nav-item active">
-          <a class="nav-link " href="#">Trang Chủ <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="home">Trang Chủ <span class="sr-only">(current)</span></a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/home-store'">Sản Phẩm</a>
+          <a class="nav-link" [routerLink]="'/home-store/home-bakery'">Sản Phẩm</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Tin Tức</a>
@@ -27,12 +27,10 @@
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <div class="form-group has-search">
-          <span class="fa fa-search form-control-feedback"></span>
+          <span class="fa fa-search form-control-feedback text-dark"></span>
           <input class="form-control mr-sm-2 searchInput" type="search" placeholder="Tìm Kiếm" aria-label="Search">
         </div>
-
-
-        <button class="btn btn-outline-warning my-2 my-sm-0 button-user" type="submit">Tìm</button>
+        <button class="btn btn-warning my-2 my-sm-0 button-user" type="submit">Tìm</button>
       </form>
       <div class="nav-item dropdown">
         <div class="cart d-flex justify-content-center mr-2 ml-5">
@@ -44,30 +42,35 @@
             <span class="badge badge-light">4</span>
           </div>
           <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
-            <a class="dropdown-item " >Chi tiết Đơn hàng</a>
+            <a class="dropdown-item account">San Pham 1</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Thanh Toán</a>
+            <a class="dropdown-item account">San Pham 2</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item account" [routerLink]="['/checkout/card']">Thanh Toán</a>
           </div>
         </div>
       </div>
       <!--  // tai khoan chua dang nhap&ndash;&gt;-->
-      <div class="nav-item dropdown " *ngIf="!userDisplayName">
-        <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown1" role="button"
+      <div class="nav-item dropdown pr-3 " *ngIf="!userDisplayName">
+        <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown11" role="button"
              data-toggle="dropdown"
              aria-haspopup="true"
              aria-expanded="true">
           <span class="material-icons mr-2">account_circle</span>
           <span>Tài Khoản</span>
         </div>
-        <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" data-toggle="modal" data-target="#loginModal" href="#">Đăng Nhập</a>
+        <div class="dropdown-menu text-center text-warning " aria-labelledby="navbarDropdown">
+          <a class="dropdown-item account  " data-toggle="modal" data-target="#loginModal" href="#">Đăng Nhập</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" data-toggle="modal" data-target="#registerModal" href="#">Đăng Ký</a>
+          <a class="dropdown-item account" data-toggle="modal" data-target="#registerModal" href="#">Đăng Ký</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item account facebook" data-toggle="modal" data-target="#registerModal" href="#">FACE BOOK</a>
+
         </div>
       </div>
       <div class="supreme-container"></div>
       <div class="modal fade font-weight-normal " id="registerModal"
-           data-backdrop="true"
+           data-backdrop="static"
            tabindex="-1"
            role="dialog"
            aria-labelledby="exampleModalLabel"
@@ -79,7 +82,7 @@
         </div>
       </div>
       <div class="modal fade font-weight-normal " id="forgetPasswordModal"
-           data-backdrop="true" role="dialog"
+           data-backdrop="static" role="dialog"
            aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -88,7 +91,7 @@
         </div>
       </div>
       <div class="modal fade font-weight-normal" id="loginModal" tabindex="-1"
-           data-backdrop="true" role="dialog"
+           data-backdrop="false" role="dialog"
            aria-labelledby="exampleModalLabel"
            aria-hidden="false">
         <div class="modal-dialog" role="document">
@@ -98,29 +101,29 @@
         </div>
       </div>
 
-<!--            //  tai khoan sau khi dang nhap-->
-            <div class="nav-item dropdown " *ngIf="userDisplayName">
-              <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true"
-                   aria-expanded="true">
-                <span class="material-icons mr-2">account_circle</span>
-                <span>Xin Chào {{userDisplayName}} </span>
-              </div>
-              <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
-                <a class="dropdown-item " [routerLink]="['user-manage/user-detail']">Quản Lý Tài Khoản</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" [routerLink]="['user-manage/user-order']">Đơn Hàng Của Tôi</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" (click)="signOut()">Đăng Xuất</a>
-              </div>
-            </div>
+      <!--            //  tai khoan sau khi dang nhap-->
+      <div class="nav-item dropdown " *ngIf="userDisplayName">
+        <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+             aria-haspopup="true"
+             aria-expanded="true">
+          <span class="material-icons mr-2">account_circle</span>
+          <span>Xin Chào {{userDisplayName}} </span>
+        </div>
+        <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
+          <a class="dropdown-item account" [routerLink]="['/user-manage/user-detail']">Quản Lý Tài Khoản</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item account" [routerLink]="['/user-manage/user-order']">Đơn Hàng Của Tôi</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item  signOut " (click)="signOut()">Đăng Xuất</a>
+        </div>
+      </div>
     </div>
   </nav>
-<!--  <div class="orderButton">-->
-<!--  <app-orderbutton></app-orderbutton>-->
-<!--  </div>-->
+  <!--  <div class="orderButton">-->
+  <!--  <app-orderbutton></app-orderbutton>-->
+  <!--  </div>-->
 </div>
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </body>
 
 

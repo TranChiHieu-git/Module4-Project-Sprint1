@@ -1,0 +1,147 @@
+::ng-deep .cdk-overlay-container {
+  z-index: 1200 !important;
+}
+
+.header-text-color {
+  color: #EE9F1F;;
+}
+
+.searchInput {
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  color: #a0d18c;
+  width: 350px;
+  height: 35px;
+  padding-left: 10px;
+  margin-top: 3px;
+}
+
+.searchInput:focus {
+  outline: none;
+  border: 1px solid #a0d18c;
+  color: #2d9fd9;
+}
+
+.align-items-center {
+  display: flex;
+  align-items: center; /*Aligns vertically center */
+  justify-content: left; /*Aligns horizontally center */
+  width: 128px;
+}
+.button-group-custom-dialog{
+  display: flex;
+  align-items: center; /*Aligns vertically center */
+  justify-content: center; /*Aligns horizontally center */
+}
+
+.mat-datepicker-label {
+  justify-content: left;
+  width: 128px;
+}
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+
+.border-0 {
+  outline: none;
+}
+
+.modal-lg-custom {
+  max-width: 45%;
+}
+
+.table-header th {
+  background: #EE9F1F;
+}
+.sort-product-name {
+  cursor: pointer;
+}
+
+.btn-filter-custom {
+  border: #EE9F1F solid 1px;
+  background-color: #EE9F1F;
+  width: 10% !important;
+}
+.btn-create-custom{
+  border: #EE9F1F solid 1px;
+  background-color: #EE9F1F;
+}
+
+.fa-pencil-alt-custom {
+  color: #3C8DBC;
+}
+.fa-trash-custom{
+  color: #fd2c4c
+}
+.button-dialog {
+  width: 30% !important;
+}
+
+
+
+
+
+
+
+
+.global-button{
+  background: transparent linear-gradient(38deg, #EE9F1F 0%, #FCBC53 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.31);
+  font-size: 12px;
+  border: none;
+  border-radius: 10px;
+  padding: 2% 5%;
+  color: #581008;
+  font-weight: 700;
+}
+
+#title5{
+  text-align: center;
+  height: 110px;
+}
+.top5{
+  font-family: "Brush Script MT";
+  font-size: 90px;
+}
+th,td{
+  text-align: center;
+  vertical-align: middle!important;
+  word-wrap: break-word;
+}
+table td {
+  position: relative;
+}
+
+table td input, table td select {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  /*margin: 0;*/
+  margin-top: 12px;
+  height: 100%;
+  width: 100%;
+  border: none;
+  padding: 10px;
+  box-sizing: border-box;
+}
+//.form-control-sm{
+//  border: 1px solid #ced4da;
+//  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+//  background-clip: padding-box;
+//  background-color: #fff;
+//}
