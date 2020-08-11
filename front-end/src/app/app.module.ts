@@ -17,33 +17,36 @@ import {ToastrModule} from 'ngx-toastr';
 import {HomeStoreModule} from './user/home-store/home-store.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AdminComponent,
-    EmployeeComponent,
-    UserComponent,
-    PagenotfoundComponent,
-  ],
-  imports: [
-    AdminModule,
-    EmployeeModule,
-    ShareModule,
-    AppRoutingModule,
-    MaterialModule,
-    UserModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot({
-      timeOut: 10000,
-      positionClass: 'toast-center-center'
-    }),
-    HomeStoreModule
-  ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true
-  }],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        AdminComponent,
+        EmployeeComponent,
+        UserComponent,
+        PagenotfoundComponent,
+    ],
+    imports: [
+        AdminModule,
+        EmployeeModule,
+        ShareModule,
+        AppRoutingModule,
+        MaterialModule,
+        UserModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot({
+            timeOut: 10000,
+            positionClass: 'toast-center-center'
+        }),
+        HomeStoreModule
+    ],
+    providers: [{
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true
+    }],
+    exports: [
+        UserComponent
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

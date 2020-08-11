@@ -19,14 +19,17 @@ label{
   color: red;
 }
 .submitButton {
-  color: #d05f31;
+  //color: #d05f31;
   border-style: solid;
   border-color: black;
-  background-color: #ffdd59;
+  background-color: #ffda28;
+  color: black;
   overflow: hidden;
   outline:none;
 }
 .submitButton:hover {
-  background-color: rgba(246, 229, 141,0.5);
+  //background-color: rgba(246, 229, 141,0.5);
+  //color: black;
+  background-color: orange;
   color: black;
 }

@@ -11,13 +11,14 @@ export class CustomerService {
 
   public readonly API_URL = 'http://localhost:8080/customers';
   public readonly API_URL_ACCOUNT = 'http://localhost:8080/customer-account';
+  public readonly API_URL_MEMBER = 'http://localhost:8080/createMemberAccount';
 
   httpOptions: any;
 
   constructor(private httpClient: HttpClient, private tokenStorage: TokenStorageService) {
     this.httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
-      , 'Access-Control-Allow-Origin': 'http://localhost:4200/', 'Access-Control-Allow-Methods': 'POST,GET',
+      , 'Access-Control-Allow-Origin': 'http://localhost:4200/', 'Access-Control-Allow-Methods': 'POST,GET,PUT',
     };
   }
   getAllCustomer(): Observable<any> {
@@ -34,7 +35,10 @@ export class CustomerService {
   }
 
   addNewCustomer(customer: Partial<Customer>): Observable<any> {
-    return this.httpClient.post<Customer>(this.API_URL, customer, this.httpOptions);
+    return this.httpClient.post<Customer>(this.API_URL + '/', customer, this.httpOptions);
+  }
+  addNewMember(customer: Partial<Customer>): Observable<any> {
+    return this.httpClient.post<Customer>(this.API_URL_MEMBER, customer, this.httpOptions);
   }
 
   deleteCustomerById(id: number): Observable<void> {
@@ -46,6 +50,6 @@ export class CustomerService {
   }
 
   getCustomerByAccountName(accountName: string): Observable<any> {
-    return this.httpClient.get<Customer>(this.API_URL_ACCOUNT + '/' + accountName, this.httpOptions);
+    return this.httpClient.get<Customer>(this.API_URL_ACCOUNT + '/' + accountName);
   }
 }

@@ -13,7 +13,9 @@ import {HomeCandyComponent} from './home-store/home-candy/home-candy.component';
 import {DetailComponent} from './home-store/detail/detail.component';
 import {OrderButtonComponent} from './orderButton/orderButton.component';
 import {UserLoginComponent} from './user-login/user-login.component';
+import {HomeBakeryComponent} from './home-store/home-bakery/home-bakery.component';
 import {AuthGuard} from '../auth/auth.guard';
+import {RegisterSuccessComponent} from './register-success/register-success.component';
 
 const routes: Routes = [{
   path: '', component: UserComponent,
@@ -44,16 +46,19 @@ const routes: Routes = [{
     path: 'home', component: UserComponent,
   },
   {
+    path: 'register-success', component: RegisterSuccessComponent,
+  },
+  {
     path: '', component: UserComponent,
     children: [
       {path: '', component: OrderButtonComponent}
       ,
       {
-        path: 'home-store', component: HomeStoreComponent,
-        children: [
-          {path: 'cake', component: HomeCakeComponent},
-          {path: 'candy', component: HomeCandyComponent},
-          {path: 'detail', component: DetailComponent}
+        path: 'home-store', component: HomeStoreComponent, children: [
+          {path: 'products/:id', component: DetailComponent},
+          {path: 'home-bakery', component: HomeBakeryComponent},
+          {path: 'home-bakery1', component: HomeCakeComponent},
+          {path: 'home-bakery2', component: HomeCandyComponent}
         ]
       },
     ],

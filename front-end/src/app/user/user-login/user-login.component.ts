@@ -63,6 +63,7 @@ export class UserLoginComponent implements OnInit {
         console.log('data', this.tokenStorage.saveUsername(data.accountName));
         console.log('data', data);
         sessionStorage.setItem('loggedUser', userInfo.accountName);
+        $('.modal-backdrop').remove();
         // sessionStorage.setItem('idUser', data.id);
         // tslint:disable-next-line:triple-equals
         if (this.tokenStorage.getAuthorities().indexOf('ROLE_ADMIN') != -1) {

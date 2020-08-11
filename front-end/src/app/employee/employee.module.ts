@@ -37,64 +37,62 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {FacebookModule} from 'ngx-facebook';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {FilterUniquePipe} from './warehouse-management/product/filter-unique.pipe';
 import {BillComponent} from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
-    WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent, BrandManagementComponent,
-    CustomerManagementComponent, CustomPaginationComponent, FilterProductPipe, FilterMultiplePipe, BillComponent, FilterWareHousePipe],
+    WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent,
+    BillComponent, BrandManagementComponent, CustomerManagementComponent, CustomPaginationComponent,
+    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe],
   exports: [
     WarehouseManagementComponent,
-    PartnerManagementComponent
+    PartnerManagementComponent,
+    HomeComponent
   ],
-  imports: [
-    CommonModule,
-    EmployeeRoutingModule,
-    RouterModule,
-    ReactiveFormsModule,
-    Ng2SearchPipeModule,
-    Ng2OrderModule,
-    HttpClientModule,
-    NgbModule,
-    MaterialModule,
-    MatDialogModule,
-    ShareModule,
-    MatCardModule,
-    NgxPaginationModule,
-    AngularFireStorageModule,
-    AngularFireDatabaseModule,
-    MatPaginatorModule,
-    AngularFireModule.initializeApp({
-      apiKey: 'AIzaSyAFbHzEL2J7oXY5bWTF6dA3DnO_iCj5W48',
-      authDomain: 'webapp-1b736.firebaseapp.com',
-      databaseURL: 'https://webapp-1b736.firebaseio.com',
-      projectId: 'webapp-1b736',
-      storageBucket: 'webapp-1b736.appspot.com',
-      messagingSenderId: '1077539336649',
-      appId: '1:1077539336649:web:e5fbf4e6a877218b887818',
-      measurementId: 'G-N3YS1JFN9K'
-    }),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
-    FacebookModule.forRoot(),
-    MatProgressBarModule,
-    NgSelectModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot({
-      timeOut: 2000,
-      positionClass: 'toast-top-center',
-      preventDuplicates: true
-    })
-  ],
-  providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-    BrandService
-  ]
+  imports:
+[
+  CommonModule,
+  EmployeeRoutingModule,
+  RouterModule,
+  ReactiveFormsModule,
+  Ng2SearchPipeModule,
+  Ng2OrderModule,
+  HttpClientModule,
+  NgbModule,
+  MaterialModule,
+  MatDialogModule,
+  ShareModule,
+  MatCardModule,
+  NgxPaginationModule,
+  AngularFireStorageModule,
+  AngularFireDatabaseModule,
+  MatPaginatorModule,
+  AngularFireModule.initializeApp({
+    apiKey: 'AIzaSyAFbHzEL2J7oXY5bWTF6dA3DnO_iCj5W48',
+    authDomain: 'webapp-1b736.firebaseapp.com',
+    databaseURL: 'https://webapp-1b736.firebaseio.com',
+    projectId: 'webapp-1b736',
+    storageBucket: 'webapp-1b736.appspot.com',
+    messagingSenderId: '1077539336649',
+    appId: '1:1077539336649:web:e5fbf4e6a877218b887818',
+    measurementId: 'G-N3YS1JFN9K'
+  }),
+  AngularFirestoreModule,
+  AngularFireAuthModule,
+  FacebookModule.forRoot(),
+  MatProgressBarModule,
+  NgSelectModule
+],
+providers: [
+  {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+  BrandService
+]
 })
+
 export class EmployeeModule {
 }

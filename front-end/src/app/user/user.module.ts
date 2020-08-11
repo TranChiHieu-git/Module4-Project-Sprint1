@@ -17,12 +17,16 @@ import {UserDetailComponent} from './user-detail/user-detail.component';
 import {UserOderDetailComponent} from './user-oder-detail/user-oder-detail.component';
 import {MatIconModule} from '@angular/material/icon';
 import {HomeStoreComponent} from './home-store/home-store.component';
-
+import {VerifyEmailComponent} from './verify-email/verify-email.component';
+import {RegisterSuccessComponent} from './register-success/register-success.component';
+import {AppModule} from '../app.module';
+import {SocialLoginModule, SocialAuthServiceConfig} from 'angularx-social-login';
+import {GoogleLoginProvider, FacebookLoginProvider} from 'angularx-social-login';
 
 @NgModule({
   declarations: [TestComponent, UserManageComponent, OrderButtonComponent,
     UserRegisterComponent, UserLoginComponent, UserForgetpasswordComponent, UserManageComponent,
-    UserOdersComponent, UserDetailComponent, UserOderDetailComponent],
+    UserOdersComponent, UserDetailComponent, UserOderDetailComponent, VerifyEmailComponent, VerifyEmailComponent, RegisterSuccessComponent],
 
   exports: [
     OrderButtonComponent,
@@ -31,7 +35,7 @@ import {HomeStoreComponent} from './home-store/home-store.component';
     UserForgetpasswordComponent,
     UserDetailComponent,
     UserOderDetailComponent,
-    HomeStoreComponent,
+    VerifyEmailComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +46,28 @@ import {HomeStoreComponent} from './home-store/home-store.component';
     ShareModule,
     MaterialModule,
     MatIconModule,
-  ]
+    SocialLoginModule,
+  ],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '399031736182-762109h8rkefbrb027lk7plmbru2unpk.apps.googleusercontent.com'
+            ),
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('946169665899071'),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    }
+  ],
 })
 export class UserModule {
 }
