@@ -1,15 +1,28 @@
+import {TypeOfShipping} from './type-of-shipping';
+import {Customer} from './customer';
+import {OrderDetail} from './order-detail';
+
 export class Order {
   orderId: number;
-  orderDate: string;
+  orderDate: Date;
   orderStatus: string;
-  orderAddress: string;
-  orderedSuccess: string;
-  received: string;
-  takingOrders: string;
-  handOverShipping: string;
-  transporting: string;
-  successfulDelivery: string;
   totalMoney: number;
-  user: any;
-  orderDetailList: any;
+  orderAddress: string;
+  typeOfShipping: TypeOfShipping;
+  receiver: string;
+  deliveryPhoneNumber: string;
+  expectedDeliveryDate: Date;
+  typeOfPayment: string;
+  orderedSuccess: Date;
+  received: Date;
+  takingOrders: Date;
+  handOverShipping: Date;
+  transporting: Date;
+  successfulDelivery: Date;
+  user: Customer;
+  orderDetailList: OrderDetail[];
+
+
+  constructor() {
+  }
 }

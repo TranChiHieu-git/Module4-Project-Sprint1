@@ -16,4 +16,12 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.userName = this.tokenStorageService.getUsername();
   }
+
+  search() {
+  }
+
+  logout() {
+    this.tokenStorageService.signOut();
+    window.location.reload();
+  }
 }

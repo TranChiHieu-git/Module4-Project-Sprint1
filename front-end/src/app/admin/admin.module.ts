@@ -15,23 +15,26 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MaterialModule} from '../shares/material.module';
 import {MatCardModule} from '@angular/material/card';
 
+import {ListEmployeeComponent} from './list-employee/list-employee.component';
+
+
 FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
 
 @NgModule({
-  declarations: [ListAccountComponent, AccessTimesComponent],
-    imports: [
-        CommonModule,
-        MatIconModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        NgxPaginationModule,
-        FusionChartsModule,
-        FormsModule,
-        MatInputModule,
-        MatDatepickerModule,
-        MaterialModule,
-        MatCardModule,
-    ]
+  declarations: [ListAccountComponent, AccessTimesComponent, ListEmployeeComponent],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgxPaginationModule,
+    FusionChartsModule,
+    FormsModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MaterialModule,
+    MatCardModule,
+  ]
 })
 export class AdminModule {
 }

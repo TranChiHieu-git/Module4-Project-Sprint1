@@ -6,7 +6,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Account} from '../../models/account';
 import {Employees} from '../../models/employees';
 import {Role} from '../../models/role';
-import {Md5} from 'ts-md5';
 import {CustomerService} from '../../services/customer.service';
 import {Customer} from '../../models/customer';
 import {ToastrService} from 'ngx-toastr';
@@ -16,6 +15,10 @@ import {Department} from '../../models/department';
 import {PositionEmp} from '../../models/position';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import {Tempjwtemp} from '../../models/tempjwtemp';
+import {TokenStorageService} from '../../auth/token-storage.service';
+
 
 function comparePassword(c: AbstractControl) {
   const v = c.value;
@@ -30,7 +33,6 @@ function comparePassword(c: AbstractControl) {
   styleUrls: ['./list-account.component.scss']
 })
 export class ListAccountComponent implements OnInit {
-
   constructor(private adminService: AdminService,
               private route: Router,
               private formBuilder: FormBuilder,
@@ -38,8 +40,10 @@ export class ListAccountComponent implements OnInit {
               private customerService: CustomerService,
               private toastrService: ToastrService,
               private employeeService: EmployeeService,
-              private afStorage: AngularFireStorage) {
+              private afStorage: AngularFireStorage,
+              private loginAccount: TokenStorageService) {
   }
+
   currentYear = new Date().getFullYear();
   minDate = new Date(this.currentYear - 100, 0, 1);
   maxDate = new Date(this.currentYear - 18, 0, 1);
@@ -50,6 +54,7 @@ export class ListAccountComponent implements OnInit {
   accountForm2 = new Array<FormGroup>();
   editAccountForm: FormGroup;
   deleteAccountForm: FormGroup;
+  deleteListAccountForm: FormGroup;
   infoAccountById: Employees = new Employees();
   infoAccountById2: Customer = new Customer();
   AccountById: Account = new Account();
@@ -72,16 +77,21 @@ export class ListAccountComponent implements OnInit {
   image: string;
   uploadStatus = true;
   uploadProgressStatus = false;
-  accountNotInEmployee: Account[]
+  accountNotInEmployee: Account[];
   account: Account;
+  deleteChose = [];
+  token: any;
+  decode = new JwtHelperService();
+  tempJwt = new Tempjwtemp();
+  accountName = '';
+  utf8 = 'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế';
 
   ngOnInit(): void {
-    this.adminService.getAllAccountNotInEmployee().subscribe( next => {
+    this.adminService.getAllAccountNotInEmployee().subscribe(next => {
       this.accountNotInEmployee = next;
-      // console.log(this.accountNotInEmployee)
-    })
-    this.employeeService.findAllPosition().subscribe(
-      next => {
+      console.log(this.accountNotInEmployee);
+    });
+    this.employeeService.findAllPosition().subscribe(next => {
         this.positionList = next;
       },
       error => console.log(error)
@@ -108,6 +118,8 @@ export class ListAccountComponent implements OnInit {
       image: [''],
       account: ['', Validators.required]
     });
+    this.tempJwt = this.decode.decodeToken(this.loginAccount.getToken());
+    this.accountName = this.tempJwt.sub;
     this.employeeService.findAll().subscribe(next => {
       this.employeeList = next;
     });
@@ -122,7 +134,6 @@ export class ListAccountComponent implements OnInit {
       console.log(error);
     });
     this.getAll();
-
     this.accountForm = this.formBuilder.group({
       accountId: [''],
       accountName: ['', [Validators.required]],
@@ -132,15 +143,15 @@ export class ListAccountComponent implements OnInit {
         confirmPassword: ['', [Validators.required]],
       }, {validator: comparePassword}),
       deleteFlag: [''],
-      role: ['', [Validators.required]],
+      role: ['', [Validators.required]]
     });
     this.editAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
-      accountName: ['', [Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,}$'), this.existAccountName.bind(this)]],
-      accountPassword: ['', [Validators.pattern('^[a-zA-Z0-9]{1,}$')]],
+      accountName: ['', [Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,100}$'), this.existAccountName.bind(this)]],
+      accountPassword: ['', [Validators.pattern('^[a-zA-Z0-9]{1,100}$')]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]],
-      reason: [''],
+      reason: ['']
     });
     this.deleteAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
@@ -148,7 +159,10 @@ export class ListAccountComponent implements OnInit {
       accountPassword: ['', [Validators.required]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]],
-      reason: ['', [Validators.required]],
+      reason: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\s' + this.utf8 + ']{1,255}$')]]
+    });
+    this.deleteListAccountForm = this.formBuilder.group({
+      reason: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\s' + this.utf8 + ']{1,255}$')]]
     });
   }
 
@@ -166,7 +180,6 @@ export class ListAccountComponent implements OnInit {
     }));
   }
 
-  // tslint:disable-next-line:typedef
   existAccountName(c: AbstractControl) {
     const v = c.value;
     for (const acc of this.accountlist) {
@@ -187,7 +200,7 @@ export class ListAccountComponent implements OnInit {
 
   existAccountName2() {
     this.getListAccount();
-    let accountName = this.accountForm.get('accountName').value;
+    const accountName = this.accountForm.get('accountName').value;
     for (const acc of this.accountlist) {
       if (acc.accountName === accountName && accountName !== this.AccountById.accountName) {
         return false;
@@ -198,7 +211,7 @@ export class ListAccountComponent implements OnInit {
 
   existAccountName3(index) {
     this.getListAccount();
-    let accountName = this.accountForm2[index].get('accountName').value;
+    const accountName = this.accountForm2[index].get('accountName').value;
     for (const acc of this.accountlist) {
       if (acc.accountName === accountName && accountName !== this.AccountById.accountName) {
         return false;
@@ -211,7 +224,6 @@ export class ListAccountComponent implements OnInit {
     this.getAllSubmit(0);
   }
 
-  // tslint:disable-next-line:typedef
   getAllSubmit(page) {
     this.adminService.getAllCourse(page, this.size, this.userName, this.nameRole).subscribe(
       data => {
@@ -223,148 +235,114 @@ export class ListAccountComponent implements OnInit {
     );
   }
 
-  // tslint:disable-next-line:typedef
-  getAllSubmitAdmin(page) {
-    this.adminService.getAllCourseAdmin(page, this.size).subscribe(
-      data => {
-        this.pageClicked = page;
-        this.accountList = data.content;
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-      }, error => console.log(error)
-    );
-  }
-
-  // tslint:disable-next-line:typedef
-  getAllSubmitWarehouse(page) {
-    this.adminService.getAllCourseWarhouse(page, this.size).subscribe(
-      data => {
-        this.pageClicked = page;
-        this.accountList = data.content;
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-      }, error => console.log(error)
-    );
-  }
-
-  // tslint:disable-next-line:typedef
-  getAllSubmitPartner(page) {
-    const md5 = new Md5();
-    this.adminService.getAllCoursePartner(page, this.size).subscribe(
-      data => {
-        this.pageClicked = page;
-        this.accountList = data.content;
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-      }, error => console.log(error)
-    );
-  }
-
-  // tslint:disable-next-line:typedef
-  getAllSubmitUser(page) {
-    this.adminService.getAllCourseUser(page, this.size).subscribe(
-      data => {
-        this.pageClicked = page;
-        this.accountList = data.content;
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-      }, error => console.log(error)
-    );
-  }
-
-  // tslint:disable-next-line:typedef
   onPrevious() {
     if (this.pageClicked > 0) {
       this.pageClicked--;
       switch (this.sumVal) {
         case 0:
+          this.nameRole = '';
           this.getAllSubmit(this.pageClicked);
           break;
         case 1:
-          this.getAllSubmitAdmin(this.pageClicked);
+          this.nameRole = 'ROLE_ADMIN';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 2:
-          this.getAllSubmitPartner(this.pageClicked);
+          this.nameRole = 'ROLE_PARTNER';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 3:
-          this.getAllSubmitWarehouse(this.pageClicked);
+          this.nameRole = 'ROLE_WAREHOUSE';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 4:
-          this.getAllSubmitUser(this.pageClicked);
+          this.nameRole = 'ROLE_MEMBER';
+          this.getAllSubmit(this.pageClicked);
           break;
       }
     }
   }
 
-  // tslint:disable-next-line:typedef
   onNext() {
     if (this.pageClicked < this.totalPages - 1) {
       this.pageClicked++;
       switch (this.sumVal) {
         case 0:
+          this.nameRole = '';
           this.getAllSubmit(this.pageClicked);
           break;
         case 1:
-          this.getAllSubmitAdmin(this.pageClicked);
+          this.nameRole = 'ROLE_ADMIN';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 2:
-          this.getAllSubmitPartner(this.pageClicked);
+          this.nameRole = 'ROLE_PARTNER';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 3:
-          this.getAllSubmitWarehouse(this.pageClicked);
+          this.nameRole = 'ROLE_WAREHOUSE';
+          this.getAllSubmit(this.pageClicked);
           break;
         case 4:
-          this.getAllSubmitUser(this.pageClicked);
+          this.nameRole = 'ROLE_MEMBER';
+          this.getAllSubmit(this.pageClicked);
           break;
       }
     }
   }
 
-  // tslint:disable-next-line:typedef
   onFirst() {
     this.pageClicked = 0;
     switch (this.sumVal) {
       case 0:
+        this.nameRole = '';
         this.getAllSubmit(this.pageClicked);
         break;
       case 1:
-        this.getAllSubmitAdmin(this.pageClicked);
+        this.nameRole = 'ROLE_ADMIN';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 2:
-        this.getAllSubmitPartner(this.pageClicked);
+        this.nameRole = 'ROLE_PARTNER';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 3:
-        this.getAllSubmitWarehouse(this.pageClicked);
+        this.nameRole = 'ROLE_WAREHOUSE';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 4:
-        this.getAllSubmitUser(this.pageClicked);
+        this.nameRole = 'ROLE_MEMBER';
+        this.getAllSubmit(this.pageClicked);
         break;
     }
   }
 
-  // tslint:disable-next-line:typedef
   onLast() {
     this.pageClicked = this.totalPages - 1;
     switch (this.sumVal) {
       case 0:
+        this.nameRole = '';
         this.getAllSubmit(this.pageClicked);
         break;
       case 1:
-        this.getAllSubmitAdmin(this.pageClicked);
+        this.nameRole = 'ROLE_ADMIN';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 2:
-        this.getAllSubmitPartner(this.pageClicked);
+        this.nameRole = 'ROLE_PARTNER';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 3:
-        this.getAllSubmitWarehouse(this.pageClicked);
+        this.nameRole = 'ROLE_WAREHOUSE';
+        this.getAllSubmit(this.pageClicked);
         break;
       case 4:
-        this.getAllSubmitUser(this.pageClicked);
+        this.nameRole = 'ROLE_MEMBER';
+        this.getAllSubmit(this.pageClicked);
         break;
     }
   }
 
-  // tslint:disable-next-line:typedef
   info(id) {
     this.infoAccountById.position = null;
     this.adminService.findByInfoId(id).subscribe(next => {
@@ -372,31 +350,25 @@ export class ListAccountComponent implements OnInit {
     });
     if (this.infoAccountById.position === null) {
       this.adminService.findByInfoUserId(id).subscribe(next => {
-        if (next.imageUrl === '') {
-          next.imageUrl = '../../../assets/photo/avatadefault.png';
+        if (next.imageUrl === '' || next.imageUrl === null || next.imageUrl === undefined) {
+          next.imageUrl = '../../../assets/photo/customer-avatar.png';
         }
         this.infoAccountById2 = next;
       });
-    } else {
     }
     $('#infor').show();
-    // tslint:disable-next-line:only-arrow-functions typedef
     $('.close').click(function() {
       $('#infor').hide();
     });
   }
 
-  // tslint:disable-next-line:typedef
   edit(id) {
     this.infoAccountById = new Employees();
     this.adminService.findByInfoId(id).subscribe(next => {
       this.infoAccountById = next;
     });
-    this.customerService.getCustomerById(id).subscribe(next => {
+    this.adminService.findByInfoUserId(id).subscribe(next => {
       this.infoAccountById2 = next;
-      // tslint:disable-next-line:no-shadowed-variable
-    }, error => {
-      console.log(error);
     });
     this.adminService.findAllRole().subscribe(next => {
       this.roleList = next;
@@ -406,7 +378,9 @@ export class ListAccountComponent implements OnInit {
     this.adminService.findAccountById(id).subscribe(next => {
       this.AccountById = next;
     }, error => {
-      console.log(error);
+      this.toastrService.error('', 'tài khoản đã bị xóa');
+      this.ngOnInit();
+      $('.destroy').click();
     });
     this.adminService.findAccountById(id).subscribe(next => {
       this.editAccountForm.patchValue({
@@ -415,23 +389,20 @@ export class ListAccountComponent implements OnInit {
         accountPassword: '',
         deleteFlag: next.deleteFlag,
         role: next.role.roleId,
-        reason: ''
+        reason: '',
       });
     }, error => {
       console.log(error);
     });
     $('#edit').show();
-    // tslint:disable-next-line:only-arrow-functions typedef
     $('.close').click(function() {
       $('#edit').hide();
     });
-    // tslint:disable-next-line:only-arrow-functions typedef
     $('.destroy').click(function() {
       $('#edit').hide();
     });
   }
 
-// tslint:disable-next-line:typedef
   delete(id) {
     this.adminService.findAccountById(id).subscribe(next => {
       this.deleteAccountForm.patchValue({
@@ -440,25 +411,21 @@ export class ListAccountComponent implements OnInit {
         accountPassword: next.accountPassword,
         deleteFlag: next.deleteFlag,
         role: next.role.roleId,
-        reason: ''
+        reason: '',
       });
       this.AccountById = next;
     }, error => {
       console.log(error);
     });
     $('#delete').show();
-    // tslint:disable-next-line:only-arrow-functions typedef
     $('.close').click(function() {
       $('#delete').hide();
     });
-    // tslint:disable-next-line:only-arrow-functions typedef
     $('.destroy').click(function() {
       $('#delete').hide();
     });
-    // tslint:disable-next-line:only-arrow-functions typedef
   }
 
-  // tslint:disable-next-line:typedef
   create() {
     if (this.existAccountName2()) {
       this.accountForm.patchValue({
@@ -529,59 +496,72 @@ export class ListAccountComponent implements OnInit {
     this.toastrService.success('Bạn đã thêm mới thành công', 'Thông báo');
   }
 
-  // tslint:disable-next-line:typedef
   deleted(accountId) {
     this.adminService.findAccountById(accountId).subscribe(next => {
-      next.reason = this.deleteAccountForm.value.reason;
-      this.adminService.delete(next).subscribe(next2 => {
-        this.toastrService.success('Xóa tài khoản thành công');
-        this.ngOnInit();
+      if (next.accountName !== this.accountName) {
+        next.reason = this.deleteAccountForm.value.reason;
+        this.adminService.delete(next).subscribe(next2 => {
+          this.toastrService.success('Xóa tài khoản thành công');
+          this.ngOnInit();
+          $('.destroyDelete').click();
+        }, error => {
+          this.toastrService.error('', 'Xóa tài khoản thất bại');
+        });
+      } else {
+        this.toastrService.error('', 'Xóa tài khoản thất bại');
         $('.destroyDelete').click();
-      }, error => {
-        this.toastrService.success('', 'Xóa tài khoản thất bại');
-      });
+      }
     });
   }
 
-  // tslint:disable-next-line:typedef
   edited() {
     this.editResuilt = new Account();
     this.editResuilt.accountId = this.editAccountForm.value.accountId;
-    // tslint:disable-next-line:max-line-length
     this.editResuilt.accountName = this.editAccountForm.value.accountName !== '' ? this.editAccountForm.value.accountName : this.AccountById.accountName;
-    // tslint:disable-next-line:max-line-length
     this.editResuilt.accountPassword = this.editAccountForm.value.accountPassword !== '' ? this.editAccountForm.value.accountPassword : this.AccountById.accountPassword;
     this.editResuilt.deleteFlag = this.editAccountForm.value.deleteFlag;
-    this.adminService.findRoleById(this.editAccountForm.value.role).subscribe(next => {
-      this.editResuilt.role = next;
-      this.adminService.edit(this.editResuilt).subscribe(next2 => {
-        this.toastrService.success('Chỉnh sửa thông tin thành công');
-        this.ngOnInit();
-        $('.destroy').click();
-      }, error => {
-        this.toastrService.success('', 'Chỉnh sửa thông tin thất bại');
-      });
+    this.adminService.findAccountById(this.editResuilt.accountId).subscribe(next => {
+      if (next !== null) {
+        this.adminService.findRoleById(this.editAccountForm.value.role).subscribe(next2 => {
+          this.editResuilt.role = next2;
+          this.adminService.edit(this.editResuilt).subscribe(next3 => {
+            this.toastrService.success('Chỉnh sửa thông tin thành công');
+            this.ngOnInit();
+            $('.destroy').click();
+          }, error => {
+            this.toastrService.error('', 'Chỉnh sửa thông tin thất bại');
+          });
+        });
+      }
+    }, error => {
+      this.toastrService.error('', 'tài khoản đã bị xóa. Không thể chỉnh sửa');
+      this.ngOnInit();
+      $('.destroy').click();
     });
   }
 
-  // tslint:disable-next-line:typedef
   filterTypeRole(val: number) {
     this.sumVal = val;
     switch (val) {
       case 0:
+        this.nameRole = '';
         this.getAllSubmit(0);
         break;
       case 1:
-        this.getAllSubmitAdmin(0);
+        this.nameRole = 'ROLE_ADMIN';
+        this.getAllSubmit(0);
         break;
       case 2:
-        this.getAllSubmitPartner(0);
+        this.nameRole = 'ROLE_PARTNER';
+        this.getAllSubmit(0);
         break;
       case 3:
-        this.getAllSubmitWarehouse(0);
+        this.nameRole = 'ROLE_WAREHOUSE';
+        this.getAllSubmit(0);
         break;
       case 4:
-        this.getAllSubmitUser(0);
+        this.nameRole = 'ROLE_MEMBER';
+        this.getAllSubmit(0);
         break;
     }
   }
@@ -594,7 +574,7 @@ export class ListAccountComponent implements OnInit {
       }
     }
     return check;
-  }
+  };
 
   selectFile(): void {
     $('#image').click();
@@ -642,8 +622,66 @@ export class ListAccountComponent implements OnInit {
           $('#edit-em').click();
           this.employeeForm.reset();
           this.image = null;
+          this.toastrService.success('Thêm mới nhân viên thành công');
         }
       );
-    })
+    });
+  }
+
+  checkChose() {
+    for (let i = 0; i < this.accountList.length; i++) {
+      let flag = true;
+      if ($('#' + this.accountList[i].accountId.toString()).is(':checked')) {
+        for (let j = 0; j < this.deleteChose.length; j++) {
+          if (this.deleteChose[j] === this.accountList[i].accountId) {
+            flag = false;
+            break;
+          }
+        }
+        if (flag) {
+          this.deleteChose.push(this.accountList[i].accountId);
+        }
+      } else {
+        for (let z = 0; z < this.deleteChose.length; z++) {
+          if (this.deleteChose[z] === this.accountList[i].accountId) {
+            this.deleteChose.splice(z, 1);
+          }
+        }
+      }
+    }
+  }
+
+  tickForCheckBox(id: number): boolean {
+    for (let i = 0; i < this.deleteChose.length; i++) {
+      if (this.deleteChose[i] === id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  deleteListAccount() {
+    const reason = this.deleteListAccountForm.value.reason;
+    for (let i = 0; i < this.deleteChose.length; i++) {
+      this.adminService.findAccountById(this.deleteChose[i]).subscribe(
+        next => {
+          if (next.accountName !== this.accountName) {
+            next.reason = reason;
+            this.adminService.delete(next).subscribe(next2 => {
+            }, error => {
+              this.toastrService.error('', 'Xóa tài khoản ' + next.accountId + ' thất bại');
+              this.ngOnInit();
+              $('.destroyDelete').click();
+            });
+          } else {
+            this.toastrService.error('', 'Xóa tài khoản ' + next.accountId + ' thất bại');
+            $('.destroyDelete').click();
+          }
+        });
+    }
+    this.toastrService.success('Xóa tài khoản thành công');
+    this.ngOnInit();
+    $('.destroyDelete').click();
+    this.deleteChose = [];
   }
 }

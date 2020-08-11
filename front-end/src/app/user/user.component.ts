@@ -4,6 +4,7 @@ import {AccountService} from '../services/account.service';
 import {TokenStorageService} from '../auth/token-storage.service';
 import {CustomerService} from '../services/customer.service';
 import {OrderService} from '../services/order.service';
+import {Customer} from '../models/customer';
 
 @Component({
   selector: 'app-user',
@@ -13,6 +14,7 @@ import {OrderService} from '../services/order.service';
 export class UserComponent implements OnInit {
   userDisplayName = '';
   idUser: number;
+  customer: Customer;
 
   constructor(private accountService: AccountService,
               private tokenStorage: TokenStorageService,
@@ -20,13 +22,14 @@ export class UserComponent implements OnInit {
               private orderService: OrderService
   ) {
   }
+
   ngOnInit(): void {
     this.userDisplayName = sessionStorage.getItem('loggedUser');
-    console.log(this.userDisplayName);
     this.customerService.getCustomerByAccountName(this.userDisplayName).subscribe(next => {
-      this.idUser = next.id;
+      this.customer = next;
+      this.orderService.chanceCustomer(this.customer);
+      this.idUser = this.customer.id;
       this.orderService.chanceIdUser(this.idUser);
-      console.log(this.idUser);
     });
   }
 

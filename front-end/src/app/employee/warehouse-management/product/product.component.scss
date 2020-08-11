@@ -1,12 +1,14 @@
 ::ng-deep .cdk-overlay-container {
   z-index: 1200 !important;
 }
-.button-edit-delete{
+
+::ng-deep .product-edit-delete {
   font-size: 20px !important;
   padding: 2% 20% !important;
   margin: 2% 10% !important;
 }
-.global-button{
+
+::ng-deep .action-button {
   background: transparent linear-gradient(38deg, #EE9F1F 0%, #FCBC53 100%) 0% 0% no-repeat padding-box;
   box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.31);
   font-size: 12px;
@@ -17,7 +19,7 @@
   font-weight: 700;
 }
 
-.global-button-cancel{
+.global-button-cancel {
   background: transparent linear-gradient(38deg, #6c757d 0%, #3b4044 100%) 0% 0% no-repeat padding-box;
   box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.31);
   font-size: 12px;
@@ -27,10 +29,12 @@
   color: white;
   font-weight: 700;
 }
-.color-validate{
+
+.color-validate {
   color: red;
   font-size: 15px;
 }
+
 .header-text-color {
   color: #EE9F1F;;
 }
@@ -58,7 +62,8 @@
   justify-content: left; /*Aligns horizontally center */
   width: 128px;
 }
-.button-group-custom-dialog{
+
+.button-group-custom-dialog {
   display: flex;
   align-items: center; /*Aligns vertically center */
   justify-content: center; /*Aligns horizontally center */
@@ -96,6 +101,7 @@
 .table-header th {
   background: #EE9F1F;
 }
+
 .sticky-top-custom {
   //background: white;
   //border: #DEE2E6 solid 1px;
@@ -111,9 +117,10 @@
 .btn-filter-custom {
   border: #EE9F1F solid 1px;
   background-color: #EE9F1F;
-  width: 10% !important;
+  width: 10.6% !important;
 }
-.btn-create-custom{
+
+.btn-create-custom {
   border: #EE9F1F solid 1px;
   background-color: #EE9F1F;
 }
@@ -121,9 +128,11 @@
 .fa-pencil-alt-custom {
   color: #3C8DBC;
 }
-.fa-trash-custom{
+
+.fa-trash-custom {
   color: #fd2c4c
 }
+
 .button-dialog {
   width: 30% !important;
 }
@@ -150,4 +159,34 @@
   align-items: center;
   justify-content: center;
 }
+
+.create-inline-form {
+  display: block;
+  width: auto;
+  /* height: 40px; */
+  /* padding: .375rem .75rem; */
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  /* border-radius: .25rem; */
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+::ng-deep #dataTable td {
+  position: relative;
+}
+
+::ng-deep #dataTable td input,::ng-deep #dataTable td select {
+  position: absolute;
+  display: block;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
 

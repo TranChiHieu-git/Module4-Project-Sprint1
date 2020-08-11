@@ -1,6 +1,6 @@
 <div class="container-fluid order-follow">
   <br>
-  <h5 *ngIf="order" class="title font-weight-bolder">Theo dõi đơn hàng #{{order.orderId}}</h5>
+  <h5 *ngIf="order" class="title font-weight-bolder">Theo dõi đơn hàng CODEBAKERY{{order.orderId}}</h5>
   <a
     [routerLink]="['/user-manage/order-detail',order.orderId]">
     <button class="btn" id="btn-detail">Xem chi tiết đơn hàng</button>

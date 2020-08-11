@@ -1,36 +1,3 @@
-input[type=text] {
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius: 20px;
-  border: 1px solid white;
-  color: #a0d18c;
-  width: 350px;
-  height: 35px;
-  padding-left: 10px;
-}
-
-input[type=text]:focus {
-  outline: none;
-  border: 1px solid #a0d18c;
-  color: #2d9fd9;
-}
-
-.has-search .form-control {
-  padding-left: 2.375rem;
-}
-
-.has-search .form-control-feedback {
-  position: absolute;
-  z-index: 2;
-  display: block;
-  width: 2.375rem;
-  height: 2.375rem;
-  line-height: 2.375rem;
-  text-align: center;
-  pointer-events: none;
-  color: #aaa;
-}
-
 .logo {
   box-shadow: 1px 0px 6px 6px #fff;
   border-radius: 10px;
@@ -96,7 +63,7 @@ input[type=text]:focus {
 
 .sidebar {
   width: 20vw;
-  height: 35vh;
+  height: 42vh;
   box-shadow: 5px 8px 20px 0px rgba(158, 158, 158, 1);
   border-radius: 10px;
   top: 95px;

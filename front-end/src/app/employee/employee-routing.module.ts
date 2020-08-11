@@ -11,12 +11,11 @@ import {ProductComponent} from './warehouse-management/product/product.component
 import {EmployeeManagerComponent} from './employee-manager/employee-manager.component';
 import {EmployeeDetailComponent} from './employee-manager/employee-detail/employee-detail.component';
 import {ListDistributorComponent} from './partner-management/list-distributor/list-distributor.component';
-// @ts-ignore
 import {CustomerManagementComponent} from './partner-management/customer-management/customer-management.component';
 import {AuthGuard} from '../auth/auth.guard';
 import {BillComponent} from './warehouse-management/bill/bill.component';
-import {SaleManagementComponent} from './sale-management/sale-management.component';
 import {ProductSaleComponent} from './sale-management/product-sale/product-sale.component';
+import {SaleManagementComponent} from './partner-management/sale-management/sale-management.component';
 const routes: Routes = [{
   path: 'employee', component: EmployeeComponent, canActivate: [AuthGuard],
   children: [
@@ -29,7 +28,8 @@ const routes: Routes = [{
           path: 'employee-manager', component: EmployeeManagerComponent, children: [
             {path: 'detail', component: EmployeeDetailComponent}
           ]
-        }
+        },
+        {path: 'list-bill', component: SaleManagementComponent}
       ]
     },
     {
