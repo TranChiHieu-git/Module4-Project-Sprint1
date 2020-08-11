@@ -3,6 +3,7 @@ import {EmployeeService} from '../../../services/employee.service';
 import {CustomerService} from '../../../services/customer.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {CouponService} from '../../../services/coupon.service';
+import {AdminService} from '../../../services/admin.service';
 
 @Component({
   selector: 'app-sale-management',
@@ -26,6 +27,7 @@ export class SaleManagementComponent implements OnInit {
 
   constructor(private employeeService: EmployeeService,
               private customerService: CustomerService,
+              private adminService: AdminService,
               private couponService: CouponService,
               private formBuilder: FormBuilder) {
   }
@@ -44,17 +46,8 @@ export class SaleManagementComponent implements OnInit {
       console.log(error);
     });
 
-
-    this.customerService.getAllCustomers().subscribe(next => {
-      this.customerList = next.content;
-    }, error => {
-      console.log(error);
-    });
-    this.getAllCoupon(0);
-
-
-    this.customerService.getAllCustomers().subscribe(next => {
-      this.customerList = next.content;
+    this.customerService.getAllCustomer().subscribe(next => {
+      this.customerList = next;
     }, error => {
       console.log(error);
     });
@@ -94,8 +87,16 @@ export class SaleManagementComponent implements OnInit {
         + '-' + this.searchCouponForm.value.createDateTo.toLocaleDateString().split('/')[1]
         + '-' + this.searchCouponForm.value.createDateTo.toLocaleDateString().split('/')[0];
     }
-    this.employee = this.searchCouponForm.value.employee;
-    this.customer = this.searchCouponForm.value.user;
+    if (this.searchCouponForm.value.employee === 'Tất cả') {
+      this.employee = '';
+    } else {
+      this.employee = this.searchCouponForm.value.employee;
+    }
+    if (this.searchCouponForm.value.user === 'Tất cả') {
+      this.customer = '';
+    } else {
+      this.customer = this.searchCouponForm.value.user;
+    }
     this.getAllCoupon(0);
   }
 
