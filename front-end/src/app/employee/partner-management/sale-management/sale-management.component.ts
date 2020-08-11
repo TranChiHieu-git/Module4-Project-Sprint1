@@ -46,13 +46,14 @@ export class SaleManagementComponent implements OnInit {
       console.log(error);
     });
 
-    this.customerService.getAllCustomers().subscribe(next => {
+    this.customerService.getAllCustomer().subscribe(next => {
       this.customerList = next;
     }, error => {
       console.log(error);
     });
     this.getAllCoupon(0);
   }
+
 
   getAllCoupon(page) {
     this.couponService.getAllCourse(page, this.size, this.createDateFrom, this.createDateTo, this.employee,

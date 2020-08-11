@@ -15,7 +15,7 @@ export class UserDetailComponent implements OnInit {
 
   constructor(private customerService: CustomerService,
               private activatedRoute: ActivatedRoute, private orderService: OrderService) {
-    this.orderService.curentIdUser.subscribe(message => {
+    this.orderService.currentIdUser.subscribe(message => {
       this.idUser = message;
       console.log(this.idUser);
       this.customerService.getCustomerById(this.idUser).subscribe(next => {
@@ -31,5 +31,4 @@ export class UserDetailComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

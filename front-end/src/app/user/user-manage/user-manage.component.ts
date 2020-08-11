@@ -10,7 +10,7 @@ export class UserManageComponent implements OnInit {
   idUser: number;
 
   constructor(private orderService: OrderService) {
-    this.orderService.curentIdUser.subscribe(message => this.idUser = message);
+    this.orderService.currentIdUser.subscribe(message => this.idUser = message);
   }
 
   ngOnInit(): void {
