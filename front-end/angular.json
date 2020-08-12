@@ -44,7 +44,10 @@
               "src/assets/js/show-info.js",
               "src/assets/js/fb.js",
               "src/assets/js/customer-chat.js",
-              "src/assets/js/BrandJS.js"
+              "src/assets/js/BrandJS.js",
+              "src/assets/js/hmac-sha256.min.js",
+              "src/assets/js/enc-base64.min.js",
+              "src/assets/js/crypto-js.min.js"
             ]
           },
           "configurations": {

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Order} from '../models/order';
+import {Order, ReceiverMomoRequest, SendMomoRequest} from '../models/order';
 import {TokenStorageService} from '../auth/token-storage.service';
 import {Customer} from '../models/customer';
 import {OrderDetail} from '../models/order-detail';
@@ -18,6 +18,8 @@ export class OrderService {
   ORDER_CREATE_API_URL = 'http://localhost:8080/order-create';
   ORDER_DETAIL_CREATE_API_URL = 'http://localhost:8080/order-detail-create';
   CART_DELETE_API_URL = 'http://localhost:8080/cart-delete';
+  CART_CHANGE_QUANTITY_API_URL = 'http://localhost:8080/cart-quantity';
+  MOMO_API_GET_REQUEST_URL = 'https://cors-anywhere.herokuapp.com/https://test-payment.momo.vn/gw_payment/transactionProcessor';
   idUserSource = new BehaviorSubject<number>(0);
   currentIdUser = this.idUserSource.asObservable();
   customerSource = new BehaviorSubject<Customer>(null);
@@ -90,5 +92,23 @@ export class OrderService {
     userKey.userName = customer.userName;
     cart.id.user = userKey;
     return this.httpClient.post<Cart>(this.CART_DELETE_API_URL, cart, this.httpOptions);
+  }
+  changeQuantityCart(cart: Cart, customer: Customer): Observable<any> {
+    const userKey1 = new UserKey();
+    userKey1.account = customer.account;
+    userKey1.address = customer.address;
+    userKey1.birthday = customer.birthday;
+    userKey1.deleteFlag = customer.deleteFlag;
+    userKey1.email = customer.email;
+    userKey1.gender = customer.gender;
+    userKey1.id = customer.id;
+    userKey1.imageUrl = customer.imageUrl;
+    userKey1.phone = customer.phone;
+    userKey1.userName = customer.userName;
+    cart.id.user = userKey1;
+    return this.httpClient.post<Cart>(this.CART_CHANGE_QUANTITY_API_URL, cart, this.httpOptions);
+  }
+  getReceiverMomoRequest(sendRequest: SendMomoRequest): Observable<ReceiverMomoRequest> {
+    return this.httpClient.post<ReceiverMomoRequest>(this.MOMO_API_GET_REQUEST_URL, sendRequest);
   }
 }

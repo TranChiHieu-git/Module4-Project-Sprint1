@@ -99,15 +99,6 @@ export class ShippingComponent implements OnInit {
       });
     }
 
-    $(document).ready(function() {
-      $('#other-address').click(function() {
-        $('#other-address-form').addClass('show');
-        $('#name').focus();
-      });
-      $('#cancel').click(function() {
-        $('#other-address-form').removeClass('show');
-      });
-    });
     selectProvince.selectize({
       sortField: 'text',
       options: this.provinceOptions,
@@ -161,5 +152,18 @@ export class ShippingComponent implements OnInit {
       this.router.navigate(['checkout/payment']);
 
     }
+  }
+
+  cancelSubmit(): void {
+    $('#other-address-form').removeClass('show');
+    this.submitted = false;
+
+  }
+
+  openOtherAddressForm(): void {
+    this.submitted = false;
+    $('#other-address-form').addClass('show');
+    $('#name').focus();
+
   }
 }

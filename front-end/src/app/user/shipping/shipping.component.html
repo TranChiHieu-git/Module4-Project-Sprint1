@@ -33,7 +33,7 @@
               <p *ngIf="customer">Địa chỉ: {{customer.address}}</p>
               <p *ngIf="customer">Số điện thoại: {{customer.phone}}</p>
               <button (click)="onSubmit()" class="btn btn-shipping">Giao đến địa chỉ này</button>
-              <button class="btn btn-outline-primary" id="other-address" style="margin-left: 15px">Giao đến địa chỉ
+              <button (click)="openOtherAddressForm()" class="btn btn-outline-primary" id="other-address" style="margin-left: 15px">Giao đến địa chỉ
                 khác
               </button>
             </div>
@@ -127,7 +127,7 @@
                 <div class="col-4"></div>
                 <div class="col-8">
                   <button class="btn btn-shipping">Giao đến địa chỉ này</button>
-                  <button style="margin-left: 20px" class="btn btn-secondary" id="cancel">Hủy bỏ</button>
+                  <button (click)="cancelSubmit()" style="margin-left: 20px" class="btn btn-secondary" id="cancel">Hủy bỏ</button>
                 </div>
               </div>
             </form>
