@@ -44,15 +44,17 @@ import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house
 
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
+import { ProductSaleComponent } from './sale-management/product-sale/product-sale.component';
 import {SaleManagementComponent} from './partner-management/sale-management/sale-management.component';
+// @ts-ignore
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {SalesManagementComponent} from './sale-management/sale-management.component';
 
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
     WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent,
     BillComponent, BrandManagementComponent, CustomerManagementComponent, CustomPaginationComponent,
-    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent],
+    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent, SalesManagementComponent, ProductSaleComponent],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent,

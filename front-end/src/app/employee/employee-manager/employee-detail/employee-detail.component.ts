@@ -1,4 +1,6 @@
 // import * as $ from 'jquery';
+import {Position} from '../../../models/position';
+
 declare var $: any;
 import {Component, OnInit} from '@angular/core';
 import {Employee} from '../../employee';
@@ -13,6 +15,7 @@ import {TokenStorageService} from '../../../auth/token-storage.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Tempjwtemp} from '../../../models/tempjwtemp';
 import {ToastrService} from 'ngx-toastr';
+
 // tslint:disable-next-line:typedef
 function comparePassword(c: AbstractControl) {
   const v = c.value;
@@ -95,7 +98,7 @@ export class EmployeeDetailComponent implements OnInit {
         id: [],
         name: []
       }),
-      phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^\+84\d{9,10}$/)]),
+      phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^09\d{8,9}$/)]),
       email: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(.[A-Za-z0-9]+)$/)]),
       image: new FormControl('')
     });

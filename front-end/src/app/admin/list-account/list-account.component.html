@@ -1,15 +1,20 @@
 <div class="container mt-4">
   <div class="row">
     <div class="col-md-12">
-      <button type="button" class="float-left btn btn-primary" data-toggle="modal" data-target="#create">
-        Thêm mới
+      <button type="button" class="float-left btn btn-custom" data-toggle="modal" data-target="#create">
+        <span class="fa fa-plus-square"></span>
+        Thêm mới tài khoản
+      </button>
+      <button type="button" class="float-left btn btn-custom" data-toggle="modal" data-target="#createEmployee">
+        <span class="fa fa-plus-square"></span>
+        Thêm mới nhân viên
       </button>
       <form (ngSubmit)="getAll()">
-        <button type="submit" class=" float-right btn btn-primary">Tìm kiếm</button>
+        <button type="submit" class=" float-right btn btn-custom"><span class="fa fa-search"></span> Tìm kiếm</button>
         <div class="float-right form-group has-search">
           <span class="fa fa-search form-control-feedback"></span>
           <input [(ngModel)]="userName" name='userName' type="text"
-                 class="border border-primary form-control"
+                 class="border border-custom form-control"
                  placeholder="Tìm kiếm">
         </div>
       </form>
@@ -24,7 +29,7 @@
           <th scope="col">Tên tài khoản</th>
           <th scope="col">
             <div class="dropdown show">
-              <a class=" dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+              <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                  aria-haspopup="true" aria-expanded="false">
                 Loại tài khoản
               </a>
@@ -96,22 +101,24 @@
           <!--          <li class="page-item" (click)="onLast()"><a class="page-link">Last</a></li>-->
         </ul>
       </nav>
-      <button class="btn btn-primary" (click)="addMore()" type="button">Thêm mới</button>
+      <button class="btn btn-custom" (click)="addMore()" type="button"><span class="fa fa-plus-square"></span> Thêm mới
+      </button>
     </div>
   </div>
   <div class="row px-0 py-0">
     <div class="col-md-12">
+      <table class="table table-borderless">
+        <thead>
+        <tr *ngIf="accountForm2.length>0">
+          <th>Tên tài khoản</th>
+          <th>Mật khẩu</th>
+          <th>Xác nhận mật khẩu</th>
+          <th>Loại tài khoản</th>
+        </tr>
+        </thead>
+      </table>
       <form *ngFor="let account of accountForm2" [formGroup]="account">
         <table class="table table-borderless">
-          <thead>
-          <tr>
-            <th>Tên tài khoản</th>
-            <th>Mật khẩu</th>
-            <th>Xác nhận mật khẩu</th>
-            <th>Loại tài khoản</th>
-            <th *ngIf="employee.value == '2' || employee.value == '3'">Mã nhân viên</th>
-          </tr>
-          </thead>
           <tbody class="border border-dark">
           <input class="form-control" formControlName="accountId" aria-label="Username"
                  aria-describedby="basic-addon1" disabled hidden>
@@ -166,25 +173,11 @@
                     *ngIf="account.hasError('required','role') && account.get('role').touched">Vui lòng chọn
                     quyền</span>
             </td>
-            <td *ngIf="employee.value == '2' || employee.value == '3'">
-              <div class="input-group">
-                <input class="w-auto border text-dark rounded-0" #idEmployee name="city"
-                       list="dsa">
-                <datalist id="dsa">
-                  <ng-container *ngFor="let employee of employeeList">
-                    <option>{{employee.id}}</option>
-                  </ng-container>
-                </datalist>
-                <button type="button" (click)="info(idEmployee.value)" data-toggle="modal"
-                        data-target="#infoEmployee" class="btn btn-primary">Kiểm tra
-                </button>
-              </div>
-            </td>
           </tbody>
         </table>
       </form>
       <button (click)="create2()" *ngIf="accountForm2.length > 0" [disabled]="checkInvalidForm2()" type="submit"
-              class="btn btn-primary">Xác Nhận
+              class="btn btn-custom"><span class="fa fa-check"></span> Xác Nhận
       </button>
     </div>
   </div>
@@ -193,14 +186,11 @@
 <!--  create-->
 <div class="row">
   <div class="col-md-12">
-    <div class="modal" tabindex="-1" role="dialog" id="create">
+    <div class="modal fade" tabindex="-1" role="dialog" id="create">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-body">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <div class="modal-header">
+            <div class="modal-header bg-header">
               <h3 class="modal-title">Tạo mới tài khoản</h3>
               <br>
             </div>
@@ -277,32 +267,16 @@
                       *ngIf="accountForm.hasError('required','role') && accountForm.get('role').touched">Vui lòng chọn
                     quyền
                   </tr>
-                  <tr *ngIf="employee.value == '2' || employee.value == '3'">
-                    Mã nhân viên:
-                  </tr>
-                  <tr *ngIf="employee.value == '2'  || employee.value == '3'">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text fa 	fas fa-barcode prefix"></span>
-                      </div>
-                      <input class="border text-dark rounded-0" #idEmployee name="city" list="cityName">
-                      <datalist id="cityName">
-                        <ng-container *ngFor="let employee of employeeList">
-                          <option>{{employee.id}}</option>
-                        </ng-container>
-                      </datalist>
-                      <button type="button" (click)="info(idEmployee.value)" data-toggle="modal"
-                              data-target="#infoEmployee" class="btn btn-primary">Kiểm tra thông tin
-                      </button>
-                    </div>
-                  </tr>
                 </table>
                 <br>
                 <div class="modal-footer">
-                  <button [ngClass]="accountForm.invalid?'disabled':''" class="btn btn-primary mr-3 float-right"
-                          type="submit">Thêm mới
+                  <button [ngClass]="accountForm.invalid?'disabled':''" class="btn btn-custom mr-3 float-right"
+                          type="submit">
+                    <span class="fa fa-plus-square"></span> Thêm mới
                   </button>
-                  <button id="close" class="btn btn-secondary float-right destroy" data-dismiss="modal">Hủy</button>
+                  <button id="close" class="btn btn-secondary float-right destroy" data-dismiss="modal"><span
+                    class="fa fa-remove"></span> Hủy
+                  </button>
                 </div>
               </form>
             </div>
@@ -564,7 +538,7 @@
             Mật khẩu chỉ bao gồm chữ và số</span>
               </div>
             </tr>
-            <tr>Loại Tài Khoản (*):</tr>
+            <tr>Loại Tài Khoản <span class="text-danger">(*)</span>:</tr>
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -686,7 +660,170 @@
   </div>
 </div>
 
-
+<!--create employee-->
+<div class="modal fade bd-example-modal-sm" id="createEmployee" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-header">
+        <h4 class="modal-title modal-titles header-inf" id="editModalLabel">Thêm mới thông tin cá nhân</h4>
+        <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 ">
+            <div class="container-fluid">
+              <form class="w-100 h-100" (ngSubmit)="createEmployee()" [formGroup]="employeeForm">
+                <div class="row">
+                  <div class="p-0 col-md-3 pt-5">
+                    <mat-card class="mat-card-img p-0" (click)="selectFile()">
+                      <img class="img-custom" id="avatar" src="{{image}}"
+                           onerror="this.src = 'https://firebasestorage.googleapis.com/v0/b/webapp-1b736.appspot.com/o/58hvov18b5f?alt=media&token=bd216998-70e7-4c1b-9127-9cc1b1127278' ">
+                      <input formControlName="id" readonly hidden>
+                      <input class="file-upload-input" type='file'
+                             (change)="readURL($event.target);" accept="image/*"
+                             hidden id="image"/>
+                    </mat-card>
+                  </div>
+                  <div class="col-md-8 ml-3">
+                    <!--          <div class="customer-input-outside form-group">-->
+                    <!--            <input class="global-content-popup-input customer-input form-control" id="name1" formControlName="name"-->
+                    <!--                   type="text"-->
+                    <!--                   placeholder="Ten khach hang"/>-->
+                    <!--            <label class="global-content-popup-icon" for="name1"><i class="fa fa-user-o"></i></label>-->
+                    <!--          </div>-->
+                    <div class="row">
+                      <label>Họ tên <span class="text-danger"><span class="text-danger">(*)</span></span> <input
+                        type="text" class="form-control text-capitalize" formControlName="name">
+                      </label>
+                    </div>
+                    <div class="row alert alert-danger" role="alert"
+                         *ngIf="employeeForm.get('name').hasError('required') && employeeForm.get('name').touched">
+                      Tên không được để trống !
+                    </div>
+                    <div class="row">
+                      <label>
+                        Giới tính <span class="text-danger">(*)</span> &nbsp;&nbsp;<input checked class="w-auto"
+                                                                                          type="radio" value="Nam"
+                                                                                          name="gender"
+                                                                                          formControlName="gender">Nam&nbsp;&nbsp;
+                      </label>
+                      <label>
+                        <input class="w-auto" type="radio" value="Nữ" name="gender" formControlName="gender">Nữ
+                      </label>
+                    </div>
+                    <div class="row">
+                      <label>Ngày sinh <span class="text-danger">(*)</span><br>
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Choose a date</mat-label>
+                          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+                                 formControlName="birthday">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                      </label>
+                    </div>
+                    <div class="row">
+                      <label>Số điện thoại <span class="text-danger">(*)</span> <input type="text" class="form-control"
+                                                                                       formControlName="phoneNumber">
+                      </label>
+                    </div>
+                    <div class="row">
+                      <div class="alert alert-danger" role="alert"
+                           *ngIf="employeeForm.get('phoneNumber').hasError('required') && employeeForm.get('phoneNumber').touched">
+                        Số điện thoại không được để trống !
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="alert alert-danger" role="alert"
+                           *ngIf="employeeForm.get('phoneNumber').hasError('pattern') && employeeForm.get('phoneNumber').touched">
+                        Số điện thoại bắt đầu bằng 09 theo sau 8 hoặc 9 chữ số
+                      </div>
+                    </div>
+                    <div class="row">
+                      <label>Email <span class="text-danger">(*)</span> <input type="text" class="form-control"
+                                                                               formControlName="email">
+                      </label>
+                    </div>
+                    <div class="row">
+                      <div class="alert alert-danger" role="alert"
+                           *ngIf="employeeForm.get('email').hasError('required') && employeeForm.get('email').touched">
+                        Email không được để trống
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="alert alert-danger" role="alert"
+                           *ngIf="employeeForm.get('email').hasError('pattern') && employeeForm.get('email').touched">
+                        Email sai cú pháp
+                      </div>
+                    </div>
+                    <div class="row">
+                      <label>Địa chỉ <span class="text-danger">(*)</span> <input type="text"
+                                                                                 class="form-control text-capitalize"
+                                                                                 formControlName="address">
+                      </label>
+                    </div>
+                    <div class="row">
+                      <div class="alert alert-danger" role="alert"
+                           *ngIf="employeeForm.get('address').hasError('required') && employeeForm.get('address').touched">
+                        Địa chỉ không đc để trống !
+                      </div>
+                    </div>
+                    <div class="row">
+                      <fieldset formGroupName="position">
+                        <label>Chức vụ <span class="text-danger">(*)</span>
+                          <select class="form-control col-form-label" formControlName="id">
+                            <option *ngFor="let position of positionList" [ngValue]="position.id"
+                                    [selected]="position.id === employeeForm.value.position.id">
+                              {{position.name}}
+                            </option>
+                          </select>
+                        </label>
+                      </fieldset>
+                    </div>
+                    <div class="row">
+                      <fieldset formGroupName="department">
+                        <label>Phòng ban <span class="text-danger">(*)</span>
+                          <select class="form-control col-form-label" formControlName="id">
+                            <option *ngFor="let department of departmentList" [ngValue]="department.id"
+                                    [selected]="department.id === employeeForm.value.department.id">
+                              {{department.name}}
+                            </option>
+                          </select>
+                        </label>
+                      </fieldset>
+                    </div>
+                    <div class="row">
+                      <label>Tài khoản <span class="text-danger">(*)</span>
+                        <select class="form-control col-form-label" formControlName="account">
+                          <option *ngFor="let account1 of accountNotInEmployee" [ngValue]="account1.accountId">
+                            {{account1.accountName}}
+                          </option>
+                        </select>
+                      </label>
+                    </div>
+                    <div class="modal-footer">
+                      <button [ngClass]="employeeForm.invalid?'disabled':''" type="submit"
+                              class="btn btn-custom edit-customer-btn1"><span
+                        class="fa fa-plus-square"></span>
+                        Thêm mới
+                      </button>
+                      <button id="edit-em" type="button" class="btn btn-secondary " data-dismiss="modal"><span
+                        class="fa fa-remove"></span> Hủy
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <!--delete List modal-->
 <div class="modal" tabindex="-1" role="dialog" id="deleteListAccount">
   <div class="modal-dialog" role="document">
@@ -696,7 +833,8 @@
           <table class="w-100">
             <tr>
               <th colspan="2" class="deleteTitle">
-                <h5><img src="https://image.flaticon.com/icons/png/512/63/63436.png" width="22px" height="auto"> Bạn có
+                <h5><img src="https://image.flaticon.com/icons/png/512/63/63436.png" width="22px" height="auto">
+                  Bạn có
                   muốn xóa những tài khoản này không ?</h5>
               </th>
             </tr>
@@ -728,7 +866,8 @@
                 <div class="row">
                   <div class="col-3"></div>
                   <div class="col-2">
-                    <button id="deleteMultiBtn" class="btn btn-danger" [disabled]="deleteListAccountForm.invalid"
+                    <button id="deleteMultiBtn" class="btn btn-danger"
+                            [disabled]="deleteListAccountForm.invalid"
                             (click)="deleteListAccount()">Xóa
                     </button>
                   </div>
