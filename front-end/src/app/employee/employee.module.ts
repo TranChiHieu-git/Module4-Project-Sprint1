@@ -55,7 +55,8 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
     FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent],
   exports: [
     WarehouseManagementComponent,
-    PartnerManagementComponent
+    PartnerManagementComponent,
+    HomeComponent
   ],
   imports:
     [

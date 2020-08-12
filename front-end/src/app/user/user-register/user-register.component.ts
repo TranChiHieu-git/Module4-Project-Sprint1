@@ -10,6 +10,7 @@ import {AccountService} from '../../services/account.service';
 import {AdminService} from '../../services/admin.service';
 import {AuthLoginInfo} from '../../auth/login-info';
 import {AuthJwtService} from '../../auth/auth-jwt.service';
+import {Role} from '../../models/role';
 
 // tslint:disable-next-line:typedef
 function comparePassword(c: AbstractControl) {
@@ -18,6 +19,7 @@ function comparePassword(c: AbstractControl) {
     passwordnotmatch: true
   };
 }
+
 
 @Component({
   selector: 'app-user-register',
@@ -38,10 +40,10 @@ export class UserRegisterComponent implements OnInit {
   hide = true;
   // tslint:disable-next-line:variable-name
   validation_messages = {
-    user_name: [
+    userName: [
       {type: 'required', message: 'Yêu Cầu Nhập Họ Tên'},
       {type: 'minlength', message: 'Họ Tên Cần Có Ít Nhất 5 Ký Tự '},
-      {type: 'maxlength', message: 'Họ Tên Không Dài Quá 25 Ký Tự'},
+      {type: 'maxlength', message: 'Họ Tên Không Dài Quá 50 Ký Tự'},
       {type: 'pattern', message: 'Xin Hãy Bỏ Khoảng Trống'}
     ],
     accountName: [
@@ -68,15 +70,9 @@ export class UserRegisterComponent implements OnInit {
       {type: 'required', message: 'Yêu Cầu Nhập Email'},
       {type: 'pattern', message: 'Định Dạng Email Không Đúng'},
     ],
-    // pwGroup: [
-    //   // {type: 'required', message: 'Password is required'},
-    //   // {type: 'minlength', message: 'Password must be at least 5 characters long'},
-    //   // {type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number'},
-    //   {type: 'comparePassword', message: 'Mật khẩu không trùng nhau '},
-    // ],
     password: [
       {type: 'required', message: 'Yêu Cầu Nhập Mật Khẩu'},
-      {type: 'minlength', message: 'Mật khẩu Cần Có Ít Nhất 5 Ký Tự'},
+      {type: 'minlength', message: 'Mật khẩu Cần Có Ít Nhất 6 Ký Tự'},
       // {type: 'pattern', message: 'Mật Khẩu bao gồm 1 ký tự viết hoa, 1 ký tự viết thường, và 1 ký tự số'},
       // {type: 'comparePassword', message: 'Mật Khẩu không trùng nhau '}
     ],
@@ -87,10 +83,9 @@ export class UserRegisterComponent implements OnInit {
       {type: 'comparePassword', message: 'Mật khẩu không trùng nhau '}
     ],
   };
-
   form: any = {};
   userInfo: Customer;
-  accountInfo: AuthLoginInfo;
+  accountInfo: Account;
   isRegister = false;
   isRegisterFailed = false;
   errorMessage = '';
@@ -103,20 +98,19 @@ export class UserRegisterComponent implements OnInit {
   // tslint:disable-next-line:typedef
   createFormRegister() {
     this.registerForm = this.fb.group({
-      user_name: new FormControl('', Validators.compose([
+      userName: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.maxLength(25),
+        Validators.maxLength(50),
         Validators.minLength(5),
         Validators.pattern(/^\S+.*\S+$/)
       ])),
       accountName: new FormControl('', Validators.compose([
-        Validators.maxLength(25),
+        Validators.maxLength(50),
         Validators.minLength(5),
         Validators.required
       ])),
-      gender: new FormControl('', Validators.compose([
-        Validators.required,
-      ])),
+      gender: new FormControl('', Validators.compose([])),
+      address: new FormControl('', Validators.compose([])),
       phone: new FormControl('', Validators.compose([
         Validators.required,
         // Validators.pattern(/^\+84\d{9,10}$/)
@@ -133,12 +127,12 @@ export class UserRegisterComponent implements OnInit {
         Validators.pattern('^[_a-z0-9]+(\\.[_a-z0-9]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$')
       ])),
       accountPassword: new FormControl('', Validators.compose([
-        Validators.minLength(5),
+        Validators.minLength(6),
         Validators.required
         // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
       ])),
       confirmPassword: new FormControl('', Validators.compose([
-        Validators.required
+        // Validators.required
       ]))
     }, {validator: comparePassword});
   }
@@ -146,24 +140,9 @@ export class UserRegisterComponent implements OnInit {
 // tslint:disable-next-line:typedef
   onSubmitRegisters() {
     console.log(this.registerForm);
-    this.userInfo = this.registerForm.value;
-    //   this.userInfo = new Customer{
-    //    this.form.username,
-    //    this.form.birthday,
-    //    this.form.email,
-    //    this.form.gender,
-    //    this.form.phone
-    // };
-    // this.customerService.addNewCustomer(this.registerForm.value);
-    this.adminService.create(this.registerForm.value)
-      .subscribe(data => {
-          // tslint:disable-next-line:no-shadowed-variable
-          this.customerService.addNewCustomer(this.registerForm.value).subscribe(data1 => {
-            if (this.userInfo == null) {
-              this.isRegister = false;
-            }
-            this.isRegister = true;
-            this.isRegisterFailed = false;
+    if (this.registerForm.valid) {
+      this.adminService.createMemberAccount(this.registerForm.value)
+        .subscribe(data => {
             const login = 'Quay Lại';
             const snackbarRef = this.snackbar.open('Đăng Ký Thành Công!', login, {
               horizontalPosition: 'center',
@@ -173,7 +152,7 @@ export class UserRegisterComponent implements OnInit {
               window.location.reload();
             });
             console.log(data);
-          });
+          // });
         },
         error => {
           this.errorMessage = error.error.message;
@@ -185,5 +164,6 @@ export class UserRegisterComponent implements OnInit {
           console.log(errorMessage);
         }
       );
+    }
   }
 }
