@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Customer} from '../models/customer';
 import {TokenStorageService} from '../auth/token-storage.service';
+import {Employee} from '../models/employee';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,9 @@ import {TokenStorageService} from '../auth/token-storage.service';
 export class CustomerService {
 
   public readonly API_URL = 'http://localhost:8080/customers';
-  public readonly API_URL_ACCOUNT = 'http://localhost:8080/customer-account';
+  private httpOptions: any;
 
-  httpOptions: any;
+  public readonly API_URL_ACCOUNT = 'http://localhost:8080/customer-account';
 
   constructor(private httpClient: HttpClient, private tokenStorage: TokenStorageService) {
     this.httpOptions = {
@@ -20,6 +21,7 @@ export class CustomerService {
       , 'Access-Control-Allow-Origin': 'http://localhost:4200/', 'Access-Control-Allow-Methods': 'POST,GET',
     };
   }
+
   getAllCustomer(): Observable<any> {
     return this.httpClient.get<Customer[]>(this.API_URL, this.httpOptions);
   }
@@ -28,6 +30,7 @@ export class CustomerService {
     // return this.httpClient.get<Student>(`${this.API_URL}/${id}`);
     return this.httpClient.get<Customer>(this.API_URL + '/' + id, this.httpOptions);
   }
+
   getCustomerByName(name: string): Observable<Customer> {
     // return this.httpClient.get<Student>(`${this.API_URL}/${id}`);
     return this.httpClient.get<Customer>(this.API_URL + '/' + name);
@@ -40,6 +43,10 @@ export class CustomerService {
   deleteCustomerById(id: number): Observable<void> {
     return this.httpClient.delete<void>(this.API_URL + '/' + id);
   }
+
+  // deleteAllCustomer(): Observable<void> {
+  //   return this.httpClient.delete<void>(this.API_URL + '/' + id);
+  // }
 
   editCustomer(customer: Customer): Observable<Customer> {
     return this.httpClient.patch<Customer>(this.API_URL + '/' + customer.id, customer);

@@ -1,0 +1,78 @@
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+
+input[type=text] {
+  border: 1px solid rgb(238, 159, 31);
+  color: #581008;
+  width: 350px;
+  height: 35px;
+  padding-left: 10px;
+}
+
+input[type=text]:focus {
+  outline: none;
+  border: 1px solid #581008;
+  color: #581008;
+}
+
+hr {
+  border: #f18502 1px solid;
+  width: 100%;
+}
+
+.btn-addnew {
+  background-color: #f18502;
+  color: #581008;
+}
+
+.dsp {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.card-body {
+  background: none;
+  height: auto;
+  border: none;
+}
+
+label {
+  margin-left: 20px;
+}
+
+.datepicker {
+  width: 180px;
+
+}
+
+.datepickerinput {
+  padding: 1px 2px !important;
+  height: 30px !important;
+  width: 182px !important;
+  border: rgb(118, 118, 118) 1px solid !important;
+  background-color: white !important;
+  color: black !important;
+}
+
+.datepicker > span:hover {
+  cursor: pointer;
+}
+
+.feature {
+  background: rgb(238, 159, 31);
+  border: none;
+  border-radius: 10px;
+}
