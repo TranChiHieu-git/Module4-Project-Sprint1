@@ -97,7 +97,7 @@ export class ListAccountComponent implements OnInit {
     this.editAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
       accountName: ['', [Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,100}$'), this.existAccountName.bind(this)]],
-      accountPassword: ['', [Validators.pattern('^[a-zA-Z0-9\\.]{1,100}$')]],
+      accountPassword: ['', [Validators.pattern('^[a-zA-Z0-9]{1,100}$')]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]],
       reason: ['']
@@ -338,7 +338,7 @@ export class ListAccountComponent implements OnInit {
         accountPassword: '',
         deleteFlag: next.deleteFlag,
         role: next.role.roleId,
-        reason: '',
+        reason: next.reason,
       });
     }, error => {
       console.log(error);
@@ -467,7 +467,7 @@ export class ListAccountComponent implements OnInit {
     this.editResuilt = new Account();
     this.editResuilt.accountId = this.editAccountForm.value.accountId;
     this.editResuilt.accountName = this.editAccountForm.value.accountName !== '' ? this.editAccountForm.value.accountName : this.AccountById.accountName;
-    this.editResuilt.accountPassword = this.editAccountForm.value.accountPassword !== '' ? this.editAccountForm.value.accountPassword : this.AccountById.accountPassword;
+    this.editResuilt.accountPassword = this.editAccountForm.value.accountPassword !== '' ? this.editAccountForm.value.accountPassword : '';
     this.editResuilt.deleteFlag = this.editAccountForm.value.deleteFlag;
     this.adminService.findAccountById(this.editResuilt.accountId).subscribe(next => {
       if (next !== null) {
