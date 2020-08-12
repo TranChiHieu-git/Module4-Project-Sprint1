@@ -15,7 +15,6 @@ import {TokenStorageService} from '../../../auth/token-storage.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Tempjwtemp} from '../../../models/tempjwtemp';
 import {ToastrService} from 'ngx-toastr';
-
 // tslint:disable-next-line:typedef
 function comparePassword(c: AbstractControl) {
   const v = c.value;
@@ -38,6 +37,8 @@ function checkCurrentPassword(c: AbstractControl): { [key: string]: any } {
   styleUrls: ['./employee-detail.component.scss']
 })
 export class EmployeeDetailComponent implements OnInit {
+  uploadStatus = true;
+  uploadProgressStatus = false;
   constructor(private employeeService: EmployeeService,
               private fb: FormBuilder,
               private afStorage: AngularFireStorage,
@@ -65,6 +66,8 @@ export class EmployeeDetailComponent implements OnInit {
   token: any;
   decode = new JwtHelperService();
   tempJwt = new Tempjwtemp();
+  isEditable = false;
+  isOtpVisible = false;
 
   private uploadFireBaseAndSubmit(): void {
     const target: any = document.getElementById('image');
@@ -98,7 +101,7 @@ export class EmployeeDetailComponent implements OnInit {
         id: [],
         name: []
       }),
-      phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^09\d{8,9}$/)]),
+      phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^0\d{9,10}$/)]),
       email: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(.[A-Za-z0-9]+)$/)]),
       image: new FormControl('')
     });
@@ -126,11 +129,13 @@ export class EmployeeDetailComponent implements OnInit {
         next => {
           $('#editModal').modal('hide');
           console.log(next);
+          this.isEditable = false;
           this.ngOnInit();
           this.toastr.success('Chỉnh sửa thông tin thành công');
         },
         error => {
           if (error.status === 400) {
+            console.log(error);
             this.listError = error.error;
           }
           $('#DeleteModal').modal('hide');
@@ -167,7 +172,8 @@ export class EmployeeDetailComponent implements OnInit {
           confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
         },
         {validator: comparePassword}),
-      accountPassword: new FormControl('')
+      accountPassword: new FormControl(''),
+      otp: new FormControl('')
     });
     this.employeeService.findAccountByName(this.accountName).subscribe(
       next => {
@@ -183,6 +189,7 @@ export class EmployeeDetailComponent implements OnInit {
       accountName: this.accountName,
       accountPassword: this.editPasswordForm.get('pwGroup.password').value,
     });
+    console.log(this.editPasswordForm);
     if (this.editPasswordForm.valid) {
       const {value} = this.editPasswordForm;
       const data = {
@@ -202,19 +209,47 @@ export class EmployeeDetailComponent implements OnInit {
           if (error.status === 400) {
             this.listError = error.error;
           }
-          $('#DeleteModal').modal('hide');
-          this.ngOnInit();
-          this.toastr.error('Mật khẩu cũ chưa chính xác!');
+          // $('#DeleteModal').modal('hide');
+          // this.ngOnInit();
+          this.toastr.error('Mật khẩu cũ chưa chính xác hoặc sai code xác nhận');
         }
       );
     }
   }
 
-  readURL(target: EventTarget): void {
-    this.uploadFireBaseAndSubmit();
+  readURL(target: EventTarget & HTMLInputElement ): void {
+    this.uploadStatus = false;
+    this.uploadProgressStatus = true;
+    if (target.files && target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // @ts-ignore
+        $('#avatar').attr('src', e.target.result);
+      };
+      reader.readAsDataURL(target.files[0]);
+      this.uploadFireBaseAndSubmit();
+    }
   }
 
   selectFile(): void {
     $('#image').click();
+  }
+  editable(): void {
+    this.isEditable = true;
+
+  }
+
+  uneditable(): void {
+    this.isEditable = false;
+    this.ngOnInit();
+  }
+
+  visibleOtp(): void {
+    this.isOtpVisible = true;
+  }
+
+  sendOTP(): void {
+    this.isOtpVisible = true;
+    this.employeeService.sendOTP(this.accountName).subscribe();
   }
 }
