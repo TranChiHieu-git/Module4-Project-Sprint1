@@ -11,22 +11,18 @@ import {Employee} from '../models/employee';
 export class CustomerService {
 
   public readonly API_URL = 'http://localhost:8080/customers';
-  private httpOptions: any;
-
   public readonly API_URL_ACCOUNT = 'http://localhost:8080/customer-account';
-
+  private httpOptions: any;
   constructor(private httpClient: HttpClient, private tokenStorage: TokenStorageService) {
     this.httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
-      , 'Access-Control-Allow-Origin': 'http://localhost:4200/', 'Access-Control-Allow-Methods': 'POST,GET',
+      , 'Access-Control-Allow-Origin': 'http://localhost:4200/', 'Access-Control-Allow-Methods': 'POST,GET,PUT',
     };
   }
- getAllCustomers(): Observable<any> {
-    return this.httpClient.get<Customer[]>(this.API_URL, this.httpOptions);
-  }
- getAllCustomerWithSearchAndPageAndFilter(page, size, search , value1, value2): Observable<any> {
+
+  getAllCustomerWithSearchAndPageAndFilter(page, size, search, value1, value2): Observable<any> {
     return this.httpClient.get(this.API_URL +
-      '?page=' + page  + '&size=' + size + '&search='
+      '?page=' + page + '&size=' + size + '&search='
       + search + '&value1=' + value1 + ' &value2=' + value2, this.httpOptions);
   }
 
@@ -41,7 +37,7 @@ export class CustomerService {
   }
 
   addNewCustomer(customer: Partial<Customer>): Observable<any> {
-    return this.httpClient.post<Customer>(this.API_URL, customer, this.httpOptions);
+    return this.httpClient.post<Customer>(this.API_URL + '/', customer, this.httpOptions);
   }
 
   deleteCustomerById(id: number): Observable<void> {
@@ -57,6 +53,10 @@ export class CustomerService {
   }
 
   getCustomerByAccountName(accountName: string): Observable<any> {
-    return this.httpClient.get<Customer>(this.API_URL_ACCOUNT + '/' + accountName, this.httpOptions);
+    return this.httpClient.get<Customer>(this.API_URL_ACCOUNT + '/' + accountName);
+  }
+
+  getAllCustomer(): Observable<Customer[]> {
+    return this.httpClient.get<Customer[]>('http://localhost:8080/customer-list');
   }
 }

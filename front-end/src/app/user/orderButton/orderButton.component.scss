@@ -1,10 +1,10 @@
 .orderButton {
-  color: #7a5744;
+  color: #f7e80f;
   border-radius: 50%;
   border-style: solid;
-  border-color: #7a5744;
+  border-color: #fefc53;
   padding: 10px;
-  background-color: Transparent;
+  background-color: rgba(0, 0, 0, 0.75);
   overflow: hidden;
   outline:none;
  font-size: 30px;
@@ -12,7 +12,12 @@
   border-block-start: none;
   border-spacing: 5px;
   border-width: 5px;
+  position: absolute;
+  top: 570px;
+  left: 634px;
+  margin: auto;
 }
 .orderButton:hover {
-  background-color: rgba(238, 159, 31,0.5)!important;
+  background-color: rgba(255, 244, 143, 0.7)!important;
+  color: black;
 }

@@ -45,6 +45,7 @@ export class ShippingComponent implements OnInit {
       this.listProvince.forEach(province => {
         this.provinceOptions.push({value: province.matp, text: province.name});
       });
+      console.log(this.provinceOptions);
       this.renderForm();
 
     }, error => {

@@ -4,11 +4,13 @@ import {Employee} from '../models/employee';
 import {Observable} from 'rxjs';
 import {Department} from '../models/department';
 import {Account} from '../models/account';
+import {PositionEmp} from '../models/position';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
+  API_URL = 'http://localhost:8080/employee';
   API_URL_EMPLOYEE = 'http://localhost:8080/employee/list';
   API_URL_EMPLOYEE_PAGE = 'http://localhost:8080/employee/page-list';
   API_URL_ACCOUNT = 'http://localhost:8080/employee/account/name';
@@ -38,9 +40,12 @@ export class EmployeeService {
     return this.httpClient.get<Employee>(this.API_URL_EMPLOYEE + '/name' + '/' + name);
   }
 
-  findAllPosition(): Observable<Position[]> {
-    return this.httpClient.get<Position[]>(this.API_URL_POSITION);
+  findAllPosition(): Observable<PositionEmp[]> {
+    return this.httpClient.get<PositionEmp[]>(this.API_URL_POSITION);
   }
+  // findAllPosition(): Observable<Position[]> {
+  //   return this.httpClient.get<Position[]>(this.API_URL_POSITION);
+  // }
 
   findAllDepartment(): Observable<Department[]> {
     return this.httpClient.get<Department[]>(this.API_URL_DEPARTMENT);
@@ -48,6 +53,10 @@ export class EmployeeService {
 
   findAccountByName(name: string): Observable<Account> {
     return this.httpClient.get<Account>(this.API_URL_EMPLOYEE + '/name/' + name);
+  }
+
+  create(employee: Employee): Observable<any> {
+    return this.httpClient.post<Employee>(this.API_URL + '/create', employee);
   }
 
   findAllEmployeeWithPage(currentPage, size, search): Observable<any> {

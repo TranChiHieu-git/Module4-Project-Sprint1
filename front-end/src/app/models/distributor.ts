@@ -9,6 +9,7 @@ export class Distributor {
   fax: string;
   website: string;
   typeOfDistributor: TypeOfDistributor;
+  status: number;
 
   constructor(id: number, name: string, address: string, numberPhone: string, email: string, img: string,
               fax: string, website: string, typeOfDistributor: TypeOfDistributor, deleted: boolean) {
@@ -37,5 +38,36 @@ export class DeleteListDistributor {
   constructor(id: number, name: string) {
     this.id = id;
     this.name = name;
+  }
+}
+
+export class Province {
+  matp: string;
+  name: string;
+  type: string;
+  districts: District[];
+}
+
+export class District {
+  maqh: string;
+  name: string;
+  type: string;
+  matp: string;
+
+}
+
+export class Commune {
+  xaid: string;
+  name: string;
+  type: string;
+  maqh: string;
+}
+
+
+export class DistributorDeleteAllResuilt {
+  successList: Distributor[];
+  modifyingList: Distributor[];
+  unsuccessList: Distributor[];
+  constructor() {
   }
 }

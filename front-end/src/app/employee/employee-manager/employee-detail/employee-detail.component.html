@@ -9,7 +9,8 @@
       <div class="row">
         <mat-card class="mat-card-img"
                   (click)="selectFile()">
-          <img class="imageEmp" id="avatar" src="{{employee['image']}}" onerror="this.src = 'https://firebasestorage.googleapis.com/v0/b/webapp-1b736.appspot.com/o/58hvov18b5f?alt=media&token=bd216998-70e7-4c1b-9127-9cc1b1127278' ">
+          <img class="imageEmp" id="avatar" src="{{employee['image']}}"
+               onerror="this.src = 'https://firebasestorage.googleapis.com/v0/b/webapp-1b736.appspot.com/o/58hvov18b5f?alt=media&token=bd216998-70e7-4c1b-9127-9cc1b1127278' ">
           <input formControlName="id" readonly hidden>
           <input class="file-upload-input" type='file'
                  (change)="readURL($event.target);" accept="image/*"
@@ -88,11 +89,9 @@
             <label>Họ tên (*) <input type="text" class="form-control" formControlName="name">
             </label>
           </div>
-          <div class="alert alert-danger" role="alert" *ngIf="editForm.get('name').hasError('required') && editForm.get('name').touched">
+          <div class="alert alert-danger" role="alert"
+               *ngIf="editForm.get('name').hasError('required') && editForm.get('name').touched">
             Tên không được để trống !
-          </div>
-          <div class="alert alert-danger" role="alert" *ngIf="editForm.get('name').hasError('pattern') && editForm.get('name').touched">
-            Tên sai cú pháp !
           </div>
           <mat-error class="error-message">
             {{listError.name}}
@@ -114,45 +113,46 @@
             </label>
           </div>
           <div class="row">
-            <label>Số điện thoại (*) <input type="text" class="form-control"  formControlName="phoneNumber">
+            <label>Số điện thoại (*) <input type="text" class="form-control" formControlName="phoneNumber">
             </label>
           </div>
-          <div class="alert alert-danger" role="alert" *ngIf="editForm.get('phoneNumber').hasError('required') && editForm.get('phoneNumber').touched">
+          <div class="alert alert-danger" role="alert"
+               *ngIf="editForm.get('phoneNumber').hasError('required') && editForm.get('phoneNumber').touched">
             Số điện thoại không được để trống !
           </div>
-          <div class="alert alert-danger" role="alert" *ngIf="editForm.get('phoneNumber').hasError('pattern') && editForm.get('phoneNumber').touched">
-            Số điện thoại bắt đầu bằng +84 theo sau 9 hoặc 10 chữ số
+          <div class="alert alert-danger" role="alert"
+               *ngIf="editForm.get('phoneNumber').hasError('pattern') && editForm.get('phoneNumber').touched">
+            Số điện thoại bắt đầu bằng 09 theo sau 8 hoặc 9 chữ số
           </div>
           <mat-error class="error-message">
             {{listError.phoneNumber}}
           </mat-error>
           <div class="row">
-            <label>Email (*) <input type="text" class="form-control"  formControlName="email">
+            <label>Email (*) <input type="text" class="form-control" formControlName="email">
             </label>
           </div>
-          <div class="alert alert-danger" role="alert" *ngIf="editForm.get('email').hasError('required') && editForm.get('email').touched">
+          <div class="alert alert-danger" role="alert"
+               *ngIf="editForm.get('email').hasError('required') && editForm.get('email').touched">
             Email không được để trống
           </div>
-          <div class="alert alert-danger" role="alert" *ngIf="editForm.get('email').hasError('pattern') && editForm.get('email').touched">
+          <div class="alert alert-danger" role="alert"
+               *ngIf="editForm.get('email').hasError('pattern') && editForm.get('email').touched">
             Email sai cú pháp !
           </div>
           <mat-error class="error-message">
             {{listError.email}}
           </mat-error>
           <div class="row">
-            <label>Địa chỉ (*) <input type="text" class="form-control"  formControlName="address">
+            <label>Địa chỉ (*) <input type="text" class="form-control" formControlName="address">
             </label>
           </div>
-          <div class="alert alert-danger" role="alert" *ngIf="editForm.get('address').hasError('pattern') && editForm.get('address').touched">
-            Địa chỉ sai cú pháp !
-          </div>
-          <div class="alert alert-danger" role="alert" *ngIf="editForm.get('address').hasError('required') && editForm.get('address').touched">
+          <div class="alert alert-danger" role="alert"
+               *ngIf="editForm.get('address').hasError('required') && editForm.get('address').touched">
             Địa chỉ không đc để trống !
           </div>
           <mat-error class="error-message">
             {{listError.address}}
           </mat-error>
-
           <fieldset formGroupName="position">
             <label>Chức vụ (*)
               <select class="form-control col-form-label" formControlName="id">
@@ -216,28 +216,32 @@
       <div class="modal-body">
         <form (ngSubmit)="onSubmit2()" [formGroup]="editPasswordForm">
           <div class="row">
-            <label>Mật khẩu cũ (*) <input type="password" class="form-control"  formControlName="oldPassword">
+            <label>Mật khẩu cũ (*) <input type="password" class="form-control" formControlName="oldPassword">
             </label>
           </div>
-          <div class="alert alert-danger" role="alert" *ngIf="editPasswordForm.get('oldPassword').hasError('required') && editPasswordForm.get('oldPassword').touched">
+          <div class="alert alert-danger" role="alert"
+               *ngIf="editPasswordForm.get('oldPassword').hasError('required') && editPasswordForm.get('oldPassword').touched">
             Không được để trống !
           </div>
           <fieldset formGroupName="pwGroup">
             <div class="row">
-              <label>Mật khẩu mới (*) <input type="password" class="form-control"  formControlName="password">
+              <label>Mật khẩu mới (*) <input type="password" class="form-control" formControlName="password">
               </label>
             </div>
-            <div class="alert alert-danger" role="alert" *ngIf="editPasswordForm.get('pwGroup.password').hasError('required') && editPasswordForm.get('pwGroup.password').touched"  >
+            <div class="alert alert-danger" role="alert"
+                 *ngIf="editPasswordForm.get('pwGroup.password').hasError('required') && editPasswordForm.get('pwGroup.password').touched">
               Không được để trống
             </div>
-            <div class="alert alert-danger" role="alert" *ngIf="editPasswordForm.get('pwGroup.password').hasError('minlength') && editPasswordForm.get('pwGroup.password').touched">
+            <div class="alert alert-danger" role="alert"
+                 *ngIf="editPasswordForm.get('pwGroup.password').hasError('minlength') && editPasswordForm.get('pwGroup.password').touched">
               Mật khẩu yêu cầu ít nhất 6 kí tự !
             </div>
-            <div class="alert alert-danger" role="alert" *ngIf="editPasswordForm.get('pwGroup.password').hasError('pattern') && editPasswordForm.get('pwGroup.password').touched">
+            <div class="alert alert-danger" role="alert"
+                 *ngIf="editPasswordForm.get('pwGroup.password').hasError('pattern') && editPasswordForm.get('pwGroup.password').touched">
               Chỉ chứa chữ và số không được chứa kí tự đặc biệt !
             </div>
             <div class="row">
-              <label>Xác nhận lại (*) <input type="password" class="form-control"  formControlName="confirmPassword">
+              <label>Xác nhận lại (*) <input type="password" class="form-control" formControlName="confirmPassword">
               </label>
             </div>
           </fieldset>

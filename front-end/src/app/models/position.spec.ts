@@ -1,7 +1,7 @@
-import { Position } from './position';
+import { Positions } from './position';
 
 describe('Position', () => {
   it('should create an instance', () => {
-    expect(new Position()).toBeTruthy();
+    expect(new Positions()).toBeTruthy();
   });
 });

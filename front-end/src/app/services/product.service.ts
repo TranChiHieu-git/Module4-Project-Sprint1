@@ -29,6 +29,15 @@ export class ProductService {
   private brandByCategoryIdUrl = BASE_API_URL + '/listBrandByCategory/';
   private productByCategoryAndBrandUrl = BASE_API_URL + '/listProductByCategoryAndBrand/';
   private productByCategoryUrl = BASE_API_URL + '/listProductByCategory/';
+  private searchProductUrl = BASE_API_URL + '/searchProduct/';
+  private searchProductByName = BASE_API_URL + '/searchProductByName/';
+  private searchProductByPrice = BASE_API_URL + '/searchProductByPrice/';
+  private searchProductByCategoryBrandNamePrice = BASE_API_URL + '/searchProductByCategoryBrandNamePrice/';
+  private searchProductByCategoryBrandPrice = BASE_API_URL + '/searchProductByCategoryBrandPrice/';
+  private searchProductByCategoryBrandName = BASE_API_URL + '/searchProductByCategoryBrandName/';
+  private searchProductByCategoryNamePrice = BASE_API_URL + '/searchProductByCategoryNamePrice/';
+  private searchProductByCategoryName = BASE_API_URL + '/searchProductByCategoryName/';
+  private searchProductByCategoryPrice = BASE_API_URL + '/searchProductByCategoryPrice/';
   private API_URL = 'http://localhost:8080/user/home-store';
 
   constructor(private httpClient: HttpClient) {
@@ -83,6 +92,93 @@ export class ProductService {
   findAllProductByCategory(categoryId: string, pageable: Pageable): Observable<Page<Product>> {
     const url = this.productByCategoryUrl + categoryId + '/'
       + '?page=' + pageable.pageNumber
+      + '&size=' + pageable.pageSize;
+    return this.httpClient.get<Page<Product>>(url , httpOptions);
+  }
+
+
+  findAllByCategoryAndName(categoryId: string, productName: string, pageable: Pageable): Observable<Page<Product>> {
+    const url = this.searchProductByCategoryName
+      + '?categoryId=' + categoryId
+      + '&productName=' + productName
+      + '&page=' + pageable.pageNumber
+      + '&size=' + pageable.pageSize;
+    return this.httpClient.get<Page<Product>>(url, httpOptions);
+  }
+
+  findAllByCategoryAndPrice(categoryId: string, price: string, pageable: Pageable): Observable<Page<Product>> {
+    const url = this.searchProductByCategoryPrice
+      + '?categoryId=' + categoryId
+      + '&price=' + price
+      + '&page=' + pageable.pageNumber
+      + '&size=' + pageable.pageSize;
+    return this.httpClient.get<Page<Product>>(url, httpOptions);
+  }
+
+  findAllByName(productName: string, pageable: Pageable): Observable<Page<Product>> {
+    const url = this.searchProductByName
+      + '?productName=' + productName
+      + '&page=' + pageable.pageNumber
+      + '&size=' + pageable.pageSize;
+    return this.httpClient.get<Page<Product>>(url, httpOptions);
+  }
+
+  findAllByPrice(price: string, pageable: Pageable): Observable<Page<Product>> {
+    const url = this.searchProductByPrice
+      + '?price=' + price
+      + '&page=' + pageable.pageNumber
+      + '&size=' + pageable.pageSize;
+    return this.httpClient.get<Page<Product>>(url, httpOptions);
+  }
+
+  findAllByNameAndPrice(productName: string, price: string, pageable: Pageable): Observable<Page<Product>> {
+    const url = this.searchProductUrl + productName + '/' + price + '/'
+      + '?page=' + pageable.pageNumber
+      + '&size=' + pageable.pageSize;
+    return this.httpClient.get<Page<Product>>(url, httpOptions);
+  }
+
+  // tslint:disable-next-line:max-line-length
+  findAllByCategoryBrandProductName(categoryId: string, brandId: string, productName: string, pageable: Pageable): Observable<Page<Product>> {
+    const url = this.searchProductByCategoryBrandName
+      + '?categoryId=' + categoryId
+      + '&brandId=' + brandId
+      + '&productName=' + productName
+      + '&page=' + pageable.pageNumber
+      + '&size=' + pageable.pageSize;
+    return this.httpClient.get<Page<Product>>(url, httpOptions);
+  }
+
+  // tslint:disable-next-line:max-line-length
+  findAllByCategoryBrandPrice(categoryId: string, brandId: string, price: string, pageable: Pageable): Observable<Page<Product>> {
+    const url = this.searchProductByCategoryBrandPrice
+      + '?categoryId=' + categoryId
+      + '&brandId=' + brandId
+      + '&price=' + price
+      + '&page=' + pageable.pageNumber
+      + '&size=' + pageable.pageSize;
+    return this.httpClient.get<Page<Product>>(url, httpOptions);
+  }
+
+  // tslint:disable-next-line:max-line-length
+  findAllByCategoryNamePrice(categoryId: string, productName: string, price: string, pageable: Pageable): Observable<Page<Product>> {
+    const url = this.searchProductByCategoryNamePrice
+      + '?categoryId=' + categoryId
+      + '&productName=' + productName
+      + '&price=' + price
+      + '&page=' + pageable.pageNumber
+      + '&size=' + pageable.pageSize;
+    return this.httpClient.get<Page<Product>>(url, httpOptions);
+  }
+
+  // tslint:disable-next-line:max-line-length
+  findAllByCategoryBrandProductNamePrice(categoryId: string, brandId: string, productName: string, price: string, pageable: Pageable): Observable<Page<Product>> {
+    const url = this.searchProductByCategoryBrandNamePrice
+      + '?categoryId=' + categoryId
+      + '&brandId=' + brandId
+      + '&productName=' + productName
+      + '&price=' + price
+      + '&page=' + pageable.pageNumber
       + '&size=' + pageable.pageSize;
     return this.httpClient.get<Page<Product>>(url, httpOptions);
   }
