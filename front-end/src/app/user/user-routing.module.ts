@@ -16,6 +16,7 @@ import {UserLoginComponent} from './user-login/user-login.component';
 import {OrderFolowComponent} from './order-folow/order-folow.component';
 import {HomeBakeryComponent} from './home-store/home-bakery/home-bakery.component';
 import {AuthGuard} from '../auth/auth.guard';
+import {RegisterSuccessComponent} from './register-success/register-success.component';
 import {ShoppingCardComponent} from './shopping-card/shopping-card.component';
 import {ShippingComponent} from './shipping/shipping.component';
 import {PaymentComponent} from './payment/payment.component';
@@ -68,6 +69,9 @@ const routes: Routes = [{
 },
   {
     path: 'home', component: UserComponent,
+  },
+  {
+    path: 'register-success', component: RegisterSuccessComponent,
   },
   {
     path: '', component: UserComponent,

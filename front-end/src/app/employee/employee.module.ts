@@ -54,7 +54,8 @@ import {SalesManagementComponent} from './sale-management/sale-management.compon
     FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent,SalesManagementComponent, ProductSaleComponent],
   exports: [
     WarehouseManagementComponent,
-    PartnerManagementComponent
+    PartnerManagementComponent,
+    HomeComponent
   ],
   imports:
     [
