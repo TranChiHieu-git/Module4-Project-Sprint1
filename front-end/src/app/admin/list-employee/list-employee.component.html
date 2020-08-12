@@ -30,7 +30,7 @@
                *ngFor="let employees of employeeList">
         <tr>
           <th scope="row">{{employees.id}}</th>
-          <td>{{employees.name}}</td>
+          <td>{{employees.name | titlecase}}</td>
           <td>{{employees.phoneNumber}}</td>
           <td>{{employees.email}}</td>
           <td>{{employees.position.name}}</td>

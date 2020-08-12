@@ -43,6 +43,10 @@ import {BillComponent} from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
 
+// @ts-ignore
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {SalesManagementComponent} from './sale-management/sale-management.component';
+
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { SaleManagementComponent } from './partner-management/sale-management/sale-management.component';
@@ -100,6 +104,41 @@ import { ListGeneralHaiComponent } from './warehouse-management/product-hai-spri
     NgSelectModule,
     SlickCarouselModule,
   ],
+  imports:
+    [
+      CommonModule,
+      EmployeeRoutingModule,
+      RouterModule,
+      ReactiveFormsModule,
+      Ng2SearchPipeModule,
+      Ng2OrderModule,
+      HttpClientModule,
+      NgbModule,
+      MaterialModule,
+      MatDialogModule,
+      ShareModule,
+      MatCardModule,
+      NgxPaginationModule,
+      AngularFireStorageModule,
+      AngularFireDatabaseModule,
+      MatPaginatorModule,
+      AngularFireModule.initializeApp({
+        apiKey: 'AIzaSyAFbHzEL2J7oXY5bWTF6dA3DnO_iCj5W48',
+        authDomain: 'webapp-1b736.firebaseapp.com',
+        databaseURL: 'https://webapp-1b736.firebaseio.com',
+        projectId: 'webapp-1b736',
+        storageBucket: 'webapp-1b736.appspot.com',
+        messagingSenderId: '1077539336649',
+        appId: '1:1077539336649:web:e5fbf4e6a877218b887818',
+        measurementId: 'G-N3YS1JFN9K'
+      }),
+      AngularFirestoreModule,
+      AngularFireAuthModule,
+      FacebookModule.forRoot(),
+      MatProgressBarModule,
+      NgSelectModule,
+      BsDatepickerModule.forRoot()
+    ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
     BrandService

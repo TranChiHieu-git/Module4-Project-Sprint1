@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AdminService} from '../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Account} from '../../models/account';
@@ -11,9 +11,14 @@ import {Customer} from '../../models/customer';
 import {ToastrService} from 'ngx-toastr';
 import {EmployeeService} from '../../services/employee.service';
 import {Employee} from '../../models/employee';
+import {Department} from '../../models/department';
+import {PositionEmp} from '../../models/position';
+import {finalize} from 'rxjs/operators';
+import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Tempjwtemp} from '../../models/tempjwtemp';
 import {TokenStorageService} from '../../auth/token-storage.service';
+
 
 function comparePassword(c: AbstractControl) {
   const v = c.value;
@@ -28,7 +33,6 @@ function comparePassword(c: AbstractControl) {
   styleUrls: ['./list-account.component.scss']
 })
 export class ListAccountComponent implements OnInit {
-
   constructor(private adminService: AdminService,
               private route: Router,
               private formBuilder: FormBuilder,
@@ -36,9 +40,13 @@ export class ListAccountComponent implements OnInit {
               private customerService: CustomerService,
               private toastrService: ToastrService,
               private employeeService: EmployeeService,
+              private afStorage: AngularFireStorage,
               private loginAccount: TokenStorageService) {
   }
 
+  currentYear = new Date().getFullYear();
+  minDate = new Date(this.currentYear - 100, 0, 1);
+  maxDate = new Date(this.currentYear - 18, 0, 1);
   accountList: Account[] = [];
   accountlist: Account[] = [];
   roleList: Role[];
@@ -60,13 +68,55 @@ export class ListAccountComponent implements OnInit {
   promiseAccount: any;
   private sumVal = 0;
   employeeList: Employee[];
+  employeeForm: FormGroup;
+  positionList: PositionEmp[];
+  departmentList: Department[];
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+  src: string;
+  image: string;
+  uploadStatus = true;
+  uploadProgressStatus = false;
+  accountNotInEmployee: Account[];
+  account: Account;
   deleteChose = [];
   token: any;
   decode = new JwtHelperService();
   tempJwt = new Tempjwtemp();
   accountName = '';
+  utf8 = 'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế';
 
   ngOnInit(): void {
+    this.adminService.getAllAccountNotInEmployee().subscribe(next => {
+      this.accountNotInEmployee = next;
+    });
+    this.employeeService.findAllPosition().subscribe(next => {
+        this.positionList = next;
+      },
+      error => console.log(error)
+    );
+    this.employeeService.findAllDepartment().subscribe(
+      next => this.departmentList = next
+    );
+    this.employeeForm = this.formBuilder.group({
+      id: [''],
+      name: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
+      birthday: ['', Validators.required],
+      address: ['', [Validators.required]],
+      position: this.formBuilder.group({
+        id: [],
+        name: ['']
+      }),
+      department: this.formBuilder.group({
+        id: [],
+        name: ['']
+      }),
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^09\d{8,9}$/)]],
+      email: ['', [Validators.required, Validators.pattern(/^[a-z0-9]+[a-z0-9]*@[A-Za-z0-9]+(.[A-Za-z0-9]+)$/)]],
+      image: [''],
+      account: ['', Validators.required]
+    });
     this.tempJwt = this.decode.decodeToken(this.loginAccount.getToken());
     this.accountName = this.tempJwt.sub;
     this.employeeService.findAll().subscribe(next => {
@@ -96,8 +146,8 @@ export class ListAccountComponent implements OnInit {
     });
     this.editAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
-      accountName: ['', [Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,}$'), this.existAccountName.bind(this)]],
-      accountPassword: ['', [Validators.pattern('^[a-zA-Z0-9]{1,}$')]],
+      accountName: ['', [Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,100}$'), this.existAccountName.bind(this)]],
+      accountPassword: ['', [Validators.pattern('^[a-zA-Z0-9]{1,100}$')]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]],
       reason: ['']
@@ -108,10 +158,10 @@ export class ListAccountComponent implements OnInit {
       accountPassword: ['', [Validators.required]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]],
-      reason: ['', [Validators.required]]
+      reason: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\s' + this.utf8 + ']{1,255}$')]]
     });
     this.deleteListAccountForm = this.formBuilder.group({
-      reason: ['', [Validators.required]]
+      reason: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\s' + this.utf8 + ']{1,255}$')]]
     });
   }
 
@@ -300,11 +350,10 @@ export class ListAccountComponent implements OnInit {
     if (this.infoAccountById.position === null) {
       this.adminService.findByInfoUserId(id).subscribe(next => {
         if (next.imageUrl === '' || next.imageUrl === null || next.imageUrl === undefined) {
-          next.imageUrl = '../../../assets/photo/avatadefault.png';
+          next.imageUrl = '../../../assets/photo/customer-avatar.png';
         }
         this.infoAccountById2 = next;
       });
-    } else {
     }
     $('#infor').show();
     $('.close').click(function() {
@@ -317,10 +366,8 @@ export class ListAccountComponent implements OnInit {
     this.adminService.findByInfoId(id).subscribe(next => {
       this.infoAccountById = next;
     });
-    this.customerService.getCustomerById(id).subscribe(next => {
+    this.adminService.findByInfoUserId(id).subscribe(next => {
       this.infoAccountById2 = next;
-    }, error => {
-      console.log(error);
     });
     this.adminService.findAllRole().subscribe(next => {
       this.roleList = next;
@@ -425,9 +472,9 @@ export class ListAccountComponent implements OnInit {
                   this.adminService.create(this.accountForm2[i].value).subscribe(
                     () => {
                       this.getAll();
-                      this.accountForm2[i].reset();
                       this.showCreated();
-                      this.accountForm2.splice(i, 1);
+
+
                     },
                     error => console.log(error)
                   );
@@ -526,6 +573,58 @@ export class ListAccountComponent implements OnInit {
       }
     }
     return check;
+  };
+
+  selectFile(): void {
+    $('#image').click();
+  }
+
+  readURL(target: EventTarget & HTMLInputElement): void {
+    this.uploadStatus = false;
+    this.uploadProgressStatus = true;
+    if (target.files && target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // @ts-ignore
+        $('#avatar').attr('src', e.target.result);
+      };
+      reader.readAsDataURL(target.files[0]);
+      this.uploadFireBaseAndSubmit();
+    } else {
+    }
+  }
+
+  private uploadFireBaseAndSubmit(): void {
+    const target: any = document.getElementById('image');
+
+    const id = Math.random().toString(36).substring(2);
+    this.ref = this.afStorage.ref(id);
+    this.task = this.ref.put(target.files[0]);
+    this.task.snapshotChanges().pipe(
+      finalize(() => {
+        this.ref.getDownloadURL().subscribe(url => {
+          this.src = url;
+          this.image = this.src;
+        });
+      }))
+      .subscribe();
+  }
+
+  createEmployee() {
+    this.adminService.findAccountById(this.employeeForm.get('account').value).subscribe(next => {
+      this.account = next;
+      this.employeeForm.patchValue({
+        image: this.image,
+        account: this.account
+      });
+      this.employeeService.create(this.employeeForm.value).subscribe(next => {
+          $('#edit-em').click();
+          this.employeeForm.reset();
+          this.image = null;
+          this.toastrService.success('Thêm mới nhân viên thành công');
+        }
+      );
+    });
   }
 
   checkChose() {
@@ -553,8 +652,7 @@ export class ListAccountComponent implements OnInit {
 
   tickForCheckBox(id: number): boolean {
     for (let i = 0; i < this.deleteChose.length; i++) {
-      if (
-        this.deleteChose[i] === id) {
+      if (this.deleteChose[i] === id) {
         return true;
       }
     }

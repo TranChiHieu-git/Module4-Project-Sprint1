@@ -10,6 +10,7 @@ import {PositionEmp} from "../models/position";
   providedIn: 'root'
 })
 export class EmployeeService {
+  API_URL = 'http://localhost:8080/employee';
   API_URL_EMPLOYEE = 'http://localhost:8080/employee/list';
   API_URL_EMPLOYEE_PAGE = 'http://localhost:8080/employee/page-list';
   API_URL_ACCOUNT = 'http://localhost:8080/employee/account/name';
@@ -49,6 +50,10 @@ export class EmployeeService {
 
   findAccountByName(name: string): Observable<Account> {
     return this.httpClient.get<Account>(this.API_URL_EMPLOYEE + '/name/' + name);
+  }
+
+  create(employee: Employee): Observable<any> {
+    return this.httpClient.post<Employee>(this.API_URL + '/create', employee);
   }
 
   findAllEmployeeWithPage(currentPage, size, search): Observable<any> {

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {finalize} from 'rxjs/operators';
@@ -20,6 +20,7 @@ export class BrandManagementComponent implements OnInit {
   selectedImage: any = null;
   downloadURL: Observable<string>;
   brandForm: FormGroup;
+  brandFormArray: FormArray = new FormArray([]);
   brand: Brand;
   brandList: Brand[];
   size = 5;
@@ -35,6 +36,8 @@ export class BrandManagementComponent implements OnInit {
   deleteList = new Array();
   listError: any = {};
   WEBSITE_PATTERN = '^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+(\\.[a-z]{2,}){1,3}(#?\\/?[a-zA-Z0-9#]+)*\\/?(\\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$';
+  NAME_PATTERN = '^((?!\s{2,}).)*$';
+  NAME_PATTERN2 = '^[a-zA-Z0-9\\_\\-\\sÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế]+$';
 
   constructor(
     private brandService: BrandService,
@@ -59,14 +62,15 @@ export class BrandManagementComponent implements OnInit {
   ngOnInit(): void {
     this.getAllBrand();
     checkAll();
+
   }
 
   initCreateForm(): void {
     this.brandForm = this.fb.group({
       brandLogo: [''],
-      brandName: ['', Validators.required],
-      brandAddress: ['', Validators.required],
-      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_PATTERN)]]
+      brandName: ['', [Validators.required, Validators.pattern(this.NAME_PATTERN2), Validators.maxLength(50)]],
+      brandAddress: ['', [Validators.required, Validators.pattern(this.NAME_PATTERN2), Validators.maxLength(100)]],
+      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_PATTERN), Validators.maxLength(50)]]
     });
   }
 
@@ -168,7 +172,9 @@ export class BrandManagementComponent implements OnInit {
 
 
   cancelCreateForm(): void {
+    this.imgSrc = 'https://via.placeholder.com/150';
     this.initCreateForm();
+
   }
 
   onFileSelected(event: any): void {
@@ -290,5 +296,44 @@ export class BrandManagementComponent implements OnInit {
   switchEdit(brand: Brand): void {
     brand.isEditable = !brand.isEditable;
     $('#submit' + brand.id).click();
+  }
+
+  createFormGroup(): FormGroup {
+    return this.fb.group({
+      brandLogo: [''],
+      brandName: ['', [Validators.required, Validators.pattern(this.NAME_PATTERN2), Validators.maxLength(50)]],
+      brandAddress: ['', [Validators.required, Validators.pattern(this.NAME_PATTERN2), Validators.maxLength(100)]],
+      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_PATTERN), Validators.maxLength(50)]]
+    });
+  }
+  onAddRow(): void{
+    this.brandFormArray.push(this.createFormGroup());
+  }
+  onRemoveRow(rowIndex: number): void{
+    this.imgSrc = 'https://via.placeholder.com/150';
+    this.brandFormArray.removeAt(rowIndex);
+  }
+
+  quickAddNewBrand(brandFormArray, index): void {
+    if (this.brandFormArray.valid) {
+      this.brandService.createBrand(brandFormArray.at(index).value).subscribe(
+        next => {
+          this.onRemoveRow(index);
+          this.showCreateSuccess();
+          this.initCreateForm();
+          this.onSubmit(0);
+        },
+        error => {
+          if (error.status === 400) {
+            this.listError = error.error;
+          }
+          if (error.status === 500) {
+            this.showCreateError();
+          }
+        }
+      );
+    } else {
+      this.showCreateWarning();
+    }
   }
 }

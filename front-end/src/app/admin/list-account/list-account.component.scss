@@ -182,3 +182,37 @@ input[type=text]:focus {
   border-radius: 10px;
 }
 
+#editBtn, #deleteBtn, #deleteMultiBtn {
+  background-color: rgb(238, 159, 31) !important;
+}
+
+.igt {
+  background-color: rgb(238, 159, 31) !important;
+}
+
+.fa, .fas {
+  color: white;
+}
+
+::ng-deep .cdk-overlay-container {
+  z-index: 2000 !important;
+}
+
+.bg-header {
+  background-color: #ee9f1f;
+}
+
+.btn-custom {
+  border: #EE9F1F solid 1px;
+  background-color: #EE9F1F;
+  color: white;
+}
+
+.border-custom {
+  border-color: #EE9F1F !important;
+}
+
+.img-custom {
+  width: 100%;
+  height: 100%;
+}

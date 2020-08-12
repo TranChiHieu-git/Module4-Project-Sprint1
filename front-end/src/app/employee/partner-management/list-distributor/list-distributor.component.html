@@ -1,7 +1,11 @@
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.19/js/uikit.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.19/css/uikit.min.css">
+
 
 <div class="container-fluid">
   <div class="row d-flex justify-content-between ">
@@ -19,22 +23,29 @@
 
   <hr>
   <div class="row">
-    <div class="col-10">
+    <div class="col-8">
       <button class="btn btn-primary btn-create-custom" (click)="openCreateForm()"><span
         class="fa fa-plus-square"></span> Thêm mới
       </button>
     </div>
-    <div class="col-2">
-      <button class="btn btn-outline-danger" style="margin-left: 42px" (click)="confirmDeleteAll()"><span
+    <div class="col-4">
+      <button class="btn btn-outline-danger" style="margin-left: 20px; float: right" (click)="confirmDeleteAll()" hidden
+              id="deleteMore"><span
         class="fas fa-trash"></span>
         Xóa nhiều
+      </button>
+
+      <button class="btn btn-outline-danger" style="margin-left: 42px; float: right" id="editMore" hidden
+              (click)="showEditMoreInfor()"><span
+        class="fas fa-trash"></span>
+        Sửa nhiều
       </button>
     </div>
   </div>
   <div class="row">
     <div class="col-12">
       <table class="table table-bordered table-striped mt-3 ml-0">
-        <thead class="table-header">
+        <thead class="table-header" style="z-index: 0">
         <tr>
           <th class="sticky-top">Mã</th>
           <th class="sticky-top">Tên</th>
@@ -50,8 +61,9 @@
         </tr>
         </thead>
         <tbody>
-        <ng-container *ngFor="let distributor of distributorList">
-          <tr *ngIf="distributor.id!==idHasModifined">
+
+        <ng-container *ngFor="let distributor of distributorList; let i = index">
+          <tr [ngClass]="{highLight: checkHighlightRecord(distributor.id)}">
             <td width="3%">
               {{distributor.id}}
             </td>
@@ -71,14 +83,17 @@
               <a>
                 <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button"
                         class="global-button m-1 customButton"><i
-                  class="icon-pencil" (click)="openEditForm(distributor.id)"></i></button>
+                  class="icon-pencil"
+                  aria-label="expand row"
+                  uk-toggle="target: #panel{{i}}; animation: uk-animation-fade"
+                  (click)="openEditForm2(i, distributor.id, distributor.name)"></i></button>
               </a>
-            </td >
+            </td>
 
             <td width="5%">
               <a>
                 <button type="button" class="global-button customButton"><i
-                  class="fa fa-trash" (click)="openDeleteForm(distributor.id)"></i></button>
+                  class="fa fa-trash" (click)="openDeleteForm(distributor.id,distributor.name, i)"></i></button>
               </a>
             </td>
             <td width="5%">
@@ -92,44 +107,187 @@
               <input *ngIf="distributor.id" type="checkbox" [id]="'checkbox' + distributor.id"
                      (change)="addToListDelete(distributor.id, distributor.name)" style="display: block"></td>
           </tr>
-          <tr *ngIf="distributor.id===idHasModifined">
-            <td style="width: 2%; color: blue; font-weight: 800">{{distributor.id}}</td>
-            <td style="width: 30% ;color: blue; font-weight: 800">{{distributor.name}}</td>
-            <td style="color: blue; font-weight: 800">
-              <span>{{distributor.address}}</span>
-            </td>
-            <td style="color: blue; font-weight: 800">
-              <span>{{distributor.numberPhone}}</span>
-            </td>
-            <td style="color: blue; font-weight: 800">
-              <span>{{distributor.email}}</span>
-            </td>
-            <td>
-              <a>
-                <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button"
-                        class="global-button m-1 customButton"><i
-                  class="icon-pencil" (click)="openEditForm(distributor.id)"></i></button>
-              </a>
+
+
+          <tr [id]="'panel'+i" class="no-border-top table-panel" hidden>
+
+            <td colspan="10">
+              <form [formGroup]="listFormGroup[i]" (ngSubmit)="submitForm2(i)">
+                <div class="row" style="margin-top: 20px">
+                  <div class="col-md-1">
+
+                  </div>
+                  <div class="col-xl-5 ">
+                    <div class="row ">
+                      <div class="myRow">
+
+                        <input formControlName="name" type="text" class="form-control" aria-label="Username"
+                               aria-describedby="basic-addon1"
+                               (focusout)="checkValidateDistributorIsExist2(i,listFormGroup[i].get('id').value)"
+                               (change)="enableSubmitButton(i)">
+                        <label id="icon3"><i class="icon-user"></i></label>
+                        <span class="spanMessError"
+                              *ngIf="this.listFormGroup[i].invalid">{{getErrorMessage2('name', listFormGroup[i])}} </span>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="myRow">
+
+                        <input formControlName="email" type="text" class="form-control" aria-label="Username"
+                               aria-describedby="basic-addon1" (change)="enableSubmitButton(i)">
+                        <label id="icon3"><i class="icon-envelope-alt"></i></label>
+                        <span class="spanMessError"
+                              *ngIf="!this.listFormGroup[i].valid">{{getErrorMessage2('email', listFormGroup[i])}} </span>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="myRow">
+                        <input formControlName="website" type="text" class="form-control" aria-label="Username"
+                               aria-describedby="basic-addon1" (change)="enableSubmitButton(i)">
+                        <label id="icon3"><i class="fa fa-globe" aria-hidden="true"></i></label>
+                        <span class="spanMessError"
+                              *ngIf="!this.listFormGroup[i].valid">{{getErrorMessage2('website', listFormGroup[i])}} </span>
+
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="myRow2">
+                          <label id="icon4" style="float: left ; margin-left: 10%"><i
+                            class="icon-phone"></i>
+                          </label>
+                          <input formControlName="numberPhone" type="text" class="form-control" aria-label="Username"
+                                 aria-describedby="basic-addon1" style=" float: left" (change)="enableSubmitButton(i)">
+                          <span class="spanMessError" *ngIf="!this.myForm.valid"
+                                style="font-size: 13px; padding-left:10%;float: left">{{getErrorMessage2('numberPhone', listFormGroup[i])}}</span>
+
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="myRow2">
+                          <input formControlName="fax" type="text" class="form-control" aria-label="Username"
+                                 aria-describedby="basic-addon1" style="margin-right: 10%; float: right"
+                                 (change)="enableSubmitButton(i)">
+                          <label id="icon4"><i class="fa fa-fax" aria-hidden="true"></i> </label>
+                          <span *ngIf="!this.listFormGroup[i].valid"
+                                style="font-size: 13px;float: left">{{getErrorMessage2('fax', listFormGroup[i])}}</span>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-3" style="padding: 0 ; margin: 0">
+                    <div class="row">
+                      <div class="myRow" style="float: right">
+                        <div style="margin-left: 5%">
+                          <select class="selectpicker show-menu-arrow"
+                                  data-style="form-control"
+                                  data-live-search="true"
+                                  title="Loại phân phối"
+                                  [id]="'selectType'+i" (change)="getTypeOfDistributor(i)">
+                            <option data-tokens="Tất cả" value="1">Phân phối tất cả</option>
+                            <option data-tokens="Bánh" value="2">Phân phối bánh</option>
+                            <option data-tokens="Kẹo" value="3">Phân phối kẹo</option>
+                          </select>
+                          <span *ngIf="!this.listFormGroup[i].valid"
+                                style="font-size: 13px;float: left">{{getErrorMessage2('address', listFormGroup[i])}}</span>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="row ">
+                      <div class="myRow" style="float: right">
+                        <div style="margin-left: 5%;">
+                          <select class="show-menu-arrow province selectpicker "
+                                  data-style="form-control"
+                                  data-live-search="true"
+                                  title="Chọn tỉnh" (change)="changeProvince($event.target.value,i)"
+                                  [id]="'province'+i">
+                            <option *ngFor="let item of listProvinces[i]" value="{{item.matp}}"
+                                    name="{{item}}">{{item.name}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row ">
+                      <div class="myRow" style="float: right">
+                        <div style="margin-left: 5%;">
+                          <select class="selectpicker show-menu-arrow district"
+                                  data-style="form-control"
+                                  data-live-search="true"
+                                  title="Chọn huyện - thị trấn" (change)="changeDistrict($event.target.value,i)"
+                                  [id]="'district'+i">
+                            <option *ngFor="let district of listDistrict[i]" name="{{district.name}}"
+                                    value="{{district.maqh}}">{{district.name}} </option>
+
+
+                          </select>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row ">
+                      <div class="myRow" style="float: right">
+                        <div style="margin-left: 5%;">
+                          <select class="selectpicker show-menu-arrow commune"
+                                  data-style="form-control"
+                                  data-live-search="true"
+                                  title="Chọn xã - phường" (change)="changeCommune($event.target.value,i)"
+                                  [id]="'commune'+i">
+                            <option *ngFor="let commune of listCommune[i]" name="{{commune.name}}"
+                                    value="{{commune.xaid}}">{{commune.name}}</option>
+
+
+                          </select>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-xl-2" style=" position: relative">
+                    <div class="row imgWidth" style="position: relative">
+                      <div id="imgFrame" style="width:{{imgHeight}}; height: {{imgHeight}};">
+                        <img [id]="'img'+i" src="{{srcList[i]}}"
+                             style="max-width: {{imgHeight}}; max-height: {{imgHeight}} ; cursor: pointer"
+                             class="imgAvatar"
+                             (mouseenter)="hoverUploadPic2(i)" (mouseleave)="leaveUploadPic2(i)"
+                             (click)="selectAvatar2(i)">
+                        <i
+                          style="font-size: 50px; opacity: -1; width: 30%; margin: 35%; text-align: center; z-index: -1"
+                          class="fa fa-picture-o"
+                          aria-hidden="true" [id]="'inputIcon'+i" (mouseenter)="hoverUploadPic2(i)"
+                          (click)="selectAvatar2(i)"></i>
+                        <input [id]="'inputImg'+i" type="file" datatype="image/*" accept="image/*" hidden
+                               (change)="loadImgAvatar2($event.target,i)">
+                        <mat-progress-bar mode="determinate" max="100"
+                                          [value]="(percentUpload | async)"></mat-progress-bar>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <button style="float: left;" type="submit" class="btn btn-success myButton" [id]="'submit'+i">SỬA
+                      </button>
+                      <button style="float: right; right: 0;" type="button"
+                              class="btn btn-secondary myButton" (click)="closeEditForm2(i, distributor.id)"> HỦY
+                      </button>
+                    </div>
+
+                  </div>
+
+                </div>
+              </form>
             </td>
 
-            <td>
-              <a>
-                <button type="button" class="global-button customButton"><i
-                  class="fa fa-trash" (click)="openDeleteForm(distributor.id)"></i></button>
-              </a>
-            </td>
-            <td>
-              <a>
-                <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button"
-                        class="global-button customButton"><i
-                  class="	fa fa-exclamation-circle" (click)="openDetailForm(distributor.id)"></i></button>
-              </a>
-            </td>
-            <td class="centerDiv" style="width: 3%">
-              <input *ngIf="distributor.id" type="checkbox" [id]="'checkbox' + distributor.id"
-                     (change)="addToListDelete(distributor.id, distributor.name)" style="display: block"></td>
-          <tr>
+          </tr>
+
+
         </ng-container>
+
         </tbody>
       </table>
     </div>
@@ -226,7 +384,7 @@
                   <div class="col-xl-8">
                     <div class="item" style="margin-top: 20px" data-tip="Tên nhà phân phối">
                       <input type="text" formControlName="name" id="name1" placeholder="Tên nhà phân phối*"
-                             (focusout)="validateDistributorIsExist()"/>
+                      />
                       <label id="icon" for="name1"><i class="icon-user"></i></label>
                       <span class="spanMessError" *ngIf="!this.myForm.valid">{{getErrorMessage('name')}} </span>
                     </div>
@@ -257,7 +415,8 @@
                       <div class="div2">
                         <input type="text" formControlName="fax" id="fax" placeholder="Fax"/>
                         <label id="icon2" for="fax"><i class="fa fa-fax" aria-hidden="true"></i> </label>
-                        <span class="spanMessError" *ngIf="this.myForm.invalid">{{getErrorMessage('fax')}}</span>
+                        <span style="padding-left: 7px" class="spanMessError"
+                              *ngIf="this.myForm.invalid">{{getErrorMessage('fax')}}</span>
                       </div>
                     </div>
                     <div class="item" style="margin-bottom: 15px">
@@ -282,7 +441,7 @@
     </div>
   </div>
 </form>
-<!--DELETE FORM-->
+<!--DELETE FORM 1 DISTRIBUTOR-->
 <button id="deleteForm" type="button" class="btn btn-primary" data-toggle="modal" data-target=".delete" hidden>Large
   modal
 </button>
@@ -293,16 +452,46 @@
       <h1>XÓA NHÀ PHÂN PHỐI</h1>
     </div>
     <div class="modal-content">
-      <h5 class="deleteTitle">Bạn có muốn xóa nhà phân phối?</h5>
-      <h5 *ngIf="myDistributor" class="deleteTitle distributorName">{{myDistributor.name}}</h5>
+      <h5 class="deleteTitle">Bạn có muốn xóa nhà phân phối <a
+        style="font-weight: 700; color: blue">{{distributorName}}</a> không ?</h5>
       <div>
-        <button class="btn btn-dark myButton" data-dismiss="modal" id="closeDeleteForrm">HỦY</button>
-        <button class="btn btn-danger myButton" (click)="deleteDistrinbutor(myDistributor.id)">XÓA</button>
+        <button class="btn btn-dark myButton" (click)="removeSession(this.distributorId)" data-dismiss="modal"
+                id="closeDeleteForrm">HỦY
+        </button>
+        <button class="btn btn-danger myButton" (click)="deleteDistributor(this.distributorId)" data-dismiss="modal">
+          XÓA
+        </button>
       </div>
     </div>
   </div>
 </div>
-<div id="snackbar"></div>
+
+<!--DELETE FORM TON TAI LIST BILLS-->
+<button id="deleteInformation" type="button" class="btn btn-primary" data-toggle="modal"
+        data-target=".deleteInformation" hidden>Large
+  modal
+</button>
+<div class="modal fade bd-example-modal-sm deleteInformation" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true" data-backdrop="static" data-keyboard="true" style="z-index: 1100">
+  <div class="modal-dialog">
+    <div class="modal-title" id="modal-title2">
+      <h1>XÓA NHÀ PHÂN PHỐI</h1>
+    </div>
+    <div class="modal-content">
+      <h5 *ngIf="distributorName" style="text-align: center" class="deleteTitle">KHÔNG THỂ XÓA NHÀ PHÂN
+        PHỐI <a style="color: blue; font-weight: 700">{{distributorName}}</a> VÌ ĐANG CÓ ĐƠN HÀNG</h5>
+      <h5 style="text-align: left; padding-left: 40px" *ngFor="let bill of listBill"
+          class="deleteTitle distributorName">Mã đơn hàng : {{bill.billName}} - tình trạng
+        : {{bill.shippingStatus}}</h5>
+      <div>
+        <button  class="btn btn-dark myButton" data-dismiss="modal" style="width: 25%; margin-left: 37.5%">XÁC NHẬN
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!--DELETE-ALL-FORM-->
 <button id="deleteAllForm" type="button" class="btn btn-primary" data-toggle="modal" data-target=".deleteAll" hidden>
@@ -340,10 +529,129 @@
       </ng-container>
 
       <div>
-        <button class="btn btn-dark myButton" data-dismiss="modal" id="closeDeleteAllForm">HỦY</button>
+        <button class="btn btn-dark myButton" data-dismiss="modal" data-dismiss="modal">HỦY</button>
         <button class="btn btn-danger myButton" (click)="deleteAll()" data-dismiss="modal">XÓA</button>
       </div>
     </div>
   </div>
 </div>
+
+
+<!--DELETE ALL RESUILT-->
+
+<button id="deleteAllFormInfor" type="button" class="btn btn-primary" data-toggle="modal" data-target=".deleteAllInfor"
+        hidden>
+  Large
+  modal
+</button>
+<div class="modal fade bd-example-modal-sm deleteAllInfor" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true" data-backdrop="static" data-keyboard="true">
+  <div class="modal-dialog">
+    <div class="modal-title" id="modal-title2">
+      <h1>XÓA TẤT CẢ NHÀ PHÂN PHỐI</h1>
+    </div>
+    <div class="modal-content">
+      <div *ngIf="deleteSuccessList.length!== 0">
+        <h5 style="text-align: left; padding-left: 15px; font-weight: 800" class="deleteTitle">DANH SÁCH NHÀ PHÂN PHỐI
+          XÓA THÀNH CÔNG
+        </h5>
+        <h5 style="text-align: left; padding-left: 40px" *ngFor="let item of deleteSuccessList"
+            class="deleteTitle distributorName">{{item.name}}</h5>
+      </div>
+
+
+      <h5 *ngIf="deleteUnsuccessList || deleteIsModifyingList" style="text-align: center; font-weight: 800"
+          class="deleteTitle">DANH SÁCH
+        NHÀ PHÂN PHỐI KHÔNG
+        THỂ XÓA VÌ ĐANG CÓ ĐƠN HÀNG HOẶC ĐANG CHỈNH SỬA BỞI NHÂN VIÊN KHÁC
+      </h5>
+      <h5 style="text-align: left; padding-left: 40px; color: red" *ngFor="let item of deleteUnsuccessList"
+          class="deleteTitle distributorName">{{item.name}}  - <a *ngIf="item.status===0"
+                                                                  (click)="getDetailBill(item.id, item.name)">Chi tiết</a></h5>
+      <h5 style="text-align: left; padding-left: 40px; color: red" *ngFor="let item of deleteIsModifyingList"
+          class="deleteTitle distributorName">{{item.name}}  - <a *ngIf="item.status!==0">Đang được chỉnh sửa</a></h5>
+      <div>
+        <button class="btn btn-dark myButton" data-dismiss="modal" style="width: 25%; margin-left: 37.5%">XÁC NHẬN
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--EDIT MORE DIALOG-->
+<button id="modifiedMoreForm" type="button" class="btn btn-primary" data-toggle="modal" data-target=".modifiedMore"
+        hidden>
+  Large
+  modal
+</button>
+<div class="modal fade bd-example-modal-sm modifiedMore" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true" data-backdrop="static" data-keyboard="true">
+  <div class="modal-dialog">
+    <div class="modal-title" id="modal-title2">
+      <h1>CHỈNH SỬA NHIỀU NHÀ PHÂN PHỐI</h1>
+    </div>
+    <div class="modal-content">
+      <h5 class="deleteTitle" style="margin-bottom: 10px; font-weight: 800; padding-left: 20px">KẾT QUẢ CHỈNH SỬA NHIỀU
+        NHÀ PHÂN PHỐI</h5>
+      <ng-container>
+        <div *ngFor="let item of listFormGroup, let i = index" style="width: 95%; margin: 0 2.5% 0 2.5%">
+          <div style="width: 90%;float: left; overflow: hidden; margin-left: 5%">
+            <div *ngIf="item.valid " style="position: relative">
+              <input type="checkbox" [id]="'checkboxEditMore'+i" value="haha"
+                     style="display: inline-block; width: 5%; float: left; position: relative; top : 18px" disabled>
+              <h5
+                style="float: left; width: 35%; color: #3a57af;line-height: 50px; display: block; margin-bottom: 0px; margin: 0">{{distributorListName[i]}}
+              </h5>
+              <mat-progress-bar *ngIf="isChangedImgList[i]" [id]="'process'+i"
+                                style="float: left; width: 60%; position: relative; top: 23px" mode="determinate"
+                                max="100" [value]="(percentListUpload[i] | async)"></mat-progress-bar>
+            </div>
+            <div *ngIf="item.invalid &&  item.value.id !== null " style="position: relative">
+              <input type="checkbox" [id]="'checkboxEditMore'+i" value="haha"
+                     style="display: inline-block; width: 5%; float: left; position: relative; top : 18px" disabled>
+
+              <h5
+                style="float: left; width: 35%; color: red;line-height: 50px; display: block;margin: 0px;">{{distributorListName[i]}}</h5>
+              <a style="line-height: 50px; color: red">( Thông tin chỉnh sửa sai)</a>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <div>
+        <button class="btn btn-dark myButton" id="cancelEditMore" data-dismiss="modal">HỦY</button>
+        <button class="btn btn-danger myButton" id="submitEditMore" (click)="submitModifiedMore()">CHỈNH SỬA</button>
+        <button class="btn btn-danger myButton" id="closeEditMore" (click)="closeEditMoreForm()" data-dismiss="modal"
+                hidden disabled>XÁC NHẬN
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--FORM THONG BAO DANG CHINH SUA BOI NHIEU CUA SO-->
+<button id="multiTab" type="button" class="btn btn-primary" data-toggle="modal" data-target=".multiTab" hidden>Large
+  modal
+</button>
+<div class="modal fade bd-example-modal-sm multiTab" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true" data-backdrop="static" data-keyboard="true">
+  <div class="modal-dialog">
+    <div class="modal-title" id="modal-title2">
+      <h1>CHỈNH SỬA NHÀ PHÂN PHỐI</h1>
+    </div>
+    <div class="modal-content">
+      <h5 class="deleteTitle">Nhà phân phối <a style="font-weight: 600; color: blue">{{this.distributorName}}</a> đang
+        được chỉnh sửa bởi 1 nhân viên khác. Vui lòng thử lại sau.</h5>
+      <div>
+        <button class="btn btn-dark myButton" style="width: 30%; margin-left: 35%" data-dismiss="modal">XÁC NHẬN
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div id="snackbar"></div>
