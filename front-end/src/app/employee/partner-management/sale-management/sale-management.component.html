@@ -16,7 +16,7 @@
       <tr>
         <td><label>Tên Nhân Viên:</label></td>
         <td>
-          <input class="form-control" list="empoyee" name="myEmpoyee" formControlName="employee"/>
+          <input class="form-control datepickerinput" list="empoyee" name="myEmpoyee" formControlName="employee"/>
           <datalist id="empoyee">
             <ng-container *ngFor="let employee of employeeList">
               <option value="{{employee.name}}">{{employee.name}}</option>
@@ -29,7 +29,7 @@
         <td>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <input class="form-control"
+              <input class="form-control datepickerinput inputnormal"
                      formControlName="createDateFrom" matInput [matDatepicker]="picker">
               <span class="datePicker-div">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -49,7 +49,7 @@
           <label>Tên Khách Hàng:</label>
         </td>
         <td>
-          <input list="user" name="myUser" class="form-control" formControlName="user"/>
+          <input list="user" name="myUser" class="form-control datepickerinput" formControlName="user"/>
           <datalist id="user">
             <ng-container *ngFor="let customers of customerList">
               <option value="{{customers.userName}}">{{customers.userName}}</option>
@@ -62,7 +62,7 @@
         <td>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <input class="form-control"
+              <input class="form-control datepickerinput inputnormal"
                      formControlName="createDateTo" matInput [matDatepicker]="picker2">
               <span class="datePicker-div">
                   <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
