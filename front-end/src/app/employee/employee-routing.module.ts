@@ -16,6 +16,7 @@ import {AuthGuard} from '../auth/auth.guard';
 import {BillComponent} from './warehouse-management/bill/bill.component';
 import {ProductSaleComponent} from './sale-management/product-sale/product-sale.component';
 import {SaleManagementComponent} from './partner-management/sale-management/sale-management.component';
+import {SalesManagementComponent} from './sale-management/sale-management.component';
 const routes: Routes = [{
   path: 'employee', component: EmployeeComponent, canActivate: [AuthGuard],
   children: [
@@ -46,7 +47,7 @@ const routes: Routes = [{
       ]
     },
     {
-      path: 'sale-management', component: SaleManagementComponent, children: [
+      path: 'sale-management', component: SalesManagementComponent, children: [
         {path: 'product', component: ProductSaleComponent}
       ]
     }

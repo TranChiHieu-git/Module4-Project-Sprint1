@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
   templateUrl: './sale-management.component.html',
   styleUrls: ['./sale-management.component.scss']
 })
-export class SaleManagementComponent implements OnInit {
+export class SalesManagementComponent implements OnInit {
   userDisplayName = '';
 
   constructor(private tokenStorageService: TokenStorageService,

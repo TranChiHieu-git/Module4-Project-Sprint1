@@ -89,7 +89,6 @@ export class ListAccountComponent implements OnInit {
   ngOnInit(): void {
     this.adminService.getAllAccountNotInEmployee().subscribe(next => {
       this.accountNotInEmployee = next;
-      console.log(this.accountNotInEmployee);
     });
     this.employeeService.findAllPosition().subscribe(next => {
         this.positionList = next;
@@ -473,9 +472,9 @@ export class ListAccountComponent implements OnInit {
                   this.adminService.create(this.accountForm2[i].value).subscribe(
                     () => {
                       this.getAll();
-                      this.accountForm2[i].reset();
                       this.showCreated();
-                      this.accountForm2.splice(i, 1);
+
+
                     },
                     error => console.log(error)
                   );

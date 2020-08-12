@@ -45,12 +45,13 @@ import { ProductSaleComponent } from './sale-management/product-sale/product-sal
 import {SaleManagementComponent} from './partner-management/sale-management/sale-management.component';
 // @ts-ignore
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {SalesManagementComponent} from './sale-management/sale-management.component';
 
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
     WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent,
     BillComponent, BrandManagementComponent, CustomerManagementComponent, CustomPaginationComponent,
-    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent, ProductSaleComponent],
+    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent,SalesManagementComponent, ProductSaleComponent],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent

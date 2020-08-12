@@ -91,9 +91,6 @@
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('name').hasError('required') && editForm.get('name').touched">
             Tên không được để trống !
           </div>
-          <div class="alert alert-danger" role="alert" *ngIf="editForm.get('name').hasError('pattern') && editForm.get('name').touched">
-            Tên sai cú pháp !
-          </div>
           <mat-error class="error-message">
             {{listError.name}}
           </mat-error>
@@ -121,7 +118,7 @@
             Số điện thoại không được để trống !
           </div>
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('phoneNumber').hasError('pattern') && editForm.get('phoneNumber').touched">
-            Số điện thoại bắt đầu bằng +84 theo sau 9 hoặc 10 chữ số
+            Số điện thoại bắt đầu bằng 09 theo sau 8 hoặc 9 chữ số
           </div>
           <mat-error class="error-message">
             {{listError.phoneNumber}}
@@ -143,16 +140,12 @@
             <label>Địa chỉ (*) <input type="text" class="form-control"  formControlName="address">
             </label>
           </div>
-          <div class="alert alert-danger" role="alert" *ngIf="editForm.get('address').hasError('pattern') && editForm.get('address').touched">
-            Địa chỉ sai cú pháp !
-          </div>
           <div class="alert alert-danger" role="alert" *ngIf="editForm.get('address').hasError('required') && editForm.get('address').touched">
             Địa chỉ không đc để trống !
           </div>
           <mat-error class="error-message">
             {{listError.address}}
           </mat-error>
-
           <fieldset formGroupName="position">
             <label>Chức vụ (*)
               <select class="form-control col-form-label" formControlName="id">
