@@ -35,17 +35,18 @@
               "./node_modules/selectize/dist/css/selectize.bootstrap3.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/slick-carousel/slick/slick.scss",
               "src/assets/css/bootstrap-select.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/popper.js/dist/umd/popper.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "./node_modules/selectize/dist/js/standalone/selectize.js",
               "src/assets/js/collapse_sidebar.js",
               "src/assets/js/addProductInRow.js",
               "src/assets/js/fb.js",
               "src/assets/js/customer-chat.js",
+              "./node_modules/slick-carousel/slick/slick.js",
               "src/assets/js/BrandJS.js",
               "src/assets/js/bootstrap-select.js"
             ]

@@ -17,6 +17,7 @@ export class AdminService {
   API_ROLE_URL = 'http://localhost:8080/role';
   httpOptions: any;
   httpOptions2: any;
+  API_URL2 = 'http://localhost:8080/accountsss';
 
   constructor(private httpClient: HttpClient, private tokenStorage: TokenStorageService) {
     this.httpOptions = {
@@ -32,6 +33,10 @@ export class AdminService {
   getAllCourse(currentPage, size, search, nameRole): Observable<any> {
     return this.httpClient.get(this.API_URL + '?page=' + currentPage + '&size=' + size + '&search=' + search + '&role=' + nameRole)
       .pipe(catchError(this.handleError));
+  }
+
+  getAllAccountNotInEmployee(): Observable<any> {
+    return this.httpClient.get(this.API_URL2)
   }
 
   findAll(): Observable<Account[]> {
