@@ -18,14 +18,12 @@ export class FilterProductPipe implements PipeTransform {
   transform(value: any[], searchString: string ): any[]{
 
     if (!searchString){
-      console.log('no search');
       return value;
     }
 
     return value.filter(it => {
       const productName = it.productName.toLowerCase().includes(searchString);
       const price = it.price.toString().includes(searchString.toLowerCase());
-      console.log( productName + price);
       return (productName + price);
     });
   }

@@ -1,8 +1,24 @@
 <div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <button type="button" class="float-left btn btn-primary" data-toggle="modal" data-target="#create">
+        Thêm mới
+      </button>
+      <form (ngSubmit)="getAll()">
+        <button type="submit" class=" float-right btn btn-primary">Tìm kiếm</button>
+        <div class="float-right form-group has-search">
+          <span class="fa fa-search form-control-feedback"></span>
+          <input [(ngModel)]="userName" name='userName' type="text"
+                 class="border border-primary form-control"
+                 placeholder="Tìm kiếm">
+        </div>
+      </form>
+    </div>
+  </div>
   <div class="row px-0 py-0">
     <div class="col-md-12">
-      <table class="table table-borderless">
-        <thead>
+      <table class="table">
+        <thead class="thead">
         <tr>
           <th scope="col">#</th>
           <th scope="col">Tên tài khoản</th>
@@ -22,10 +38,13 @@
             </div>
           </th>
           <th></th>
-          <th><input class="mat-checkbox " type="checkbox"></th>
+          <th>
+            <a class="details" data-target="#deleteListAccount" data-toggle="modal"
+               *ngIf="deleteChose.length > 1">Xóa</a>
+          </th>
         </tr>
         </thead>
-        <tbody class="border border-dark"
+        <tbody class=""
                *ngFor="let account of accountList">
         <tr>
           <th scope="row">{{account.accountId}}</th>
@@ -33,12 +52,19 @@
               data-target="#infor">{{account.accountName}}</td>
           <td><label class="pw">{{account.role.roleName}}</label></td>
           <td>
-            <button class="border-0 mr-5 bg-transparent fas fa-pencil-alt"
-                    (click)="edit(account.accountId)" data-toggle="modal" data-target="#edit"></button>
-            <button class="border-0 bg-transparent	fa fa-trash "
-                    (click)="delete(account.accountId)" data-toggle="modal" data-target="#delete"></button>
+            <button class="border-0 mr-5 bg-transparent edit"
+                    (click)="edit(account.accountId)" data-toggle="modal" data-target="#edit">
+              <img class="icon" width="25px" height="auto"
+                   src="https://cdn4.iconfinder.com/data/icons/eldorado-education/40/291332-pencil-256.png">
+            </button>
+            <button class="border-0 bg-transparent delete"
+                    (click)="delete(account.accountId)" data-toggle="modal" data-target="#delete">
+              <img class="icon" width="25px" height="auto"
+                   src="https://cdn4.iconfinder.com/data/icons/vectory-basic/40/recycle_bin_full-256.png">
+            </button>
           </td>
-          <td><input class="mat-checkbox " type="checkbox"></td>
+          <td><input id="{{account.accountId}}" class="checkbox" type="checkbox"
+                     (change)="checkChose()" [checked]="tickForCheckBox(account.accountId)"/></td>
         </tr>
         </tbody>
       </table>
@@ -70,29 +96,120 @@
           <!--          <li class="page-item" (click)="onLast()"><a class="page-link">Last</a></li>-->
         </ul>
       </nav>
+      <button class="btn btn-primary" (click)="addMore()" type="button">Thêm mới</button>
     </div>
   </div>
-
-  <!--  THêm mới-->
-  <div class="row">
+  <div class="row px-0 py-0">
     <div class="col-md-12">
-      <button type="button" class="float-right btn btn-primary" data-toggle="modal" data-target="#create">
-        Thêm mới
+      <form *ngFor="let account of accountForm2" [formGroup]="account">
+        <table class="table table-borderless">
+          <thead>
+          <tr>
+            <th>Tên tài khoản</th>
+            <th>Mật khẩu</th>
+            <th>Xác nhận mật khẩu</th>
+            <th>Loại tài khoản</th>
+            <th *ngIf="employee.value == '2' || employee.value == '3'">Mã nhân viên</th>
+          </tr>
+          </thead>
+          <tbody class="border border-dark">
+          <input class="form-control" formControlName="accountId" aria-label="Username"
+                 aria-describedby="basic-addon1" disabled hidden>
+          <input class="form-control" formControlName="deleteFlag"
+                 aria-label="Username" aria-describedby="basic-addon1" disabled
+                 hidden>
+          <tr>
+            <td>
+              <div class="input-group">
+                <input placeholder="Nhập tên tài khoản"
+                       class="w-input-custom border rounded-0 form-control"
+                       formControlName="accountName"
+                       aria-label="Username"
+                       aria-describedby="basic-addon1">
+              </div>
+              <span class="text-danger"
+                    *ngIf="account.hasError('required','accountName') && account.get('accountName').touched">
+                                  Vui lòng nhập tên tài khoản</span>
+            </td>
+
+            <td>
+              <div formGroupName="pwGroup">
+                <input placeholder="Nhập mật khẩu" type="password" class="w-auto form-control"
+                       formControlName="accountPassword"
+                       aria-label="Username"
+                       aria-describedby="basic-addon1">
+                <span class="text-danger"
+                      *ngIf="account.hasError('required','pwGroup.accountPassword') && account.get('pwGroup.accountPassword').touched">
+                            Vui lòng nhập mật khẩu</span>
+              </div>
+            </td>
+            <td>
+              <div formGroupName="pwGroup">
+                <div class="input-group">
+                  <input placeholder="Xác nhận mật khẩu" type="password" class="w-auto form-control"
+                         formControlName="confirmPassword">
+                </div>
+                <span class="text-danger" *ngIf="account.hasError('passwordnotmatch', ['pwGroup']) &&
+                      account.get('pwGroup').touched && account.get('pwGroup.confirmPassword').touched ">
+                      Mật khẩu và xác nhận chưa trùng nhau!</span>
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <select #employee class="browser-default custom-select form-control" formControlName="role">
+                  <ng-container *ngFor="let role of roleList">
+                    <option selected value="{{role.roleId}}">{{role.roleName}}</option>
+                  </ng-container>
+                </select>
+              </div>
+              <span class="text-danger"
+                    *ngIf="account.hasError('required','role') && account.get('role').touched">Vui lòng chọn
+                    quyền</span>
+            </td>
+            <td *ngIf="employee.value == '2' || employee.value == '3'">
+              <div class="input-group">
+                <input class="w-auto border text-dark rounded-0" #idEmployee name="city"
+                       list="dsa">
+                <datalist id="dsa">
+                  <ng-container *ngFor="let employee of employeeList">
+                    <option>{{employee.id}}</option>
+                  </ng-container>
+                </datalist>
+                <button type="button" (click)="info(idEmployee.value)" data-toggle="modal"
+                        data-target="#infoEmployee" class="btn btn-primary">Kiểm tra
+                </button>
+              </div>
+            </td>
+          </tbody>
+        </table>
+      </form>
+      <button (click)="create2()" *ngIf="accountForm2.length > 0" [disabled]="checkInvalidForm2()" type="submit"
+              class="btn btn-primary">Xác Nhận
       </button>
-      <div class="modal" tabindex="-1" role="dialog" id="create">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+    </div>
+  </div>
+</div>
+
+<!--  create-->
+<div class="row">
+  <div class="col-md-12">
+    <div class="modal" tabindex="-1" role="dialog" id="create">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-header">
               <h3 class="modal-title">Tạo mới tài khoản</h3>
               <br>
+            </div>
+            <div class="modal-body">
               <form [formGroup]="accountForm" (ngSubmit)="create()">
                 <table class="w-100">
-                  <input type="text" class="form-control" formControlName="accountId" aria-label="Username"
+                  <input class="form-control" formControlName="accountId" aria-label="Username"
                          aria-describedby="basic-addon1" disabled hidden>
-                  <input type="text" class="form-control" formControlName="deleteFlag"
+                  <input class="form-control" formControlName="deleteFlag"
                          aria-label="Username" aria-describedby="basic-addon1" disabled
                          hidden>
                   <tr>Tên Tài Khoản:</tr>
@@ -101,51 +218,91 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text fas fa-vcard prefix"></span>
                       </div>
-                      <input type="text" class="form-control" formControlName="accountName" aria-label="Username"
-                             aria-describedby="basic-addon1">
-                    </div>
-                  </tr>
-                  <tr>Mật Khẩu:</tr>
-                  <tr>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text fas fa-id-card prefix"></span>
-                      </div>
-                      <input type="password" class="form-control" formControlName="accountPassword"
+                      <input placeholder="Nhập tên tài khoản" class="border rounded-0 form-control"
+                             formControlName="accountName"
                              aria-label="Username"
                              aria-describedby="basic-addon1">
                     </div>
                   </tr>
+                  <tr class="text-danger"
+                      *ngIf="accountForm.hasError('required','accountName') && accountForm.get('accountName').touched">
+                    Vui lòng nhập tên tài khoản
+                  </tr>
+                  <div formGroupName="pwGroup">
+                    <tr>Mật Khẩu:</tr>
+                    <tr>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text fas fa-id-card prefix"></span>
+                        </div>
+                        <input placeholder="Nhập mật khẩu" type="password" class="width-password form-control"
+                               formControlName="accountPassword"
+                               aria-label="Username"
+                               aria-describedby="basic-addon1">
+                      </div>
+                    </tr>
+                    <tr class="text-danger"
+                        *ngIf="accountForm.hasError('required','pwGroup.accountPassword') && accountForm.get('pwGroup.accountPassword').touched">
+                      Vui lòng nhập mật khẩu
+                    </tr>
+                    <tr>Nhập Lại Mật Khẩu:</tr>
+                    <tr>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text fas fa-id-card prefix"></span>
+                        </div>
+                        <input placeholder="Xác nhận mật khẩu" type="password" class="width-password form-control"
+                               formControlName="confirmPassword">
+                      </div>
+                    </tr>
+                    <div class="text-danger" *ngIf="accountForm.hasError('passwordnotmatch', ['pwGroup']) &&
+                      accountForm.get('pwGroup').touched && accountForm.get('pwGroup.confirmPassword').touched ">
+                      Mật khẩu và xác nhận chưa trùng nhau!
+                    </div>
+                  </div>
                   <tr>Loại Tài Khoản:</tr>
                   <tr>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text fa fa-list-ol prefix"></span>
                       </div>
-                      <select class="browser-default custom-select form-control" formControlName="role">
+                      <select #employee class="browser-default custom-select form-control" formControlName="role">
                         <ng-container *ngFor="let role of roleList">
-                          <option value="{{role.roleId}}">{{role.roleName}}</option>
+                          <option selected value="{{role.roleId}}">{{role.roleName}}</option>
                         </ng-container>
                       </select>
                     </div>
                   </tr>
-                  <!--                  <tr *ngIf="employee.value === '2'">Mã Nhân viên:-->
-                  <!--                    <div class="input-group mb-3">-->
-                  <!--                      <div class="input-group-prepend">-->
-                  <!--                        <span class="input-group-text fas fa-user prefix"></span>-->
-                  <!--                      </div>-->
-                  <!--                      <select class="browser-default custom-select form-control" formControlName="role">-->
-                  <!--                        <ng-container *ngFor="let role of roleList">-->
-                  <!--                          <option value="{{role.roleId}}">{{role.roleName}}</option>-->
-                  <!--                        </ng-container>-->
-                  <!--                      </select>-->
-                  <!--                    </div>-->
-                  <!--                  </tr>-->
+                  <tr class="text-danger"
+                      *ngIf="accountForm.hasError('required','role') && accountForm.get('role').touched">Vui lòng chọn
+                    quyền
+                  </tr>
+                  <tr *ngIf="employee.value == '2' || employee.value == '3'">
+                    Mã nhân viên:
+                  </tr>
+                  <tr *ngIf="employee.value == '2'  || employee.value == '3'">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text fa 	fas fa-barcode prefix"></span>
+                      </div>
+                      <input class="border text-dark rounded-0" #idEmployee name="city" list="cityName">
+                      <datalist id="cityName">
+                        <ng-container *ngFor="let employee of employeeList">
+                          <option>{{employee.id}}</option>
+                        </ng-container>
+                      </datalist>
+                      <button type="button" (click)="info(idEmployee.value)" data-toggle="modal"
+                              data-target="#infoEmployee" class="btn btn-primary">Kiểm tra thông tin
+                      </button>
+                    </div>
+                  </tr>
                 </table>
                 <br>
-                <div class="container-fluid">
+                <div class="modal-footer">
+                  <button [ngClass]="accountForm.invalid?'disabled':''" class="btn btn-primary mr-3 float-right"
+                          type="submit">Thêm mới
+                  </button>
                   <button id="close" class="btn btn-secondary float-right destroy" data-dismiss="modal">Hủy</button>
-                  <button class="btn btn-primary mr-3 float-right" type="submit">Thêm mới</button>
                 </div>
               </form>
             </div>
@@ -155,6 +312,7 @@
     </div>
   </div>
 </div>
+
 <!--details modal-->
 <div class="modal " role="dialog" id="infor" data-backdrop="static"
      aria-labelledby="exampleModalScrollableTitle"
@@ -173,9 +331,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fas fa-id-card prefix"></span>
+                  <span class="igt input-group-text fas fa-id-card prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.id}}">
               </div>
             </tr>
@@ -183,9 +341,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fas fa-user prefix"></span>
+                  <span class="igt input-group-text fas fa-user prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.name}}">
               </div>
             </tr>
@@ -193,9 +351,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fa fa-birthday-cake prefix"></span>
+                  <span class="igt input-group-text fa fa-birthday-cake prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.birthday | date: 'dd/MM/yyyy'}}">
               </div>
             </tr>
@@ -203,9 +361,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fa fa-home prefix"></span>
+                  <span class="igt input-group-text fa fa-home prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.address}}">
               </div>
             </tr>
@@ -213,9 +371,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fa fa-envelope prefix"></span>
+                  <span class="igt input-group-text fa fa-envelope prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.email}}">
               </div>
             </tr>
@@ -223,9 +381,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fa fa-phone prefix"></span>
+                  <span class="igt input-group-text fa fa-phone prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.phoneNumber}}">
               </div>
             </tr>
@@ -233,9 +391,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fa fa-venus-mars prefix"></span>
+                  <span class="igt input-group-text fa fa-venus-mars prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.gender}}">
               </div>
             </tr>
@@ -243,9 +401,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fa fa-briefcase prefix"></span>
+                  <span class="igt input-group-text fa fa-briefcase prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.department.name}}">
               </div>
             </tr>
@@ -253,9 +411,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fa fa-industry prefix"></span>
+                  <span class="igt input-group-text fa fa-industry prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.position.name}}">
               </div>
             </tr>
@@ -274,9 +432,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fas fa-id-card prefix"></span>
+                  <span class="igt input-group-text fas fa-id-card prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById2.id}}">
               </div>
             </tr>
@@ -284,9 +442,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fas fa-user prefix"></span>
+                  <span class="igt input-group-text fas fa-user prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById2.userName}}">
               </div>
             </tr>
@@ -294,9 +452,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fa fa-birthday-cake prefix"></span>
+                  <span class="igt input-group-text fa fa-birthday-cake prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById2.birthday | date: 'dd/MM/yyyy'}}">
               </div>
             </tr>
@@ -304,9 +462,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fa fa-home prefix"></span>
+                  <span class="igt input-group-text fa fa-home prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById2.address}}">
               </div>
             </tr>
@@ -314,9 +472,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fa fa-envelope prefix"></span>
+                  <span class="igt input-group-text fa fa-envelope prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById2.email}}">
               </div>
             </tr>
@@ -324,9 +482,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fa fa-phone prefix"></span>
+                  <span class="igt input-group-text fa fa-phone prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById2.phone}}">
               </div>
             </tr>
@@ -334,9 +492,9 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fa fa-venus-mars prefix"></span>
+                  <span class="igt input-group-text fa fa-venus-mars prefix"></span>
                 </div>
-                <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById2.gender}}">
               </div>
             </tr>
@@ -359,21 +517,21 @@
         <br>
         <form [formGroup]="editAccountForm">
           <table class="w-100">
-            <input type="text" class="form-control" formControlName="accountId" aria-label="Username"
+            <input class="form-control" formControlName="accountId" aria-label="Username"
                    aria-describedby="basic-addon1" disabled hidden>
-            <input type="text" class="form-control" formControlName="deleteFlag"
+            <input class="form-control" formControlName="deleteFlag"
                    aria-label="Username" aria-describedby="basic-addon1" disabled
                    hidden>
-            <input type="text" class="form-control" formControlName="reason"
+            <input class="form-control" formControlName="reason"
                    aria-label="Username" aria-describedby="basic-addon1" disabled
                    hidden>
             <tr>Tên Tài Khoản:</tr>
             <tr>
               <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text fas fa-vcard prefix"></span>
+                <div class="input-group-prepend ">
+                  <span class="igt input-group-text fas fa-vcard prefix"></span>
                 </div>
-                <input type="text" class="form-control" formControlName="accountName" aria-label="Username"
+                <input class="form-control" formControlName="accountName" aria-label="Username"
                        aria-describedby="basic-addon1" placeholder="Nhập tên tài khoản nếu muốn sửa">
               </div>
             </tr>
@@ -392,7 +550,7 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fas fa-id-card prefix"></span>
+                  <span class="igt input-group-text fas fa-id-card prefix"></span>
                 </div>
                 <input type="password" class="form-control" formControlName="accountPassword" aria-label="Username"
                        aria-describedby="basic-addon1" placeholder="Nhập mật khẩu nếu muốn sửa">
@@ -410,7 +568,7 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fa fa-list-ol prefix"></span>
+                  <span class="igt input-group-text fa fa-list-ol prefix"></span>
                 </div>
                 <select class="browser-default custom-select form-control" formControlName="role">
                   <ng-container *ngFor="let roles of roleList">
@@ -421,17 +579,17 @@
             </tr>
             <tr>Tên chủ tài khoản:</tr>
             <tr>
-
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fas fa-user prefix"></span>
+                  <span class=" igt input-group-text fas fa-user prefix"></span>
                 </div>
-                <ng-container *ngIf="infoAccountById.name !== undefined; else elseBlock">
-                  <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                <ng-container
+                  *ngIf="infoAccountById.name != null; else elseBlock">
+                  <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                          value="{{infoAccountById.name}}">
                 </ng-container>
                 <ng-template #elseBlock>
-                  <input disabled type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
+                  <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                          value="{{infoAccountById2.userName}}">
                 </ng-template>
               </div>
@@ -447,7 +605,7 @@
                   <div class="col-2 form-group">
                     <button id="editBtn" class="btn btn-warning"
                             [disabled]="editAccountForm.invalid" (click)="edited()"
-                    >sửa
+                    >Sửa
                     </button>
                   </div>
                   <div class="col-1"></div>
@@ -478,34 +636,27 @@
               </th>
             </tr>
             <br>
-            <input type="text" class="form-control" formControlName="accountId" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled hidden>
-            <input type="text" class="form-control" formControlName="deleteFlag"
-                   aria-label="Username" aria-describedby="basic-addon1" disabled
-                   hidden>
-            <input type="text" class="form-control" formControlName="accountName" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled hidden>
-            <input type="text" class="form-control" formControlName="accountPassword"
-                   aria-label="Username" aria-describedby="basic-addon1" disabled
-                   hidden>
-            <input type="text" class="form-control" formControlName="accountPassword"
-                   aria-label="role" aria-describedby="basic-addon1" disabled
-                   hidden>
+            <input class="form-control" formControlName="accountId" disabled hidden>
+            <input class="form-control" formControlName="deleteFlag" disabled hidden>
+            <input class="form-control" formControlName="accountName" disabled hidden>
+            <input class="form-control" formControlName="accountPassword" disabled hidden>
+            <input class="form-control" formControlName="role" disabled hidden>
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text fa fa-trash-o prefix"></span>
+                  <span class="igt input-group-text fa fa-trash-o prefix"></span>
                 </div>
-                <input type="text" class="form-control" formControlName="reason" aria-label="Username"
-                       aria-describedby="basic-addon1" placeholder="Vui lòng nhập lý do muốn xóa">
+                <input class="form-control" formControlName="reason" placeholder="Vui lòng nhập lý do muốn xóa">
               </div>
             </tr>
             <tr>
               <div class="alert alert-danger" role="alert"
                    *ngIf="deleteAccountForm.get('reason').invalid && deleteAccountForm.get('reason').touched">
                 <span
-                  *ngIf="deleteAccountForm.get('reason').hasError('require')">
+                  *ngIf="deleteAccountForm.get('reason').hasError('required')">
             lý do không được bỏ trống</span>
+                <span *ngIf="deleteAccountForm.get('reason').hasError('pattern')">
+                            lý do chỉ bao gồm chữ, số và không được quá 255 từ</span>
               </div>
             </tr>
           </table>
@@ -517,8 +668,68 @@
                 <div class="row">
                   <div class="col-3"></div>
                   <div class="col-2">
-                    <button class="btn btn-danger" [disabled]="deleteAccountForm.invalid"
+                    <button id="deleteBtn" class="btn btn-danger" [disabled]="deleteAccountForm.invalid"
                             (click)="deleted(AccountById.accountId)">Xóa
+                    </button>
+                  </div>
+                  <div class="col-1"></div>
+                  <div class="col-5">
+                    <button class="btn btn-secondary destroyDelete" data-dismiss="modal">Hủy</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--delete List modal-->
+<div class="modal" tabindex="-1" role="dialog" id="deleteListAccount">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form [formGroup]="deleteListAccountForm">
+          <table class="w-100">
+            <tr>
+              <th colspan="2" class="deleteTitle">
+                <h5><img src="https://image.flaticon.com/icons/png/512/63/63436.png" width="22px" height="auto"> Bạn có
+                  muốn xóa những tài khoản này không ?</h5>
+              </th>
+            </tr>
+            <br>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="igt input-group-text fa fa-trash-o prefix"></span>
+              </div>
+              <input class="form-control" formControlName="reason" aria-label="Username"
+                     aria-describedby="basic-addon1" placeholder="Vui lòng nhập lý do muốn xóa">
+            </div>
+            <tr>
+              <div class="alert alert-danger" role="alert"
+                   *ngIf="deleteListAccountForm.get('reason').invalid && deleteListAccountForm.get('reason').touched">
+                <span
+                  *ngIf="deleteListAccountForm.get('reason').hasError('required')">
+            lý do không được bỏ trống</span>
+                <span
+                  *ngIf="deleteListAccountForm.get('reason').hasError('pattern')">
+                            lý do chỉ bao gồm chữ, số và không được quá 255 từ</span>
+              </div>
+            </tr>
+          </table>
+          <br>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-8"></div>
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-3"></div>
+                  <div class="col-2">
+                    <button id="deleteMultiBtn" class="btn btn-danger" [disabled]="deleteListAccountForm.invalid"
+                            (click)="deleteListAccount()">Xóa
                     </button>
                   </div>
                   <div class="col-1"></div>

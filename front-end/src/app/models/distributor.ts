@@ -5,10 +5,10 @@ export class Distributor {
   numberPhone: string;
   email: string;
   img: string;
+  deleted: boolean;
   fax: string;
   website: string;
   typeOfDistributor: TypeOfDistributor;
-  deleted: boolean;
 
   constructor(id: number, name: string, address: string, numberPhone: string, email: string, img: string,
               fax: string, website: string, typeOfDistributor: TypeOfDistributor, deleted: boolean) {

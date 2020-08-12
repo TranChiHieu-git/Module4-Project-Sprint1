@@ -340,6 +340,7 @@
 // }
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+// @ts-ignore
 import {DeleteListDistributor, Distributor, TypeOfDistributor} from '../../../models/distributor';
 import {DistributorService} from '../../../services/distributor.service';
 import {Router} from '@angular/router';

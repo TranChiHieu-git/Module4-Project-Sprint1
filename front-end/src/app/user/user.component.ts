@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
 import {AccountService} from '../services/account.service';
 import {TokenStorageService} from '../auth/token-storage.service';
 import {CustomerService} from '../services/customer.service';
@@ -10,8 +10,8 @@ import {AdminService} from '../services/admin.service';
 import {Account} from '../models/account';
 import {AuthLoginInfo} from '../auth/login-info';
 import {AuthJwtService} from '../auth/auth-jwt.service';
-import {Role} from '../models/role';
 import {LoginStatusService} from '../auth/login-status.service';
+import {Customer} from '../models/customer';
 
 @Component({
   selector: 'app-user',
@@ -29,6 +29,7 @@ export class UserComponent implements OnInit {
   isLoginFailed = false;
   isLoggedIn = false;
   userLogin = '';
+  customer: Customer;
 
   constructor(private accountService: AccountService,
               private tokenStorage: TokenStorageService,
@@ -44,9 +45,10 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.userDisplayName = sessionStorage.getItem('loggedUser');
-    console.log(this.userDisplayName);
     this.customerService.getCustomerByAccountName(this.userDisplayName).subscribe(next => {
-      this.idUser = next.id;
+      this.customer = next;
+      this.orderService.chanceCustomer(this.customer);
+      this.idUser = this.customer.id;
       this.orderService.chanceIdUser(this.idUser);
     });
     this.socialAuthService.authState.subscribe((user) => {

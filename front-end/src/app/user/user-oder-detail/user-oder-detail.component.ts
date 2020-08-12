@@ -3,6 +3,7 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {OrderService} from '../../services/order.service';
 import {Order} from '../../models/order';
 import {OrderDetail} from '../../models/order-detail';
+import {NotificationService} from '../../services/notification.service';
 
 @Component({
   selector: 'app-user-oder-detail',
@@ -19,13 +20,15 @@ export class UserOderDetailComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private orderService: OrderService,
-              private router: Router
+              private notificeService: NotificationService
   ) {
-    this.orderService.curentIdUser.subscribe(message => {
+  }
+
+  ngOnInit(): void {
+    this.orderService.currentIdUser.subscribe(message => {
       this.idUser = message;
       this.orderService.findAllOrderByUserId(this.idUser).subscribe((next: any) => {
           this.orders = next.content;
-          console.log(this.orders);
           this.activatedRoute.paramMap.subscribe((param: ParamMap) => {
             const idOrder = Number(param.get('idOrder'));
             this.orders.forEach(order => {
@@ -35,8 +38,8 @@ export class UserOderDetailComponent implements OnInit {
               }
             });
             if (this.isCurrentOrder) {
-              this.orderService.findOrderById(idOrder).subscribe(next => {
-                  this.order = next;
+              this.orderService.findOrderById(idOrder).subscribe(res => {
+                  this.order = res;
                   this.orderDetails = this.order.orderDetailList;
                   this.orderDetails.forEach(product => {
                     product.temMoney = product.orderQuantity * product.id.product.price;
@@ -57,21 +60,29 @@ export class UserOderDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-
-  }
-
   // tslint:disable-next-line:typedef
   cancelOrder(orderId: number) {
+    this.spinnerOn();
     this.orderService.cancelOrder(orderId).subscribe(
       res => {
-        alert('Hủy đơn hàng thành công');
-       window.location.reload();
-
+        this.ngOnInit();
+        this.spinnerOff();
+        this.notificeService.config.horizontalPosition = 'center';
+        this.notificeService.config.verticalPosition = 'bottom';
+        this.notificeService.config.duration = 4000;
+        this.notificeService.create('Hủy đơn hàng thành công!');
       },
       error => {
         console.log(error);
       }
     );
+  }
+
+  spinnerOn(): void {
+    document.getElementById('overlay').style.display = 'flex';
+  }
+
+  spinnerOff(): void {
+    document.getElementById('overlay').style.display = 'none';
   }
 }
