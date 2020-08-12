@@ -195,4 +195,8 @@ export class ProductService {
   getAllProductByCategory(categoryId: number): Observable<any> {
     return this.httpClient.get(this.API_URL + '/' + categoryId);
   }
+
+  getAllProductByCategoryAndDeleteFlag(categoryId: number): Observable<any> {
+    return this.httpClient.get('http://localhost:8080/warehouse-management/listProductByCategory/hai/' + categoryId);
+  }
 }
