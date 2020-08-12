@@ -93,8 +93,9 @@ export class ProductService {
     const url = this.productByCategoryUrl + categoryId + '/'
       + '?page=' + pageable.pageNumber
       + '&size=' + pageable.pageSize;
-    return this.httpClient.get<Page<Product>>(url, httpOptions);
+    return this.httpClient.get<Page<Product>>(url , httpOptions);
   }
+
 
   findAllByCategoryAndName(categoryId: string, productName: string, pageable: Pageable): Observable<Page<Product>> {
     const url = this.searchProductByCategoryName
