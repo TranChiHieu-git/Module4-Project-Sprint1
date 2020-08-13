@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ServiceBillService} from '../../../services/service-bill.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Bill} from '../../../models/bill';
 import {WareHouse} from '../../../models/ware-house';
 import {Transportation} from '../../../models/transportation';
@@ -36,9 +36,12 @@ export class BillComponent implements OnInit {
   public createDate: Date;
   createForm: FormGroup;
   editForm: FormGroup;
+  form: FormGroup;
+  formArray: FormArray = new FormArray([]);
   p = 1;
   today: string;
   filter: any;
+  tipContent: any;
 
   constructor(private billService: ServiceBillService,
               private ref: ChangeDetectorRef,
@@ -52,14 +55,16 @@ export class BillComponent implements OnInit {
     this.getData();
     this.buildEditForm();
     this.initCreateForm();
+    this.createAddLiveForm();
+    this.form = this.fb.group({rows: new FormArray([])});
   }
 
   buildEditForm(): void {
     this.editForm = this.fb.group({
       id: [''],
       billName: ['', Validators.required],
-      createDate: ['', Validators.required],
-      editLatestDate: ['', Validators.required],
+      createDate: [''],
+      editLatestDate: [''],
       billStatus: ['', Validators.required],
       processingStatus: ['', Validators.required],
       shippingStatus: ['', Validators.required],
@@ -281,5 +286,78 @@ export class BillComponent implements OnInit {
   public getPageInNewSize(pageSize: number): void {
     this.page.pageable = this.paginationService.getPageInNewSize(this.page, pageSize);
     this.getData();
+  }
+  switchEdit(bill1: Bill): void {
+    bill1.isEditable = !bill1.isEditable;
+    $('#submit' + bill1.id).click();
+  }
+
+  cancelEdit(bill1: Bill): void {
+    bill1.isEditable = !bill1.isEditable;
+  }
+  get rows(): FormArray {
+    return this.form.get('rows') as FormArray;
+  }
+
+  addCity(): void {
+    this.rows.push(this.createAddLiveForm());
+  }
+  addRow(): void {
+    this.formArray.push(this.createAddLiveForm());
+  }
+
+  removeRow(index: number): void {
+    this.formArray.removeAt(index);
+  }
+  onSubmitSingleRow(formArray, index): void {
+    console.log('index cua form: ' + index);
+    console.log(formArray.at(index).value);
+    this.billService.create(formArray.at(index).value).subscribe(
+      () => {
+        this.removeRow(index);
+        this.notificationService.create('Tạo mới thành công');
+        this.getData();
+      },
+      error => console.log(error));
+  }
+  createAddLiveForm(): FormGroup {
+    return this.fb.group({
+      billName: ['', Validators.required],
+      createDate: [''],
+      editLatestDate: [''],
+      billStatus: ['', Validators.required],
+      processingStatus: ['', Validators.required],
+      shippingStatus: ['', Validators.required],
+      paymentStatus: ['', Validators.required],
+      idTypeBill: this.fb.group({
+        id: [''],
+        nameTypeBill: ['']
+      }),
+      idStorageLocation: this.fb.group({
+        id: [''],
+        nameStorageLocation: ['']
+      }),
+      idWareHouse: this.fb.group({
+        id: [''],
+        nameWareHouse: ['']
+      }),
+      idTransportation: this.fb.group({
+        id: [''],
+        nameTransportation: ['']
+      }),
+      idPay: this.fb.group({
+        id: [''],
+        namePay: ['']
+      }),
+      idDistributor: this.fb.group({
+        id: [''],
+        name: ['']
+      }),
+      idEmployee: this.fb.group({
+        id: [''],
+        name: ['']
+      }),
+      deleteFlag: [0]
+    });
   }
 }

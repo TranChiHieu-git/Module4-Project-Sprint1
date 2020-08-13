@@ -22,8 +22,10 @@ export class CustomerService {
     };
   }
 
-  getAllCustomer(): Observable<any> {
-    return this.httpClient.get<Customer[]>(this.API_URL, this.httpOptions);
+  getAllCustomerWithSearchAndPageAndFilter(page, size, search, value1, value2): Observable<any> {
+    return this.httpClient.get(this.API_URL +
+      '?page=' + page + '&size=' + size + '&search='
+      + search + '&value1=' + value1 + ' &value2=' + value2, this.httpOptions);
   }
 
   getCustomerById(id: number): Observable<any> {
@@ -54,5 +56,9 @@ export class CustomerService {
 
   getCustomerByAccountName(accountName: string): Observable<any> {
     return this.httpClient.get<Customer>(this.API_URL_ACCOUNT + '/' + accountName, this.httpOptions);
+  }
+
+  getAllCustomer(): Observable<Customer[]> {
+    return this.httpClient.get<Customer[]>('http://localhost:8080/customer-list');
   }
 }

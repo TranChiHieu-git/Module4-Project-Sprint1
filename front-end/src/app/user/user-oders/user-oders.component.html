@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
       integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <div class="container-oders">
-  <div class="user-oder-container">
+    <div class="user-oder-container">
     <div class="container-fluid user-oder">
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
@@ -26,7 +26,7 @@
             <tbody>
             <tr *ngFor="let order of orders">
               <!--              <td><a (click)="goToDetailOrder(order.orderId)">{{order.orderId}}</a></td>-->
-              <td><a [routerLink]="['/user-manage/order-detail',order.orderId]">{{order.orderId}}</a></td>
+              <td><a [routerLink]="['/user-manage/order-detail',order.orderId]">CODEBAKERY{{order.orderId}}</a></td>
               <td>{{order.orderDate|date:'dd/MM/yyyy'}}</td>
               <td style="width: 40%">{{order.orderDetailList[0].id.product.productName}} và {{order.orderDetailList.length - 1}} sản phẩm
                 khác

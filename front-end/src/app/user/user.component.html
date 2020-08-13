@@ -1,4 +1,9 @@
 <body>
+<div id="overlay">
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="spinner"></div>
+  </div>
+</div>
 <div class="container-fluid pt-lg-5 px-0 font-weight-bolder">
   <nav class="navbar navbar-expand-lg navbar-light table-light ">
     <div class="navbar-brand codeBakery" href="#">
@@ -46,7 +51,7 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item account">San Pham 2</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item account" [routerLink]="['/checkout/card']">Thanh Toán</a>
+            <a class="dropdown-item account" href="/checkout/card">Thanh Toán</a>
           </div>
         </div>
       </div>

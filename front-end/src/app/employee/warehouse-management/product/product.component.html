@@ -42,17 +42,18 @@
     </div>
   </form>
 
-  <div>   <button class="btn btn-primary btn-create-custom" data-toggle="modal" data-target="#modal-create-product"><span
+  <div class="row mt-3 px-3">
+    <button class="btn btn-primary btn-create-custom" data-toggle="modal" data-target="#modal-create-product"><span
     class="fa fa-plus-square"></span> Thêm mới
   </button>
   </div>
 
-  <div class="row mt-3 px-3">
+  <div class="row px-3">
 
     <!--  Table grid -->
 
 
-    <form [formGroup]="productForm" (ngSubmit)="editProduct(product.productId)">
+    <form [formGroup]="productForm" (ngSubmit)="edit()">
     <table class="table table-bordered table-striped mt-3">
       <thead class="table-header">
       <tr>
@@ -166,13 +167,24 @@
 
 
         <td>
-          <button class="global-button m-1 button-edit-delete fa fa-pencil"
-                  (click)="product.isEditable=!product.isEditable;catchProductId(product.productId) "
-                  *ngIf="!product.isEditable"></button>
-          <button class="global-button m-1 button-edit-delete fa fa-check"
-                  *ngIf="product.isEditable" (click)="switchEdit(product);onSubmitEdit()"></button>
-          <button hidden type="submit" id="submit{{product.productId}}"
-          ></button>
+          <a (click)="product.isEditable=!product.isEditable; catchProductId(product.productId)"
+             *ngIf="!product.isEditable">
+            <button  class="global-button m-1 button-edit-delete "><i
+              class="icon-pencil"></i></button>
+          </a>
+          <a *ngIf="product.isEditable" (click)="switchEdit(product)">
+            <button  class="global-button m-1 button-edit-delete"><i
+              class="fa fa-check"></i></button>
+          </a>
+          <button hidden type="submit" id="submit{{product.productId}}"></button>
+
+<!--          <button class="global-button m-1 button-edit-delete fa fa-pencil"-->
+<!--                  (click)="product.isEditable=!product.isEditable;catchProductId(product.productId); "-->
+<!--                  *ngIf="!product.isEditable"></button>-->
+<!--          <button class="global-button m-1 button-edit-delete fa fa-check"-->
+<!--                  *ngIf="product.isEditable" (click)="switchEdit(product);onSubmitEdit1()"></button>-->
+<!--          <button hidden type="submit" id="submit{{product.productId}}"-->
+<!--          ></button>-->
 
         </td>
 
@@ -212,10 +224,19 @@
 
 <!--        </td>-->
         <td>
-          <a (click)="deleteProduct(product.productId)">
+
+          <a *ngIf="product.isEditable" (click)="cancelEdit(product)">
             <button  type="button" class="global-button button-edit-delete"><i
+              class="fa fa-times"></i></button>
+          </a>
+          <a *ngIf="!product.isEditable" data-toggle="modal" data-target="#modal-delete-product" (click)="deleteProduct(product.productId)">
+            <button type="button" class="global-button button-edit-delete"><i
               class="icon-trash"></i></button>
           </a>
+<!--          <a (click)="deleteProduct(product.productId)">-->
+<!--            <button  type="button" class="global-button button-edit-delete"><i-->
+<!--              class="icon-trash"></i></button>-->
+<!--          </a>-->
           <a data-toggle="modal" data-target="#modal-delete-product" id="delete1" hidden>
             <button  type="button" class="global-button button-edit-delete"><i
               class="icon-trash"></i></button>
@@ -263,6 +284,7 @@
       </div>
       <div class="col-2"></div>
     </div>
+  </div>
     <!--      Modal Create-->
     <form [formGroup]="createProductForm" (ngSubmit)="onCreate()" role="form">
       <div class="modal fade" id="modal-create-product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -541,5 +563,5 @@
       </div>
     </form>
   </div>
-</div>
+
 

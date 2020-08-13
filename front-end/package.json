@@ -28,6 +28,7 @@
     "@auth0/angular-jwt": "^5.0.1",
     "@ng-bootstrap/ng-bootstrap": "^6.2.0",
     "@ng-select/ng-select": "^4.0.4",
+    "@types/selectize": "^0.12.34",
     "angular-fusioncharts": "^3.0.4",
     "angular2-jwt": "^0.2.3",
     "angularfire2": "^5.4.2",
@@ -48,6 +49,8 @@
     "ngx-toastr": "^13.0.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.5",
+    "selectize": "^0.12.6",
+    "rxjs-observable": "0.0.7",
     "ts-md5": "^1.2.7",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

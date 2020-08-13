@@ -1,6 +1,6 @@
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<div class="container">
+<div class="container-fluid">
 
   <!--Search All-->
   <div class="row d-flex justify-content-between m-3">
@@ -9,7 +9,7 @@
       <div class="form-group has-search mr-2">
         <span class="fa fa-search form-control-feedback"></span>
         <input type="text" class="form-control searchInput" [(ngModel)]="filter"
-               placeholder="Tìm Kiếm Tất Cả" name="search">
+               placeholder="Tìm Kiếm" name="search">
       </div>
     </div>
   </div>
@@ -70,76 +70,449 @@
     <!--Button add-->
     <button class="btn btn-primary btn-create-custom" data-toggle="modal" data-target="#modal-create-product"><span
       class="fa fa-plus-square"></span> Thêm mới
-    </button>
+    </button>&nbsp;&nbsp;
+    <button class="btn btn-primary btn-create-custom" (click)="addRow()"><span
+      class="fa fa-plus-square"></span> Thêm trực tiếp</button>
     <!--End button-->
 
     <!--Table list bill-->
-    <table class="table table-bordered table-striped mt-3">
+    <form [formGroup]="formArray">
+    <form [formGroup]="editForm" (ngSubmit)="onSubmitEdit()">
+
+    <table class="table table-bordered table-striped mt-3 table-sm table-hover" style="font-size: 15px">
+
       <thead class="table-header">
       <tr>
-        <th class="sticky-top sort-product-name">Mã phiếu</th>
         <th class="sticky-top">Tên phiếu</th>
-        <th class="sticky-top">Ngày tạo phiếu</th>
+        <th class="sticky-top" style="display: none">Ngày tạo phiếu</th>
+        <th class="sticky-top" style="display: none">Ngày chỉnh sửa gần nhất</th>
         <th class="sticky-top">Tình trạng phiếu</th>
-        <th class="sticky-top">Kho chứa</th>
-        <th class="sticky-top">Phương tiện vận chuyển</th>
-        <th class="sticky-top">Tên nhân viên</th>
-        <th class="sticky-top">Nhà phân phối</th>
-        <th class="sticky-top">Sửa</th>
-        <th class="sticky-top">Xóa</th>
+        <th class="sticky-top" >Loại phiếu</th>
+        <th class="sticky-top" >Kho chứa</th>
+        <th class="sticky-top" >Phương tiện vận chuyển</th>
+        <th class="sticky-top" >Tên nhân viên</th>
+        <th class="sticky-top" >Nhà phân phối</th>
+        <th class="sticky-top" >Vị trí lưu trữ</th>
+        <th class="sticky-top" >Phương thức thanh toán</th>
+        <th class="sticky-top">Trạng thái xử lý</th>
+        <th class="sticky-top">Trạng thái vận chuyển</th>
+        <th class="sticky-top">Trạng thái thanh toán</th>
+        <th class="sticky-top" colspan="2">Hành Động</th>
       </tr>
       </thead>
-      <tbody>
+
+      <tbody >
+          <ng-container *ngFor="let group of formArray.controls;let i=index" [formGroup]="group">
+            <tr>
+              <td>
+                <div class="input-group">
+                  <input formControlName="billName" type="text" class="form-control form-control-sm">
+                </div>
+              </td>
+              <td style="display: none">
+                <div class="input-group">
+                  <input formControlName="createDate" type="text" class="form-control form-control-sm">
+                </div>
+              </td>
+              <td style="display: none">
+                <div class="input-group">
+                  <input formControlName="editLatestDate" type="text" class="form-control form-control-sm">
+                </div>
+              </td>
+              <td>
+                <div class="input-group">
+                  <input formControlName="billStatus" type="text" class="form-control form-control-sm">
+                </div>
+              </td>
+              <td>
+                <div class="form-group row" >
+                  <div class="col-md-7 col-sm-7">
+                    <fieldset formGroupName="idTypeBill">
+                      <select class="form-control-sm" formControlName="id" >
+                        <ng-container>
+                          <option *ngFor="let typeBill of typeBillList" [ngValue]="typeBill.id"
+                                  [selected]="typeBill.id === editForm.value.idTypeBill.id">
+                            {{typeBill.nameTypeBill}}
+                          </option>
+                        </ng-container>
+                      </select>
+                    </fieldset>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="form-group row">
+                  <div class="col-md-7 col-sm-7">
+                    <fieldset formGroupName="idWareHouse">
+                      <select class="form-control-sm" formControlName="id">
+                        <ng-container>
+                          <option *ngFor="let wareHouse of wareHouseList" [ngValue]="wareHouse.id"
+                                  [selected]="wareHouse.id === editForm.value.idWareHouse.id">
+                            {{wareHouse.nameWareHouse}}
+                          </option>
+                        </ng-container>
+                      </select>
+                    </fieldset>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="form-group row">
+                  <div class="col-md-7 col-sm-7">
+                    <fieldset formGroupName="idTransportation">
+                      <select class="form-control-sm" formControlName="id">
+                        <ng-container>
+                          <option *ngFor="let transportation of transportationList" [ngValue]="transportation.id"
+                                  [selected]="transportation.id === editForm.value.idTransportation.id">
+                            {{transportation.nameTransportation}}
+                          </option>
+                        </ng-container>
+                      </select>
+                    </fieldset>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="form-group row">
+                  <div class="col-md-7 col-sm-7">
+                    <fieldset formGroupName="idEmployee">
+                      <select class="form-control-sm" formControlName="id">
+                        <ng-container>
+                          <option *ngFor="let employees of employeeList" [ngValue]="employees.id"
+                                  [selected]="employees.id === editForm.value.idEmployee.id">
+                            {{employees.name}}
+                          </option>
+                        </ng-container>
+                      </select>
+                    </fieldset>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="form-group row">
+                  <div class="col-md-7 col-sm-7">
+                    <fieldset formGroupName="idDistributor">
+                      <select class="form-control-sm" formControlName="id">
+                        <ng-container>
+                          <option *ngFor="let distributor of distributorList" [ngValue]="distributor.id"
+                                  [selected]="distributor.id === editForm.value.idDistributor.id">
+                            {{distributor.name}}
+                          </option>
+                        </ng-container>
+                      </select>
+                    </fieldset>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="form-group row">
+                  <div class="col-md-7 col-sm-7">
+                    <fieldset formGroupName="idStorageLocation">
+                      <select class="form-control-sm" formControlName="id">
+                        <ng-container>
+                          <option *ngFor="let storageLocation of storageLocationList" [ngValue]="storageLocation.id"
+                                  [selected]="storageLocation.id === editForm.value.idStorageLocation.id">
+                            {{storageLocation.nameStorageLocation}}
+                          </option>
+                        </ng-container>
+                      </select>
+                    </fieldset>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="form-group row">
+                  <div class="col-md-7 col-sm-7">
+                    <fieldset formGroupName="idPay">
+                      <select class="form-control-sm" formControlName="id">
+                        <ng-container>
+                          <option *ngFor="let pay of payList" [ngValue]="pay.id"
+                                  [selected]="pay.id === editForm.value.idPay.id">
+                            {{pay.namePay}}
+                          </option>
+                        </ng-container>
+                      </select>
+                    </fieldset>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="input-group">
+                  <input formControlName="processingStatus" type="text" class="form-control form-control-sm">
+                </div>
+              </td>
+              <td>
+                <div class="input-group">
+                  <input formControlName="shippingStatus" type="text" class="form-control form-control-sm">
+                </div>
+              </td>
+              <td>
+                <div class="input-group">
+                  <input formControlName="paymentStatus" type="text" class="form-control form-control-sm">
+                </div>
+              </td>
+              <td>
+<!--                <button [disabled]="formArray.at(i).invalid" type="button" class=" action-button m-1 product-edit-delete" (click)="onSubmitSingleRow(formArray,i)"><i-->
+<!--                  class="icon-ok"></i></button>-->
+                <a type="button" class=" action-button m-1 product-edit-delete" (click)="onSubmitSingleRow(formArray,i)">
+                  <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button m-1"><i
+                    class="fa fa-check"></i></button>
+                </a>
+              </td>
+              <td>
+<!--                <button type="button" class=" action-button product-edit-delete" (click)="removeRow(i)"><i-->
+<!--                  class="icon-remove"></i></button>-->
+                <a (click)="removeRow(i)">
+                  <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button m-1"><i
+                    class="fa fa-times"></i></button>
+                </a>
+              </td>
+            </tr>
+          </ng-container>
+
+
+
       <tr *ngFor="let bill of page.content|filter:filter|filter: selectedWareHouse.value| filter: selectedEmployees.value| filter: selectedDistributor.value| filter:selectedTransportation.value" >
-        <td>
-          <span>{{bill.id}}</span>
+        <td *ngIf="bill.isEditable">
+          <div class="input-group">
+            <input formControlName="billName" type="text" class="form-control form-control-sm"
+                   [(ngModel)]="bill.billName">
+          </div>
         </td>
-        <td>
+        <td *ngIf="!bill.isEditable">
           <span>{{bill.billName}}</span>
         </td>
-        <td>
+
+        <td *ngIf="bill.isEditable" style="display: none">
+          <div class="input-group">
+            <input formControlName="createDate" type="text" class="form-control form-control-sm"
+                   [(ngModel)]="bill.createDate">
+          </div>
+        </td>
+        <td *ngIf="!bill.isEditable" style="display: none">
           <span>{{bill.createDate}}</span>
         </td>
-        <td>
+
+        <td *ngIf="bill.isEditable" style="display: none">
+          <div class="input-group">
+            <input formControlName="editLatestDate" type="text" class="form-control form-control-sm"
+                   [(ngModel)]="bill.editLatestDate">
+          </div>
+        </td>
+        <td *ngIf="!bill.isEditable" style="display: none">
+          <span>{{bill.editLatestDate}}</span>
+        </td>
+
+        <td *ngIf="bill.isEditable">
+          <div class="input-group">
+            <input formControlName="billStatus" type="text" class="form-control form-control-sm"
+                   [(ngModel)]="bill.billStatus">
+          </div>
+        </td>
+        <td *ngIf="!bill.isEditable">
           <span>{{bill.billStatus}}</span>
         </td>
-        <td>
+
+        <td *ngIf="bill.isEditable">
+          <div class="form-group row">
+            <div class="col-md-7 col-sm-7">
+              <fieldset formGroupName="idTypeBill">
+                <select class="form-control-sm" formControlName="id">
+                  <ng-container>
+                    <option *ngFor="let typeBill of typeBillList" [ngValue]="typeBill.id"
+                            [selected]="typeBill.id === editForm.value.idTypeBill.id">
+                      {{typeBill.nameTypeBill}}
+                    </option>
+                  </ng-container>
+                </select>
+              </fieldset>
+            </div>
+          </div>
+        </td>
+        <td *ngIf="!bill.isEditable">
+          <span>{{bill.idTypeBill.nameTypeBill}}</span>
+        </td>
+
+        <td *ngIf="bill.isEditable">
+          <div class="form-group row">
+            <div class="col-md-7 col-sm-7">
+              <fieldset formGroupName="idWareHouse">
+                <select class="form-control-sm" formControlName="id">
+                  <ng-container>
+                    <option *ngFor="let wareHouse of wareHouseList" [ngValue]="wareHouse.id"
+                            [selected]="wareHouse.id === editForm.value.idWareHouse.id">
+                      {{wareHouse.nameWareHouse}}
+                    </option>
+                  </ng-container>
+                </select>
+              </fieldset>
+            </div>
+          </div>
+        </td>
+        <td *ngIf="!bill.isEditable">
           <span>{{bill.idWareHouse.nameWareHouse}}</span>
         </td>
-        <td>
+
+        <td *ngIf="bill.isEditable">
+          <div class="form-group row">
+            <div class="col-md-7 col-sm-7">
+              <fieldset formGroupName="idTransportation">
+                <select class="form-control-sm" formControlName="id">
+                  <ng-container>
+                    <option *ngFor="let transportation of transportationList" [ngValue]="transportation.id"
+                            [selected]="transportation.id === editForm.value.idTransportation.id">
+                      {{transportation.nameTransportation}}
+                    </option>
+                  </ng-container>
+                </select>
+              </fieldset>
+            </div>
+          </div>
+        </td>
+        <td *ngIf="!bill.isEditable">
           <span>{{bill.idTransportation.nameTransportation}}</span>
         </td>
-        <td>
+
+        <td *ngIf="bill.isEditable">
+          <div class="form-group row">
+            <div class="col-md-7 col-sm-7">
+              <fieldset formGroupName="idEmployee">
+                <select class="form-control-sm" formControlName="id">
+                  <ng-container>
+                    <option *ngFor="let employees of employeeList" [ngValue]="employees.id"
+                            [selected]="employees.id === editForm.value.idEmployee.id">
+                      {{employees.name}}
+                    </option>
+                  </ng-container>
+                </select>
+              </fieldset>
+            </div>
+          </div>
+        </td>
+        <td *ngIf="!bill.isEditable">
           <span>{{bill.idEmployee.name}}</span>
         </td>
-        <td>
+
+        <td *ngIf="bill.isEditable">
+          <div class="form-group row">
+            <div class="col-md-7 col-sm-7">
+              <fieldset formGroupName="idDistributor">
+                <select class="form-control-sm" formControlName="id">
+                  <ng-container>
+                    <option *ngFor="let distributor of distributorList" [ngValue]="distributor.id"
+                            [selected]="distributor.id === editForm.value.idDistributor.id">
+                      {{distributor.name}}
+                    </option>
+                  </ng-container>
+                </select>
+              </fieldset>
+            </div>
+          </div>
+        </td>
+        <td *ngIf="!bill.isEditable">
           <span>{{bill.idDistributor.name}}</span>
         </td>
+
+        <td *ngIf="bill.isEditable">
+          <div class="form-group row">
+            <div class="col-md-7 col-sm-7">
+              <fieldset formGroupName="idStorageLocation">
+                <select class="form-control-sm" formControlName="id">
+                  <ng-container>
+                    <option *ngFor="let storageLocation of storageLocationList" [ngValue]="storageLocation.id"
+                            [selected]="storageLocation.id === editForm.value.idStorageLocation.id">
+                      {{storageLocation.nameStorageLocation}}
+                    </option>
+                  </ng-container>
+                </select>
+              </fieldset>
+            </div>
+          </div>
+        </td>
+        <td *ngIf="!bill.isEditable">
+          <span>{{bill.idStorageLocation.nameStorageLocation}}</span>
+        </td>
+
+        <td *ngIf="bill.isEditable">
+          <div class="form-group row">
+            <div class="col-md-7 col-sm-7">
+              <fieldset formGroupName="idPay">
+                <select class="form-control-sm" formControlName="id">
+                  <ng-container>
+                    <option *ngFor="let pay of payList" [ngValue]="pay.id"
+                            [selected]="pay.id === editForm.value.idPay.id">
+                      {{pay.namePay}}
+                    </option>
+                  </ng-container>
+                </select>
+              </fieldset>
+            </div>
+          </div>
+        </td>
+        <td *ngIf="!bill.isEditable">
+          <span>{{bill.idPay.namePay}}</span>
+        </td>
+
+        <td *ngIf="bill.isEditable">
+          <div class="input-group">
+            <input formControlName="processingStatus" type="text" class="form-control form-control-sm"
+                   [(ngModel)]="bill.processingStatus">
+          </div>
+        </td>
+        <td *ngIf="!bill.isEditable">
+          <span>{{bill.processingStatus}}</span>
+        </td>
+        <td *ngIf="bill.isEditable">
+          <div class="input-group">
+            <input formControlName="shippingStatus" type="text" class="form-control form-control-sm"
+                   [(ngModel)]="bill.shippingStatus">
+          </div>
+        </td>
+        <td *ngIf="!bill.isEditable">
+          <span>{{bill.shippingStatus}}</span>
+        </td>
+        <td *ngIf="bill.isEditable">
+          <div class="input-group">
+            <input formControlName="paymentStatus" type="text" class="form-control form-control-sm"
+                   [(ngModel)]="bill.paymentStatus">
+          </div>
+        </td>
+        <td *ngIf="!bill.isEditable">
+          <span>{{bill.paymentStatus}}</span>
+        </td>
         <td>
-          <a data-toggle="modal" data-target="#modal-edit-product" (click)="editBill(bill.id)">
+<!--          <a data-toggle="modal" data-target="#modal-edit-product" (click)="editBill(bill.id)">-->
+<!--            <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button m-1"><i-->
+<!--              class="icon-pencil"></i></button>-->
+<!--          </a>-->
+
+          <a (click)="bill.isEditable=!bill.isEditable; editBill(bill.id)"
+             *ngIf="!bill.isEditable">
             <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button m-1"><i
               class="icon-pencil"></i></button>
           </a>
-<!--          <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal"-->
-<!--                  data-target="#modal-edit-product" (click)="editBill(bill.id)">Sửa-->
-<!--          </button>-->
+          <a *ngIf="bill.isEditable" (click)="switchEdit(bill)">
+            <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button m-1"><i
+              class="fa fa-check"></i></button>
+          </a>
+          <button hidden type="submit" id="submit{{bill.id}}"></button>
         </td>
         <td>
-          <a data-toggle="modal" data-target="#modal-delete-product" (click)="deleteBill(bill.id)">
+          <a *ngIf="bill.isEditable" (click)="cancelEdit(bill)">
+            <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button m-1"><i
+              class="fa fa-times"></i></button>
+          </a>
+          <a *ngIf="!bill.isEditable" data-toggle="modal" data-target="#modal-delete-product" (click)="deleteBill(bill.id)">
             <button style="font-size: 20px;padding: 2% 10%;margin: 2% 10%;" type="button" class="global-button"><i
               class="icon-trash"></i></button>
           </a>
-<!--          <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal"-->
-<!--                  data-target="#modal-delete-product" (click)="deleteBill(bill.id)">Xóa-->
-<!--          </button>-->
         </td>
       </tr>
+
       </tbody>
-      <br>
-      <br>
-
-
     </table>
+      </form>
+    </form>
     <!--Paging-->
     <div class="row w-100">
       <div class="col-2"></div>
@@ -275,7 +648,6 @@
                     <div class="form-group row">
                       <div class="col-md-5 col-sm-5">
                         Phương tiện vận chuyển (<i style="color: red">*</i>)
-<!--                        <span class="align-items-center">Phương tiện vận chuyển (<i style="color: red">*</i>)</span>-->
                       </div>
                       <div class="col-md-7 col-sm-7">
                         <fieldset formGroupName="idTransportation">
@@ -294,7 +666,6 @@
                     <div class="form-group row">
                       <div class="col-md-5 col-sm-5">
                         Phương thức thanh toán (<i style="color: red">*</i>)
-<!--                        <span class="align-items-center">Phương thức thanh toán (<i style="color: red">*</i>)</span>-->
                       </div>
                       <div class="col-md-7 col-sm-7">
                         <fieldset formGroupName="idPay">

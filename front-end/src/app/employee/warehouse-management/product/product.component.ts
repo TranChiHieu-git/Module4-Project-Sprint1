@@ -8,8 +8,7 @@ import {Unit} from '../../../models/unit';
 import {Brand} from '../../../models/brand';
 import {Category} from '../../../models/category';
 import {NotificationService} from '../../../services/notification.service';
-import {Customer} from '../../../models/customer';
-import {ToastrService} from 'ngx-toastr';
+import {Coupon} from '../../../models/coupon';
 
 @Component({
   selector: 'app-product',
@@ -35,14 +34,13 @@ export class ProductComponent implements OnInit {
   public minDate = new Date();
   searchProductName: string;
   listBrand: any;
-  categoryNameFromSelect: string;
   brandArray = [];
 
   constructor(private fb: FormBuilder,
               private productService: ProductService,
               private paginationService: CustomPaginationService,
               private notificationService: NotificationService,
-              private toastr: ToastrService) {
+              ) {
   }
 
   ngOnInit(): void {
@@ -115,6 +113,32 @@ export class ProductComponent implements OnInit {
     this.getData();
   }
 
+  edit(): void {
+   this.productService.updateProduct(this.productForm.value).subscribe(
+      next => {
+        this.notificationService.edit('Chỉnh sửa thành công');
+        this.getData();
+      },
+      error => console.log(error));
+  }
+  onSubmitEdit(): void {
+    if (this.productForm.valid) {
+      const {value} = this.productForm;
+      const data = {
+        ...this.product,
+        ...value
+      };
+      this.productService.updateProduct(data).subscribe(
+        next => {
+          this.closeEditModal.nativeElement.click();
+          this.notificationService.edit('Chỉnh sửa thành công');
+          this.getData();
+        },
+        error => console.log(error));
+    } else {
+      this.notificationService.edit('Xin lỗi! Bạn chưa chỉnh sửa xong');
+    }
+  }
   editProduct(id: number): void {
     this.productService.findProductById(id).subscribe(next => {
 
@@ -126,16 +150,16 @@ export class ProductComponent implements OnInit {
                 this.getData();
     });
   }
-  onSubmitEdit(): void {
-    if (this.productForm.valid) {
-      this.productService.updateProduct(this.productForm.value).subscribe(
-        next => {
-          this.notificationService.edit('Chỉnh sửa thành công');
-          this.getData();
-        },
-        error => console.log(error));
-    }
-  }
+  // onSubmitEdit(): void {
+  //   if (this.productForm.valid) {
+  //     this.productService.updateProduct(this.productForm.value).subscribe(
+  //       next => {
+  //         this.notificationService.edit('Chỉnh sửa thành công');
+  //         this.getData();
+  //       },
+  //       error => console.log(error));
+  //   }
+  // }
 
   onCreate(): void {
     this.productService.createNew(this.createProductForm.value).subscribe(
@@ -266,5 +290,8 @@ OnCancelEditForm(): void {
   switchEdit(product: Product): void {
     product.isEditable = !product.isEditable;
     $('#submit' + product.productId).click();
+  }
+  cancelEdit(coupon: Coupon): void {
+    coupon.isEditable = !coupon.isEditable;
   }
 }
