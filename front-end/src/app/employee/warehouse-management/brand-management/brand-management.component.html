@@ -63,7 +63,7 @@
             <td>
               <div class="add-brand-input">
                 <div class="input-group">
-                  <input formControlName="brandName" type="text" class="form-control custom-input" placeholder="(*)">
+                  <input appAutofocus formControlName="brandName" type="text" class="form-control custom-input" placeholder="(*)" >
                 </div>
                 <p class="text-danger message"
                    *ngIf="row.get('brandName').hasError('required') && row.get('brandName').touched">

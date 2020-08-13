@@ -46,16 +46,19 @@ import {SaleManagementComponent} from './partner-management/sale-management/sale
 // @ts-ignore
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {SalesManagementComponent} from './sale-management/sale-management.component';
+import {AutofocusDirective} from '../directive/autofocus.directive';
 
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
     WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent,
     BillComponent, BrandManagementComponent, CustomerManagementComponent, CustomPaginationComponent,
-    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent,SalesManagementComponent, ProductSaleComponent],
+    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent,
+    SalesManagementComponent, ProductSaleComponent, AutofocusDirective],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent,
-    HomeComponent
+    HomeComponent,
+    AutofocusDirective
   ],
   imports:
     [
