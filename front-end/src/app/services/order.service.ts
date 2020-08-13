@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Order} from '../models/order';
+import {Order, ReceiverMomoRequest, SendMomoRequest} from '../models/order';
 import {TokenStorageService} from '../auth/token-storage.service';
 import {Customer} from '../models/customer';
 import {OrderDetail} from '../models/order-detail';
-import {Cart} from '../models/cart';
+import {Cart, CartId} from '../models/cart';
 import {UserKey} from '../models/userKey';
+import {Product} from '../models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,9 @@ export class OrderService {
   ORDER_CREATE_API_URL = 'http://localhost:8080/order-create';
   ORDER_DETAIL_CREATE_API_URL = 'http://localhost:8080/order-detail-create';
   CART_DELETE_API_URL = 'http://localhost:8080/cart-delete';
+  CART_CREATE_API_URL = 'http://localhost:8080/cart-create';
+  CART_CHANGE_QUANTITY_API_URL = 'http://localhost:8080/cart-quantity';
+  MOMO_API_GET_REQUEST_URL = 'https://cors-anywhere.herokuapp.com/https://test-payment.momo.vn/gw_payment/transactionProcessor';
   idUserSource = new BehaviorSubject<number>(0);
   currentIdUser = this.idUserSource.asObservable();
   customerSource = new BehaviorSubject<Customer>(null);
@@ -27,6 +31,7 @@ export class OrderService {
   order = new BehaviorSubject<Order>(null);
   currentOrder = this.order.asObservable();
   httpOptions: any;
+  cart: Cart = new Cart();
 
   constructor(private httpClient: HttpClient, private tokenStorage: TokenStorageService) {
     this.httpOptions = {
@@ -76,6 +81,26 @@ export class OrderService {
     return this.httpClient.post<OrderDetail>(this.ORDER_DETAIL_CREATE_API_URL, orderDetail, this.httpOptions);
   }
 
+  createCart(product: Product, customer: Customer, quantity: number): Observable<any> {
+    const userKey2 = new UserKey();
+    const cartId = new CartId();
+    userKey2.account = customer.account;
+    userKey2.address = customer.address;
+    userKey2.birthday = customer.birthday;
+    userKey2.deleteFlag = customer.deleteFlag;
+    userKey2.email = customer.email;
+    userKey2.gender = customer.gender;
+    userKey2.id = customer.id;
+    userKey2.imageUrl = customer.imageUrl;
+    userKey2.phone = customer.phone;
+    userKey2.userName = customer.userName;
+    cartId.product = product;
+    cartId.user = userKey2;
+    this.cart.id = cartId;
+    this.cart.quantity = quantity;
+    return this.httpClient.post<Cart>(this.CART_CREATE_API_URL, this.cart, this.httpOptions);
+  }
+
   deleteCart(cart: Cart, customer: Customer): Observable<any> {
     const userKey = new UserKey();
     userKey.account = customer.account;
@@ -90,5 +115,25 @@ export class OrderService {
     userKey.userName = customer.userName;
     cart.id.user = userKey;
     return this.httpClient.post<Cart>(this.CART_DELETE_API_URL, cart, this.httpOptions);
+  }
+
+  changeQuantityCart(cart: Cart, customer: Customer): Observable<any> {
+    const userKey1 = new UserKey();
+    userKey1.account = customer.account;
+    userKey1.address = customer.address;
+    userKey1.birthday = customer.birthday;
+    userKey1.deleteFlag = customer.deleteFlag;
+    userKey1.email = customer.email;
+    userKey1.gender = customer.gender;
+    userKey1.id = customer.id;
+    userKey1.imageUrl = customer.imageUrl;
+    userKey1.phone = customer.phone;
+    userKey1.userName = customer.userName;
+    cart.id.user = userKey1;
+    return this.httpClient.post<Cart>(this.CART_CHANGE_QUANTITY_API_URL, cart, this.httpOptions);
+  }
+
+  getReceiverMomoRequest(sendRequest: SendMomoRequest): Observable<ReceiverMomoRequest> {
+    return this.httpClient.post<ReceiverMomoRequest>(this.MOMO_API_GET_REQUEST_URL, sendRequest);
   }
 }

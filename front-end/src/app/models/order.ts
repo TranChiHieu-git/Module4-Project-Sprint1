@@ -26,3 +26,29 @@ export class Order {
   constructor() {
   }
 }
+
+export class SendMomoRequest {
+  accessKey: string;
+  partnerCode: string;
+  requestType: string;
+  notifyUrl: string;
+  returnUrl: string;
+  orderId: string;
+  amount: string;
+  orderInfo: string;
+  requestId: string;
+  extraData: string;
+  signature: string;
+
+}
+
+export class ReceiverMomoRequest {
+  requestId: string;
+  errorCode: string;
+  orderId: string;
+  message: string;
+  localMessage: string;
+  requestType: string;
+  payUrl: string;
+  signature: string;
+}
