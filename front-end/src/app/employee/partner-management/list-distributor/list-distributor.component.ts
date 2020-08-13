@@ -33,7 +33,6 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
   isSearch = false;
   idHasModifined: number;
   totalPages = 1;
-  listError: any = '';
   img: any;
   myForm: FormGroup;
   src = 'https://worklink.vn/wp-content/uploads/2018/07/no-logo.png';
@@ -44,7 +43,6 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
   typeOfDistributorPromise: any;
   isChangedImg = false;
   isChangedImgList: boolean[] = [];
-  myDistributor: Distributor;
   functionTitle: string;
   functionButton: string;
   functionMode: string;
@@ -364,23 +362,12 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
       this.getAddress(i);
       this.uploadFireBaseAndSubmit2(i);
     }
-    // this.listFormGroup.forEach(item => {
-    //     if (item !== undefined && item.value.id !== null) {
-    //       this.distributorService.removeSession(item.value.id).subscribe(
-    //         res => {
-    //         }
-    //         , error => {
-    //         }
-    //       );
-    //     }
-    //   }
-    // )
-    // ;
   }
 
   resetSessionAll(): void {
     for (let i = 0; i < this.size; i++) {
-      if (this.listFormGroup[i] !== undefined && this.listFormGroup[i].value.id !== null) {
+      console.log(this.listFormGroup[i].value)
+      if (this.listFormGroup[i].value.id !== null && this.listFormGroup[i].value.id !== '') {
         this.distributorService.removeSession(this.listFormGroup[i].value.id).subscribe(
           res => console.log('Remove Session'),
           error => {
@@ -523,14 +510,20 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
 
 
   private saveModifiedDistributor(i: number): void {
+    let temp = this.listFormGroup[i].value.id;
     this.distributorService.modifiedDistributor(this.listFormGroup[i].value).subscribe(
       res1 => {
         this.showNotications('Chỉnh sửa nhà phân phối thành công');
         this.listModifiedIdSuccess[i] = this.listFormGroup[i].get('id').value;
-        for (let a = 0; a < this.size; a++) {
-          this.listFormGroup[a].reset();
-        }
-        this.resetList();
+        this.listFormGroup[i].reset();
+        this.distributorService.findById(temp).subscribe(
+          res => {
+            console.log(res);
+            this.distributorList[i] = res;
+          }, error => {
+          }
+        );
+        // this.resetList();
         this.enableModifiedMoreButton();
 
       }, error => console.log(error));
@@ -538,7 +531,6 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
 
 
   private saveModifiedMoreDistributor(i: number): void {
-    this.sentModifiedList[i].status = 1;
     this.distributorService.modifiedDistributor(this.sentModifiedList[i]).subscribe(
       res => {
         this.distributorService.removeSession(this.listFormGroup[i].value.id).subscribe(
@@ -548,15 +540,15 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
 
           }
         );
+
         this.idHasModifined = this.sentModifiedList[i].id;
         $('#checkboxEditMore' + i).prop('disable', false);
         $('#checkboxEditMore' + i).prop('checked', true);
         $('#checkboxEditMore' + i).prop('disable', true);
         this.listModifiedIdSuccess.push(this.sentModifiedList[i].id);
         this.countListSentEditMore++;
-        this.enableAcceptEditMoreButton();
         this.distributorListName[i] += ' (OK)';
-        this.onChange2(this.pageClick);
+        this.enableAcceptEditMoreButton();
       }, error => console.log(error));
   }
 
@@ -1298,26 +1290,6 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
     );
   }
 
-  // autoGenDistrictList(): void {
-  //   this.distributorService.findAllDistrictByProvinceId('01').subscribe(
-  //     res => {
-  //       for (let i = 0; i < this.size; i++) {
-  //         this.listDistrict[i] = res;
-  //       }
-  //     }, error => console.log(error)
-  //   );
-  // }
-  //
-  // autoGenCommuneList(): void {
-  //   this.distributorService.findAllCommuneByDistrictId('001').subscribe(
-  //     res => {
-  //       for (let i = 0; i < this.size; i++) {
-  //         this.listCommune[i] = res;
-  //       }
-  //     }, error => console.log(error)
-  //   );
-  // }
-
   getDetailBill(id: number, name: string): void {
     this.distributorService.findAllBillIsExistDistributor(id).subscribe(
       res1 => {
@@ -1408,9 +1380,12 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
     $('#cancelEditMore').prop('hidden', true);
     $('#submitEditMore').prop('hidden', true);
     $('#closeEditMore').prop('hidden', false);
-
-    this.listModifiedOutSession = [];
-    console.log(this.listModifiedOutSession);
+    this.listModifiedOutSession = []
+    this.enableAcceptEditMoreButton();
+    this.distributorService.getAllDistributor(this.pageClick, this.size, '').subscribe(
+      res => this.distributorList = res, error => {
+      }
+    );
 
   }
 
@@ -1424,6 +1399,7 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < this.size; i++) {
       this.listFormGroup[i].reset();
     }
+    this.resetList();
     $('#editMore').prop('hidden', true);
   }
 
