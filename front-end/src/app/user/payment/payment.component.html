@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
       integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha256.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.min.js"></script>
 <div class="container">
   <div class="row">
 
@@ -102,15 +104,14 @@
                   </div>
                   <br>
                   <div class="custom-control custom-radio">
-                    <input id="other2" name="Regarding" type="radio" class="custom-control-input" value="Other"
-                           required>
-                    <label class="custom-control-label" for="other2">Thanh toán bằng thẻ ngân hàng <span
+                    <input id="momo" name="Regarding" type="radio" class="custom-control-input"
+                           value="Đã thanh toán bằng ví điện tử MoMo"
+                           [(ngModel)]="paymentMethod">
+                    <label class="custom-control-label" for="momo">Thanh toán bằng Ví điện tử Momo <span
                       class="statusOther"
                       style="visibility:visible"></span></label>
                   </div>
-                  <div id="divOther2" class="collapse fade paypall">
-                    <label>Chưa có chức năng này</label>
-                  </div>
+
                 </div>
               </div>
 

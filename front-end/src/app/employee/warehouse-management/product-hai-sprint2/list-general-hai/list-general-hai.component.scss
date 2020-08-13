@@ -1,0 +1,22 @@
+.cake-box {
+  text-align: center; padding:10px; margin:10px; background:#f1f1f1; color:#666;
+}
+.carousel-item-prev,
+.carousel-item-next,
+.carousel-item.active {
+  display:flex;
+}
+
+
+/* control image height */
+.card-img-top-250 {
+  max-height: 225px;
+  overflow:hidden;
+}
+
+/* smoother transitions */
+.carousel-inner>.carousel-item.next.left,
+.carousel-inner>.carousel-item.prev.right,
+{
+  transition: all 1s ease;
+}

@@ -162,8 +162,16 @@ input[type=text]:focus {
 }
 
 .checkbox {
-  width: 10px !important;
+  width: 30px !important;
   border-radius: 50%;
+  background: #329d7b;
+
+}
+
+.checkbox:checked {
+  width: 30px !important;
+  border-radius: 50%;
+  background: red;
 }
 
 .dropdown-toggle {
@@ -216,3 +224,8 @@ input[type=text]:focus {
   width: 100%;
   height: 100%;
 }
+
+.smallicon {
+  padding-top: 10px !important;
+}
+

@@ -15,7 +15,6 @@ export class PaymentSuccessComponent implements OnInit {
   ngOnInit(): void {
      this.newOrderId = this.activatedRoute.snapshot.paramMap.get('newOrderId');
      this.newOrderReceiverDate = this.activatedRoute.snapshot.paramMap.get('newOrderReceiverDate');
-     console.log(this.newOrderReceiverDate);
 
   }
 

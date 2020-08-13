@@ -13,12 +13,6 @@ hr {
   font-weight: bold;
 }
 
-.card-body {
-  background: none;
-  height: auto;
-  border: none;
-}
-
 label {
   margin-left: 20px;
 }
@@ -28,10 +22,7 @@ label {
 
 }
 
-.datepickerinput {
-  padding: 1px 2px !important;
-  height: 30px !important;
-  width: 182px !important;
+.fromdate, .fromto, .employee, .user {
   border: rgb(118, 118, 118) 1px solid !important;
   background-color: white !important;
   color: black !important;
@@ -49,9 +40,20 @@ label {
 
 .datePicker-div {
   position: absolute;
+  top: 25%;
   left: 80%;
 }
 
-.date{
-  padding-top: 15px !important;
+.inputnormal {
+  margin-top: 15px !important;
+}
+
+.backlist {
+  color: #0f23ce;
+  cursor: pointer;
+}
+
+.backlist:hover {
+  color: #f18502;
+  cursor: pointer;
 }

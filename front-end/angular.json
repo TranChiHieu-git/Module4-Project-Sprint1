@@ -36,18 +36,24 @@
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/slick-carousel/slick/slick.scss",
-              "src/assets/css/bootstrap-select.css"
+              "src/assets/css/bootstrap-select.css",
+              "./node_modules/jquery-ui-dist/jquery-ui.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/popper.js/dist/umd/popper.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "./node_modules/jquery-ui-dist/jquery-ui.js",
+              "./node_modules/selectize/dist/js/standalone/selectize.js",
               "src/assets/js/collapse_sidebar.js",
               "src/assets/js/addProductInRow.js",
               "src/assets/js/fb.js",
               "src/assets/js/customer-chat.js",
-              "./node_modules/slick-carousel/slick/slick.js",
               "src/assets/js/BrandJS.js",
+              "src/assets/js/hmac-sha256.min.js",
+              "src/assets/js/enc-base64.min.js",
+              "src/assets/js/crypto-js.min.js",
+              "./node_modules/slick-carousel/slick/slick.js",
               "src/assets/js/bootstrap-select.js"
             ]
           },
