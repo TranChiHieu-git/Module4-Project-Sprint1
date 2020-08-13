@@ -16,6 +16,7 @@ export class ShoppingCardComponent implements OnInit {
   orderNow: Cart[] = [];
   tempMoney = 0;
   totalProduct = 0;
+
   constructor(private customerService: CustomerService,
               private orderService: OrderService,
               private router: Router) {
@@ -27,7 +28,6 @@ export class ShoppingCardComponent implements OnInit {
         this.customer = message;
         if (this.customer != null) {
           this.orderNow = this.customer.cartList;
-          console.log(this.orderNow);
           this.calTempMoney();
         }
       },
@@ -51,18 +51,21 @@ export class ShoppingCardComponent implements OnInit {
     this.calTempMoney();
   }
 
-  increase(i: number): void {
+  increase(i: number, cart: Cart): void {
     this.tempMoney = 0;
     this.totalProduct = 0;
     this.orderNow[i].quantity++;
     this.calTempMoney();
+    this.changeQuantity(cart);
+
   }
 
-  decrease(i: number): void {
+  decrease(i: number, cart: Cart): void {
     this.tempMoney = 0;
     this.totalProduct = 0;
     this.orderNow[i].quantity--;
     this.calTempMoney();
+    this.changeQuantity(cart);
   }
 
   toOrder(): void {
@@ -72,6 +75,13 @@ export class ShoppingCardComponent implements OnInit {
   deleteCart(cart: Cart): void {
     this.spinnerOn();
     this.orderService.deleteCart(cart, this.customer).toPromise().then(res => {
+      this.spinnerOff();
+    });
+  }
+
+  changeQuantity(cart: Cart): void {
+    this.spinnerOn();
+    this.orderService.changeQuantityCart(cart, this.customer).toPromise().then(res => {
       this.spinnerOff();
     });
   }

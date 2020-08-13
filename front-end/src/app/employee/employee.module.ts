@@ -61,6 +61,7 @@ import { ListGeneralHaiComponent } from './warehouse-management/product-hai-spri
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
     WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent,
     BillComponent, BrandManagementComponent, CustomerManagementComponent, CustomPaginationComponent,
+
     FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent, SalesManagementComponent, ProductHaiSprint2Component,
     CakeDetailHaiComponent, ListCakeHaiComponent, CreateProductHaiComponent, DeleteProductHaiComponent, ListGeneralHaiComponent],
   exports: [
