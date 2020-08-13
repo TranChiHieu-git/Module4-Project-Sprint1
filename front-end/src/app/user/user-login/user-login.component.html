@@ -28,13 +28,10 @@
         </div>
       </div>
     </div>
-    <div class="form-check ml-4">
-      <input type="checkbox" class="form-check-input" id="dropdownCheck">
-      <label class="form-check-label" for="dropdownCheck">
+    <div class=" ml-4">
+      <input type="checkbox" [checked]="rememberMe" [(ngModel)]="rememberMe" id="dropdownCheck">
         Nhớ Tài Khoản
-      </label>
     </div>
-  </form>
 
   <a href="#" class="text-primary pl-4" data-toggle="modal" data-target="#forgetPasswordModal" data-dismiss="modal">Quên
     Mật Khẩu?
@@ -48,7 +45,7 @@
             id="loginButton"
             (click)="onSubmit()">Đăng Nhập
     </button>
-    <button class="btn-sm btn-outline-secondary  w-25" data-dismiss="modal"> Hủy</button>
+    <button class="btn-sm btn-outline-secondary  w-25" data-dismiss="modal" (click)="loginForm.reset()"> Hủy</button>
   </div>
   <div class="text-danger" role="alert">
     {{message}}
@@ -59,5 +56,7 @@
       Ngay
     </a>
   </div>
+  </form>
+
 </div>
 
