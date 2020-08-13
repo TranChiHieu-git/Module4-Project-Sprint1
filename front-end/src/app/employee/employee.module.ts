@@ -41,14 +41,10 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {FilterUniquePipe} from './warehouse-management/product/filter-unique.pipe';
 import {BillComponent} from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
-
+import { ProductSaleComponent } from './sale-management/product-sale/product-sale.component';
 // @ts-ignore
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {SalesManagementComponent} from './sale-management/sale-management.component';
-
-import {ToastrModule} from 'ngx-toastr';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { SaleManagementComponent } from './partner-management/sale-management/sale-management.component';
 import { ProductHaiSprint2Component } from './warehouse-management/product-hai-sprint2/product-hai-sprint2.component';
 import { CakeDetailHaiComponent } from './warehouse-management/product-hai-sprint2/cake-detail-hai/cake-detail-hai.component';
@@ -58,12 +54,29 @@ import { DeleteProductHaiComponent } from './warehouse-management/product-hai-sp
 import { ListGeneralHaiComponent } from './warehouse-management/product-hai-sprint2/list-general-hai/list-general-hai.component';
 // @ts-ignore
 @NgModule({
-  declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
-    WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent,
-    BillComponent, BrandManagementComponent, CustomerManagementComponent, CustomPaginationComponent,
-
-    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent, SalesManagementComponent, ProductHaiSprint2Component,
-    CakeDetailHaiComponent, ListCakeHaiComponent, CreateProductHaiComponent, DeleteProductHaiComponent, ListGeneralHaiComponent],
+  declarations: [PartnerManagementComponent,
+    EmployeeDetailComponent,
+    EmployeeManagerComponent,
+    WarehouseManagementComponent,
+    HomeComponent,
+    ProductComponent,
+    ListDistributorComponent,
+    BillComponent,
+    BrandManagementComponent,
+    CustomerManagementComponent,
+    CustomPaginationComponent,
+    FilterProductPipe,
+    FilterMultiplePipe,
+    FilterUniquePipe,
+    SaleManagementComponent,
+    SalesManagementComponent,
+    ProductHaiSprint2Component,
+    CakeDetailHaiComponent,
+    ListCakeHaiComponent,
+    CreateProductHaiComponent,
+    DeleteProductHaiComponent,
+    ListGeneralHaiComponent,
+    ProductSaleComponent],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent

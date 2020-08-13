@@ -12,13 +12,12 @@ import {ToastrService} from 'ngx-toastr';
 import {EmployeeService} from '../../services/employee.service';
 import {Employee} from '../../models/employee';
 import {Department} from '../../models/department';
-import {PositionEmp} from '../../models/position';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Tempjwtemp} from '../../models/tempjwtemp';
 import {TokenStorageService} from '../../auth/token-storage.service';
-
+import {Position} from '../../models/position';
 
 function comparePassword(c: AbstractControl) {
   const v = c.value;
@@ -69,7 +68,7 @@ export class ListAccountComponent implements OnInit {
   private sumVal = 0;
   employeeList: Employee[];
   employeeForm: FormGroup;
-  positionList: PositionEmp[];
+  positionList: Position[];
   departmentList: Department[];
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
@@ -388,7 +387,7 @@ export class ListAccountComponent implements OnInit {
         accountPassword: '',
         deleteFlag: next.deleteFlag,
         role: next.role.roleId,
-        reason: '',
+        reason: next.reason,
       });
     }, error => {
       console.log(error);
@@ -517,7 +516,7 @@ export class ListAccountComponent implements OnInit {
     this.editResuilt = new Account();
     this.editResuilt.accountId = this.editAccountForm.value.accountId;
     this.editResuilt.accountName = this.editAccountForm.value.accountName !== '' ? this.editAccountForm.value.accountName : this.AccountById.accountName;
-    this.editResuilt.accountPassword = this.editAccountForm.value.accountPassword !== '' ? this.editAccountForm.value.accountPassword : this.AccountById.accountPassword;
+    this.editResuilt.accountPassword = this.editAccountForm.value.accountPassword !== '' ? this.editAccountForm.value.accountPassword : '';
     this.editResuilt.deleteFlag = this.editAccountForm.value.deleteFlag;
     this.adminService.findAccountById(this.editResuilt.accountId).subscribe(next => {
       if (next !== null) {

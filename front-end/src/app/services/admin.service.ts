@@ -36,7 +36,7 @@ export class AdminService {
   }
 
   getAllAccountNotInEmployee(): Observable<any> {
-    return this.httpClient.get(this.API_URL2)
+    return this.httpClient.get(this.API_URL2);
   }
 
   findAll(): Observable<Account[]> {
