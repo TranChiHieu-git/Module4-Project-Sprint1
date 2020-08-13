@@ -57,12 +57,8 @@ export class DistributorService {
     return this.httpClient.get<TypeOfDistributor>(this.MY_API_URL + '/type_distributor/' + name);
   }
 
-  deleteAllDistributor(list: DeleteListDistributor[]): Observable<DistributorDeleteAllResuilt> {
-    const sendList: number[] = [];
-    for (let i = 0; i < list.length; i++) {
-      sendList[i] = list[i].id;
-    }
-    return this.httpClient.post<DistributorDeleteAllResuilt>(this.MY_API_URL + '/distributor/deleteAll', sendList);
+  deleteAllDistributor(list: Distributor[]): Observable<DistributorDeleteAllResuilt> {
+    return this.httpClient.post<DistributorDeleteAllResuilt>(this.MY_API_URL + '/distributor/deleteAll', list);
   }
 
   isExistDistributorName(name: string, id: number): Observable<Distributor> {
@@ -119,7 +115,16 @@ export class DistributorService {
     return this.httpClient.get<boolean>(this.MY_API_URL + '/distributor/isNotModifying/' + id);
   }
 
-  setSession(id: number, status: number): Observable<any> {
-    return this.httpClient.get<any>(this.MY_API_URL + '/distributor/setSession/' + id + '/' + status);
+  setSession(id: number, status: number): Observable<number> {
+    return this.httpClient.get<number>(this.MY_API_URL + '/distributor/setSession/' + id + '/' + status);
+  }
+
+  modifiedDistributor(item: Distributor): Observable<any> {
+    return this.httpClient.post<any>(this.MY_API_URL + '/distributor/modified', item);
+  }
+
+  checkInSession(id: number, numSession: number): Observable<boolean> {
+    return this.httpClient.get<boolean>(this.MY_API_URL + '/distributor/inSession/' + id + '/' + numSession);
+
   }
 }

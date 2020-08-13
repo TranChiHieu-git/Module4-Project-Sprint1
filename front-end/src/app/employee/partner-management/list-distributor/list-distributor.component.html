@@ -57,7 +57,7 @@
           <th class="sticky-top">Chi Tiết</th>
 
           <th scope="col" class="centerDiv">
-            <input type="checkbox" id="all" (change)="addToListDelete('all','')" style="display: block"></th>
+            <input type="checkbox" id="checboxall" (change)="addToListDelete('all')" style="display: block"></th>
         </tr>
         </thead>
         <tbody>
@@ -93,7 +93,7 @@
             <td width="5%">
               <a>
                 <button type="button" class="global-button customButton"><i
-                  class="fa fa-trash" (click)="openDeleteForm(distributor.id,distributor.name, i)"></i></button>
+                  class="fa fa-trash" (click)="openDeleteForm(distributor.id,distributor.name,distributor.numSession, i)"></i></button>
               </a>
             </td>
             <td width="5%">
@@ -105,7 +105,7 @@
             </td>
             <td class="centerDiv" style="width: 3%">
               <input *ngIf="distributor.id" type="checkbox" [id]="'checkbox' + distributor.id"
-                     (change)="addToListDelete(distributor.id, distributor.name)" style="display: block"></td>
+                     (change)="addToListDelete(distributor)" style="display: block"></td>
           </tr>
 
 
@@ -458,7 +458,7 @@
         <button class="btn btn-dark myButton" (click)="removeSession(this.distributorId)" data-dismiss="modal"
                 id="closeDeleteForrm">HỦY
         </button>
-        <button class="btn btn-danger myButton" (click)="deleteDistributor(this.distributorId)" data-dismiss="modal">
+        <button class="btn btn-danger myButton" (click)="deleteDistributor(this.distributorId, this.distributorSession)" data-dismiss="modal">
           XÓA
         </button>
       </div>
@@ -485,7 +485,7 @@
           class="deleteTitle distributorName">Mã đơn hàng : {{bill.billName}} - tình trạng
         : {{bill.shippingStatus}}</h5>
       <div>
-        <button  class="btn btn-dark myButton" data-dismiss="modal" style="width: 25%; margin-left: 37.5%">XÁC NHẬN
+        <button class="btn btn-dark myButton" data-dismiss="modal" style="width: 25%; margin-left: 37.5%">XÁC NHẬN
         </button>
       </div>
     </div>
@@ -506,30 +506,26 @@
     </div>
     <div class="modal-content">
       <h5 class="deleteTitle" style="margin-bottom: 10px">Bạn có muốn xóa tất cả nhà phân phối được chọn?</h5>
-      <ng-container *ngIf="deleteList.length!=0">
-        <div *ngFor="let item of deleteList" style="width: 95%; margin: 0 2.5% 0 2.5%">
+      <ng-container *ngIf="deleteListSend.length!=0">
+        <div *ngFor="let item of deleteListSend" style="width: 95%; margin: 0 2.5% 0 2.5%">
           <div style="width: 10%;float:left; overflow: hidden; align-content: center" class="centerDiv">
             <i style=" line-height: 30px" class="fas fa-trash"
                (click)="removeFromDeleteList(item)"></i>
-
           </div>
           <div style="width: 90%;float: left; overflow: hidden">
 
             <h5 style="float: left; padding-left: 20px; color: #3a57af;line-height: 30px">{{item.name}}</h5>
           </div>
 
-          <!--          <label style="text-align: left; overflow: hidden">-->
-          <!--            <button style="float: left" (click)="removeFromDeleteList(item)">X</button>-->
-          <!--            {{item.name}}</label>-->
-          <!--         <div style="float: left; width: 80% ; ">-->
-          <!--           <label style="text-align: left">{{item.name}}</label>-->
-          <!--         </div>-->
 
+        </div>
+        <div *ngFor="let item of deleteListSendIsModifying">
+          <h5 style="float: left; padding-left: 16%; color: red;line-height: 30px">{{item.name}}  -- (Đang được chỉnh sửa)</h5>
         </div>
       </ng-container>
 
       <div>
-        <button class="btn btn-dark myButton" data-dismiss="modal" data-dismiss="modal">HỦY</button>
+        <button class="btn btn-dark myButton" data-dismiss="modal" id="closeDeleteAllForm" (click)="removeSessionDeleteListSent()" data-dismiss="modal">HỦY</button>
         <button class="btn btn-danger myButton" (click)="deleteAll()" data-dismiss="modal">XÓA</button>
       </div>
     </div>
@@ -554,23 +550,24 @@
     <div class="modal-content">
       <div *ngIf="deleteSuccessList.length!== 0">
         <h5 style="text-align: left; padding-left: 15px; font-weight: 800" class="deleteTitle">DANH SÁCH NHÀ PHÂN PHỐI
-          XÓA THÀNH CÔNG
+          XÓA THÀNH CÔNG :
         </h5>
         <h5 style="text-align: left; padding-left: 40px" *ngFor="let item of deleteSuccessList"
             class="deleteTitle distributorName">{{item.name}}</h5>
       </div>
 
 
-      <h5 *ngIf="deleteUnsuccessList || deleteIsModifyingList" style="text-align: center; font-weight: 800"
+      <h5 *ngIf="deleteUnsuccessList || deleteOutSessionList" style="text-align: center; font-weight: 800"
           class="deleteTitle">DANH SÁCH
         NHÀ PHÂN PHỐI KHÔNG
-        THỂ XÓA VÌ ĐANG CÓ ĐƠN HÀNG HOẶC ĐANG CHỈNH SỬA BỞI NHÂN VIÊN KHÁC
+        THỂ XÓA VÌ ĐANG CÓ ĐƠN HÀNG :
       </h5>
       <h5 style="text-align: left; padding-left: 40px; color: red" *ngFor="let item of deleteUnsuccessList"
-          class="deleteTitle distributorName">{{item.name}}  - <a *ngIf="item.status===0"
-                                                                  (click)="getDetailBill(item.id, item.name)">Chi tiết</a></h5>
-      <h5 style="text-align: left; padding-left: 40px; color: red" *ngFor="let item of deleteIsModifyingList"
-          class="deleteTitle distributorName">{{item.name}}  - <a *ngIf="item.status!==0">Đang được chỉnh sửa</a></h5>
+          class="deleteTitle distributorName">{{item.name}}  - <a
+                                                                  (click)="getDetailBill(item.id, item.name)">Chi
+        tiết</a></h5>
+      <h5 style="text-align: left; padding-left: 40px; color: red" *ngFor="let item of deleteOutSessionList"
+          class="deleteTitle distributorName">{{item.name}}  - <a>Hết phiên làm việc</a></h5>
       <div>
         <button class="btn btn-dark myButton" data-dismiss="modal" style="width: 25%; margin-left: 37.5%">XÁC NHẬN
         </button>
@@ -598,7 +595,7 @@
       <ng-container>
         <div *ngFor="let item of listFormGroup, let i = index" style="width: 95%; margin: 0 2.5% 0 2.5%">
           <div style="width: 90%;float: left; overflow: hidden; margin-left: 5%">
-            <div *ngIf="item.valid " style="position: relative">
+            <div *ngIf="item.valid &&  listModifiedOutSession.indexOf(item.value)===-1" style="position: relative">
               <input type="checkbox" [id]="'checkboxEditMore'+i" value="haha"
                      style="display: inline-block; width: 5%; float: left; position: relative; top : 18px" disabled>
               <h5
@@ -618,13 +615,26 @@
             </div>
           </div>
         </div>
+        <div *ngFor="let item of listModifiedOutSession, let i = index" style="width: 95%; margin: 0 2.5% 0 2.5%">
+          <div style="width: 90%;float: left; overflow: hidden; margin-left: 5%">
+            <div style="position: relative">
+              <input type="checkbox" [id]="'checkboxEditMore'+i" value="haha"
+                     style="display: inline-block; width: 5%; float: left; position: relative; top : 18px" disabled>
+
+              <h5
+                style="float: left; width: 35%; color: red;line-height: 50px; display: block;margin: 0px;">{{item.name}}</h5>
+              <a style="line-height: 50px; color: red; padding-left: 40px">( Ngoài phiên làm việc)</a>
+            </div>
+          </div>
+        </div>
+
       </ng-container>
 
       <div>
         <button class="btn btn-dark myButton" id="cancelEditMore" data-dismiss="modal">HỦY</button>
         <button class="btn btn-danger myButton" id="submitEditMore" (click)="submitModifiedMore()">CHỈNH SỬA</button>
         <button class="btn btn-danger myButton" id="closeEditMore" (click)="closeEditMoreForm()" data-dismiss="modal"
-                hidden disabled>XÁC NHẬN
+                hidden disabled style="width: 30%; margin-left: 35%">XÁC NHẬN
         </button>
       </div>
     </div>
@@ -644,6 +654,27 @@
     <div class="modal-content">
       <h5 class="deleteTitle">Nhà phân phối <a style="font-weight: 600; color: blue">{{this.distributorName}}</a> đang
         được chỉnh sửa bởi 1 nhân viên khác. Vui lòng thử lại sau.</h5>
+      <div>
+        <button class="btn btn-dark myButton" style="width: 30%; margin-left: 35%" data-dismiss="modal">XÁC NHẬN
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="session" type="button" class="btn btn-primary" data-toggle="modal" data-target=".session" hidden>Large
+  modal
+</button>
+<div class="modal fade bd-example-modal-sm session" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true" data-backdrop="static" data-keyboard="true">
+  <div class="modal-dialog">
+    <div class="modal-title" id="modal-title2">
+      <h1>CHỈNH SỬA NHÀ PHÂN PHỐI</h1>
+    </div>
+    <div class="modal-content">
+      <h5 class="deleteTitle">Bạn đã hết phiên làm việc với nhà phân phối <a
+        style="font-weight: 600; color: blue">{{this.distributorName}}</a> . Thời hạn phiên làm việc là 5 phút.</h5>
       <div>
         <button class="btn btn-dark myButton" style="width: 30%; margin-left: 35%" data-dismiss="modal">XÁC NHẬN
         </button>

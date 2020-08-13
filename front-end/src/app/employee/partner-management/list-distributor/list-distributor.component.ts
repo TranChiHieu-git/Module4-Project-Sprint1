@@ -52,6 +52,8 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
   percentListUpload: Observable<number>[] = [];
   isSubmiting = false;
   deleteList: DeleteListDistributor[] = [];
+  deleteListSend: Distributor[] = [];
+  deleteListSendIsModifying: Distributor[] = [];
   imgFile: any;
   imgFileList: any[] = [];
   listProvinces: any[] = [];
@@ -59,7 +61,6 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
   listCommune: any[] = [];
   listFormGroup: FormGroup[] = [];
   listBill: Bill[] = [];
-  deleteDistributorListFail: Distributor[] = [];
   srcList: string[] = [];
   imgHeight: string;
   modifiedFormGroupList: FormGroup[] = [];
@@ -69,12 +70,14 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
   distributorListName: string[] = [];
   countListSentEditMore = 0;
   listModifiedIdSuccess: number[] = [];
-  listDeleteSucces: string[] = [];
+  listModifiedOutSession: Distributor[] = [];
   distributorName: string;
   distributorId: number;
-  deleteIsModifyingList: Distributor[] = [];
+  distributorSession: number;
+  deleteOutSessionList: Distributor[] = [];
   deleteSuccessList: Distributor[] = [];
   deleteUnsuccessList: Distributor[] = [];
+  modifiedListSend: Distributor[] = [];
 
   constructor(private fb: FormBuilder,
               private distributorService: DistributorService,
@@ -279,16 +282,27 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
     }
   }
 
-  deleteDistributor(id: number): void {
-    this.distributorService.deleteById(id).subscribe(
-      res => {
-        this.showNotications('Xóa nhà phân phối thành công');
-        this.resetList();
-      },
-      error => {
-        this.showNotications('Xóa nhà phân phối thất bại');
+  deleteDistributor(id: number, numOfSession: number): void {
+    this.distributorService.checkInSession(id, numOfSession).subscribe(
+      res1 => {
+        if (res1) {
+          this.distributorService.deleteById(id).subscribe(
+            res => {
+              this.showNotications('Xóa nhà phân phối thành công');
+              this.resetList();
+            },
+            error => {
+              this.showNotications('Xóa nhà phân phối thất bại');
+            }
+          );
+        } else {
+          $('#session').click();
+        }
+      }, error => {
+
       }
     );
+
   }
 
   private submitForm(): void {
@@ -350,6 +364,18 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
       this.getAddress(i);
       this.uploadFireBaseAndSubmit2(i);
     }
+    // this.listFormGroup.forEach(item => {
+    //     if (item !== undefined && item.value.id !== null) {
+    //       this.distributorService.removeSession(item.value.id).subscribe(
+    //         res => {
+    //         }
+    //         , error => {
+    //         }
+    //       );
+    //     }
+    //   }
+    // )
+    // ;
   }
 
   resetSessionAll(): void {
@@ -425,77 +451,95 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
   }
 
   private uploadFireBaseAndSubmit2(i: number): void {
-    const id = Math.random().toString(36).substring(2);
-    this.ref = this.afStorage.ref(id);
-    if (this.isChangedImgList[i]) {
-      this.task = this.ref.put(this.imgFileList[i]);
-      this.percentUpload = this.task.snapshotChanges()
-        .pipe(map(s => (s.bytesTransferred / s.totalBytes) * 100));
-      this.task.snapshotChanges().pipe(
-        finalize(() => {
-          this.ref.getDownloadURL().subscribe(url => {
-            this.getUrlUploadImgPromise = new Promise((resolve, reject) => {
-              resolve(url);
-              this.listFormGroup[i].value.img = url;
-              this.saveModifiedDistributor(i);
-            });
-          });
-        }))
-        .subscribe();
-    } else {
-      this.saveModifiedDistributor(i);
-    }
+    this.distributorService.checkInSession(this.listFormGroup[i].value.id, this.listFormGroup[i].value.numSession).subscribe(
+      res => {
+        if (res) {
+          const id = Math.random().toString(36).substring(2);
+          this.ref = this.afStorage.ref(id);
+          if (this.isChangedImgList[i]) {
+            this.task = this.ref.put(this.imgFileList[i]);
+            this.percentUpload = this.task.snapshotChanges()
+              .pipe(map(s => (s.bytesTransferred / s.totalBytes) * 100));
+            this.task.snapshotChanges().pipe(
+              finalize(() => {
+                this.ref.getDownloadURL().subscribe(url => {
+                  this.getUrlUploadImgPromise = new Promise((resolve, reject) => {
+                    resolve(url);
+                    this.listFormGroup[i].value.img = url;
+                    this.saveModifiedDistributor(i);
+                  });
+                });
+              }))
+              .subscribe();
+          } else {
+            this.saveModifiedDistributor(i);
+          }
+
+        } else {
+          $('#session').click();
+          $('#panel' + i).prop('hidden', true);
+        }
+
+
+      }
+    );
+
+
   }
 
   private uploadFireBaseAndSubmitEditMore(i: number): void {
-    if (this.isChangedImgList[i]) {
-      const id = Math.random().toString(36).substring(2);
-      this.ref = this.afStorage.ref(id);
-      this.task = this.ref.put(this.imgFileList[i]);
-      this.percentListUpload[i] = this.task.snapshotChanges()
-        .pipe(map(s => (s.bytesTransferred / s.totalBytes) * 100));
-      this.task.snapshotChanges().pipe(
-        finalize(() => {
-          this.ref.getDownloadURL().subscribe(url => {
-            this.sentModifiedList[i].img = url;
-            this.saveModifiedDistributorNoNotications(i);
-          });
-        }))
-        .subscribe();
-    } else {
-      // this.percentListUpload[i] = this.task.snapshotChanges()
-      //   .pipe(map(s => 100));
-      this.saveModifiedDistributorNoNotications(i);
-    }
+    this.distributorService.checkInSession(this.listFormGroup[i].value.id, this.listFormGroup[i].value.numSession).subscribe(
+      res => {
+        if (res) {
+          if (this.isChangedImgList[i]) {
+            const id = Math.random().toString(36).substring(2);
+            this.ref = this.afStorage.ref(id);
+            this.task = this.ref.put(this.imgFileList[i]);
+            this.percentListUpload[i] = this.task.snapshotChanges()
+              .pipe(map(s => (s.bytesTransferred / s.totalBytes) * 100));
+            this.task.snapshotChanges().pipe(
+              finalize(() => {
+                this.ref.getDownloadURL().subscribe(url => {
+                  this.sentModifiedList[i].img = url;
+                  this.saveModifiedMoreDistributor(i);
+                });
+              }))
+              .subscribe();
+          } else {
+            this.saveModifiedMoreDistributor(i);
+          }
+
+        } else {
+          this.listModifiedOutSession.push(this.listFormGroup[i].value);
+          $('#panel' + i).prop('hidden', true);
+          this.countListSentEditMore++;
+          this.enableAcceptEditMoreButton();
+        }
+
+      }
+    );
+
   }
 
 
   private saveModifiedDistributor(i: number): void {
-    this.distributorService.save(this.listFormGroup[i].value).subscribe(
-      res => {
-        this.distributorService.removeSession(this.listFormGroup[i].value.id).subscribe(
-          res2 => {
-            console.log('remove Session');
-          }, error => {
-
-          }
-        );
+    this.distributorService.modifiedDistributor(this.listFormGroup[i].value).subscribe(
+      res1 => {
         this.showNotications('Chỉnh sửa nhà phân phối thành công');
         this.listModifiedIdSuccess[i] = this.listFormGroup[i].get('id').value;
         for (let a = 0; a < this.size; a++) {
           this.listFormGroup[a].reset();
         }
-
-        // this.numberOfModifiedFormGroupList = 0;
-        // this.modifiedFormGroupList = [];
         this.resetList();
         this.enableModifiedMoreButton();
+
       }, error => console.log(error));
   }
 
 
-  private saveModifiedDistributorNoNotications(i: number): void {
-    this.distributorService.save(this.sentModifiedList[i]).subscribe(
+  private saveModifiedMoreDistributor(i: number): void {
+    this.sentModifiedList[i].status = 1;
+    this.distributorService.modifiedDistributor(this.sentModifiedList[i]).subscribe(
       res => {
         this.distributorService.removeSession(this.listFormGroup[i].value.id).subscribe(
           res2 => {
@@ -641,44 +685,44 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
 
   }
 
-  openEditForm(id: number): void {
-    this.functionMode = 'edit';
-    this.switchCreateAndDetailForm();
-    this.isSubmiting = false;
-    this.myForm.markAllAsTouched();
-    this.percentUpload = new Observable<number>();
-    this.functionTitle = 'CHỈNH SỬA NHÀ PHÂN PHỐI';
-    this.functionButton = 'SỬA';
-    this.isChangedImg = false;
-    this.distributorService.findById(id).subscribe(
-      res => {
-        this.myDistributor = res;
-        this.myForm.patchValue(res);
-        if (this.myForm.value.img !== '') {
-          this.src = this.myForm.value.img;
-        }
-        switch (this.myForm.value.typeOfDistributor.name) {
-          case 'Tất cả' : {
-            $('#box-2, #box-3,#box-1').prop('checked', true);
-            break;
-          }
-          case 'Bánh': {
-            $('#box-2').prop('checked', true);
-            $('#box-1,#box-3').prop('checked', false);
-            break;
-          }
-          case 'Kẹo' : {
-            $('#box-3').prop('checked', true);
-            $('#box-1,#box-2').prop('checked', false);
-            break;
-          }
-        }
-      },
-      error => console.log(error)
-    );
-    $('#openForm').click();
-
-  }
+  // openEditForm(id: number): void {
+  //   this.functionMode = 'edit';
+  //   this.switchCreateAndDetailForm();
+  //   this.isSubmiting = false;
+  //   this.myForm.markAllAsTouched();
+  //   this.percentUpload = new Observable<number>();
+  //   this.functionTitle = 'CHỈNH SỬA NHÀ PHÂN PHỐI';
+  //   this.functionButton = 'SỬA';
+  //   this.isChangedImg = false;
+  //   this.distributorService.findById(id).subscribe(
+  //     res => {
+  //       this.myDistributor = res;
+  //       this.myForm.patchValue(res);
+  //       if (this.myForm.value.img !== '') {
+  //         this.src = this.myForm.value.img;
+  //       }
+  //       switch (this.myForm.value.typeOfDistributor.name) {
+  //         case 'Tất cả' : {
+  //           $('#box-2, #box-3,#box-1').prop('checked', true);
+  //           break;
+  //         }
+  //         case 'Bánh': {
+  //           $('#box-2').prop('checked', true);
+  //           $('#box-1,#box-3').prop('checked', false);
+  //           break;
+  //         }
+  //         case 'Kẹo' : {
+  //           $('#box-3').prop('checked', true);
+  //           $('#box-1,#box-2').prop('checked', false);
+  //           break;
+  //         }
+  //       }
+  //     },
+  //     error => console.log(error)
+  //   );
+  //   $('#openForm').click();
+  //
+  // }
 
 
   openCreateForm(): void {
@@ -710,29 +754,35 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
   }
 
 
-  openDeleteForm(id: number, name: string, index: number): void {
+  openDeleteForm(id: number, name: string, numSession: number, index: number): void {
     this.distributorService.checkIsNotModifying(id).subscribe(
       res => {
         this.distributorName = name;
         this.distributorId = id;
         if (res) {
-          this.distributorService.findAllBillIsExistDistributor(id).toPromise().then(
-            value => {
-              if (value.length !== 0) {
-                this.listBill = value;
-                this.distributorService.removeSession(id).subscribe(
-                  res2 => console.log('remove Session success'),
-                  error => {
+          this.distributorService.setSession(id, 2).subscribe(
+            next => {
+              this.distributorSession = next;
+              this.distributorService.findAllBillIsExistDistributor(id).toPromise().then(
+                value => {
+                  if (value.length !== 0) {
+                    this.listBill = value;
+                    this.distributorService.removeSession(id).subscribe(
+                      res2 => console.log('remove Session success'),
+                      error => {
+                      }
+                    );
+                    $('#deleteInformation').click();
+                  } else {
 
+                    $('#deleteForm').click();
                   }
-                );
-                $('#deleteInformation').click();
-              } else {
-
-                $('#deleteForm').click();
-              }
+                }
+              );
+            }, error => {
             }
           );
+
         } else {
           $('#multiTab').click();
         }
@@ -744,43 +794,13 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
   }
 
 
-  private removeSessionAndCheckDeleteDistributor(id: number): void {
-    this.distributorService.findByIdToDo(id, 2).subscribe(
-      res => {
-        if (res !== null) {
-          this.myDistributor = res;
-          this.distributorName = res.name;
-          this.distributorService.findAllBillIsExistDistributor(id).toPromise().then(
-            value => {
-              this.listBill = value;
-              if (this.listBill.length === 0) {
-                $('#deleteForm').click();
-              } else {
-                this.distributorService.removeSession(id).subscribe(
-                  res4 => console.log('Remove Session Success'),
-                  error => {
-                  }
-                );
-                $('#deleteInformation').click();
-              }
-            }, reason => {
-              console.log(reason);
-            }
-          );
-        } else {
-          $('#multiTab').click();
-        }
-      },
-      error => console.log(error)
-    );
-  }
-
   searchName(): void {
     if (this.search === '') {
       this.isSearch = false;
     } else {
       this.isSearch = true;
     }
+    this.onChange(0);
     this.onChange(0);
   }
 
@@ -993,39 +1013,33 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
 
   }
 
-  addToListDelete(id: any, name: string): void {
-    if (id !== 'all') {
-      if (id !== undefined) {
-        if ($('#checkbox' + id).prop('checked')) {
-          this.deleteList === null ? this.deleteList[0] = new DeleteListDistributor(id, name)
-            : this.deleteList[this.deleteList.length] = new DeleteListDistributor(id, name);
+  addToListDelete(item2: any): void {
+    if (item2 !== 'all') {
+      if (item2 !== undefined) {
+        if ($('#checkbox' + item2.id).prop('checked')) {
+          this.deleteListSend.push(item2);
         } else {
-          this.deleteList.splice(this.deleteList.indexOf(id), 1);
+          this.deleteListSend.splice(this.deleteListSend.indexOf(item2), 1);
         }
-        console.log(this.deleteList);
       }
     } else {
-      let item: DeleteListDistributor;
-      if ($('#all').prop('checked')) {
+      if ($('#checboxall').prop('checked')) {
         for (let i = 0; i < this.distributorList.length; i++) {
           if (this.distributorList[i].id !== undefined) {
-            item = new DeleteListDistributor(this.distributorList[i].id, this.distributorList[i].name);
-            this.deleteList[i] = item;
-            $('#checkbox' + item.id).prop('checked', true);
+            this.deleteListSend.push(this.distributorList[i]);
+            $('#checkbox' + this.distributorList[i].id).prop('checked', true);
           }
         }
       } else {
-        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.distributorList.length; i++) {
           if (this.distributorList[i].id !== undefined) {
-            item = new DeleteListDistributor(this.distributorList[i].id, this.distributorList[i].name);
-            $('#checkbox' + item.id).prop('checked', false);
-            this.deleteList.splice(this.deleteList.indexOf(item), 1);
+            $('#checkbox' + this.distributorList[i].id).prop('checked', false);
+            this.deleteListSend.splice(this.deleteListSend.indexOf(item2), 1);
           }
         }
       }
     }
-    if (this.deleteList.length !== 0) {
+    if (this.deleteListSend.length > 1) {
       $('#deleteMore').prop('hidden', false);
     } else {
       $('#deleteMore').prop('hidden', true);
@@ -1033,14 +1047,16 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
   }
 
   deleteAll(): void {
-    this.distributorService.deleteAllDistributor(this.deleteList).subscribe(
+    this.distributorService.deleteAllDistributor(this.deleteListSend).subscribe(
       res => {
-        this.deleteIsModifyingList = res.modifyingList;
+        this.deleteOutSessionList = res.outSessionList;
         this.deleteSuccessList = res.successList;
         this.deleteUnsuccessList = res.unsuccessList;
         $('#deleteAllFormInfor').click();
         this.resetList();
-        $('#all').prop('checked', false);
+        this.deleteListSend = [];
+        this.deleteListSendIsModifying = [];
+        $('#checboxall').prop('checked', false);
         $('#deleteMore').prop('hidden', true);
 
       },
@@ -1051,19 +1067,45 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
   }
 
   confirmDeleteAll(): void {
-    if (this.deleteList.length !== 0) {
+    if (this.deleteListSend.length !== 0) {
+      this.deleteListSend.forEach(item => {
+        item.status = 2;
+        this.distributorService.checkIsNotModifying(item.id).toPromise().then(
+          res1 => {
+            if (res1) {
+              this.distributorService.setSession(item.id, 2).subscribe(
+                res => item.numSession = res, error => {
+                }
+              );
+            } else {
+              this.deleteListSendIsModifying.push(item);
+              this.deleteListSend.splice(this.deleteListSend.indexOf(item), 1);
+              $('#checkbox' + item.id).prop('checked', false);
+            }
+
+
+          }
+        );
+
+
+      });
       $('#deleteAllForm').click();
     } else {
       this.showNotications('Bạn chưa chọn nhà phân phối');
     }
   }
 
-  removeFromDeleteList(item: DeleteListDistributor): void {
-    this.deleteList.splice(this.deleteList.indexOf(item), 1);
+  removeFromDeleteList(item: Distributor): void {
+    this.deleteListSend.splice(this.deleteListSend.indexOf(item), 1);
+    this.distributorService.removeSession(item.id).subscribe(
+      res => console.log(res), error => {
+      }
+    );
     $('#checkbox' + item.id).prop('checked', false);
-    if (this.deleteList.length === 0) {
+    if (this.deleteListSend.length === 0) {
+      this.deleteListSendIsModifying = [];
       $('#closeDeleteAllForm').click();
-      $('#all').prop('checked', false);
+      $('#checboxall').prop('checked', false);
       $('#deleteMore').prop('hidden', true);
       for (let i = 0; i < this.distributorList.length; i++) {
         $('#checkbox' + i).prop('checked', false);
@@ -1086,10 +1128,24 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
         }
       );
     }
-    for (let a = i - 1; a >= 0; a--) {
-      if (this.listFormGroup[i].value.name === this.listFormGroup[a].value.name) {
-        this.listFormGroup[i].get('name').setErrors({exist: true});
+    let isExist = false;
+    for (let a = 0; a < this.size; a++) {
+      if (a === i) {
+        continue;
       }
+      if (this.listFormGroup[a] !== undefined) {
+        if (this.listFormGroup[i].value.name === this.listFormGroup[a].value.name) {
+          isExist = true;
+          break;
+        }
+
+      }
+
+    }
+    if (isExist) {
+      this.listFormGroup[i].get('name').setErrors({exist: true});
+    } else {
+
     }
 
   }
@@ -1103,32 +1159,33 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
       this.distributorService.checkIsNotModifying(id).subscribe(
         res1 => {
           if (res1) {
-            this.distributorService.setSession(id, 1).subscribe(
-              res => console.log('Set Session success'),
-              error => {
-              }
-            );
-            this.distributorService.findById(id).subscribe(
-              res => {
-                this.distributorListName[index] = res.name;
-                this.listFormGroup[index].patchValue(res);
-                this.modifiedFormGroupList[this.numberOfModifiedFormGroupList] = this.listFormGroup[index];
-                this.numberOfModifiedFormGroupList++;
-                this.enableModifiedMoreButton();
-                this.setAddress(index, res.address);
-                this.setTypeOfDistrubutor(index);
-                if (res.img !== '') {
-                  this.srcList[index] = res.img;
-                } else {
-                  this.srcList[index] = this.imgDefault;
-                }
-                this.enableSubmitButton(index);
-                $('#panel' + index).prop('hidden', !isHidden);
-                this.imgHeight = $('.imgWidth')[index].clientWidth + 'px';
-              }, error => {
+            this.distributorService.setSession(id, 1).toPromise().then(
+              res2 => {
+                this.distributorService.findById(id).subscribe(
+                  res => {
+                    this.distributorListName[index] = res.name;
+                    this.listFormGroup[index].patchValue(res);
+                    this.listFormGroup[index].value.numSession = res2;
+                    this.modifiedFormGroupList[this.countListSentEditMore] = this.listFormGroup[index];
+                    this.countListSentEditMore++;
+                    this.enableModifiedMoreButton();
+                    this.setAddress(index, res.address);
+                    this.setTypeOfDistrubutor(index);
+                    if (res.img !== '') {
+                      this.srcList[index] = res.img;
+                    } else {
+                      this.srcList[index] = this.imgDefault;
+                    }
+                    this.enableSubmitButton(index);
+                    $('#panel' + index).prop('hidden', !isHidden);
+                    this.imgHeight = $('.imgWidth')[index].clientWidth + 'px';
+                  }, error => {
 
+                  }
+                );
               }
             );
+
           } else {
             this.distributorName = name;
             $('#multiTab').click();
@@ -1222,9 +1279,9 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
         website: ['', [Validators.pattern('(^((http:\/\/www\.)|(https:\/\/www\.))([a-zA-Z0-9]+\.){1,2}[a-zA-Z0-9]+$)|(^$)')]],
         img: [''],
         typeOfDistributor: [''],
-        deleted: ['false']
+        deleted: ['false'],
+        numSession: [''],
       });
-
     }
     this.autoGenProvinceList();
     // this.autoGenDistrictList();
@@ -1241,25 +1298,25 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
     );
   }
 
-  autoGenDistrictList(): void {
-    this.distributorService.findAllDistrictByProvinceId('01').subscribe(
-      res => {
-        for (let i = 0; i < this.size; i++) {
-          this.listDistrict[i] = res;
-        }
-      }, error => console.log(error)
-    );
-  }
-
-  autoGenCommuneList(): void {
-    this.distributorService.findAllCommuneByDistrictId('001').subscribe(
-      res => {
-        for (let i = 0; i < this.size; i++) {
-          this.listCommune[i] = res;
-        }
-      }, error => console.log(error)
-    );
-  }
+  // autoGenDistrictList(): void {
+  //   this.distributorService.findAllDistrictByProvinceId('01').subscribe(
+  //     res => {
+  //       for (let i = 0; i < this.size; i++) {
+  //         this.listDistrict[i] = res;
+  //       }
+  //     }, error => console.log(error)
+  //   );
+  // }
+  //
+  // autoGenCommuneList(): void {
+  //   this.distributorService.findAllCommuneByDistrictId('001').subscribe(
+  //     res => {
+  //       for (let i = 0; i < this.size; i++) {
+  //         this.listCommune[i] = res;
+  //       }
+  //     }, error => console.log(error)
+  //   );
+  // }
 
   getDetailBill(id: number, name: string): void {
     this.distributorService.findAllBillIsExistDistributor(id).subscribe(
@@ -1278,12 +1335,14 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
 
   closeEditForm2(index: number, id: number): void {
     const isHidden = $('#panel' + index).prop('hidden');
+    this.modifiedListSend.splice(this.modifiedListSend.indexOf(this.listFormGroup[index].value), 1);
     this.distributorService.removeSession(id).subscribe(
       res => {
         $('#panel' + index).prop('hidden', !isHidden);
-        this.modifiedFormGroupList.splice(this.modifiedFormGroupList.indexOf(this.listFormGroup[index]), 1);
+        // this.modifiedFormGroupList.splice(this.modifiedFormGroupList.indexOf(this.listFormGroup[index]), 1);
         this.listFormGroup[index].reset();
-        this.numberOfModifiedFormGroupList--;
+        // this.numberOfModifiedFormGroupList--;
+        this.srcList[index] = '';
         this.enableModifiedMoreButton();
       }, error => {
 
@@ -1293,6 +1352,7 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
   }
 
   showEditMoreInfor(): void {
+    this.listModifiedOutSession = [];
     this.countListSentEditMore = 0;
     this.failModifiedList = [];
     for (let i = 0; i < this.size; i++) {
@@ -1306,7 +1366,6 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
         }
       }
     }
-    console.log(this.failModifiedList);
     $('#modifiedMoreForm').click();
     let count = 0;
     for (let i = 0; i < this.size; i++) {
@@ -1333,6 +1392,9 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
       if (this.sentModifiedList[i] !== null) {
         this.uploadFireBaseAndSubmitEditMore(i);
       }
+      if (this.listFormGroup[i].invalid) {
+        $('#panel' + i).prop('hidden', true);
+      }
       if (this.failModifiedList[i] !== undefined) {
         this.distributorService.removeSession(this.failModifiedList[i].id).subscribe(
           res => console.log('Remove Session Success'),
@@ -1346,6 +1408,10 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
     $('#cancelEditMore').prop('hidden', true);
     $('#submitEditMore').prop('hidden', true);
     $('#closeEditMore').prop('hidden', false);
+
+    this.listModifiedOutSession = [];
+    console.log(this.listModifiedOutSession);
+
   }
 
   private resetEditMore(): void {
@@ -1365,7 +1431,6 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
   // Enalble button xac nhan Form EDIT MORE
   enableAcceptEditMoreButton(): void {
     const count = this.countSentList();
-    console.log(count + ' ' + this.countListSentEditMore);
     if (count === this.countListSentEditMore) {
       $('#closeEditMore').prop('disabled', false);
     }
@@ -1389,15 +1454,31 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
       }
     );
   }
+
+  removeSessionDeleteListSent(): void {
+    this.deleteListSend.forEach(item => {
+      this.distributorService.removeSession(item.id).subscribe(
+        res => {
+
+        }, error => {
+        }
+      );
+    });
+    this.deleteListSendIsModifying = [];
+  }
+
 }
 
 function changeToggleButtonIcon(button): void {
   const attrName = 'uk-icon';
   const icon = button.querySelector(`[${attrName}]`);
-  if (icon.getAttribute(attrName) === 'chevron-right') {
-    icon.setAttribute(attrName, 'chevron-down');
-  } else {
-    icon.setAttribute(attrName, 'chevron-right');
+  if (icon !== null) {
+    if (icon.getAttribute(attrName) === 'chevron-right') {
+      icon.setAttribute(attrName, 'chevron-down');
+    } else {
+      icon.setAttribute(attrName, 'chevron-right');
+    }
   }
+
 }
 

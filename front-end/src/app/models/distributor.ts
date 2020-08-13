@@ -10,6 +10,7 @@ export class Distributor {
   website: string;
   typeOfDistributor: TypeOfDistributor;
   status: number;
+  numSession: number;
 
   constructor(id: number, name: string, address: string, numberPhone: string, email: string, img: string,
               fax: string, website: string, typeOfDistributor: TypeOfDistributor, deleted: boolean) {
@@ -66,7 +67,7 @@ export class Commune {
 
 export class DistributorDeleteAllResuilt {
   successList: Distributor[];
-  modifyingList: Distributor[];
+  outSessionList: Distributor[];
   unsuccessList: Distributor[];
   constructor() {
   }
