@@ -13,77 +13,52 @@
 
   <!--Search Multi-->
   <form>
-    <div class="row">
+    <div class="row mt-3 px-3">
       <div class="input-group">
         <div class="input-group-prepend">
-          <label class="input-group-text font-weight-bold text-dark" for="inputGroupSelect01">Tháng</label>
+          <span class="input-group-text font-weight-bold text-dark" id="searchProductName">Năm</span>
         </div>
-        <select class="custom-select" #selectedWareHouse id="inputGroupSelect01">
-          <option selected value="">1</option>
-          <option selected value="">2</option>
-          <option selected value="">3</option>
-          <option selected value="">4</option>
-          <option selected value="">5</option>
-          <option selected value="">6</option>
-          <option selected value="">7</option>
-          <option selected value="">8</option>
-          <option selected value="">9</option>
-          <option selected value="">10</option>
-          <option selected value="">11</option>
-          <option selected value="">12</option>
-        </select>
+        <input #y type="text" class="form-control" aria-label="Default" aria-describedby="searchProductName">
         <div class="input-group-prepend">
-          <label class="input-group-text font-weight-bold text-dark" for="inputGroupSelect02">Năm</label>
+          <span class="input-group-text font-weight-bold text-dark" id="searchPrice">Tháng</span>
         </div>
-        <select class="custom-select" #selectedEmployees id="inputGroupSelect02">
-          <option selected value="">2012</option>
-          <option selected value="">2013</option>
-          <option selected value="">2014</option>
-          <option selected value="">2015</option>
-          <option selected value="">2016</option>
-          <option selected value="">2017</option>
-          <option selected value="">2018</option>
-          <option selected value="">2019</option>
-          <option selected value="">2020</option>
-        </select>
-        <button class="btn btn-primary btn-filter-custom"><i class="fa fa-search" aria-hidden="true"></i> Tìm kiếm
+        <input #m type="text" class="form-control" aria-label="Default" aria-describedby="searchPrice">
+        <button (click)="searchProducts(y.value, m.value)"
+                class="btn btn-primary btn-create-custom btn-filter-custom"><span
+          class="fa fa-filter"></span>Tìm kiếm
         </button>
       </div>
     </div>
   </form>
   <!--End search Multi-->
 
-  <div class="row">
+  <div class="container-fluid">
 
     <!--Table list bill-->
-        <table class="table table-bordered table-striped table-hover ">
+        <table class="table table-bordered table-striped table-hover container-fluid">
 
           <thead class="table-header">
           <tr>
-            <th class="sticky-top" style="width: 10%">Tên phiếu</th>
-            <th class="sticky-top" style="width: 20%">Tình trạng phiếu</th>
-            <th class="sticky-top">Loại phiếu</th>
-            <th class="sticky-top">Kho chứa</th>
-            <th class="sticky-top">Phương tiện vận chuyển</th>
-            <th class="sticky-top">Tên nhân viên</th>
-            <th class="sticky-top">Nhà phân phối</th>
-
+            <th class="sticky-top">Tên mặt hàng</th>
+            <th class="sticky-top">Danh mục</th>
+            <th class="sticky-top">Thương hiệu</th>
+            <th class="sticky-top">Số lượng</th>
+            <th class="sticky-top">Đơn giá</th>
+            <th class="sticky-top">Doanh thu</th>
           </tr>
           </thead>
 
           <tbody >
-            <tr>
-              <td>10</td>
-              <td>10</td>
-              <td>10</td>
-              <td>10</td>
-              <td>10</td>
-              <td>10</td>
-              <td>10</td>
+            <tr *ngFor="let product of products">
+              <td>{{product.productName}}</td>
+              <td>{{product.productName}}</td>
+              <td>{{product.productName}}</td>
+              <td>{{product.productName}}</td>
+              <td>{{product.price}}</td>
+              <td>{{product.productName}}</td>
             </tr>
           </tbody>
         </table>
     <!--End table list bill-->
   </div>
 </div>
-

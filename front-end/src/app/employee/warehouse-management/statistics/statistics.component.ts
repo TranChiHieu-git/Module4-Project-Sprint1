@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Product} from '../../../models/product';
+import {ServiceBillService} from '../../../services/service-bill.service';
 
 @Component({
   selector: 'app-statistics',
@@ -7,10 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatisticsComponent implements OnInit {
   filter: any;
-
-  constructor() { }
+  products: Product[];
+  constructor(private billService: ServiceBillService) { }
 
   ngOnInit(): void {
+    // this.billService.findAllTop().subscribe(
+    //   next => this.products = next,
+    //   error => {
+    //     this.products = [];
+    //     console.log(error);
+    //   });
+  }
+  searchProducts(y: string, m: string): void{
+    this.findTop(y, m);
+  }
+  private findTop(y: string, m: string): void {
+    this.billService.findAllTop(y, m).subscribe(
+      next => this.products = next,
+      error => {
+        this.products = [];
+        console.log(error);
+      });
   }
 
 }
