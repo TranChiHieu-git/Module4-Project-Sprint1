@@ -43,7 +43,7 @@
             </div>
           </th>
           <th></th>
-          <th>
+          <th width="8%">
             <a class="details" data-target="#deleteListAccount" data-toggle="modal"
                *ngIf="deleteChose.length > 1">Xóa</a>
           </th>
@@ -51,7 +51,7 @@
         </thead>
         <tbody class=""
                *ngFor="let account of accountList">
-        <tr>
+        <tr class="">
           <th scope="row">{{account.accountId}}</th>
           <td class="details" (click)="info(account.accountId)" data-toggle="modal"
               data-target="#infor">{{account.accountName}}</td>
@@ -325,7 +325,7 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="igt input-group-text fa fa-birthday-cake prefix"></span>
+                  <span class="igt input-group-text fa fa-birthday-cake smallicon prefix"></span>
                 </div>
                 <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.birthday | date: 'dd/MM/yyyy'}}">
@@ -335,7 +335,7 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="igt input-group-text fa fa-home prefix"></span>
+                  <span class="igt input-group-text smallicon fa fa-home prefix"></span>
                 </div>
                 <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.address}}">
@@ -345,7 +345,7 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="igt input-group-text fa fa-envelope prefix"></span>
+                  <span class="igt input-group-text smallicon fa fa-envelope prefix"></span>
                 </div>
                 <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.email}}">
@@ -355,7 +355,7 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="igt input-group-text fa fa-phone prefix"></span>
+                  <span class="igt input-group-text smallicon fa fa-phone prefix"></span>
                 </div>
                 <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.phoneNumber}}">
@@ -365,7 +365,7 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="igt input-group-text fa fa-venus-mars prefix"></span>
+                  <span class="igt input-group-text smallicon fa fa-venus-mars prefix"></span>
                 </div>
                 <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.gender}}">
@@ -375,7 +375,7 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="igt input-group-text fa fa-briefcase prefix"></span>
+                  <span class="igt input-group-text smallicon fa fa-briefcase prefix"></span>
                 </div>
                 <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.department.name}}">
@@ -385,7 +385,7 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="igt input-group-text fa fa-industry prefix"></span>
+                  <span class="igt input-group-text smallicon fa fa-industry prefix"></span>
                 </div>
                 <input disabled class="form-control" aria-label="Username" aria-describedby="basic-addon1"
                        value="{{infoAccountById.position.name}}">
@@ -513,6 +513,9 @@
               <div class="alert alert-danger" role="alert"
                    *ngIf="editAccountForm.get('accountName').invalid && editAccountForm.get('accountName').touched">
                 <span
+                  *ngIf="editAccountForm.get('accountName').hasError('maxlength')">
+            Tên tài khoản lớn nhất 100 kí tự</span>
+                <span
                   *ngIf="editAccountForm.get('accountName').hasError('pattern')">
             Tên tài khoản chỉ gồm chữ, số, và .,-_@</span>
                 <span
@@ -524,7 +527,7 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="igt input-group-text fas fa-id-card prefix"></span>
+                  <span class="igt input-group-text smallicon fa fa-key prefix"></span>
                 </div>
                 <input type="password" class="form-control" formControlName="accountPassword" aria-label="Username"
                        aria-describedby="basic-addon1" placeholder="Nhập mật khẩu nếu muốn sửa">
@@ -534,6 +537,9 @@
               <div class="alert alert-danger" role="alert"
                    *ngIf="editAccountForm.get('accountPassword').invalid && editAccountForm.get('accountPassword').touched">
                 <span
+                  *ngIf="editAccountForm.get('accountPassword').hasError('maxlength')">
+            Tên tài khoản lớn nhất 100 kí tự</span>
+                <span
                   *ngIf="editAccountForm.get('accountPassword').hasError('pattern')">
             Mật khẩu chỉ bao gồm chữ và số</span>
               </div>
@@ -542,7 +548,7 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="igt input-group-text fa fa-list-ol prefix"></span>
+                  <span class="igt input-group-text smallicon fa fa-list-ol prefix"></span>
                 </div>
                 <select class="browser-default custom-select form-control" formControlName="role">
                   <ng-container *ngFor="let roles of roleList">
@@ -618,7 +624,7 @@
             <tr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="igt input-group-text fa fa-trash-o prefix"></span>
+                  <span class="igt smallicon input-group-text fa fa-trash-o prefix"></span>
                 </div>
                 <input class="form-control" formControlName="reason" placeholder="Vui lòng nhập lý do muốn xóa">
               </div>
@@ -841,7 +847,7 @@
             <br>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="igt input-group-text fa fa-trash-o prefix"></span>
+                <span class="igt input-group-text fa fa-trash-o prefix smallicon"></span>
               </div>
               <input class="form-control" formControlName="reason" aria-label="Username"
                      aria-describedby="basic-addon1" placeholder="Vui lòng nhập lý do muốn xóa">

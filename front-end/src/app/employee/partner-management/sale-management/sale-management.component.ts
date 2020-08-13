@@ -76,6 +76,11 @@ export class SaleManagementComponent implements OnInit {
         this.totalPages = next.totalPages;
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
         this.couponList = next.content;
+        if (this.couponList.length < 4) {
+          $('.table').attr('style', 'margin-bottom: ' + ((4 - this.couponList.length) * 56) + 'px');
+        } else {
+          $('.table').attr('style', 'margin-bottom: 0');
+        }
       } else {
         this.pageClicked = 0;
         this.totalPages = 1;
@@ -88,15 +93,19 @@ export class SaleManagementComponent implements OnInit {
   }
 
   search(): void {
+    // tslint:disable-next-line:only-arrow-functions typedef
     $('.employee').click(function() {
       $('.employee').attr('style', 'box-shadow: none');
     });
+    // tslint:disable-next-line:only-arrow-functions typedef
     $('.user').click(function() {
       $('.user').attr('style', 'box-shadow: none');
     });
+    // tslint:disable-next-line:only-arrow-functions typedef
     $('.fromdate').click(function() {
       $('.fromdate').attr('style', 'box-shadow: none');
     });
+    // tslint:disable-next-line:only-arrow-functions typedef
     $('.fromto').click(function() {
       $('.fromto').attr('style', 'box-shadow: none');
     });
@@ -155,19 +164,36 @@ export class SaleManagementComponent implements OnInit {
       if (toDate >= fromDate) {
         checkDate = true;
       } else {
-        $('.fromdate').attr('style', 'box-shadow: 1px 1px 5px 5px #f18502');
         $('.fromto').attr('style', 'box-shadow: 1px 1px 5px 5px #f18502');
       }
+    }
+    if (this.searchCouponForm.value.createDateTo === '') {
+      this.searchCouponForm.patchValue({
+        createDateTo: ''
+      });
+    }
+    if (this.searchCouponForm.value.createDateFrom === '') {
+      this.searchCouponForm.patchValue({
+        createDateFrom: ''
+      });
     }
     if (employeeName === true && customerName === true) {
       if (this.searchCouponForm.value.createDateTo !== '' && this.searchCouponForm.value.createDateFrom !== '') {
         if (checkDate === true) {
           this.getAllCoupon(0);
+          $('.fromdate').attr('style', 'box-shadow: none');
+          $('.fromto').attr('style', 'box-shadow: none');
+          $('.user').attr('style', 'box-shadow: none');
+          $('.employee').attr('style', 'box-shadow: none');
         } else {
           this.toastr.error('Giá trị nhập vào không đúng định dạng. Vui lòng nhập lại!');
         }
       } else {
         this.getAllCoupon(0);
+        $('.fromdate').attr('style', 'box-shadow: none');
+        $('.fromto').attr('style', 'box-shadow: none');
+        $('.user').attr('style', 'box-shadow: none');
+        $('.employee').attr('style', 'box-shadow: none');
       }
     } else {
       this.toastr.error('Giá trị nhập vào không đúng định dạng. Vui lòng nhập lại!');
@@ -261,6 +287,7 @@ export class SaleManagementComponent implements OnInit {
   }
 
   onDeleteMany(): void {
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.deleteList.length; i++) {
       this.couponService.deleteManyCoupon(this.deleteList[i]).subscribe(
         next => {
@@ -277,6 +304,14 @@ export class SaleManagementComponent implements OnInit {
 
   emptyDeleteList(): void {
     this.deleteList.length = 0;
+  }
+
+  backList(): void {
+    this.createDateFrom = '';
+    this.createDateTo = '';
+    this.employee = '';
+    this.customer = '';
+    this.ngOnInit();
   }
 }
 

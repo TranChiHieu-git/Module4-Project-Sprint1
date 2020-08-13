@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AdminService} from '../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Account} from '../../models/account';
@@ -19,7 +19,7 @@ import {Tempjwtemp} from '../../models/tempjwtemp';
 import {TokenStorageService} from '../../auth/token-storage.service';
 import {Position} from '../../models/position';
 
-function comparePassword(c: AbstractControl) {
+function comparePassword(c: AbstractControl): object {
   const v = c.value;
   return (v.accountPassword === v.confirmPassword) ? null : {
     passwordnotmatch: true
@@ -145,8 +145,9 @@ export class ListAccountComponent implements OnInit {
     });
     this.editAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
-      accountName: ['', [Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,100}$'), this.existAccountName.bind(this)]],
-      accountPassword: ['', [Validators.pattern('^[a-zA-Z0-9]{1,100}$')]],
+      accountName: ['', [Validators.maxLength(100), Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,}$'),
+        this.existAccountName.bind(this)]],
+      accountPassword: ['', [Validators.maxLength(100), Validators.pattern('^[a-zA-Z0-9]{1,}$')]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]],
       reason: ['']
@@ -164,7 +165,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  addMore() {
+  addMore(): void {
     this.accountForm2.push(this.formBuilder.group({
       accountId: [''],
       accountName: ['', [Validators.required]],
@@ -178,7 +179,7 @@ export class ListAccountComponent implements OnInit {
     }));
   }
 
-  existAccountName(c: AbstractControl) {
+  existAccountName(c: AbstractControl): object {
     const v = c.value;
     for (const acc of this.accountlist) {
       if (acc.accountName === v && v !== this.AccountById.accountName) {
@@ -188,7 +189,7 @@ export class ListAccountComponent implements OnInit {
     return null;
   }
 
-  getListAccount() {
+  getListAccount(): void {
     this.adminService.findAll().subscribe(next => {
       this.accountlist = next;
     }, error => {
@@ -196,7 +197,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  existAccountName2() {
+  existAccountName2(): boolean {
     this.getListAccount();
     const accountName = this.accountForm.get('accountName').value;
     for (const acc of this.accountlist) {
@@ -207,7 +208,7 @@ export class ListAccountComponent implements OnInit {
     return true;
   }
 
-  existAccountName3(index) {
+  existAccountName3(index): boolean {
     this.getListAccount();
     const accountName = this.accountForm2[index].get('accountName').value;
     for (const acc of this.accountlist) {
@@ -222,18 +223,23 @@ export class ListAccountComponent implements OnInit {
     this.getAllSubmit(0);
   }
 
-  getAllSubmit(page) {
+  getAllSubmit(page): void {
     this.adminService.getAllCourse(page, this.size, this.userName, this.nameRole).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
         this.totalPages = data.totalPages;
+        if (this.accountList.length < 6) {
+          $('.table').attr('style', 'margin-bottom: ' + ((6 - this.accountList.length) * 58) + 'px');
+        } else {
+          $('.table').attr('style', 'margin-bottom: 0');
+        }
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
     );
   }
 
-  onPrevious() {
+  onPrevious(): void {
     if (this.pageClicked > 0) {
       this.pageClicked--;
       switch (this.sumVal) {
@@ -261,7 +267,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  onNext() {
+  onNext(): void {
     if (this.pageClicked < this.totalPages - 1) {
       this.pageClicked++;
       switch (this.sumVal) {
@@ -289,7 +295,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  onFirst() {
+  onFirst(): void {
     this.pageClicked = 0;
     switch (this.sumVal) {
       case 0:
@@ -315,7 +321,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  onLast() {
+  onLast(): void {
     this.pageClicked = this.totalPages - 1;
     switch (this.sumVal) {
       case 0:
@@ -341,7 +347,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  info(id) {
+  info(id): void {
     this.infoAccountById.position = null;
     this.adminService.findByInfoId(id).subscribe(next => {
       this.infoAccountById = next;
@@ -360,7 +366,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  edit(id) {
+  edit(id): void {
     this.infoAccountById = new Employees();
     this.adminService.findByInfoId(id).subscribe(next => {
       this.infoAccountById = next;
@@ -401,7 +407,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  delete(id) {
+  delete(id): void {
     this.adminService.findAccountById(id).subscribe(next => {
       this.deleteAccountForm.patchValue({
         accountId: next.accountId,
@@ -424,7 +430,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  create() {
+  create(): void {
     if (this.existAccountName2()) {
       this.accountForm.patchValue({
         accountPassword: this.accountForm.get('pwGroup.accountPassword').value
@@ -456,7 +462,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  create2() {
+  create2(): void {
     for (let i = 0; i < this.accountForm2.length; i++) {
       if (this.existAccountName3(i)) {
         this.accountForm2[i].patchValue({
@@ -490,11 +496,11 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  showCreated() {
+  showCreated(): void {
     this.toastrService.success('Bạn đã thêm mới thành công', 'Thông báo');
   }
 
-  deleted(accountId) {
+  deleted(accountId): void {
     this.adminService.findAccountById(accountId).subscribe(next => {
       if (next.accountName !== this.accountName) {
         next.reason = this.deleteAccountForm.value.reason;
@@ -512,10 +518,11 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  edited() {
+  edited(): void {
     this.editResuilt = new Account();
     this.editResuilt.accountId = this.editAccountForm.value.accountId;
-    this.editResuilt.accountName = this.editAccountForm.value.accountName !== '' ? this.editAccountForm.value.accountName : this.AccountById.accountName;
+    this.editResuilt.accountName =
+      this.editAccountForm.value.accountName !== '' ? this.editAccountForm.value.accountName : this.AccountById.accountName;
     this.editResuilt.accountPassword = this.editAccountForm.value.accountPassword !== '' ? this.editAccountForm.value.accountPassword : '';
     this.editResuilt.deleteFlag = this.editAccountForm.value.deleteFlag;
     this.adminService.findAccountById(this.editResuilt.accountId).subscribe(next => {
@@ -538,7 +545,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  filterTypeRole(val: number) {
+  filterTypeRole(val: number): void {
     this.sumVal = val;
     switch (val) {
       case 0:
@@ -564,7 +571,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  checkInvalidForm2() {
+  checkInvalidForm2(): boolean {
     let check = false;
     for (let i = 0; i < this.accountForm2.length; i++) {
       if (this.accountForm2[i].invalid) {
@@ -609,7 +616,7 @@ export class ListAccountComponent implements OnInit {
       .subscribe();
   }
 
-  createEmployee() {
+  createEmployee(): void {
     this.adminService.findAccountById(this.employeeForm.get('account').value).subscribe(next => {
       this.account = next;
       this.employeeForm.patchValue({
@@ -626,7 +633,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  checkChose() {
+  checkChose(): void {
     for (let i = 0; i < this.accountList.length; i++) {
       let flag = true;
       if ($('#' + this.accountList[i].accountId.toString()).is(':checked')) {
@@ -658,7 +665,7 @@ export class ListAccountComponent implements OnInit {
     return false;
   }
 
-  deleteListAccount() {
+  deleteListAccount(): void {
     const reason = this.deleteListAccountForm.value.reason;
     for (let i = 0; i < this.deleteChose.length; i++) {
       this.adminService.findAccountById(this.deleteChose[i]).subscribe(

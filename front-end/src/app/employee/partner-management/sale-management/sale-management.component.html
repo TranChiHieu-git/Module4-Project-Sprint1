@@ -145,7 +145,9 @@
       </div>
     </ng-container>
     <ng-container *ngIf="couponList === null">
-      <p class="text-center">Không tìm thấy phiếu nào phù hợp với dữ liệu nhập vào!</p>
+      <p class="text-center">Không tìm thấy phiếu nào phù hợp với dữ liệu nhập vào.<a class="backlist"
+                                                                                      (click)="backList()">Nhấn vào để
+        trở lại</a></p>
     </ng-container>
   </div>
 </div>
