@@ -366,7 +366,7 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
 
   resetSessionAll(): void {
     for (let i = 0; i < this.size; i++) {
-      console.log(this.listFormGroup[i].value)
+      console.log(this.listFormGroup[i].value);
       if (this.listFormGroup[i].value.id !== null && this.listFormGroup[i].value.id !== '') {
         this.distributorService.removeSession(this.listFormGroup[i].value.id).subscribe(
           res => console.log('Remove Session'),
@@ -445,7 +445,7 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
           this.ref = this.afStorage.ref(id);
           if (this.isChangedImgList[i]) {
             this.task = this.ref.put(this.imgFileList[i]);
-            this.percentUpload = this.task.snapshotChanges()
+            this.percentListUpload[i] = this.task.snapshotChanges()
               .pipe(map(s => (s.bytesTransferred / s.totalBytes) * 100));
             this.task.snapshotChanges().pipe(
               finalize(() => {
@@ -1380,7 +1380,7 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
     $('#cancelEditMore').prop('hidden', true);
     $('#submitEditMore').prop('hidden', true);
     $('#closeEditMore').prop('hidden', false);
-    this.listModifiedOutSession = []
+    this.listModifiedOutSession = [];
     this.enableAcceptEditMoreButton();
     this.distributorService.getAllDistributor(this.pageClick, this.size, '').subscribe(
       res => this.distributorList = res, error => {

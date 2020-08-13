@@ -265,7 +265,7 @@
                         <input [id]="'inputImg'+i" type="file" datatype="image/*" accept="image/*" hidden
                                (change)="loadImgAvatar2($event.target,i)">
                         <mat-progress-bar mode="determinate" max="100"
-                                          [value]="(percentUpload | async)"></mat-progress-bar>
+                                          [value]="(percentListUpload[i] | async)"></mat-progress-bar>
                       </div>
 
                     </div>
