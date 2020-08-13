@@ -133,33 +133,42 @@ export class SaleManagementComponent implements OnInit {
       this.customer = this.searchCouponForm.value.user;
       customerName = true;
     }
-
-    let getDateFrom = false;
-    console.log(this.searchCouponForm.value.createDateFrom);
+    let fromDate: Date;
     if (this.searchCouponForm.value.createDateFrom !== '') {
-      const day = this.searchCouponForm.value.createDateFrom.split('-')[2];
-      const month = this.searchCouponForm.value.createDateFrom.split('-')[1];
-      const year = this.searchCouponForm.value.createDateFrom.split('-')[0];
-      if (!this.searchCouponForm.value.createDateFrom.match(regDate) &&
-        day > 31 && day < 1 && month > 12 && month < 1 && year < 1000 && year > 9999) {
-        $('.fromdate').attr('style', 'box-shadow: 1px 1px 5px 5px #f18502');
-      } else {
-        this.createDateFrom = this.searchCouponForm.value.createDateFrom;
-        getDateFrom = true;
-      }
-    } else {
-      this.createDateFrom = '';
-      getDateFrom = true;
+      this.createDateFrom = this.searchCouponForm.value.createDateFrom;
+      const year = parseInt(this.searchCouponForm.value.createDateFrom.split('-')[0], 0);
+      const month = parseInt(this.searchCouponForm.value.createDateFrom.split('-')[1], 0) - 1;
+      const day = parseInt(this.searchCouponForm.value.createDateFrom.split('-')[2], 0);
+      fromDate = new Date(year, month, day);
     }
-
+    let toDate: Date;
     if (this.searchCouponForm.value.createDateTo !== '') {
-      this.createDateTo =
-        this.searchCouponForm.value.createDateTo.split('/')[0]
-        + '-' + this.searchCouponForm.value.createDateTo.split('/')[1]
-        + '-' + this.searchCouponForm.value.createDateTo.split('/')[2];
+      this.createDateTo = this.searchCouponForm.value.createDateTo;
+      const year = parseInt(this.searchCouponForm.value.createDateTo.split('-')[0], 0);
+      const month = parseInt(this.searchCouponForm.value.createDateTo.split('-')[1], 0) - 1;
+      const day = parseInt(this.searchCouponForm.value.createDateTo.split('-')[2], 0);
+      toDate = new Date(year, month, day);
     }
-    if (employeeName === true && customerName === true && getDateFrom === true) {
-      this.getAllCoupon(0);
+    let checkDate;
+    if (this.searchCouponForm.value.createDateTo !== '' && this.searchCouponForm.value.createDateFrom !== '') {
+      checkDate = false;
+      if (toDate >= fromDate) {
+        checkDate = true;
+      } else {
+        $('.fromdate').attr('style', 'box-shadow: 1px 1px 5px 5px #f18502');
+        $('.fromto').attr('style', 'box-shadow: 1px 1px 5px 5px #f18502');
+      }
+    }
+    if (employeeName === true && customerName === true) {
+      if (this.searchCouponForm.value.createDateTo !== '' && this.searchCouponForm.value.createDateFrom !== '') {
+        if (checkDate === true) {
+          this.getAllCoupon(0);
+        } else {
+          this.toastr.error('Giá trị nhập vào không đúng định dạng. Vui lòng nhập lại!');
+        }
+      } else {
+        this.getAllCoupon(0);
+      }
     } else {
       this.toastr.error('Giá trị nhập vào không đúng định dạng. Vui lòng nhập lại!');
     }
