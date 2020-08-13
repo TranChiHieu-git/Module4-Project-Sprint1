@@ -39,6 +39,9 @@ export class CakeDetailHaiComponent implements OnInit {
   url: any;
   uploadStatus = true;
   uploadProgressStatus = false;
+
+  myThumbnail: any;
+  myFullresImage: any;
   constructor(private fb: FormBuilder,
               private productService: ProductService,
               private notificationService: NotificationService,
@@ -56,6 +59,8 @@ export class CakeDetailHaiComponent implements OnInit {
     this.productService.getProductById(this.productId).subscribe(next => {
       this.product = next;
       this.productForm.patchValue(this.product);
+      this.myThumbnail = this.product.imageUrl;
+      this.myFullresImage = this.product.imageUrl;
     });
     this.productForm = this.fb.group({
       productId: [''],
@@ -104,6 +109,7 @@ export class CakeDetailHaiComponent implements OnInit {
     this.productForm.patchValue({
       imageUrl: this.src
     });
+    console.log(this.productForm);
     if (this.productForm.valid) {
       this.productService.updateProduct(this.productForm.value).subscribe(
         next => {
@@ -161,5 +167,9 @@ export class CakeDetailHaiComponent implements OnInit {
       reader.readAsDataURL(target.files[0]);
       this.uploadFireBaseAndSubmit();
     }
+  }
+
+  bigger(): void {
+    $('#imageEmp').css({width: '300px', height: '300px'});
   }
 }

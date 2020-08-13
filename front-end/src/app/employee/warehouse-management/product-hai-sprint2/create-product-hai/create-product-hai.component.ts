@@ -6,6 +6,8 @@ import {Brand} from '../../../../models/brand';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ProductService} from '../../../../services/product.service';
 import {NotificationService} from '../../../../services/notification.service';
+import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from "@angular/fire/storage";
+import {finalize} from "rxjs/operators";
 
 @Component({
   selector: 'app-create-product-hai',
@@ -18,9 +20,15 @@ export class CreateProductHaiComponent implements OnInit {
   brandList: Brand[];
   categoryList: Category[];
   category: Category;
+  src: any;
+  uploadStatus = true;
+  uploadProgressStatus = false;
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
   constructor(private fb: FormBuilder,
               public productService: ProductService,
               private notificationService: NotificationService,
+              private afStorage: AngularFireStorage,
               private dialogRef: MatDialogRef<CreateProductHaiComponent>,
               @Inject(MAT_DIALOG_DATA) {brandList, unitList}) {
     this.unitList = unitList;
@@ -42,6 +50,7 @@ export class CreateProductHaiComponent implements OnInit {
         categoryId: [''],
         categoryName: ['']
       }),
+      infor: ['']
     });
   }
 
@@ -54,7 +63,8 @@ export class CreateProductHaiComponent implements OnInit {
       category: {
         categoryId: 1,
         categoryName: 'Bánh'
-      }
+      },
+      imageUrl: this.src
     });
     this.productService.createNew(this.createProductForm.value).subscribe(
       next => {
@@ -85,7 +95,36 @@ export class CreateProductHaiComponent implements OnInit {
   close(): void {
     this.dialogRef.close();
   }
+  selectFile(): void {
+    $('#image').click();
+  }
 
+  readURL(target: EventTarget & HTMLInputElement): void {
+    this.uploadStatus = false;
+    this.uploadProgressStatus = true;
+    if (target.files && target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // @ts-ignore
+        $('#avatar').attr('src', e.target.result);
+      };
+      reader.readAsDataURL(target.files[0]);
+      this.uploadFireBaseAndSubmit();
+    }
+  }
+  private uploadFireBaseAndSubmit(): void {
+    const target: any = document.getElementById('image');
+    const id = Math.random().toString(36).substring(2);
+    this.ref = this.afStorage.ref(id);
+    this.task = this.ref.put(target.files[0]);
+    this.task.snapshotChanges().pipe(
+      finalize(() => {
+        this.ref.getDownloadURL().subscribe(url => {
+          this.src = url;
+        });
+      }))
+      .subscribe();
+  }
 
 
 }

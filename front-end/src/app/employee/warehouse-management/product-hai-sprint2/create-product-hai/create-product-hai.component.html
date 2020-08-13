@@ -1,126 +1,121 @@
-<h2 mat-dialog-title>Thêm Mới Bánh</h2>
-
+<h1 mat-dialog-title class="text-center" style="font-weight: bold">Thêm Mới Bánh</h1>
+<hr>
 
 <mat-dialog-content [formGroup]="createProductForm">
-
-<!--  <mat-form-field>-->
-<!--    <input matInput-->
-<!--           placeholder="Course Description"-->
-<!--           formControlName="description">-->
-<!--  </mat-form-field>-->
-<!--  <mat-form-field>-->
-<!--    <input matInput [matDatepicker]="myDatepicker"-->
-<!--           formControlName="releasedAt">-->
-
-<!--    <mat-datepicker-toggle matSuffix-->
-<!--                           [for]="myDatepicker">-->
-
-<!--    </mat-datepicker-toggle>-->
-<!--    <mat-datepicker #myDatepicker></mat-datepicker>-->
-<!--  </mat-form-field>-->
-<!--  <mat-form-field>-->
-<!--        <textarea matInput placeholder="Description"-->
-<!--                  formControlName="longDescription">-->
-
-<!--        </textarea>-->
-<!--  </mat-form-field>-->
-  <div class="row form-group">
-    <div class="col-md-5 col-sm-5">
-      <p>Tên sản phẩm (<i class="color-validate">*</i>)</p>
-    </div>
-    <div class="col-md-7 col-sm-7">
-      <input type="text" class="form-control" formControlName="productName" autofocus>
-      <div *ngIf="createProductForm.get('productName').invalid && createProductForm.get('productName').touched">
-        <i class="color-validate" *ngIf="createProductForm.get('productName').hasError('required')">Vui lòng phải điền tên mặt hàng</i>
+  <div class="row d-flex justify-content-between">
+    <div class="col-4 text-center">
+      <div
+        (click)="selectFile()" class="imgContainer">
+        <img class="imagePro" id="avatar" src="https://via.placeholder.com/150">
+        <input class="file-upload-input" type='file' #fileUploader
+               (change)="readURL($event.target);" accept="image/*"
+               hidden id="image"/>
       </div>
+      <button type="button" class="btn btn-primary" (click)="fileUploader.click()">Chọn ảnh</button>
     </div>
-  </div>
+      <div class="col-8">
+        <div class="row form-group">
+          <div class="col-md-5 col-sm-5">
+            <p>Tên sản phẩm (<i class="color-validate">*</i>)</p>
+          </div>
+          <div class="col-md-7 col-sm-7">
+            <input type="text" class="form-control" formControlName="productName" autofocus>
+            <div *ngIf="createProductForm.get('productName').invalid && createProductForm.get('productName').touched">
+              <i class="color-validate" *ngIf="createProductForm.get('productName').hasError('required')">Vui lòng phải
+                điền tên mặt hàng</i>
+            </div>
+          </div>
+        </div>
 
-  <div class="row form-group">
-    <div class="col-md-5 col-sm-5">
-      <p>Ngày sản xuất (<i class="color-validate">*</i>)</p>
-    </div>
-    <div class="col-md-7 col-sm-7">
-      <mat-form-field>
-        <input formControlName="expiryDate" matInput [matDatepicker]="picker1">
-        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-        <mat-datepicker #picker1></mat-datepicker>
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row form-group">
-    <div class="col-md-5 col-sm-5">
-      <p>Đơn giá (vnd) (<i class="color-validate">*</i>)</p>
-    </div>
-    <div class="col-md-7 col-sm-7">
-      <input type="text" class="form-control" formControlName="price" autofocus >
-      <div *ngIf="createProductForm.get('price').invalid && createProductForm.get('price').touched">
-        <i class="color-validate" *ngIf="createProductForm.get('price').hasError('required')">Vui lòng phải nhập đơn giá</i>
-        <i class="color-validate" *ngIf="createProductForm.get('price').hasError('pattern')">Vui lòng phải nhập đơn giá đúng định dạng (ví dụ: 10000)</i>
+        <div class="row form-group">
+          <div class="col-md-5 col-sm-5">
+            <p>Ngày sản xuất (<i class="color-validate">*</i>)</p>
+          </div>
+          <div class="col-md-7 col-sm-7">
+            <mat-form-field>
+              <input formControlName="expiryDate" matInput [matDatepicker]="picker1">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-5 col-sm-5">
+            <p>Đơn giá (vnd) (<i class="color-validate">*</i>)</p>
+          </div>
+          <div class="col-md-7 col-sm-7">
+            <input type="text" class="form-control" formControlName="price" autofocus>
+            <div *ngIf="createProductForm.get('price').invalid && createProductForm.get('price').touched">
+              <i class="color-validate" *ngIf="createProductForm.get('price').hasError('required')">Vui lòng phải nhập
+                đơn giá</i>
+              <i class="color-validate" *ngIf="createProductForm.get('price').hasError('pattern')">Vui lòng phải nhập
+                đơn giá đúng định dạng (ví dụ: 10000)</i>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-5 col-sm-5">
+            <p>Nhà cung cấp (<i class="color-validate">*</i>)</p>
+          </div>
+          <div class="col-md-7 col-sm-7">
+            <fieldset formGroupName="brand">
+              <select class="form-control col-form-label" formControlName="id">
+                <option *ngFor="let brand of brandList" [ngValue]="brand.id"
+                        [selected]="brand.id === createProductForm.value.brand.id">{{brand.brandName}}</option>
+              </select>
+            </fieldset>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-5 col-sm-5">
+            <p>Số lượng trong kho(<i class="color-validate">*</i>)</p>
+          </div>
+          <div class="col-md-7 col-sm-7">
+            <input type="text" class="form-control" formControlName="quantity" autofocus>
+            <div *ngIf="createProductForm.get('quantity').invalid && createProductForm.get('quantity').touched">
+              <i class="color-validate" *ngIf="createProductForm.get('quantity').hasError('required')">Vui lòng phải
+                nhập số lượng</i>
+              <i class="color-validate" *ngIf="createProductForm.get('quantity').hasError('pattern')">Vui lòng phải nhập
+                số lượng đúng định dạng (ví dụ: 1000)</i>
+            </div>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-5 col-sm-5">
+            <p>Đơn vị(<i class="color-validate">*</i>)</p>
+          </div>
+          <div class="col-md-7 col-sm-7">
+            <fieldset formGroupName="unit">
+              <select class="form-control col-form-label" formControlName="unitId">
+                <option *ngFor="let unit of unitList" [ngValue]="unit.unitId"
+                        [selected]="unit.unitId === createProductForm.value.unit.unitId">{{unit.unitName}}</option>
+              </select>
+            </fieldset>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-5 col-sm-5">
+            <p>Thông tin </p>
+          </div>
+          <div class="col-md-7 col-sm-7">
+            <textarea type="text" class="form-control" formControlName="infor"></textarea>
+
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="row form-group">
-    <div class="col-md-5 col-sm-5">
-      <p>Nhà cung cấp (<i class="color-validate">*</i>)</p>
-    </div>
-    <div class="col-md-7 col-sm-7">
-      <fieldset formGroupName="brand">
-        <select class="form-control col-form-label"  formControlName="id">
-          <option *ngFor="let brand of brandList" [ngValue]="brand.id"
-                  [selected]="brand.id === createProductForm.value.brand.id">{{brand.brandName}}</option>
-        </select>
-      </fieldset>
-    </div>
-  </div>
-  <div class="row form-group">
-    <div class="col-md-5 col-sm-5">
-      <p>Số lượng trong kho(<i class="color-validate">*</i>)</p>
-    </div>
-    <div class="col-md-7 col-sm-7">
-      <input type="text" class="form-control" formControlName="quantity" autofocus>
-      <div *ngIf="createProductForm.get('quantity').invalid && createProductForm.get('quantity').touched">
-        <i class="color-validate" *ngIf="createProductForm.get('quantity').hasError('required')">Vui lòng phải nhập số lượng</i>
-        <i class="color-validate" *ngIf="createProductForm.get('quantity').hasError('pattern')">Vui lòng phải nhập số lượng đúng định dạng (ví dụ: 1000)</i>
-      </div>
-    </div>
-  </div>
-
-  <div class="row form-group">
-    <div class="col-md-5 col-sm-5">
-      <p>Đơn vị(<i class="color-validate">*</i>)</p>
-    </div>
-    <div class="col-md-7 col-sm-7">
-      <fieldset formGroupName="unit">
-        <select class="form-control col-form-label"  formControlName="unitId">
-          <option *ngFor="let unit of unitList" [ngValue]="unit.unitId"
-                  [selected]="unit.unitId === createProductForm.value.unit.unitId">{{unit.unitName}}</option>
-        </select>
-      </fieldset>
-    </div>
-  </div>
-
-  <div class="row form-group">
-    <div class="col-md-5 col-sm-5">
-      <p>Thông tin </p>
-    </div>
-    <div class="col-md-7 col-sm-7">
-      <textarea type="text" class="form-control" formControlName="infor" ></textarea>
-
-    </div>
-  </div>
 
 
-
-
+    </div>
 </mat-dialog-content>
-
+<hr>
 <mat-dialog-actions>
-  <button class="mat-raised-button mat-primary" (click)="onCreate()">
-    Save
+  <button class="mat-raised-button mat-primary" (click)="onCreate()" style="margin-right: 3%">
+    Thêm
   </button>
   <button class="mat-raised-button"
           (click)="close()">
-    Close
+    Hủy
   </button>
 </mat-dialog-actions>

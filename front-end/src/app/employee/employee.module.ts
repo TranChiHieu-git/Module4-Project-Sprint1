@@ -56,13 +56,15 @@ import { ListCakeHaiComponent } from './warehouse-management/product-hai-sprint2
 import { CreateProductHaiComponent } from './warehouse-management/product-hai-sprint2/create-product-hai/create-product-hai.component';
 import { DeleteProductHaiComponent } from './warehouse-management/product-hai-sprint2/delete-product-hai/delete-product-hai.component';
 import { ListGeneralHaiComponent } from './warehouse-management/product-hai-sprint2/list-general-hai/list-general-hai.component';
+import {ProductSaleComponent} from './sale-management/product-sale/product-sale.component';
+import {NgxImageZoomModule} from "ngx-image-zoom";
 // @ts-ignore
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
     WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent,
     BillComponent, BrandManagementComponent, CustomerManagementComponent, CustomPaginationComponent,
     FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent, SalesManagementComponent, ProductHaiSprint2Component,
-    CakeDetailHaiComponent, ListCakeHaiComponent, CreateProductHaiComponent, DeleteProductHaiComponent, ListGeneralHaiComponent],
+    CakeDetailHaiComponent, ListCakeHaiComponent, CreateProductHaiComponent, DeleteProductHaiComponent, ListGeneralHaiComponent, ProductSaleComponent],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent
@@ -101,7 +103,8 @@ import { ListGeneralHaiComponent } from './warehouse-management/product-hai-spri
       FacebookModule.forRoot(),
       MatProgressBarModule,
       NgSelectModule,
-      BsDatepickerModule.forRoot()
+      BsDatepickerModule.forRoot(),
+      NgxImageZoomModule
     ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},

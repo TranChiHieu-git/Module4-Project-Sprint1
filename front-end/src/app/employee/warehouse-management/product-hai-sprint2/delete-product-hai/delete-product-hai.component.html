@@ -1,19 +1,16 @@
-<h2 mat-dialog-title >Xóa Bánh</h2>
+<h1 mat-dialog-title class="text-center text-danger border-bottom border-dark" style="font-weight: bold">Xóa Bánh</h1>
 
-
-<mat-dialog-content>
+<mat-dialog-content class="border-bottom border-dark">
 
  <mat-form-field>
-   <h5 class="my-3">
+   <span class="my-3">
                  Bạn có chắc xóa mặt hàng <span class="text-danger font-weight-bold">{{product.productName}}</span> không?
-               </h5>
+               </span>
  </mat-form-field>
 
 </mat-dialog-content>
-
 <mat-dialog-actions>
-  <button class="mat-raised-button mat-warn"
-          (click)="OnDelete()" >
+  <button class="mat-raised-button mat-warn" (click)="OnDelete()" style="margin-right: 3%">
     Xóa
   </button>
   <button class="mat-raised-button"

@@ -4,20 +4,24 @@
     <div class="row ">
       <div class="col-md-12">
         <div class="ml-5">
-          <div class="row d-flex justify-content-between m-3 border-bottom border-dark">
+          <div class="row d-flex justify-content-between m-3 ">
             <div class="h3 header-text-color" style="color: #ee9f1f"><span
-              class="fa fa-bars"></span>&nbsp;<span >Bánh</span></div>
-            <div class="d-flex">
+              class="fa fa-bars"></span>&nbsp;<span >Bánh</span>
             </div>
           </div>
+          <hr style="border: 0.5px solid black; width: 150%">
         </div>
       </div>
     </div>
+
+
     <div class="row">
       <div class="col-md-4">
         <div style="padding-left: 18%"
                   (click)="selectFile()" class="imgContainer">
-          <img  class="imageEmp" id="avatar" src="{{product['imageUrl']}}" onerror="this.src = 'https://firebasestorage.googleapis.com/v0/b/webapp-1b736.appspot.com/o/58hvov18b5f?alt=media&token=bd216998-70e7-4c1b-9127-9cc1b1127278' ">
+
+          <img  class="imageEmp" id="avatar" src="{{product['imageUrl']}}" name="xd" (mouseover)="bigger()"
+                onerror="this.src = 'https://firebasestorage.googleapis.com/v0/b/webapp-1b736.appspot.com/o/58hvov18b5f?alt=media&token=bd216998-70e7-4c1b-9127-9cc1b1127278' ">
           <input class="file-upload-input" type='file'
                  (change)="readURL($event.target);" accept="image/*"
                  hidden id="image"/>
@@ -51,10 +55,10 @@
             </select>
           </fieldset>
         </div>
-        <div class="row-cols-12" (click)="editable()">Đơn giá:
-          <span class="" *ngIf="!isEditable">{{product.price}}</span>
+        <div class="row-cols-12" (click)="editable()">Đơn giá (vnd):
+          <span class="" *ngIf="!isEditable">{{product.price}} </span>
           <br>
-          <input *ngIf="isEditable" type="number" class="form-control" formControlName="price" style="">
+          <input *ngIf="isEditable" type="text" class="form-control" formControlName="price" style="">
           <div *ngIf="productForm.get('price').invalid && productForm.get('price').touched">
             <i class="color-validate" *ngIf="productForm.get('price').hasError('required')">Vui lòng phải nhập đơn giá</i>
             <i class="color-validate" *ngIf="productForm.get('price').hasError('pattern')">Vui lòng phải nhập đơn giá đúng định dạng (ví dụ: 10000)</i>
@@ -70,6 +74,17 @@
             <i class="color-validate" *ngIf="productForm.get('quantity').hasError('pattern')">Vui lòng phải nhập số lượng đúng định dạng (ví dụ: 1000)</i>
           </div>
         </div>
+          <div class="row-cols-12" (click)="editable()">Đơn vị :
+            <span *ngIf="!isEditable">{{product.unit.unitName}}</span>
+            <fieldset formGroupName="unit">
+              <select *ngIf="isEditable" class="form-control col-form-label" formControlName="unitId">
+                <option *ngFor="let unit of unitList" [ngValue]="unit.unitId"
+                        [selected]="unit.unitId === productForm.value.unit.unitId">
+                  {{unit.unitName}}
+                </option>
+              </select>
+            </fieldset>
+          </div>
         <div class="row-cols-12 ">
           Thông tin:
         </div>
@@ -87,6 +102,14 @@
     ​
   </div>
 </div>
+<lib-ngx-image-zoom>
+  [thumbImage]=myThumbnail
+  [fullImage]=myFullresImage
+  [magnification]="1"
+  [enableScrollZoom]="true"
+  [enableLens]="true"
+  [lensWidth]="200"
+</lib-ngx-image-zoom>
 <form (ngSubmit)="OnDelete()">
   <div class="modal fade" id="modal-delete-product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
        aria-hidden="true"

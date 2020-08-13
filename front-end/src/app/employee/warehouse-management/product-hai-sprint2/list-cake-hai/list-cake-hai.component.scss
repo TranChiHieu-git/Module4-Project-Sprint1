@@ -1,7 +1,8 @@
 //
 .container__detail {
-  width: 100%;
-  height: 22rem;
+  width: 277px;
+  height: 350px;
+
   border-radius: 8px;
   //color: white;
   display: flex;
@@ -10,19 +11,22 @@
   font-size: 1rem;
   cursor: pointer;
   transition: 0.1s linear;
-  padding: 15px;
+  padding: 10px;
   position: relative;
   background: rgba(255, 244, 126, 0.5);
-  margin-left: 7%;
+  margin-left: 3%;
 }
 .container__detail:hover{
   transform: translateY(3px);
   box-shadow: 0 4px 5px rgba(246, 229, 141,1);
 }
 .img__info{
-  width: 100%;
-  height: auto;
+  //width: 100%;
+  //height: 221.6px;
+  width: 200px;
+  height: 200px;
   border-radius: 8px;
+  margin-left: 4%;
 }
 .img_product{
   position: absolute;
@@ -56,6 +60,15 @@ p.info__cake {
 //  font-size: 0.7em;
 //  text-decoration: line-through;
 //}
+
+.product__price-discount {
+
+  text-decoration: line-through;
+  font-size: 0.7em;
+  color: black;
+  margin-top: 85%;
+  margin-right: 27%;
+}
 .my__pagination{
   position: absolute;
   bottom: -55px;
@@ -71,29 +84,22 @@ p.info__cake {
   border: #EE9F1F;
   background: white;
 }
-.icon {
-  color: #EE9F1F;
-
-}
 //div .kicuc {
 //  width: 200%;
 //}
 
-
 .icon {
-  position: absolute;
+  //position: absolute;
   //width: 25%;
   //height: 15%;
-  background-color: rgba(25, 212, 17, 1);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1rem;
-  //border-radius: 10px;
-  //margin: 0 0 0 -5px;
-  top: 0;
-  left: 0%;
+  margin-left: 100%;
+  margin-top: 120%;
   transition: 0.1s linear;
+  color: #EE9F1F;
 }
 //.icon:hover {
 //  transform: translateY(3px);
