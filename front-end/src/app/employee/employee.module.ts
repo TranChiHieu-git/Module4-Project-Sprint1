@@ -1,3 +1,4 @@
+
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {EmployeeRoutingModule} from './employee-routing.module';
@@ -40,26 +41,47 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {FilterUniquePipe} from './warehouse-management/product/filter-unique.pipe';
 import {BillComponent} from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
-
-import {ToastrModule} from 'ngx-toastr';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ProductSaleComponent } from './sale-management/product-sale/product-sale.component';
-import {SaleManagementComponent} from './partner-management/sale-management/sale-management.component';
 // @ts-ignore
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {SalesManagementComponent} from './sale-management/sale-management.component';
-
+import { SaleManagementComponent } from './partner-management/sale-management/sale-management.component';
+import { ProductHaiSprint2Component } from './warehouse-management/product-hai-sprint2/product-hai-sprint2.component';
+import { CakeDetailHaiComponent } from './warehouse-management/product-hai-sprint2/cake-detail-hai/cake-detail-hai.component';
+import { ListCakeHaiComponent } from './warehouse-management/product-hai-sprint2/list-cake-hai/list-cake-hai.component';
+import { CreateProductHaiComponent } from './warehouse-management/product-hai-sprint2/create-product-hai/create-product-hai.component';
+import { DeleteProductHaiComponent } from './warehouse-management/product-hai-sprint2/delete-product-hai/delete-product-hai.component';
+import { ListGeneralHaiComponent } from './warehouse-management/product-hai-sprint2/list-general-hai/list-general-hai.component';
+// @ts-ignore
 @NgModule({
-  declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
-    WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent,
-    BillComponent, BrandManagementComponent, CustomerManagementComponent, CustomPaginationComponent,
-    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent, SalesManagementComponent, ProductSaleComponent],
+  declarations: [PartnerManagementComponent,
+    EmployeeDetailComponent,
+    EmployeeManagerComponent,
+    WarehouseManagementComponent,
+    HomeComponent,
+    ProductComponent,
+    ListDistributorComponent,
+    BillComponent,
+    BrandManagementComponent,
+    CustomerManagementComponent,
+    CustomPaginationComponent,
+    FilterProductPipe,
+    FilterMultiplePipe,
+    FilterUniquePipe,
+    SaleManagementComponent,
+    SalesManagementComponent,
+    ProductHaiSprint2Component,
+    CakeDetailHaiComponent,
+    ListCakeHaiComponent,
+    CreateProductHaiComponent,
+    DeleteProductHaiComponent,
+    ListGeneralHaiComponent,
+    ProductSaleComponent],
   exports: [
     WarehouseManagementComponent,
-    PartnerManagementComponent,
-    HomeComponent
+    PartnerManagementComponent
   ],
+
   imports:
     [
       CommonModule,
@@ -97,8 +119,9 @@ import {SalesManagementComponent} from './sale-management/sale-management.compon
     ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-    BrandService,
+    BrandService
   ]
+
 })
 
 export class EmployeeModule {

@@ -1,13 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {EmployeeService} from '../../../services/employee.service';
 import {CustomerService} from '../../../services/customer.service';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup} from '@angular/forms';
 import {CouponService} from '../../../services/coupon.service';
 import {AdminService} from '../../../services/admin.service';
 import {Coupon} from '../../../models/coupon';
 import {ToastrService} from 'ngx-toastr';
+
 declare const checkAll: any;
 import * as $ from 'jquery';
+
 @Component({
   selector: 'app-sale-management',
   templateUrl: './sale-management.component.html',
@@ -32,6 +34,8 @@ export class SaleManagementComponent implements OnInit {
   coupon: Coupon;
   couponId: number;
   deleteList = new Array();
+  utf8 = 'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế';
+
   constructor(private employeeService: EmployeeService,
               private customerService: CustomerService,
               private adminService: AdminService,
@@ -84,29 +88,81 @@ export class SaleManagementComponent implements OnInit {
   }
 
   search(): void {
-    if (this.searchCouponForm.value.createDateFrom !== '') {
-      this.createDateFrom =
-        this.searchCouponForm.value.createDateFrom.toLocaleDateString().split('/')[2]
-        + '-' + this.searchCouponForm.value.createDateFrom.toLocaleDateString().split('/')[1]
-        + '-' + this.searchCouponForm.value.createDateFrom.toLocaleDateString().split('/')[0];
-    }
-    if (this.searchCouponForm.value.createDateTo !== '') {
-      this.createDateTo =
-        this.searchCouponForm.value.createDateTo.toLocaleDateString().split('/')[2]
-        + '-' + this.searchCouponForm.value.createDateTo.toLocaleDateString().split('/')[1]
-        + '-' + this.searchCouponForm.value.createDateTo.toLocaleDateString().split('/')[0];
-    }
+    $('.employee').click(function() {
+      $('.employee').attr('style', 'box-shadow: none');
+    });
+    $('.user').click(function() {
+      $('.user').attr('style', 'box-shadow: none');
+    });
+    $('.fromdate').click(function() {
+      $('.fromdate').attr('style', 'box-shadow: none');
+    });
+    $('.fromto').click(function() {
+      $('.fromto').attr('style', 'box-shadow: none');
+    });
+    const regName = new RegExp('^[a-zA-Z0-9\\ ' + this.utf8 + ']{1,100}$');
+    const regDate = new RegExp('^[0-9]{4}\\-+[0-9]{1,2}\\-+[0-9]{1,2}$');
+    let employeeName = false;
     if (this.searchCouponForm.value.employee === 'Tất cả') {
       this.employee = '';
+      employeeName = true;
+    } else if (this.searchCouponForm.value.employee !== '') {
+      if (!this.searchCouponForm.value.employee.match(regName)) {
+        $('.employee').attr('style', 'box-shadow: 1px 1px 5px 5px #f18502');
+      } else {
+        this.employee = this.searchCouponForm.value.employee;
+        employeeName = true;
+      }
     } else {
-      this.employee = this.searchCouponForm.value.employee;
+      this.employee = '';
+      employeeName = true;
     }
-    if (this.searchCouponForm.value.user === 'Tất cả') {
+
+    let customerName = false;
+    if (this.searchCouponForm.value.user !== '') {
+      if (!this.searchCouponForm.value.user.match(regName)) {
+        $('.user').attr('style', 'box-shadow: 1px 1px 5px 5px #f18502');
+      } else {
+        this.customer = this.searchCouponForm.value.user;
+        customerName = true;
+      }
+    } else if (this.searchCouponForm.value.user === 'Tất cả') {
       this.customer = '';
+      customerName = true;
     } else {
       this.customer = this.searchCouponForm.value.user;
+      customerName = true;
     }
-    this.getAllCoupon(0);
+
+    let getDateFrom = false;
+    console.log(this.searchCouponForm.value.createDateFrom);
+    if (this.searchCouponForm.value.createDateFrom !== '') {
+      const day = this.searchCouponForm.value.createDateFrom.split('-')[2];
+      const month = this.searchCouponForm.value.createDateFrom.split('-')[1];
+      const year = this.searchCouponForm.value.createDateFrom.split('-')[0];
+      if (!this.searchCouponForm.value.createDateFrom.match(regDate) &&
+        day > 31 && day < 1 && month > 12 && month < 1 && year < 1000 && year > 9999) {
+        $('.fromdate').attr('style', 'box-shadow: 1px 1px 5px 5px #f18502');
+      } else {
+        this.createDateFrom = this.searchCouponForm.value.createDateFrom;
+        getDateFrom = true;
+      }
+    } else {
+      this.createDateFrom = '';
+      getDateFrom = true;
+    }
+
+    if (this.searchCouponForm.value.createDateTo !== '') {
+      this.createDateTo =
+        this.searchCouponForm.value.createDateTo.split('/')[0]
+        + '-' + this.searchCouponForm.value.createDateTo.split('/')[1]
+        + '-' + this.searchCouponForm.value.createDateTo.split('/')[2];
+    }
+    if (employeeName === true && customerName === true && getDateFrom === true) {
+      this.getAllCoupon(0);
+    } else {
+      this.toastr.error('Giá trị nhập vào không đúng định dạng. Vui lòng nhập lại!');
+    }
   }
 
   onPrevious(): void {
@@ -194,6 +250,7 @@ export class SaleManagementComponent implements OnInit {
       $('#deleteMany').click();
     }
   }
+
   onDeleteMany(): void {
     for (let i = 0; i < this.deleteList.length; i++) {
       this.couponService.deleteManyCoupon(this.deleteList[i]).subscribe(
@@ -201,14 +258,15 @@ export class SaleManagementComponent implements OnInit {
           this.closeDeleteManyModal.nativeElement.click();
           this.showDeleteSuccess();
           this.emptyDeleteList();
-          $('#checkAll').prop('checked',false);
+          $('#checkAll').prop('checked', false);
           this.ngOnInit();
         },
-      error => console.log(error)
-    );
+        error => console.log(error)
+      );
     }
   }
-  emptyDeleteList(): void{
+
+  emptyDeleteList(): void {
     this.deleteList.length = 0;
   }
 }

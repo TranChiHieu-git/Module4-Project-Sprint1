@@ -22,7 +22,7 @@ label {
 
 }
 
-.datepickerinput {
+.fromdate, .fromto, .employee, .user {
   border: rgb(118, 118, 118) 1px solid !important;
   background-color: white !important;
   color: black !important;
@@ -43,6 +43,7 @@ label {
   top: 25%;
   left: 80%;
 }
-.inputnormal{
+
+.inputnormal {
   margin-top: 15px !important;
 }

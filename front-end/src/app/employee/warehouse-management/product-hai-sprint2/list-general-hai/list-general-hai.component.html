@@ -1,0 +1,22 @@
+<div class='container-fluid'>
+
+  <div class='col-12'>
+    <ngb-carousel>
+      <ng-container *ngFor="let cake2 of cakeListFormatted">
+
+      <ng-template ngbSlide >
+        <div *ngFor="let cake of cake2" class="cake-box col-xs-3 col-md-3 col-lg-3 col-sm-6">
+          <img src="{{cake.imageUrl}}" class="img-fluid mx-auto d-block" alt="Delhi Metro">
+          <div class="carousel-caption">
+          <p style="color: yellow">{{cake.productName}}</p>
+          </div>
+
+        </div>
+      </ng-template>
+
+      </ng-container>
+    </ngb-carousel>
+  </div>
+</div>
+
+

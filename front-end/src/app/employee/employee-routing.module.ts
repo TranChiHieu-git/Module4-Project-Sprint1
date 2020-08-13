@@ -11,11 +11,17 @@ import {ProductComponent} from './warehouse-management/product/product.component
 import {EmployeeManagerComponent} from './employee-manager/employee-manager.component';
 import {EmployeeDetailComponent} from './employee-manager/employee-detail/employee-detail.component';
 import {ListDistributorComponent} from './partner-management/list-distributor/list-distributor.component';
+// @ts-ignore
 import {CustomerManagementComponent} from './partner-management/customer-management/customer-management.component';
 import {AuthGuard} from '../auth/auth.guard';
 import {BillComponent} from './warehouse-management/bill/bill.component';
 import {ProductSaleComponent} from './sale-management/product-sale/product-sale.component';
 import {SaleManagementComponent} from './partner-management/sale-management/sale-management.component';
+import {ProductHaiSprint2Component} from './warehouse-management/product-hai-sprint2/product-hai-sprint2.component';
+import {CakeDetailHaiComponent} from './warehouse-management/product-hai-sprint2/cake-detail-hai/cake-detail-hai.component';
+import {ListCakeHaiComponent} from './warehouse-management/product-hai-sprint2/list-cake-hai/list-cake-hai.component';
+import {ListGeneralHaiComponent} from "./warehouse-management/product-hai-sprint2/list-general-hai/list-general-hai.component";
+
 import {SalesManagementComponent} from './sale-management/sale-management.component';
 const routes: Routes = [{
   path: 'employee', component: EmployeeComponent, canActivate: [AuthGuard],
@@ -42,6 +48,13 @@ const routes: Routes = [{
         {
           path: 'employee-manager', component: EmployeeManagerComponent, children: [
             {path: 'detail', component: EmployeeDetailComponent}
+          ]
+        },
+        {
+          path: 'product-hai-sprint2', component: ProductHaiSprint2Component, children: [
+            {path: 'cake-detail-hai/:id', component: CakeDetailHaiComponent},
+            {path: 'list-cake-hai', component: ListCakeHaiComponent},
+            {path: 'list-general-hai', component: ListGeneralHaiComponent}
           ]
         }
       ]

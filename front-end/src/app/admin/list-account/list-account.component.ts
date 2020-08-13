@@ -19,7 +19,6 @@ import {Tempjwtemp} from '../../models/tempjwtemp';
 import {TokenStorageService} from '../../auth/token-storage.service';
 import {Position} from '../../models/position';
 
-
 function comparePassword(c: AbstractControl) {
   const v = c.value;
   return (v.accountPassword === v.confirmPassword) ? null : {
