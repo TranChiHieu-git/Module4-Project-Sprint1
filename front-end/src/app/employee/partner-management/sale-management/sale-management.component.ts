@@ -35,7 +35,6 @@ export class SaleManagementComponent implements OnInit {
   couponId: number;
   deleteList = new Array();
   utf8 = 'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế';
-
   constructor(private employeeService: EmployeeService,
               private customerService: CustomerService,
               private adminService: AdminService,
@@ -220,7 +219,7 @@ export class SaleManagementComponent implements OnInit {
   }
 
   showDeleteError(): void {
-    this.toastr.error('Không thể xóa!');
+    this.toastr.error('Phiếu đang được sử dụng, không thể xóa!');
   }
 
   showDeleteSuccess(): void {
@@ -238,8 +237,6 @@ export class SaleManagementComponent implements OnInit {
       },
       error => {
         console.log(error);
-        this.showDeleteError();
-        this.ngOnInit();
       });
   }
 
@@ -248,9 +245,14 @@ export class SaleManagementComponent implements OnInit {
       next => {
         this.closeDeleteModal.nativeElement.click();
         this.showDeleteSuccess();
-        this.ngOnInit();
+        this.getAllCoupon(this.pageClicked);
       },
-      error => console.log(error)
+      error => {
+        console.log(error);
+        this.closeDeleteModal.nativeElement.click();
+        this.showDeleteError();
+
+      }
     );
   }
 
@@ -295,9 +297,13 @@ export class SaleManagementComponent implements OnInit {
           this.showDeleteSuccess();
           this.emptyDeleteList();
           $('#checkAll').prop('checked', false);
-          this.ngOnInit();
+          this.getAllCoupon(this.pageClicked);
         },
-        error => console.log(error)
+        error => {
+          console.log(error);
+          this.closeDeleteManyModal.nativeElement.click();
+          this.showDeleteError();
+        }
       );
     }
   }
