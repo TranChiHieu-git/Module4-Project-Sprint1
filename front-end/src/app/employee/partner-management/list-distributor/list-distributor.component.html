@@ -125,7 +125,7 @@
                                aria-describedby="basic-addon1"
                                (focusout)="checkValidateDistributorIsExist2(i,listFormGroup[i].get('id').value)"
                                (change)="enableSubmitButton(i)">
-                        <label id="icon3"><i class="icon-user"></i></label>
+                        <label id="icon3"><i class="icon-user">*</i></label>
                         <span class="spanMessError"
                               *ngIf="this.listFormGroup[i].invalid">{{getErrorMessage2('name', listFormGroup[i])}} </span>
                       </div>
@@ -136,7 +136,7 @@
 
                         <input formControlName="email" type="text" class="form-control" aria-label="Username"
                                aria-describedby="basic-addon1" (change)="enableSubmitButton(i)">
-                        <label id="icon3"><i class="icon-envelope-alt"></i></label>
+                        <label id="icon3"><i class="icon-envelope-alt">*</i></label>
                         <span class="spanMessError"
                               *ngIf="!this.listFormGroup[i].valid">{{getErrorMessage2('email', listFormGroup[i])}} </span>
                       </div>
@@ -146,7 +146,7 @@
                       <div class="myRow">
                         <input formControlName="website" type="text" class="form-control" aria-label="Username"
                                aria-describedby="basic-addon1" (change)="enableSubmitButton(i)">
-                        <label id="icon3"><i class="fa fa-globe" aria-hidden="true"></i></label>
+                        <label id="icon3"><i class="fa fa-globe" aria-hidden="true"> &nbsp;</i></label>
                         <span class="spanMessError"
                               *ngIf="!this.listFormGroup[i].valid">{{getErrorMessage2('website', listFormGroup[i])}} </span>
 
@@ -158,7 +158,7 @@
                       <div class="col-md-6">
                         <div class="myRow2">
                           <label id="icon4" style="float: left ; margin-left: 10%"><i
-                            class="icon-phone"></i>
+                            class="icon-phone">*</i>
                           </label>
                           <input formControlName="numberPhone" type="text" class="form-control" aria-label="Username"
                                  aria-describedby="basic-addon1" style=" float: left" (change)="enableSubmitButton(i)">
@@ -172,7 +172,7 @@
                           <input formControlName="fax" type="text" class="form-control" aria-label="Username"
                                  aria-describedby="basic-addon1" style="margin-right: 10%; float: right"
                                  (change)="enableSubmitButton(i)">
-                          <label id="icon4"><i class="fa fa-fax" aria-hidden="true"></i> </label>
+                          <label id="icon4"><i class="fa fa-fax" aria-hidden="true">&nbsp;</i> </label>
                           <span *ngIf="!this.listFormGroup[i].valid"
                                 style="font-size: 13px;float: left">{{getErrorMessage2('fax', listFormGroup[i])}}</span>
                         </div>
@@ -184,7 +184,7 @@
                     <div class="row">
                       <div class="myRow" style="float: right">
                         <div style="margin-left: 5%">
-                          <select class="selectpicker show-menu-arrow"
+                          <select class="selectpicker show-menu-arrow border rounded"
                                   data-style="form-control"
                                   data-live-search="true"
                                   title="Loại phân phối"
@@ -202,7 +202,7 @@
                     <div class="row ">
                       <div class="myRow" style="float: right">
                         <div style="margin-left: 5%;">
-                          <select class="show-menu-arrow province selectpicker "
+                          <select class="show-menu-arrow province selectpicker border rounded "
                                   data-style="form-control"
                                   data-live-search="true"
                                   title="Chọn tỉnh" (change)="changeProvince($event.target.value,i)"
@@ -216,7 +216,7 @@
                     <div class="row ">
                       <div class="myRow" style="float: right">
                         <div style="margin-left: 5%;">
-                          <select class="selectpicker show-menu-arrow district"
+                          <select class="selectpicker show-menu-arrow district border rounded"
                                   data-style="form-control"
                                   data-live-search="true"
                                   title="Chọn huyện - thị trấn" (change)="changeDistrict($event.target.value,i)"
@@ -233,7 +233,7 @@
                     <div class="row ">
                       <div class="myRow" style="float: right">
                         <div style="margin-left: 5%;">
-                          <select class="selectpicker show-menu-arrow commune"
+                          <select class="selectpicker show-menu-arrow commune border rounded"
                                   data-style="form-control"
                                   data-live-search="true"
                                   title="Chọn xã - phường" (change)="changeCommune($event.target.value,i)"
@@ -557,7 +557,7 @@
       </div>
 
 
-      <h5 *ngIf="deleteUnsuccessList || deleteOutSessionList" style="text-align: center; font-weight: 800"
+      <h5 *ngIf="deleteUnsuccessList.length>0" style="text-align: center; font-weight: 800"
           class="deleteTitle">DANH SÁCH
         NHÀ PHÂN PHỐI KHÔNG
         THỂ XÓA VÌ ĐANG CÓ ĐƠN HÀNG :
@@ -683,6 +683,52 @@
     </div>
   </div>
 </div>
+
+<!--Form EDIT IS OPENING-->
+<button id="formEditOpening" type="button" class="btn btn-primary" data-toggle="modal" data-target=".formEditOpening" hidden>Large
+  modal
+</button>
+<div class="modal fade bd-example-modal-sm formEditOpening" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true" data-backdrop="static" data-keyboard="true">
+  <div class="modal-dialog">
+    <div class="modal-title" id="modal-title2">
+      <h1>NHÀ PHÂN PHỐI ĐANG ĐƯỢC CHỈNH SỬA</h1>
+    </div>
+    <div class="modal-content">
+      <h5 class="deleteTitle">Nhà phân phối  <a
+        style="font-weight: 600; color: blue">{{this.distributorName}}</a> đang được chỉnh sủa. Vui lòng lưu cập nhật trước khi thực hiện thao tác xóa nhà phân phối.</h5>
+      <div>
+        <button class="btn btn-dark myButton" style="width: 30%; margin-left: 35%" data-dismiss="modal">XÁC NHẬN
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--CONFIRM NEXT PAGE-->
+<button id="nextPage" type="button" class="btn btn-primary" data-toggle="modal" data-target=".nextPage" hidden>Large
+  modal
+</button>
+<div class="modal fade bd-example-modal-sm nextPage" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true" data-backdrop="static" data-keyboard="true">
+  <div class="modal-dialog">
+    <div class="modal-title" id="modal-title2">
+      <h1>NHÀ PHÂN PHÂN PHỐI ĐANG ĐƯỢC CHỈNH SỬA</h1>
+    </div>
+    <div class="modal-content">
+      <h5 class="deleteTitle">Có nhà phân phối đang được chỉnh sửa. Bạn có muốn chuyển trang không?.</h5>
+      <div>
+        <button class="btn btn-danger myButton" style="width: 25%; margin-left: 15%" (click)="this.goToPage(this.pageClick)" data-dismiss="modal" >XÁC NHẬN
+        </button>
+        <button class="btn btn-dark myButton" style="width: 25%; margin-left: 10%"  (click)="returnTempPage()" data-dismiss="modal">HỦY
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <div id="snackbar"></div>

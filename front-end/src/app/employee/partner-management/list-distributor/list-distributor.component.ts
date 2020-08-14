@@ -39,7 +39,6 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
   imgDefault = 'https://worklink.vn/wp-content/uploads/2018/07/no-logo.png';
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
-  getUrlUploadImgPromise: any;
   typeOfDistributorPromise: any;
   isChangedImg = false;
   isChangedImgList: boolean[] = [];
@@ -80,7 +79,6 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
   constructor(private fb: FormBuilder,
               private distributorService: DistributorService,
               private router: Router, private afStorage: AngularFireStorage) {
-    // console.log(this.myForm)
     this.myForm = fb.group({
       id: [''],
       name: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\_\\-\\sÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮ' +
@@ -130,8 +128,20 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
     this.onChange(this.pageClick);
   }
 
+  tempPage: number;
+
   onChange(page): void {
-    // this.listModifiedIdSuccess = [];
+    this.tempPage = this.pageClick;
+    if (this.countOpeningFormEdit() > 0) {
+      $('#nextPage').click();
+      this.pageClick = page;
+    } else {
+      this.goToPage(page);
+    }
+  }
+
+
+  goToPage(page): void {
     this.resetSessionAll();
     this.distributorService.getAllDistributor(page, this.size, this.search).subscribe(
       next => {
@@ -155,7 +165,6 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
       },
       error => {
         this.distributorList = [];
-        // this.fillListToSize();
       }
     );
     this.deleteList = [];
@@ -167,6 +176,17 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
     this.enableModifiedMoreButton();
   }
 
+  countOpeningFormEdit(): number {
+    let count = 0;
+
+    for (let i = 0; i < this.size; i++) {
+      if (this.listFormGroup[i] !== undefined && this.listFormGroup[i].value.id > 0) {
+        count++;
+      }
+
+    }
+    return count;
+  }
 
   setTypeOfDistrubutor(i: number): void {
     $('#selectType' + i).selectpicker('refresh');
@@ -190,29 +210,6 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
 
   }
 
-  // Không xóa data list formGroup
-  onChange2(page): void {
-    this.distributorService.getAllDistributor(page, this.size, this.search).subscribe(
-      next => {
-        if (next !== null) {
-          this.pageClick = page;
-          this.distributorList = next.content;
-          this.totalPages = next.totalPages;
-          this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
-          this.router.navigate(['employee/partner-management/list-distributor']);
-          this.resetEditMore();
-        } else {
-          this.distributorList = [];
-        }
-      },
-      error => {
-        this.distributorList = [];
-        // this.fillListToSize();
-      }
-    );
-    this.deleteList = [];
-    $('#all').prop('checked', false);
-  }
 
   getAllDistributor(): void {
     this.onChange(this.pageClick);
@@ -366,7 +363,6 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
 
   resetSessionAll(): void {
     for (let i = 0; i < this.size; i++) {
-      console.log(this.listFormGroup[i].value);
       if (this.listFormGroup[i].value.id !== null && this.listFormGroup[i].value.id !== '') {
         this.distributorService.removeSession(this.listFormGroup[i].value.id).subscribe(
           res => console.log('Remove Session'),
@@ -426,11 +422,8 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
     this.task.snapshotChanges().pipe(
       finalize(() => {
         this.ref.getDownloadURL().subscribe(url => {
-          this.getUrlUploadImgPromise = new Promise((resolve, reject) => {
-            resolve(url);
-            this.myForm.value.img = url;
-            this.submitForm();
-          });
+          this.myForm.value.img = url;
+          this.submitForm();
         });
       }))
       .subscribe();
@@ -450,11 +443,8 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
             this.task.snapshotChanges().pipe(
               finalize(() => {
                 this.ref.getDownloadURL().subscribe(url => {
-                  this.getUrlUploadImgPromise = new Promise((resolve, reject) => {
-                    resolve(url);
-                    this.listFormGroup[i].value.img = url;
-                    this.saveModifiedDistributor(i);
-                  });
+                  this.listFormGroup[i].value.img = url;
+                  this.saveModifiedDistributor(i);
                 });
               }))
               .subscribe();
@@ -747,41 +737,48 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
 
 
   openDeleteForm(id: number, name: string, numSession: number, index: number): void {
-    this.distributorService.checkIsNotModifying(id).subscribe(
-      res => {
-        this.distributorName = name;
-        this.distributorId = id;
-        if (res) {
-          this.distributorService.setSession(id, 2).subscribe(
-            next => {
-              this.distributorSession = next;
-              this.distributorService.findAllBillIsExistDistributor(id).toPromise().then(
-                value => {
-                  if (value.length !== 0) {
-                    this.listBill = value;
-                    this.distributorService.removeSession(id).subscribe(
-                      res2 => console.log('remove Session success'),
-                      error => {
-                      }
-                    );
-                    $('#deleteInformation').click();
-                  } else {
+    this.distributorName = name;
+    const isHidden = $('#panel' + index).prop('hidden');
+    if (!isHidden) {
+      $('#formEditOpening').click();
+    } else {
+      this.distributorService.checkIsNotModifying(id).subscribe(
+        res => {
+          this.distributorName = name;
+          this.distributorId = id;
+          if (res) {
+            this.distributorService.setSession(id, 2).subscribe(
+              next => {
+                this.distributorSession = next;
+                this.distributorService.findAllBillIsExistDistributor(id).toPromise().then(
+                  value => {
+                    if (value.length !== 0) {
+                      this.listBill = value;
+                      this.distributorService.removeSession(id).subscribe(
+                        res2 => console.log('remove Session success'),
+                        error => {
+                        }
+                      );
+                      $('#deleteInformation').click();
+                    } else {
 
-                    $('#deleteForm').click();
+                      $('#deleteForm').click();
+                    }
                   }
-                }
-              );
-            }, error => {
-            }
-          );
+                );
+              }, error => {
+              }
+            );
 
-        } else {
-          $('#multiTab').click();
+          } else {
+            $('#multiTab').click();
+          }
+        }, error => {
+
         }
-      }, error => {
+      );
+    }
 
-      }
-    );
 
   }
 
@@ -862,7 +859,7 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
         count++;
       }
     }
-    if (this.distributorList.length === 1 || this.deleteList.length === count) {
+    if (this.distributorList.length === 1 || this.deleteSuccessList.length === count) {
       if (this.pageClick >= 1) {
         this.onChange(this.pageClick - 1);
       } else {
@@ -1113,10 +1110,11 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
         res => {
           if (res !== null && searchName === res.name) {
             this.listFormGroup[i].get('name').setErrors({exist: true});
+            this.enableSubmitButton(i);
           }
         },
         error => {
-          console.log(error);
+          // console.log(error);
         }
       );
     }
@@ -1136,6 +1134,7 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
     }
     if (isExist) {
       this.listFormGroup[i].get('name').setErrors({exist: true});
+      this.enableSubmitButton(i);
     } else {
 
     }
@@ -1443,6 +1442,9 @@ export class ListDistributorComponent implements OnInit, AfterViewInit {
     this.deleteListSendIsModifying = [];
   }
 
+  returnTempPage(): void {
+    this.pageClick = this.tempPage;
+  }
 }
 
 function changeToggleButtonIcon(button): void {

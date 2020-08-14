@@ -56,7 +56,10 @@
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
-  justify-content: space-between
+  justify-content: space-between;
+  max-height: 35px;
+  top : -1px;
+
 }
 
 .bootstrap-select > .dropdown-toggle:after {
@@ -118,7 +121,7 @@
   margin-bottom: 0;
   padding: 0;
   border: none;
-  height: auto
+  height: auto;
 }
 
 :not(.input-group) > .bootstrap-select.form-control:not([class*=col-]) {
@@ -259,7 +262,7 @@
   min-width: 100%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
 .bootstrap-select .dropdown-menu > .inner:focus {
@@ -392,7 +395,8 @@
 }
 
 .bootstrap-select.show-menu-arrow.open > .dropdown-toggle, .bootstrap-select.show-menu-arrow.show > .dropdown-toggle {
-  z-index: 1061
+  z-index: 1061;
+  max-height: 35px;
 }
 
 .bootstrap-select.show-menu-arrow .dropdown-toggle .filter-option:before {

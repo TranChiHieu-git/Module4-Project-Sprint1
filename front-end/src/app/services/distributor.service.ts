@@ -40,13 +40,13 @@ export class DistributorService {
 
   // // Thach
 
-  findByName(name: string): Observable<TypeOfDistributor> {
-    return this.httpClient.get<TypeOfDistributor>(this.MY_API_URL + '/type_distributor/' + name);
-  }
-
-  save(item: Distributor): Observable<any> {
-    return this.httpClient.post<any>(this.MY_API_URL + '/distributor', item);
-  }
+  // findByName(name: string): Observable<TypeOfDistributor> {
+  //   return this.httpClient.get<TypeOfDistributor>(this.MY_API_URL + '/type_distributor/' + name);
+  // }
+  //
+  // save(item: Distributor): Observable<any> {
+  //   return this.httpClient.post<any>(this.MY_API_URL + '/distributor', item);
+  // }
 
   getAllDistributor(currentPage, size, search): Observable<any> {
     return this.httpClient.get(this.MY_API_URL + '/distributor/list' + '?page=' + currentPage + '&size='
