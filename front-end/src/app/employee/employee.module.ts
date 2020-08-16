@@ -16,7 +16,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {ShareModule} from '../shares/share.module';
 import {EmployeeManagerComponent} from './employee-manager/employee-manager.component';
 import {ListDistributorComponent} from './partner-management/list-distributor/list-distributor.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {MatCardModule} from '@angular/material/card';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
@@ -46,19 +46,21 @@ import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { SaleManagementComponent } from './partner-management/sale-management/sale-management.component';
+import {ShortNamePipe} from './partner-management/customer-management/shortname';
+// import {FormatDatePipe} from './partner-management/customer-management/formatdate';
 
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
     WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent,
     BillComponent, BrandManagementComponent, CustomerManagementComponent, CustomPaginationComponent,
-    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent],
+    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent, ShortNamePipe, ],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent
   ],
-
   imports: [
     CommonModule,
+    FormsModule,
     EmployeeRoutingModule,
     RouterModule,
     ReactiveFormsModule,
@@ -89,12 +91,13 @@ import { SaleManagementComponent } from './partner-management/sale-management/sa
     FacebookModule.forRoot(),
     MatProgressBarModule,
     BrowserAnimationsModule,
-    NgSelectModule
+    NgSelectModule,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
     BrandService
-  ]
+  ],
+
 
 })
 

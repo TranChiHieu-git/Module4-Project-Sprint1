@@ -6,10 +6,10 @@
   width: 160%;
 }
 .avatar{
-  height: 200px;
+  height: 170px;
   position: absolute;
   left: 0;
-  top: 0;
+  top: 115px;
 }
 .card{
   width: 28%;
@@ -23,7 +23,10 @@
   margin: 0 6.8%;
 } tr th{
     padding: 10px 0;
-  }
+  } thead {
+        background-color: rgb(243 163 64) !important;
+        text-align: center
+      }
 .edit-customer-btn1,.edit-customer-btn2{
   margin: 40px 0;
 }
@@ -226,16 +229,22 @@ mat-progress-bar[value]::-webkit-progress-value {
   font-weight: 700;
   margin-left: 41%;
 }
-input[type=text], .datePickker  {
+input[type=text] {
   height: 40px;
   border-radius: 0 5px 5px 0;
-  width: 100%;
+  width: 60%;
   box-sizing: border-box;
   border: solid 0.25px;
   box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.31);
-
 }
-
+//input[type=text] > .dapicker {
+//  height: 40px;
+//  border-radius: 0 5px 5px 0;
+//  width: 100%;
+//  box-sizing: border-box;
+//  border: solid 0.25px;
+//  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.31);
+//}
 .has-search .form-control {
   padding-left: 2.375rem;
 }
@@ -406,12 +415,6 @@ label{
 .modal-content{
   left: -30%;
   width: 160%;
-}
-.avatar{
-  height: 200px;
-  position: absolute;
-  left: 0;
-  top: 0;
 }
 .card{
   width: 28%;
@@ -639,12 +642,6 @@ mat-progress-bar[value]::-webkit-progress-value {
   left: -30%;
   width: 160%;
 }
-.avatar{
-  height: 200px;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
 .card{
   width: 28%;
   height: 57%;
@@ -857,7 +854,7 @@ mat-progress-bar[value]::-webkit-progress-value {
   position: relative;
   height: 0%;
   width: 8%;
-  margin-left: 3%;
+  margin-left: 6%;
 }
 .icon-can {
   margin-top: -9%;
@@ -873,11 +870,6 @@ mat-progress-bar[value]::-webkit-progress-value {
   width: 400px;
   height: 100%;
 }
-.search-input {
-  margin-left: 93%;
-  margin-bottom: 1%;
-  margin-top: 2%;
-}
 .label-datepicker{
   margin-left: 9%;
 }
@@ -888,7 +880,7 @@ mat-progress-bar[value]::-webkit-progress-value {
 }
 .button-can{
   position: absolute;
-  margin-left: 164px;
+  margin-left: 187px;
   margin-top: -54px;
   font-size: 24px;
 }
@@ -897,3 +889,23 @@ mat-progress-bar[value]::-webkit-progress-value {
   margin-top: -10%;
   margin-left: 228px;
 }
+.addScoll{
+  width: 76%;
+  margin-left: 289px;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 12px;
+  text-align: center;
+  position: fixed;
+  margin-left: 1279px;
+  z-index: 2;
+  margin-top: -76px;
+}
+.d-flex {
+  display: block;
+}
+

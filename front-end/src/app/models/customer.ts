@@ -1,4 +1,5 @@
 import {Account} from './account';
+import {Order} from './order';
 
 export class Customer {
   id: number;
@@ -11,6 +12,8 @@ export class Customer {
   imageUrl: string;
   deleteFlag: boolean;
   account: Account;
+  listOrder: Order[];
+  total: any;
 
   constructor() {
   }
