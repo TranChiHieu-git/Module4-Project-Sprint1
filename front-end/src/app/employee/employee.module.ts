@@ -53,6 +53,7 @@ import { CreateProductHaiComponent } from './warehouse-management/product-hai-sp
 import { DeleteProductHaiComponent } from './warehouse-management/product-hai-sprint2/delete-product-hai/delete-product-hai.component';
 import { ListGeneralHaiComponent } from './warehouse-management/product-hai-sprint2/list-general-hai/list-general-hai.component';
 import {AutofocusDirective} from '../directive/autofocus.directive';
+import { StatisticsComponent } from './warehouse-management/statistics/statistics.component';
 // @ts-ignore
 @NgModule({
   declarations: [PartnerManagementComponent,
@@ -78,7 +79,8 @@ import {AutofocusDirective} from '../directive/autofocus.directive';
     DeleteProductHaiComponent,
     ListGeneralHaiComponent,
     ProductSaleComponent,
-    AutofocusDirective],
+    AutofocusDirective,
+    StatisticsComponent],
   exports: [
     WarehouseManagementComponent,
     PartnerManagementComponent,
