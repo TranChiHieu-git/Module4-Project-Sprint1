@@ -87,7 +87,7 @@ export class BrandManagementComponent implements OnInit {
   }
 
   showCreateWarning(): void {
-    this.toastr.warning('Vui lòng nhập đầy đủ thông tin!');
+    this.toastr.error('Vui lòng nhập đầy đủ thông tin!');
   }
 
   showEditSuccess(): void {
