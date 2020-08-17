@@ -10,6 +10,7 @@ export class Product {
   brand: Brand;
   price: number;
   infor: string;
+  amountSold: number;
     constructor(productId: number, productName: string, category: string, expiryDate: string, quantity: number,
                 unit: string, brand: Brand, price: number, infor: string) {
         this.productId = productId;

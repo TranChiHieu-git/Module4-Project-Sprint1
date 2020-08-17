@@ -9,7 +9,7 @@ import * as $ from 'jquery';
   styleUrls: ['./list-employee.component.scss']
 })
 export class ListEmployeeComponent implements OnInit {
-  size = 6;
+  size = 7;
   pageClicked = 0;
   employeeList: Employees[];
   pages = [];
@@ -31,7 +31,7 @@ export class ListEmployeeComponent implements OnInit {
           this.employeeList = data.content;
           this.totalPages = data.totalPages;
           if (this.employeeList.length < 6) {
-            $('.table').attr('style', 'margin-bottom: ' + ((6 - this.employeeList.length) * 55) + 'px');
+            $('.table').attr('style', 'margin-bottom: ' + ((6 - this.employeeList.length) * 60) + 'px');
           } else {
             $('.table').attr('style', 'margin-bottom: 0');
           }

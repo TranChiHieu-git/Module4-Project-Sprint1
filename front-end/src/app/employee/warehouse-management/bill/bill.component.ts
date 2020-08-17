@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ServiceBillService} from '../../../services/service-bill.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Bill} from '../../../models/bill';
 import {WareHouse} from '../../../models/ware-house';
 import {Transportation} from '../../../models/transportation';
@@ -32,10 +32,13 @@ export class BillComponent implements OnInit {
   payList: Pay[];
   typeBillList: TypeBill[];
   bill: Bill;
+  billSubmit: Bill;
   public billName: string;
   public createDate: Date;
   createForm: FormGroup;
   editForm: FormGroup;
+  form: FormGroup;
+  formArray: FormArray = new FormArray([]);
   p = 1;
   today: string;
   filter: any;
@@ -52,18 +55,20 @@ export class BillComponent implements OnInit {
     this.getData();
     this.buildEditForm();
     this.initCreateForm();
+    this.createAddLiveForm();
+    this.form = this.fb.group({rows: new FormArray([])});
   }
 
   buildEditForm(): void {
     this.editForm = this.fb.group({
       id: [''],
-      billName: ['', Validators.required],
-      createDate: ['', Validators.required],
-      editLatestDate: ['', Validators.required],
-      billStatus: ['', Validators.required],
-      processingStatus: ['', Validators.required],
-      shippingStatus: ['', Validators.required],
-      paymentStatus: ['', Validators.required],
+      billName: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), Validators.pattern(/^[^\s]+$/)]],
+      createDate: [''],
+      editLatestDate: [''],
+      billStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
+      processingStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
+      shippingStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
+      paymentStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
       idTypeBill: this.fb.group({
         id: [''],
         nameTypeBill: ['']
@@ -175,6 +180,7 @@ export class BillComponent implements OnInit {
           this.getData();
         },
         error => console.log(error));
+      this.switchEdit(this.billSubmit);
     } else {
       this.notificationService.edit('Xin lỗi! Bạn chưa chỉnh sửa xong');
     }
@@ -281,5 +287,85 @@ export class BillComponent implements OnInit {
   public getPageInNewSize(pageSize: number): void {
     this.page.pageable = this.paginationService.getPageInNewSize(this.page, pageSize);
     this.getData();
+  }
+  switchEdit(bill1: Bill): void {
+    bill1.isEditable = !bill1.isEditable;
+    // $('#submit' + bill1.id).click();
+  }
+  switchEdit2(bill1: Bill): void {
+    $('#submit' + bill1.id).click();
+  }
+
+  cancelEdit(bill1: Bill): void {
+    bill1.isEditable = !bill1.isEditable;
+    this.getData();
+  }
+  get rows(): FormArray {
+    return this.form.get('rows') as FormArray;
+  }
+  addRow(): void {
+    this.formArray.push(this.createAddLiveForm());
+  }
+
+  removeRow(index: number): void {
+    this.formArray.removeAt(index);
+  }
+  onSubmitSingleRow(formArray, index): void {
+    if (this.formArray.valid) {
+      const {value} = this.formArray.at(index);
+      const data = {
+        ...this.bill,
+        ...value
+      };
+      this.billService.create(data).subscribe(
+        () => {
+          this.removeRow(index);
+          this.notificationService.create('Tạo mới thành công');
+          this.getData();
+        },
+        error => console.log(error));
+    } else {
+      this.notificationService.create('Xin lỗi! Bạn chưa thể thêm phiếu. Xin hãy xem lại!!');
+    }
+  }
+  createAddLiveForm(): FormGroup {
+    return this.fb.group({
+      billName: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), Validators.pattern(/^[^\s]+$/)]],
+      createDate: [''],
+      editLatestDate: [''],
+      billStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
+      processingStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
+      shippingStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
+      paymentStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
+      idTypeBill: this.fb.group({
+        id: [''],
+        nameTypeBill: ['']
+      }),
+      idStorageLocation: this.fb.group({
+        id: [''],
+        nameStorageLocation: ['']
+      }),
+      idWareHouse: this.fb.group({
+        id: [''],
+        nameWareHouse: ['']
+      }),
+      idTransportation: this.fb.group({
+        id: [''],
+        nameTransportation: ['']
+      }),
+      idPay: this.fb.group({
+        id: [''],
+        namePay: ['']
+      }),
+      idDistributor: this.fb.group({
+        id: [''],
+        name: ['']
+      }),
+      idEmployee: this.fb.group({
+        id: [''],
+        name: ['']
+      }),
+      deleteFlag: [0]
+    });
   }
 }

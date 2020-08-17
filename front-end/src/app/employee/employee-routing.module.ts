@@ -20,9 +20,10 @@ import {SaleManagementComponent} from './partner-management/sale-management/sale
 import {ProductHaiSprint2Component} from './warehouse-management/product-hai-sprint2/product-hai-sprint2.component';
 import {CakeDetailHaiComponent} from './warehouse-management/product-hai-sprint2/cake-detail-hai/cake-detail-hai.component';
 import {ListCakeHaiComponent} from './warehouse-management/product-hai-sprint2/list-cake-hai/list-cake-hai.component';
-import {ListGeneralHaiComponent} from "./warehouse-management/product-hai-sprint2/list-general-hai/list-general-hai.component";
+import {ListGeneralHaiComponent} from './warehouse-management/product-hai-sprint2/list-general-hai/list-general-hai.component';
 
 import {SalesManagementComponent} from './sale-management/sale-management.component';
+import {StatisticsComponent} from './warehouse-management/statistics/statistics.component';
 const routes: Routes = [{
   path: 'employee', component: EmployeeComponent, canActivate: [AuthGuard],
   children: [
@@ -45,6 +46,7 @@ const routes: Routes = [{
         {path: 'bill', component: BillComponent},
         {path: 'brand', component: BrandManagementComponent},
         {path: 'product', component: ProductComponent},
+        {path: 'statistic', component: StatisticsComponent},
         {
           path: 'employee-manager', component: EmployeeManagerComponent, children: [
             {path: 'detail', component: EmployeeDetailComponent}
