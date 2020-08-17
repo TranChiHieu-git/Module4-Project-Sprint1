@@ -1,14 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {EmployeeService} from '../../../services/employee.service';
 import {CustomerService} from '../../../services/customer.service';
-import {AbstractControl, FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {CouponService} from '../../../services/coupon.service';
 import {AdminService} from '../../../services/admin.service';
 import {Coupon} from '../../../models/coupon';
 import {ToastrService} from 'ngx-toastr';
+// import * as $ from 'jquery';
 
-declare const checkAll: any;
-import * as $ from 'jquery';
+declare const $: any;
 
 @Component({
   selector: 'app-sale-management',
@@ -44,7 +44,6 @@ export class SaleManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    checkAll();
     this.searchCouponForm = this.formBuilder.group({
       employee: [''],
       user: [''],
@@ -280,6 +279,12 @@ export class SaleManagementComponent implements OnInit {
     }
   }
 
+  checkAll(): void{
+    $('#checkAll').change(function () {
+      $('input:checkbox').prop('checked', this.checked);
+    });
+  }
+
   deleteManyCoupon(): void {
     if (this.deleteList.length <= 0) {
       this.showDeleteWarning();
@@ -320,4 +325,3 @@ export class SaleManagementComponent implements OnInit {
     this.ngOnInit();
   }
 }
-
