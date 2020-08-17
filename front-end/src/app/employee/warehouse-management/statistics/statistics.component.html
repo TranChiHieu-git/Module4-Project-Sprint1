@@ -1,0 +1,66 @@
+<div class="container">
+
+  <!--Title-->
+  <div class="row">
+    <div class="col-12">
+      <div id="title5">
+        <div class="h3 header-text-color"><span>TOP <span class="top5">5</span> MẶT HÀNG BÁN CHẠY</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!--End Title-->
+
+  <!--Search Multi-->
+  <form>
+    <div class="row">
+      <div class="col-12">
+        <div class="input-group">
+          <input #m type="text" class="form-control border rounded" placeholder="Tháng">&nbsp;&nbsp;
+          <input #y type="text" class="form-control border rounded" placeholder="Năm">&nbsp;&nbsp;
+          <button (click)="searchProducts(y.value, m.value)" type="button" class="btn btn-outline-warning"><span
+            class="fa fa-filter"></span>Tìm kiếm
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <br>
+  <br>
+  <!--End search Multi-->
+
+  <div class="row">
+
+    <!--Table list bill-->
+        <div class="col-12">
+          <table class="table table-bordered table-striped table-hover" style="width: 100%">
+
+            <thead class="table-header">
+            <tr>
+              <th class="sticky-top">Tên mặt hàng</th>
+              <th class="sticky-top">Danh mục</th>
+              <th class="sticky-top">Thương hiệu</th>
+              <th class="sticky-top">Số lượng</th>
+              <th class="sticky-top">Đơn giá</th>
+              <th class="sticky-top">Doanh thu</th>
+            </tr>
+            </thead>
+
+            <tbody >
+            <tr *ngFor="let product of products">
+              <td>{{product.productName}}</td>
+              <td>{{product.category.categoryName}}</td>
+              <td>{{product.brand.brandName}}</td>
+              <td>{{product.amountSold}}</td>
+              <td>{{product.price| number}}</td>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+    <!--End table list bill-->
+  </div>
+  <div class="row position-relative">
+    <button type="button" class="btn btn-outline-warning position-absolute" style="right: 154px">In</button>
+  </div>
+</div>
