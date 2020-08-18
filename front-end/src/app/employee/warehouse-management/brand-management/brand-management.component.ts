@@ -8,7 +8,7 @@ import {BrandService} from '../../../services/brand.service';
 import {ToastrService} from 'ngx-toastr';
 
 declare const checkAll: any;
-
+declare const $: any;
 @Component({
   selector: 'app-brand-management',
   templateUrl: './brand-management.component.html',
@@ -62,7 +62,6 @@ export class BrandManagementComponent implements OnInit {
   ngOnInit(): void {
     this.getAllBrand();
     checkAll();
-
   }
 
   initCreateForm(): void {
@@ -340,5 +339,11 @@ export class BrandManagementComponent implements OnInit {
     } else {
       this.showCreateWarning();
     }
+  }
+
+  autoFocus(): void {
+    $('#createBrand').on('shown.bs.modal', function () {
+      $('#autoFocus').trigger('focus');
+    });
   }
 }

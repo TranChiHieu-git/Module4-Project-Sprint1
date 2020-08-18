@@ -229,6 +229,10 @@ export class SaleManagementComponent implements OnInit {
     this.toastr.error('Chưa có phiếu được chọn!');
   }
 
+  showError404(): void {
+    this.toastr.error('Phiếu không tồn tại!');
+  }
+
   deleteCoupon(id: number): void {
     this.couponService.findCouponById(id).subscribe(next => {
         this.coupon = next;
@@ -236,6 +240,10 @@ export class SaleManagementComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.showError404();
+        setTimeout(function(){
+          $('#modalDeleteCoupon').modal('hide');
+        }, 20);
       });
   }
 
