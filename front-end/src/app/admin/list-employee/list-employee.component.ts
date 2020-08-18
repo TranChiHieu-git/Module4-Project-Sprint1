@@ -26,6 +26,7 @@ export class ListEmployeeComponent implements OnInit {
   getAllEmployeeWithPage(page): void {
     this.employeeService.findAllEmployeeWithPage(page, this.size, this.key).subscribe(
       data => {
+        $('.searchInput').focus();
         if (data !== null) {
           this.pageClicked = page;
           this.employeeList = data.content;
