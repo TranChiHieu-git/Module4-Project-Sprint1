@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ServiceBillService} from '../../../services/service-bill.service';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Bill} from '../../../models/bill';
 import {WareHouse} from '../../../models/ware-house';
 import {Transportation} from '../../../models/transportation';
@@ -13,11 +13,35 @@ import {NotificationService} from '../../../services/notification.service';
 import {CustomPaginationService} from '../../../services/pagination/custom-pagination.service';
 import {Page} from '../../../models/pagination/page';
 
+function whiteSpaceValidator(control: AbstractControl): ValidationErrors | null {
+  if ((control.value as string).indexOf(' ') >= 1){
+    return {whiteSpaceValidator: true};
+  }
+  return null;
+}
+function whiteAllSpaceValidator(control: AbstractControl): ValidationErrors | null {
+  const isWhitespace = (control.value as string).trim().length === 0;
+  const isValid = !isWhitespace;
+  return isValid ? null : { whitespace: true };
+}
+function removeSpace(control: AbstractControl): ValidationErrors | null {
+  if (control && control.value && !control.value.replace(/\s/g, '').length) {
+    control.setValue('');
+    console.log(control.value);
+    return { removeSpace: true };
+  }
+  else {
+    return null;
+  }
+}
+
 @Component({
   selector: 'app-bill',
   templateUrl: './bill.component.html',
   styleUrls: ['./bill.component.scss']
 })
+
+
 export class BillComponent implements OnInit {
   @ViewChild('closeEditModal') closeEditModal;
   @ViewChild('closeDeleteModal') closeDeleteModal;
@@ -62,13 +86,13 @@ export class BillComponent implements OnInit {
   buildEditForm(): void {
     this.editForm = this.fb.group({
       id: [''],
-      billName: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), Validators.pattern(/^[^\s]+$/)]],
+      billName: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), whiteSpaceValidator, removeSpace]],
       createDate: [''],
       editLatestDate: [''],
-      billStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
-      processingStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
-      shippingStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
-      paymentStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
+      billStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), removeSpace]],
+      processingStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), removeSpace]],
+      shippingStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), removeSpace]],
+      paymentStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), removeSpace]],
       idTypeBill: this.fb.group({
         id: [''],
         nameTypeBill: ['']
@@ -330,13 +354,13 @@ export class BillComponent implements OnInit {
   }
   createAddLiveForm(): FormGroup {
     return this.fb.group({
-      billName: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), Validators.pattern(/^[^\s]+$/)]],
+      billName: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), whiteSpaceValidator, removeSpace]],
       createDate: [''],
       editLatestDate: [''],
-      billStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
-      processingStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
-      shippingStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
-      paymentStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/)]],
+      billStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), removeSpace]],
+      processingStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), removeSpace]],
+      shippingStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), removeSpace]],
+      paymentStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), removeSpace]],
       idTypeBill: this.fb.group({
         id: [''],
         nameTypeBill: ['']

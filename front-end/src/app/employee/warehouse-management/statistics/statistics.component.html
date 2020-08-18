@@ -37,6 +37,7 @@
 
             <thead class="table-header">
             <tr>
+              <th class="sticky-top">STT</th>
               <th class="sticky-top">Tên mặt hàng</th>
               <th class="sticky-top">Danh mục</th>
               <th class="sticky-top">Thương hiệu</th>
@@ -47,7 +48,8 @@
             </thead>
 
             <tbody >
-            <tr *ngFor="let product of products">
+            <tr *ngFor="let product of products;let i=index">
+              <td>{{i+1}}</td>
               <td>{{product.productName}}</td>
               <td>{{product.category.categoryName}}</td>
               <td>{{product.brand.brandName}}</td>
