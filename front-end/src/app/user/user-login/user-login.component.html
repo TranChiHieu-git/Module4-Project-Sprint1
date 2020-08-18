@@ -8,11 +8,17 @@
         </div>
         <div class="col-md-10">
           <input type="text" class="form-control" id="username" placeholder="Tên Đăng Nhập" formControlName="username">
-          <div class="text-danger" role="alert" *ngIf="loginForm.get('username').invalid && loginForm.get('username').touched">
-            Sai Tên Đăng Nhập!!!
+<!--          <div class="text-danger" role="alert" *ngIf="loginForm.get('username').invalid && loginForm.get('username').touched">-->
+<!--            Sai Tên Đăng Nhập!!!-->
+<!--          </div>-->
+          <div *ngFor="let validation of validation_messages.username">
+            <div class="text-danger"
+                 *ngIf="loginForm.get('username').hasError(validation.type) && (loginForm.get('username').dirty ||
+               loginForm.get('username').touched)">
+              {{validation.message}}
+            </div>
           </div>
         </div>
-
       </div>
     </div>
     <div class="form-group mb-2 ">
@@ -22,14 +28,21 @@
         </div>
         <div class="col-md-10">
           <input type="password" class="form-control" id="inputPassword4" placeholder="Mật Khẩu" formControlName="password">
-          <div class="text-danger" role="alert" *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
-            Sai Tên Đăng Nhập Hoặc Mật Khẩu!!!
+<!--          <div class="text-danger" role="alert" *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">-->
+<!--            Sai Tên Đăng Nhập Hoặc Mật Khẩu!!!-->
+<!--          </div>-->
+          <div *ngFor="let validation of validation_messages.password">
+            <div class="text-danger"
+                 *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty ||
+               loginForm.get('password').touched)">
+              {{validation.message}}
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class=" ml-4">
-      <input type="checkbox" [checked]="rememberMe" [(ngModel)]="rememberMe" id="dropdownCheck">
+      <input type="checkbox" formControlName="rememberMe">
         Nhớ Tài Khoản
     </div>
 
@@ -41,7 +54,6 @@
             type="button"
             class="btn-sm btn-primary submitButton mr-3 w-25"
             aria-hidden="true"
-            data-toggle="modal"
             id="loginButton"
             (click)="onSubmit()">Đăng Nhập
     </button>
@@ -50,6 +62,7 @@
   <div class="text-danger" role="alert">
     {{message}}
   </div>
+
   <div class="d-flex text-cente pl-4">
     <span>Bạn chưa phải là thành viên?</span>
     <a href="#" class="text-primary pl-1" data-toggle="modal" data-target="#registerModal" data-dismiss="modal">Đăng ký

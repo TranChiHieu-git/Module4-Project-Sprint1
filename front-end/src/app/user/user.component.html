@@ -137,27 +137,12 @@
       <!--      </div>-->
     </div>
     <!--            //  tai khoan sau khi dang nhap-->
-    <div class="nav-item dropdown " *ngIf="userDisplayName">
+    <div class="nav-item dropdown " *ngIf="userDisplayName || user">
       <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
            aria-haspopup="true"
            aria-expanded="true">
         <span class="material-icons mr-2">account_circle</span>
-        <span>Xin Chào {{userDisplayName}} </span>
-      </div>
-      <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
-        <a class="dropdown-item account" [routerLink]="['/user-manage/user-detail']">Quản Lý Tài Khoản</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item account" [routerLink]="['/user-manage/user-order']">Đơn Hàng Của Tôi</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item mt-1 signOut " (click)="signOut()">Đăng Xuất</a>
-      </div>
-    </div>
-    <div class="nav-item dropdown " *ngIf="user">
-      <div class="nav-link  d-flex justify-content-center" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown"
-           aria-haspopup="true"
-           aria-expanded="true">
-        <span class="material-icons mr-2">account_circle</span>
-        <span>Xin Chào <span>{{user.firstName}}</span>  </span>
+        <span *ngIf="userDisplayName || user">Xin Chào {{userDisplayName || user.firstName}} </span>
       </div>
       <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown">
         <a class="dropdown-item account" [routerLink]="['/user-manage/user-detail']">Quản Lý Tài Khoản</a>

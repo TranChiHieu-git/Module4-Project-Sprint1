@@ -84,7 +84,7 @@ th {
   height: 65px;
   }
 .message {
-font-size: 14px;
+font-size: 12px;
 }
 
 .global-button{
@@ -95,4 +95,7 @@ font-size: 14px;
   border-radius: 10px;
   padding: 2% 5%;
   color: #581008;
+}
+.custom-input::placeholder {
+  color: red;
 }

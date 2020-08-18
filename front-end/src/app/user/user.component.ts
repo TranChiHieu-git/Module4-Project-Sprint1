@@ -51,10 +51,10 @@ export class UserComponent implements OnInit {
       this.idUser = this.customer.id;
       this.orderService.chanceIdUser(this.idUser);
     });
-    this.socialAuthService.authState.subscribe((user) => {
-      this.user = user;
-      this.loggedIn = (user != null);
-    });
+    // this.socialAuthService.authState.subscribe((user) => {
+    //   this.user = user;
+    //   this.loggedIn = (user != null);
+    // });
   }
 
   // tslint:disable-next-line:typedef
@@ -80,12 +80,6 @@ export class UserComponent implements OnInit {
           email: userData.email,
           userName: userData.name
         };
-        // accountId: number;
-        // accountName: string;
-        // accountPassword: string | Int32Array;
-        // deleteFlag: boolean;
-        // role: Role;
-        // reason: string;
         console.log(userInfo);
         this.adminService.createMemberAccount(userInfo).subscribe(
           data => {
@@ -126,9 +120,10 @@ export class UserComponent implements OnInit {
 
 // tslint:disable-next-line:typedef
   signOut() {
-    this.tokenStorage.signOut();
-    this.socialAuthService.signOut();
-    window.location.reload();
+    // this.auth.logout();
+   this.tokenStorage.signOut();
+   this.socialAuthService.signOut();
+   window.location.reload();
   }
 
   // signInWithFB(): void {

@@ -1,4 +1,4 @@
-import {Position} from './position';
+
 import {Account} from './account';
 
 export class Employee {

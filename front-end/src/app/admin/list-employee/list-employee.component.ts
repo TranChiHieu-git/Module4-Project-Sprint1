@@ -26,10 +26,14 @@ export class ListEmployeeComponent implements OnInit {
   getAllEmployeeWithPage(page) {
     this.employeeService.findAllEmployeeWithPage(page, this.size, this.key).subscribe(
       data => {
-        this.pageClicked = page;
-        this.employeeList = data.content;
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
+        if (data !== null) {
+          this.pageClicked = page;
+          this.employeeList = data.content;
+          this.totalPages = data.totalPages;
+          this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
+        } else {
+          this.employeeList = null;
+        }
       }, error => console.log(error)
     );
   }

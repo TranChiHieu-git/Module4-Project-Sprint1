@@ -25,6 +25,9 @@ label{
   overflow: hidden;
   outline:none;
 }
+.submitButton:disabled {
+  background-color: #6c757d;
+}
 .submitButton:hover {
   background-color: orange;
   color: black;
