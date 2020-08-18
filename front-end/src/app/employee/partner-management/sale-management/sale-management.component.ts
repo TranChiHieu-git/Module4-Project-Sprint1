@@ -1,14 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {EmployeeService} from '../../../services/employee.service';
 import {CustomerService} from '../../../services/customer.service';
-import {AbstractControl, FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {CouponService} from '../../../services/coupon.service';
 import {AdminService} from '../../../services/admin.service';
 import {Coupon} from '../../../models/coupon';
 import {ToastrService} from 'ngx-toastr';
+// import * as $ from 'jquery';
 
-declare const checkAll: any;
-import * as $ from 'jquery';
+declare const $: any;
 
 @Component({
   selector: 'app-sale-management',
@@ -44,7 +44,6 @@ export class SaleManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    checkAll();
     this.searchCouponForm = this.formBuilder.group({
       employee: [''],
       user: [''],
@@ -230,6 +229,10 @@ export class SaleManagementComponent implements OnInit {
     this.toastr.error('Chưa có phiếu được chọn!');
   }
 
+  showError404(): void {
+    this.toastr.error('Phiếu không tồn tại!');
+  }
+
   deleteCoupon(id: number): void {
     this.couponService.findCouponById(id).subscribe(next => {
         this.coupon = next;
@@ -237,6 +240,10 @@ export class SaleManagementComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.showError404();
+        setTimeout(function(){
+          $('#modalDeleteCoupon').modal('hide');
+        }, 20);
       });
   }
 
@@ -280,6 +287,12 @@ export class SaleManagementComponent implements OnInit {
     }
   }
 
+  checkAll(): void{
+    $('#checkAll').change(function () {
+      $('input:checkbox').prop('checked', this.checked);
+    });
+  }
+
   deleteManyCoupon(): void {
     if (this.deleteList.length <= 0) {
       this.showDeleteWarning();
@@ -320,4 +333,3 @@ export class SaleManagementComponent implements OnInit {
     this.ngOnInit();
   }
 }
-
