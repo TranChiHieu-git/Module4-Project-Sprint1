@@ -12,7 +12,7 @@
               <tr *ngFor="let cart of orderNow, index as i">
                 <td class="image-product">
                   <img
-                    src="https://media.cooky.vn/recipe/g3/27362/s320x320/recipe27362-prepare-step6-636522101763042581.jpg"
+                    src="../../../assets/photo/product/{{cart.id.product.imageUrl}}"
                     alt="">
                 </td>
                 <td class="money">
@@ -108,7 +108,7 @@
             </div>
             <div class="row " style="justify-content: center;">
 
-              <a style="width: 50%" href="/home-store/home-bakery"><button class="btn-payment">Tiếp tục mua sản phẩm</button></a>
+              <a style="width: 50%" href="/home-store/home-bakery"><button class="btn btn-payment">Tiếp tục mua sản phẩm</button></a>
             </div>
             <br>
           </div>

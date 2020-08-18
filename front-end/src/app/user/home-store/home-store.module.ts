@@ -11,8 +11,6 @@ import {Ng2OrderModule} from 'ng2-order-pipe';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-
-
 @NgModule({
   declarations: [HomeStoreComponent, HomeCakeComponent, HomeCandyComponent, DetailComponent, HomeBakeryComponent],
   exports: [

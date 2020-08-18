@@ -4,7 +4,6 @@ import {OrderService} from '../../services/order.service';
 import {Customer} from '../../models/customer';
 import {Cart} from '../../models/cart';
 import {Router} from '@angular/router';
-import {UserKey} from '../../models/userKey';
 
 @Component({
   selector: 'app-shopping-card',

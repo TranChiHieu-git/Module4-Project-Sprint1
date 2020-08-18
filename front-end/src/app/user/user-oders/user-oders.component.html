@@ -17,7 +17,7 @@
               <th>Mã đơn hàng</th>
               <th>Ngày đặt hàng</th>
               <th>Sản phẩm</th>
-              <th>Tổng tiền</th>
+              <th style="text-align: right">Tổng tiền</th>
               <th>Trạng thái đơn hàng</th>
 
             </tr>
@@ -28,10 +28,10 @@
               <!--              <td><a (click)="goToDetailOrder(order.orderId)">{{order.orderId}}</a></td>-->
               <td><a [routerLink]="['/user-manage/order-detail',order.orderId]">CODEBAKERY{{order.orderId}}</a></td>
               <td>{{order.orderDate|date:'dd/MM/yyyy'}}</td>
-              <td style="width: 40%">{{order.orderDetailList[0].id.product.productName}} và {{order.orderDetailList.length - 1}} sản phẩm
-                khác
+              <td style="width: 40%">{{order.orderDetailList[0].id.product.productName}} <span *ngIf="order.orderDetailList.length>1">
+                và {{order.orderDetailList.length - 1}} sản phẩm khác</span>
               </td>
-              <td>{{order.totalMoney|currency: 'VND'}}</td>
+              <td style="text-align: right">{{order.totalMoney|currency: 'VND'}}</td>
               <td>{{order.orderStatus}}</td>
             </tr>
             </tbody>

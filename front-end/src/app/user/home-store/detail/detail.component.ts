@@ -22,7 +22,7 @@ export class DetailComponent implements OnInit {
               public activatedRoute: ActivatedRoute,
               private orderService: OrderService,
               private notificationService: NotificationService) {
-  }
+}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(data => this.productId = data.id);
@@ -32,15 +32,19 @@ export class DetailComponent implements OnInit {
     this.orderService.currentCustomer.subscribe(cus => {
       this.customer = cus;
     });
-  }
-
-  addToCarts(): void {
-    this.spinnerOn();
-    this.orderService.createCart(this.product, this.customer, this.productQuantity).toPromise().then(res => {
-      this.spinnerOff();
-      this.notificationService.config.horizontalPosition = 'center';
-      this.notificationService.create('Thêm sản phẩm vào giỏ hàng thành công');
+    this.orderService.currentCustomer.subscribe(mes => {
+      this.customer = mes;
     });
+     }
+
+  async addToCarts(): Promise<void> {
+    this.spinnerOn();
+    await this.orderService.createCart(this.product, this.customer, this.productQuantity).toPromise().then(res => {
+      this.spinnerOff();
+    });
+    $('#navbarDropdown1').click();
+    this.ngOnInit();
+
   }
 
   spinnerOn(): void {
