@@ -229,3 +229,8 @@ input[type=text]:focus {
   padding-top: 10px !important;
 }
 
+.pagination > li.active > a {
+  background-color: #EE9F1F !important;
+  border: none !important;
+  color: white;
+}

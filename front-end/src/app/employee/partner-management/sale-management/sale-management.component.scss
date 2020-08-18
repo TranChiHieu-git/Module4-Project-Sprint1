@@ -1,11 +1,11 @@
 hr {
-  border: #f18502 1px solid;
+  border: rgb(238, 159, 31) 1px solid;
   width: 100%;
 }
 
 .btn-addnew {
-  background-color: #f18502;
-  color: #581008;
+  background-color: rgb(238, 159, 31);
+  color: #ffffff;
 }
 
 .dsp {
@@ -60,4 +60,10 @@ label {
 
 .input-group {
   padding-top: 13px !important;
+}
+
+.pagination > li.active > a {
+  background-color: #EE9F1F !important;
+  border: none !important;
+  color: white;
 }

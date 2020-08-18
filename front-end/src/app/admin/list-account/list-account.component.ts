@@ -83,7 +83,8 @@ export class ListAccountComponent implements OnInit {
   decode = new JwtHelperService();
   tempJwt = new Tempjwtemp();
   accountName = '';
-  utf8 = 'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế';
+  utf8 = 'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨ'
+    + 'ỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹếý';
 
   ngOnInit(): void {
     this.adminService.getAllAccountNotInEmployee().subscribe(next => {
@@ -184,6 +185,7 @@ export class ListAccountComponent implements OnInit {
     for (const acc of this.accountlist) {
       if (acc.accountName === v && v !== this.AccountById.accountName) {
         return {nameAccountExist: true};
+        $('.accountInput').focus();
       }
     }
     return null;
@@ -376,6 +378,7 @@ export class ListAccountComponent implements OnInit {
     });
     this.adminService.findAllRole().subscribe(next => {
       this.roleList = next;
+      $('.accountInput').focus();
     }, error => {
       console.log(error);
     });
@@ -527,16 +530,25 @@ export class ListAccountComponent implements OnInit {
     this.editResuilt.deleteFlag = this.editAccountForm.value.deleteFlag;
     this.adminService.findAccountById(this.editResuilt.accountId).subscribe(next => {
       if (next !== null) {
-        this.adminService.findRoleById(this.editAccountForm.value.role).subscribe(next2 => {
-          this.editResuilt.role = next2;
-          this.adminService.edit(this.editResuilt).subscribe(next3 => {
-            this.toastrService.success('Chỉnh sửa thông tin thành công');
-            this.ngOnInit();
-            $('.destroy').click();
-          }, error => {
-            this.toastrService.error('', 'Chỉnh sửa thông tin thất bại');
+        if (this.AccountById.accountName === next.accountName
+          && this.AccountById.accountPassword === next.accountPassword
+          && this.AccountById.role.roleId === next.role.roleId
+          && this.AccountById.accountId === next.accountId) {
+          this.adminService.findRoleById(this.editAccountForm.value.role).subscribe(next2 => {
+            this.editResuilt.role = next2;
+            this.adminService.edit(this.editResuilt).subscribe(next3 => {
+              this.toastrService.success('Chỉnh sửa thông tin thành công');
+              this.ngOnInit();
+              $('.destroy').click();
+            }, error => {
+              this.toastrService.error('', 'Chỉnh sửa thông tin thất bại');
+            });
           });
-        });
+        } else {
+          this.toastrService.error('Chỉnh sửa thông tin thất bại. Tài khoản vừa được thay đổi bởi người khác');
+          this.ngOnInit();
+          $('.destroy').click();
+        }
       }
     }, error => {
       this.toastrService.error('', 'tài khoản đã bị xóa. Không thể chỉnh sửa');
@@ -579,7 +591,7 @@ export class ListAccountComponent implements OnInit {
       }
     }
     return check;
-  };
+  }
 
   selectFile(): void {
     $('#image').click();
