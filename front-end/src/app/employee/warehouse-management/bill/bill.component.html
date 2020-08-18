@@ -106,11 +106,12 @@
             <tr>
               <td>
                 <div class="input-group">
-                  <input formControlName="billName" type="text" class="form-control-sm">
+                  <input appAutofocus formControlName="billName" type="text" class="form-control-sm">
                   <div *ngIf="group.get('billName').invalid && group.get('billName').touched">
-                    <i style="color: red" *ngIf="group.get('billName').hasError('required')">Bạn nên điền tên phiếu</i><br>
-                    <i style="color: red" *ngIf="group.get('billName').hasError('pattern')">Tên phiếu không dc chứa kí tự đặc biệt !@#</i><br>
-                    <i style="color: red" *ngIf="group.get('billName').hasError('pattern')">Tên phiếu không chứa khoảng trắng</i>
+                    <i style="color: red" *ngIf="group.get('billName').hasError('removeSpace')">Tên phiếu không được chỉ toàn khoảng trắng</i>
+                    <i style="color: red" *ngIf="group.get('billName').hasError('required')">Bạn nên điền tên phiếu</i>
+                    <i style="color: red" *ngIf="group.get('billName').hasError('pattern')">Tên phiếu không dc chứa kí tự đặc biệt !@#</i>
+                    <i style="color: red" *ngIf="group.get('billName').hasError('whiteSpaceValidator')">Tên phiếu không chứa khoảng trắng</i>
                   </div>
                 </div>
               </td>
@@ -128,8 +129,9 @@
                 <div class="input-group">
                   <input formControlName="billStatus" type="text" class="form-control-sm">
                   <div *ngIf="group.get('billStatus').invalid && group.get('billStatus').touched">
-                    <i style="color: red" *ngIf="group.get('billStatus').hasError('required')">Bạn nên điền tình trạng phiếu</i><br>
-                    <i style="color: red" *ngIf="group.get('billStatus').hasError('pattern')">Tình trạng phiếu không chứa kí tự đặc biệt !@#</i><br>
+                    <i style="color: red" *ngIf="group.get('billStatus').hasError('removeSpace')">Tình trạng phiếu không được chỉ toàn khoảng trắng</i>
+                    <i style="color: red" *ngIf="group.get('billStatus').hasError('required')">Bạn nên điền tình trạng phiếu</i>
+                    <i style="color: red" *ngIf="group.get('billStatus').hasError('pattern')">Tình trạng phiếu không chứa kí tự đặc biệt !@#</i>
                   </div>
                 </div>
               </td>
@@ -243,8 +245,9 @@
                 <div class="input-group">
                   <input formControlName="processingStatus" type="text" class="form-control-sm">
                   <div *ngIf="group.get('processingStatus').invalid && group.get('processingStatus').touched">
-                    <i style="color: red" *ngIf="group.get('processingStatus').hasError('required')">Bạn nên điền trạng thái xử lý</i><br>
-                    <i style="color: red" *ngIf="group.get('processingStatus').hasError('pattern')">Trạng thái xử lý không chứa kí tự đặc biệt !@#</i><br>
+                    <i style="color: red" *ngIf="group.get('processingStatus').hasError('removeSpace')">Trạng thái xử lý không được chỉ toàn khoảng trắng</i>
+                    <i style="color: red" *ngIf="group.get('processingStatus').hasError('required')">Bạn nên điền trạng thái xử lý</i>
+                    <i style="color: red" *ngIf="group.get('processingStatus').hasError('pattern')">Trạng thái xử lý không chứa kí tự đặc biệt !@#</i>
                   </div>
                 </div>
               </td>
@@ -252,8 +255,9 @@
                 <div class="input-group">
                   <input formControlName="shippingStatus" type="text" class="form-control-sm">
                   <div *ngIf="group.get('shippingStatus').invalid && group.get('shippingStatus').touched">
-                    <i style="color: red" *ngIf="group.get('shippingStatus').hasError('required')">Bạn nên điền trạng thái vận chuyển</i><br>
-                    <i style="color: red" *ngIf="group.get('shippingStatus').hasError('pattern')">Trạng thái vận chuyển không chứa kí tự đặc biệt !@#</i><br>
+                    <i style="color: red" *ngIf="group.get('shippingStatus').hasError('removeSpace')">Trạng thái vận chuyển không được chỉ toàn khoảng trắng</i>
+                    <i style="color: red" *ngIf="group.get('shippingStatus').hasError('required')">Bạn nên điền trạng thái vận chuyển</i>
+                    <i style="color: red" *ngIf="group.get('shippingStatus').hasError('pattern')">Trạng thái vận chuyển không chứa kí tự đặc biệt !@#</i>
                   </div>
                 </div>
               </td>
@@ -261,8 +265,9 @@
                 <div class="input-group">
                   <input formControlName="paymentStatus" type="text" class="form-control-sm">
                   <div *ngIf="group.get('paymentStatus').invalid && group.get('paymentStatus').touched">
-                    <i style="color: red" *ngIf="group.get('paymentStatus').hasError('required')">Bạn nên điền trạng thái thanh toán</i><br>
-                    <i style="color: red" *ngIf="group.get('paymentStatus').hasError('pattern')">Trạng thái thanh toán không chứa kí tự đặc biệt !@#</i><br>
+                    <i style="color: red" *ngIf="group.get('paymentStatus').hasError('removeSpace')">Trạng thái thanh toán không được chỉ toàn khoảng trắng</i>
+                    <i style="color: red" *ngIf="group.get('paymentStatus').hasError('required')">Bạn nên điền trạng thái thanh toán</i>
+                    <i style="color: red" *ngIf="group.get('paymentStatus').hasError('pattern')">Trạng thái thanh toán không chứa kí tự đặc biệt !@#</i>
                   </div>
                 </div>
               </td>
@@ -290,12 +295,13 @@
       <tr *ngFor="let bill of page.content|filter:filter|filter: selectedWareHouse.value| filter: selectedEmployees.value| filter: selectedDistributor.value| filter:selectedTransportation.value" >
         <td *ngIf="bill.isEditable">
           <div class="input-group">
-            <input formControlName="billName" type="text" class="form-control-sm"
+            <input appAutofocus formControlName="billName" type="text" class="form-control-sm"
                    [(ngModel)]="bill.billName">
             <div *ngIf="editForm.get('billName').invalid && editForm.get('billName').touched">
-              <i style="color: red" *ngIf="editForm.get('billName').hasError('required')">Bạn nên điền tên phiếu</i><br>
-              <i style="color: red" *ngIf="editForm.get('billName').hasError('pattern')">Tên phiếu không dc chứa kí tự đặc biệt !@#</i><br>
-              <i style="color: red" *ngIf="editForm.get('billName').hasError('pattern')">Tên phiếu không chứa khoảng trắng</i>
+              <i style="color: red" *ngIf="editForm.get('billName').hasError('removeSpace')">Tên phiếu không chỉ chứa toàn khoảng trắng</i>
+              <i style="color: red" *ngIf="editForm.get('billName').hasError('required')">Tên phiếu không được để trống</i>
+              <i style="color: red" *ngIf="editForm.get('billName').hasError('pattern')">Tên phiếu không dc chứa kí tự đặc biệt !@#...</i>
+              <i style="color: red" *ngIf="editForm.get('billName').hasError('whiteSpaceValidator')">Tên phiếu không chứa khoảng trắng</i>
             </div>
           </div>
         </td>
@@ -328,8 +334,9 @@
             <input formControlName="billStatus" type="text" class="form-control-sm"
                    [(ngModel)]="bill.billStatus">
             <div *ngIf="editForm.get('billStatus').invalid && editForm.get('billStatus').touched">
-              <i style="color: red" *ngIf="editForm.get('billStatus').hasError('required')">Tình trạng phiếu không được để trống</i><br>
-              <i style="color: red" *ngIf="editForm.get('billStatus').hasError('pattern')">Tình trạng phiếu không được chứa kí tự đặc biệt !@#</i><br>
+              <i style="color: red" *ngIf="editForm.get('billStatus').hasError('required')">Tên trạng phiếu không được để trống</i>
+              <i style="color: red" *ngIf="editForm.get('billStatus').hasError('removeSpace')">Tình trạng phiếu không chỉ chứa toàn khoảng trắng</i>
+              <i style="color: red" *ngIf="editForm.get('billStatus').hasError('pattern')">Tình trạng phiếu không được chứa kí tự đặc biệt !@#</i>
             </div>
           </div>
         </td>
@@ -482,8 +489,9 @@
             <input formControlName="processingStatus" type="text" class="form-control-sm"
                    [(ngModel)]="bill.processingStatus">
             <div *ngIf="editForm.get('processingStatus').invalid && editForm.get('processingStatus').touched">
-              <i style="color: red" *ngIf="editForm.get('processingStatus').hasError('required')">Trạng thái xử lý không được để trống</i><br>
-              <i style="color: red" *ngIf="editForm.get('processingStatus').hasError('pattern')">Trạng thái xử lý không được chứa kí tự đặc biệt !@#</i><br>
+              <i style="color: red" *ngIf="editForm.get('processingStatus').hasError('removeSpace')">Trạng thái xử lý không chỉ chứa toàn khoảng trắng</i>
+              <i style="color: red" *ngIf="editForm.get('processingStatus').hasError('required')">Trạng thái xử lý không được để trống</i>
+              <i style="color: red" *ngIf="editForm.get('processingStatus').hasError('pattern')">Trạng thái xử lý không được chứa kí tự đặc biệt !@#</i>
             </div>
           </div>
         </td>
@@ -495,8 +503,9 @@
             <input formControlName="shippingStatus" type="text" class="form-control-sm"
                    [(ngModel)]="bill.shippingStatus">
             <div *ngIf="editForm.get('shippingStatus').invalid && editForm.get('shippingStatus').touched">
-              <i style="color: red" *ngIf="editForm.get('shippingStatus').hasError('required')">Trạng thái vận chuyển không được để trống</i><br>
-              <i style="color: red" *ngIf="editForm.get('shippingStatus').hasError('pattern')">Trạng thái vận chuyển không được chứa kí tự đặc biệt !@#</i><br>
+              <i style="color: red" *ngIf="editForm.get('shippingStatus').hasError('removeSpace')">Trạng thái vận chuyển không chỉ chứa toàn khoảng trắng</i>
+              <i style="color: red" *ngIf="editForm.get('shippingStatus').hasError('required')">Trạng thái vận chuyển không được để trống</i>
+              <i style="color: red" *ngIf="editForm.get('shippingStatus').hasError('pattern')">Trạng thái vận chuyển không được chứa kí tự đặc biệt !@#</i>
             </div>
           </div>
         </td>
@@ -508,8 +517,9 @@
             <input formControlName="paymentStatus" type="text" class="form-control-sm"
                    [(ngModel)]="bill.paymentStatus">
             <div *ngIf="editForm.get('paymentStatus').invalid && editForm.get('paymentStatus').touched">
-              <i style="color: red" *ngIf="editForm.get('paymentStatus').hasError('required')">Trạng thái thanh toán không được để trống</i><br>
-              <i style="color: red" *ngIf="editForm.get('paymentStatus').hasError('pattern')">Trạng thái thanh toán không được chứa kí tự đặc biệt !@#</i><br>
+              <i style="color: red" *ngIf="editForm.get('paymentStatus').hasError('removeSpace')">Trạng thái thanh toán không chỉ chứa toàn khoảng trắng</i>
+              <i style="color: red" *ngIf="editForm.get('paymentStatus').hasError('required')">Trạng thái thanh toán không được để trống</i>
+              <i style="color: red" *ngIf="editForm.get('paymentStatus').hasError('pattern')">Trạng thái thanh toán không được chứa kí tự đặc biệt !@#</i>
             </div>
           </div>
         </td>
