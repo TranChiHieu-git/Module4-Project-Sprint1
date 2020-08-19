@@ -55,7 +55,8 @@ registerLocaleData(localeGB);
     HomeStoreModule,
     ShareModule,
     MaterialModule,
-    SocialLoginModule,
+    SocialLoginModule
+
   ],
   providers: [
     {

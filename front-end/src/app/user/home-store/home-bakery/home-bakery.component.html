@@ -7,12 +7,12 @@
   <div *ngFor="let product of productList | orderBy: key : reverse | paginate: { itemsPerPage: 8, currentPage: p }" class="col-md-3 m-0 mt-2" routerLink="/home-store/products/{{product.productId}}">
     <div class="container__detail">
       <div class="img_product">
-        <img class="img__info" src="{{product.imageUrl}}" alt="">
+        <img class="img__info" src="../../../../assets/photo/product/{{product.imageUrl}}" alt="">
       </div>
       <div class="icon">
         <i class="fa fa-cart-arrow-down"> {{product.discount}}%</i>
       </div>
-      <p class="info__cake">{{product.productName}} là dòng sản phẩm nổi tiếng của thương hiệu {{product.brand.brandName}}</p>
+      <p class="info__cake"><span class="font-weight-bolder text-primary font-weight-lighter">{{product.productName}}</span> là dòng sản phẩm nổi tiếng của thương hiệu {{product.brand.brandName}}</p>
       <div class="product__price-discount">
         <p>{{product.price | number: '3.'}} VNĐ</p>
       </div>
@@ -21,6 +21,7 @@
       </div>
     </div>
   </div>
+  <br>
   <div class="my__pagination">
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>

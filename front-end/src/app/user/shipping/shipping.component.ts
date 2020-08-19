@@ -25,7 +25,6 @@ export class ShippingComponent implements OnInit {
   provinceOptions: Option [] = [];
   customer: Customer;
   order: Order = new Order();
-  submitted = false;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -52,17 +51,20 @@ export class ShippingComponent implements OnInit {
       console.log(error);
     });
     this.shippingForm = this.fb.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, Validators.pattern('([A-Z][a-zàáâãèéêìíòóôõùúăđĩũơ' +
+        'ưăạảấầẩẫậắằẳẵặẹẻẽềềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹế]+\\s)*([A-Z][a-zàáâãèéêìíòóôõùúăđĩũơ' +
+        'ưăạảấầẩẫậắằẳẵặẹẻẽềềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹế]+)$')]],
       district: ['', [Validators.required]],
       city: ['', [Validators.required]],
       commune: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       address: ['', [Validators.required]]
 
     });
   }
 
   renderForm(): void {
+    const form = this.shippingForm;
     const service = this.addressService;
     const selectCommune = $('#commune');
     const selectDistrict = $('#district');
@@ -105,6 +107,12 @@ export class ShippingComponent implements OnInit {
       options: this.provinceOptions,
       onChange(value: string): void {
         getDistrictList(value);
+        form.get('city').patchValue(value);
+      },
+      onBlur(): void {
+        form.get('city').markAsTouched();
+        form.get('city').patchValue('');
+
       }
     });
     selectDistrict.selectize({
@@ -112,14 +120,29 @@ export class ShippingComponent implements OnInit {
       onChange(value: string): void {
         if (value !== '') {
           getCommuneList(value);
+          form.get('district').patchValue(value);
+
         } else {
           selectCommune[0].selectize.clear();
           selectCommune[0].selectize.clearOptions();
         }
+      },
+      onBlur(): void {
+        form.get('district').markAsTouched();
+        form.get('district').patchValue('');
+
       }
     });
     selectCommune.selectize({
-      sortField: 'text'
+      sortField: 'text',
+      onChange(value: string): void {
+        form.get('commune').patchValue(value);
+      },
+      onBlur(): void {
+        form.get('commune').markAsTouched();
+        form.get('commune').patchValue('');
+
+      }
     });
   }
 
@@ -132,14 +155,7 @@ export class ShippingComponent implements OnInit {
   }
 
   async onSubmitOther(): Promise<void> {
-    this.submitted = true;
-    const selectCommune = $('#commune');
-    const selectDistrict = $('#district');
-    const selectProvince = $('#city');
-    this.shippingForm.get('city').patchValue(selectProvince[0].selectize.getValue());
-    this.shippingForm.get('district').patchValue(selectDistrict[0].selectize.getValue());
-    this.shippingForm.get('commune').patchValue(selectCommune[0].selectize.getValue());
-
+    this.shippingForm.markAllAsTouched();
     if (this.shippingForm.valid) {
       const promise1 = this.addressService.findProvinceById(this.shippingForm.get('city').value).toPromise();
       const promise2 = this.addressService.findDistrictById(this.shippingForm.get('district').value).toPromise();
@@ -152,19 +168,55 @@ export class ShippingComponent implements OnInit {
       this.orderService.chanceOrder(this.order);
       this.router.navigate(['checkout/payment']);
 
+    } else {
+      if (this.shippingForm.get('name').invalid) {
+        $('#name').focus();
+      } else if (this.shippingForm.get('phone').invalid) {
+        $('#phone').focus();
+      } else if (this.shippingForm.get('address').invalid) {
+        $('#address').focus();
+      }
     }
   }
 
   cancelSubmit(): void {
     $('#other-address-form').removeClass('show');
-    this.submitted = false;
 
   }
 
   openOtherAddressForm(): void {
-    this.submitted = false;
     $('#other-address-form').addClass('show');
     $('#name').focus();
+
+  }
+
+  getMessageError(fieldName: string): string {
+    if (this.shippingForm.get(fieldName).hasError('required')) {
+      switch (fieldName) {
+        case 'name':
+
+          return 'Vui lòng nhập họ và tên người nhận.';
+        case 'phone':
+          return 'Vui lòng nhập số điện thoại.';
+        case 'city':
+          return 'Vui lòng chọn tỉnh/thành phố.';
+        case 'district':
+          return 'Vui lòng chọn quận/huyện.';
+        case 'commune':
+          return 'Vui lòng chọn xã/phường.';
+        case 'address':
+          return 'Vui lòng nhập địa chỉ.';
+      }
+    } else {
+      if (this.shippingForm.get(fieldName).hasError('pattern')) {
+        switch (fieldName) {
+          case 'name':
+            return 'Họ và tên không chứa ký tự đặt biệt hoặc số, viết hoa chữ cái đầu mỗi từ';
+          case 'phone':
+            return 'Số điện thoại gồm 10 chữ số';
+        }
+      }
+    }
 
   }
 }

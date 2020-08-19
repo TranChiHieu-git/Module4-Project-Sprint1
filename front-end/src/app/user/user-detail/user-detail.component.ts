@@ -1,7 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CustomerService} from '../../services/customer.service';
 import {Customer} from '../../models/customer';
-import {ActivatedRoute, ParamMap} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {OrderService} from '../../services/order.service';
 
 @Component({

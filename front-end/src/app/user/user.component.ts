@@ -99,8 +99,9 @@ export class UserComponent implements OnInit {
       }
     );
   }
+
   // tslint:disable-next-line:typedef
-  public login(userInfo){
+  public login(userInfo) {
     this.auth.attemptAuth(userInfo).subscribe(
       data => {
         console.log('OK ', data);

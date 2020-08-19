@@ -44,8 +44,8 @@
                data-toggle="dropdown"
                aria-haspopup="true"
                aria-expanded="true">
-            <span class="material-icons">shopping_cart</span>
-            <span class="badge badge-light">4</span>
+            <span style="font-size: 40px" class="material-icons">shopping_cart</span>
+            <span *ngIf="customer" style="height: 50%" class="badge badge-light">{{customer.cartList.length}}</span>
           </div>
           <div class="dropdown-menu text-center " aria-labelledby="navbarDropdown" id="dropdown-Menu-cart">
             <a class="dropdown-item cart1 d-flex justify-content-center align-items-center">
