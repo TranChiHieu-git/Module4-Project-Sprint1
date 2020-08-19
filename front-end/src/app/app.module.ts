@@ -16,6 +16,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import {HomeStoreModule} from './user/home-store/home-store.module';
 
+
 @NgModule({
   declarations: [
     AppComponent,
