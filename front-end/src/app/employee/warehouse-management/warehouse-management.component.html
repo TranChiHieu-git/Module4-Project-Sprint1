@@ -56,27 +56,52 @@
             <span class="menu-collapsed">Danh Sách</span>
           </a>
         </div>
-        <a routerLink="bill" data-toggle="collapse" aria-expanded="false"
-           class="sidebar list-group-item list-group-item-action flex-column align-items-start">
+        <a href="#submenu7" data-toggle="collapse" aria-expanded="false"
+           class="list-group-item list-group-item-action flex-column align-items-start sidebar">
           <div class="d-flex w-100 justify-content-start align-items-center">
             <span class="menu-collapsed">Phiếu</span>
             <span class="submenu-icon ml-auto"></span>
           </div>
         </a>
         <!-- Submenu content -->
-        <div id='submenu2' class="collapse sidebar-submenu">
-          <a href="#" class="list-group-item list-group-item-action sidebar text-white">
-            <span class="menu-collapsed">Phiếu 1</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action sidebar text-white">
-            <span class="menu-collapsed">Phiếu 2</span>
+        <div id='submenu7' class="collapse sidebar-submenu">
+          <a routerLink="bill" class="list-group-item list-group-item-action sidebar text-white">
+            <span class="fa fa-reorder"></span>&nbsp;
+            <span class="menu-collapsed">Danh Sách</span>
           </a>
         </div>
+<!--        <a routerLink="bill" data-toggle="collapse" aria-expanded="false"-->
+<!--           class="sidebar list-group-item list-group-item-action flex-column align-items-start">-->
+<!--          <div class="d-flex w-100 justify-content-start align-items-center">-->
+<!--            <span class="menu-collapsed">Phiếu</span>-->
+<!--            <span class="submenu-icon ml-auto"></span>-->
+<!--          </div>-->
+<!--        </a>-->
+<!--        &lt;!&ndash; Submenu content &ndash;&gt;-->
+<!--        <div id='submenu2' class="collapse sidebar-submenu">-->
+<!--          <a href="#" class="list-group-item list-group-item-action sidebar text-white">-->
+<!--            <span class="menu-collapsed">Phiếu 1</span>-->
+<!--          </a>-->
+<!--        </div>-->
         <a routerLink="brand" class="sidebar list-group-item list-group-item-action">
           <div class="d-flex w-100 justify-content-start align-items-center">
             <span class="menu-collapsed">Thương Hiệu</span>
           </div>
         </a>
+        <a href="#submenu8" data-toggle="collapse" aria-expanded="false"
+           class="list-group-item list-group-item-action flex-column align-items-start sidebar">
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="menu-collapsed">Thống kê</span>
+            <span class="submenu-icon ml-auto"></span>
+          </div>
+        </a>
+        <!-- Submenu content -->
+        <div id='submenu8' class="collapse sidebar-submenu">
+          <a routerLink="statistic" class="list-group-item list-group-item-action sidebar text-white">
+            <span class="fa fa-reorder"></span>&nbsp;
+            <span class="menu-collapsed">Top 5 bán chạy</span>
+          </a>
+        </div>
       </ul><!-- List Group END-->
     </div><!-- sidebar-container END -->
   <!-- MAIN CONTENT -->

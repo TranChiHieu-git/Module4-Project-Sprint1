@@ -1,14 +1,11 @@
 body {
   background-image: url("../../assets/background/bg-bakery-4.png");
-  //height: 900px;
-  //background-size: cover;
   width: 100%;
- min-height: 100vh;
+  min-height: 100vh;
   //background-attachment: fixed;
   background-color: rgba(238, 159, 31, 0.5) !important;
-  //rgba(238, 159, 31,0.5)!important;
-  //background-size: 100%
-  //color: rgba(181, 62, 58, 1) !important;
+
+  font-family: "Times New Roman", Times, serif;
 }
 
 .collapse {
@@ -16,14 +13,108 @@ body {
 }
 
 nav {
-  background-color: #ee9f1f !important;
+  background-image: linear-gradient(to bottom, #ff9700 0%, #f7d097 123%) !important;
   color: white !important;;
+}
+
+.navbar-nav {
+  margin-right: 100px !important;
+}
+
+#navbarDropdown11 {
+  margin-left: 45px !important;
+}
+
+#navbarDropdown {
+  padding: 0;
+}
+
+#dropdown-Menu-cart {
+  min-width: auto !important;
+  left: -55px !important;
+}
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.account, .cart1, .cart-pay {
+  background-color: #ffdd59;
+  border-color: #FCBC53;
+  border-radius: 5px;
+  width: 95%;
+  color: black !important;
+  font-size: 13px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin: 5px auto;
+}
+
+.cart1 {
+  background-color: white !important;
+  padding-right: 20px;
+  padding-left: 8px;
+}
+
+.cart-pay {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.account:hover {
+  background-color: rgba(255, 211, 42, 0.5);
+}
+
+.cart-pay:hover {
+  background-color: rgba(255, 211, 42, 0.5);
 }
 
 a {
-  color: white !important;;
+  color: white !important;
 }
 
+.dropdown-menu {
+  min-width: 13rem;
+}
+
+.facebook {
+  font-size: 13px;
+  color: white !important;
+  background-color: #3a57af;
+  padding: 0px 22px 0px 0px;
+}
+
+.facebook:hover {
+  background-color: rgba(58, 87, 175, 0.7);
+}
+
+.google {
+  font-size: 13px;
+  background: rgb(223, 74, 50);
+  color: white !important;
+  padding: 0px 1px 0px 1px;
+  text-align: left;
+  margin-bottom: 3px;
+}
+
+.google-icon {
+  padding: 9px 10px 9px 9px;
+  margin-right: 6px;
+}
+
+.facebook-icon {
+  margin-right: 10px;
+  padding: 10px 13px 10px 10px;
+}
+
+.google:hover {
+  background-color: rgba(223, 74, 50, 0.7);
+}
+
+.dropdown-divider {
+  margin: 0px;
+  border: none;
+}
 
 .codeBakery {
   background-image: url('../../assets/photo/logo.png');
@@ -37,9 +128,9 @@ a {
 }
 
 .searchInput {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.5) !important;
   border-color: white;
-  background-color: white !important;
+  //background-color: white !important;
 }
 
 .has-search .form-control-feedback {
@@ -51,19 +142,6 @@ a {
   line-height: 2.375rem;
   text-align: center;
   pointer-events: none;
-}
-
-.has-search .form-control {
-  padding-left: 2.375rem;
-}
-
-.account {
-  background-color: #ffdd59;
-  border-color: #FCBC53;
-  border-radius: 5px;
-  width: 90%;
-  margin: auto;
-  color: black !important;
 }
 
 .account:hover {
@@ -90,11 +168,12 @@ a {
 
 .button-user {
   color: black;
-  border-color: black;
+  border-color: white;
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 .button-user:hover {
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, 0.5) !important;
 }
 
 .modal-content {
@@ -102,13 +181,14 @@ a {
   padding: 11px;
 }
 
-.modal {
-  overflow: auto !important;
-  //margin-top: 80px;
-
-
+img {
+  margin-left: auto;
+  margin-right: auto;
 }
 
+.modal {
+  overflow: auto !important;
+}
 
 .spinner {
   height: 60px;
@@ -171,7 +251,7 @@ a {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 9999;
   //cursor: pointer;
 

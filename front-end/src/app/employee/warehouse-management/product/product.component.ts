@@ -162,7 +162,6 @@ export class ProductComponent implements OnInit {
 
   deleteProduct(id: number): void {
     this.productService.findProductById(id).subscribe(next => {
-
         this.productName = next.productName;
         this.product = next;
         $('#delete1').click();

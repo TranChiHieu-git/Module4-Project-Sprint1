@@ -11,11 +11,15 @@ import {Customer} from '../../models/customer';
 import {ToastrService} from 'ngx-toastr';
 import {EmployeeService} from '../../services/employee.service';
 import {Employee} from '../../models/employee';
+import {Department} from '../../models/department';
+import {finalize} from 'rxjs/operators';
+import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Tempjwtemp} from '../../models/tempjwtemp';
 import {TokenStorageService} from '../../auth/token-storage.service';
+import {Position} from '../../models/position';
 
-function comparePassword(c: AbstractControl) {
+function comparePassword(c: AbstractControl): object {
   const v = c.value;
   return (v.accountPassword === v.confirmPassword) ? null : {
     passwordnotmatch: true
@@ -35,9 +39,13 @@ export class ListAccountComponent implements OnInit {
               private customerService: CustomerService,
               private toastrService: ToastrService,
               private employeeService: EmployeeService,
+              private afStorage: AngularFireStorage,
               private loginAccount: TokenStorageService) {
   }
 
+  currentYear = new Date().getFullYear();
+  minDate = new Date(this.currentYear - 100, 0, 1);
+  maxDate = new Date(this.currentYear - 18, 0, 1);
   accountList: Account[] = [];
   accountlist: Account[] = [];
   roleList: Role[];
@@ -59,14 +67,56 @@ export class ListAccountComponent implements OnInit {
   promiseAccount: any;
   private sumVal = 0;
   employeeList: Employee[];
+  employeeForm: FormGroup;
+  positionList: Position[];
+  departmentList: Department[];
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+  src: string;
+  image: string;
+  uploadStatus = true;
+  uploadProgressStatus = false;
+  accountNotInEmployee: Account[];
+  account: Account;
   deleteChose = [];
   token: any;
   decode = new JwtHelperService();
   tempJwt = new Tempjwtemp();
   accountName = '';
-  utf8 = 'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế';
+  utf8 = 'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨ'
+    + 'ỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹếý';
 
   ngOnInit(): void {
+    this.adminService.getAllAccountNotInEmployee().subscribe(next => {
+      this.accountNotInEmployee = next;
+    });
+    this.employeeService.findAllPosition().subscribe(next => {
+        this.positionList = next;
+      },
+      error => console.log(error)
+    );
+    this.employeeService.findAllDepartment().subscribe(
+      next => this.departmentList = next
+    );
+    this.employeeForm = this.formBuilder.group({
+      id: [''],
+      name: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
+      birthday: ['', Validators.required],
+      address: ['', [Validators.required]],
+      position: this.formBuilder.group({
+        id: [],
+        name: ['']
+      }),
+      department: this.formBuilder.group({
+        id: [],
+        name: ['']
+      }),
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^09\d{8,9}$/)]],
+      email: ['', [Validators.required, Validators.pattern(/^[a-z0-9]+[a-z0-9]*@[A-Za-z0-9]+(.[A-Za-z0-9]+)$/)]],
+      image: [''],
+      account: ['', Validators.required]
+    });
     this.tempJwt = this.decode.decodeToken(this.loginAccount.getToken());
     this.accountName = this.tempJwt.sub;
     this.employeeService.findAll().subscribe(next => {
@@ -96,8 +146,9 @@ export class ListAccountComponent implements OnInit {
     });
     this.editAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
-      accountName: ['', [Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,100}$'), this.existAccountName.bind(this)]],
-      accountPassword: ['', [Validators.pattern('^[a-zA-Z0-9]{1,100}$')]],
+      accountName: ['', [Validators.maxLength(100), Validators.pattern('^[a-zA-Z0-9\\,\\.\\-\\_\\@]{1,}$'),
+        this.existAccountName.bind(this)]],
+      accountPassword: ['', [Validators.maxLength(100), Validators.pattern('^[a-zA-Z0-9]{1,}$')]],
       deleteFlag: ['', [Validators.required]],
       role: ['', [Validators.required]],
       reason: ['']
@@ -115,7 +166,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  addMore() {
+  addMore(): void {
     this.accountForm2.push(this.formBuilder.group({
       accountId: [''],
       accountName: ['', [Validators.required]],
@@ -129,17 +180,18 @@ export class ListAccountComponent implements OnInit {
     }));
   }
 
-  existAccountName(c: AbstractControl) {
+  existAccountName(c: AbstractControl): object {
     const v = c.value;
     for (const acc of this.accountlist) {
       if (acc.accountName === v && v !== this.AccountById.accountName) {
         return {nameAccountExist: true};
+        $('.accountInput').focus();
       }
     }
     return null;
   }
 
-  getListAccount() {
+  getListAccount(): void {
     this.adminService.findAll().subscribe(next => {
       this.accountlist = next;
     }, error => {
@@ -147,7 +199,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  existAccountName2() {
+  existAccountName2(): boolean {
     this.getListAccount();
     const accountName = this.accountForm.get('accountName').value;
     for (const acc of this.accountlist) {
@@ -158,7 +210,7 @@ export class ListAccountComponent implements OnInit {
     return true;
   }
 
-  existAccountName3(index) {
+  existAccountName3(index): boolean {
     this.getListAccount();
     const accountName = this.accountForm2[index].get('accountName').value;
     for (const acc of this.accountlist) {
@@ -173,18 +225,23 @@ export class ListAccountComponent implements OnInit {
     this.getAllSubmit(0);
   }
 
-  getAllSubmit(page) {
+  getAllSubmit(page): void {
     this.adminService.getAllCourse(page, this.size, this.userName, this.nameRole).subscribe(
       data => {
         this.pageClicked = page;
         this.accountList = data.content;
         this.totalPages = data.totalPages;
+        if (this.accountList.length < 6) {
+          $('.table').attr('style', 'margin-bottom: ' + ((6 - this.accountList.length) * 58) + 'px');
+        } else {
+          $('.table').attr('style', 'margin-bottom: 0');
+        }
         this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
       }, error => console.log(error)
     );
   }
 
-  onPrevious() {
+  onPrevious(): void {
     if (this.pageClicked > 0) {
       this.pageClicked--;
       switch (this.sumVal) {
@@ -212,7 +269,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  onNext() {
+  onNext(): void {
     if (this.pageClicked < this.totalPages - 1) {
       this.pageClicked++;
       switch (this.sumVal) {
@@ -240,7 +297,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  onFirst() {
+  onFirst(): void {
     this.pageClicked = 0;
     switch (this.sumVal) {
       case 0:
@@ -266,7 +323,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  onLast() {
+  onLast(): void {
     this.pageClicked = this.totalPages - 1;
     switch (this.sumVal) {
       case 0:
@@ -292,7 +349,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  info(id) {
+  info(id): void {
     this.infoAccountById.position = null;
     this.adminService.findByInfoId(id).subscribe(next => {
       this.infoAccountById = next;
@@ -311,7 +368,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  edit(id) {
+  edit(id): void {
     this.infoAccountById = new Employees();
     this.adminService.findByInfoId(id).subscribe(next => {
       this.infoAccountById = next;
@@ -321,6 +378,7 @@ export class ListAccountComponent implements OnInit {
     });
     this.adminService.findAllRole().subscribe(next => {
       this.roleList = next;
+      $('.accountInput').focus();
     }, error => {
       console.log(error);
     });
@@ -338,7 +396,7 @@ export class ListAccountComponent implements OnInit {
         accountPassword: '',
         deleteFlag: next.deleteFlag,
         role: next.role.roleId,
-        reason: '',
+        reason: next.reason,
       });
     }, error => {
       console.log(error);
@@ -352,7 +410,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  delete(id) {
+  delete(id): void {
     this.adminService.findAccountById(id).subscribe(next => {
       this.deleteAccountForm.patchValue({
         accountId: next.accountId,
@@ -375,7 +433,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  create() {
+  create(): void {
     if (this.existAccountName2()) {
       this.accountForm.patchValue({
         accountPassword: this.accountForm.get('pwGroup.accountPassword').value
@@ -407,7 +465,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  create2() {
+  create2(): void {
     for (let i = 0; i < this.accountForm2.length; i++) {
       if (this.existAccountName3(i)) {
         this.accountForm2[i].patchValue({
@@ -422,9 +480,9 @@ export class ListAccountComponent implements OnInit {
                   this.adminService.create(this.accountForm2[i].value).subscribe(
                     () => {
                       this.getAll();
-                      this.accountForm2[i].reset();
                       this.showCreated();
-                      this.accountForm2.splice(i, 1);
+
+
                     },
                     error => console.log(error)
                   );
@@ -441,11 +499,11 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  showCreated() {
+  showCreated(): void {
     this.toastrService.success('Bạn đã thêm mới thành công', 'Thông báo');
   }
 
-  deleted(accountId) {
+  deleted(accountId): void {
     this.adminService.findAccountById(accountId).subscribe(next => {
       if (next.accountName !== this.accountName) {
         next.reason = this.deleteAccountForm.value.reason;
@@ -463,24 +521,34 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  edited() {
+  edited(): void {
     this.editResuilt = new Account();
     this.editResuilt.accountId = this.editAccountForm.value.accountId;
-    this.editResuilt.accountName = this.editAccountForm.value.accountName !== '' ? this.editAccountForm.value.accountName : this.AccountById.accountName;
-    this.editResuilt.accountPassword = this.editAccountForm.value.accountPassword !== '' ? this.editAccountForm.value.accountPassword : this.AccountById.accountPassword;
+    this.editResuilt.accountName =
+      this.editAccountForm.value.accountName !== '' ? this.editAccountForm.value.accountName : this.AccountById.accountName;
+    this.editResuilt.accountPassword = this.editAccountForm.value.accountPassword !== '' ? this.editAccountForm.value.accountPassword : '';
     this.editResuilt.deleteFlag = this.editAccountForm.value.deleteFlag;
     this.adminService.findAccountById(this.editResuilt.accountId).subscribe(next => {
       if (next !== null) {
-        this.adminService.findRoleById(this.editAccountForm.value.role).subscribe(next2 => {
-          this.editResuilt.role = next2;
-          this.adminService.edit(this.editResuilt).subscribe(next3 => {
-            this.toastrService.success('Chỉnh sửa thông tin thành công');
-            this.ngOnInit();
-            $('.destroy').click();
-          }, error => {
-            this.toastrService.error('', 'Chỉnh sửa thông tin thất bại');
+        if (this.AccountById.accountName === next.accountName
+          && this.AccountById.accountPassword === next.accountPassword
+          && this.AccountById.role.roleId === next.role.roleId
+          && this.AccountById.accountId === next.accountId) {
+          this.adminService.findRoleById(this.editAccountForm.value.role).subscribe(next2 => {
+            this.editResuilt.role = next2;
+            this.adminService.edit(this.editResuilt).subscribe(next3 => {
+              this.toastrService.success('Chỉnh sửa thông tin thành công');
+              this.ngOnInit();
+              $('.destroy').click();
+            }, error => {
+              this.toastrService.error('', 'Chỉnh sửa thông tin thất bại');
+            });
           });
-        });
+        } else {
+          this.toastrService.error('Chỉnh sửa thông tin thất bại. Tài khoản vừa được thay đổi bởi người khác');
+          this.ngOnInit();
+          $('.destroy').click();
+        }
       }
     }, error => {
       this.toastrService.error('', 'tài khoản đã bị xóa. Không thể chỉnh sửa');
@@ -489,7 +557,7 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  filterTypeRole(val: number) {
+  filterTypeRole(val: number): void {
     this.sumVal = val;
     switch (val) {
       case 0:
@@ -515,7 +583,7 @@ export class ListAccountComponent implements OnInit {
     }
   }
 
-  checkInvalidForm2() {
+  checkInvalidForm2(): boolean {
     let check = false;
     for (let i = 0; i < this.accountForm2.length; i++) {
       if (this.accountForm2[i].invalid) {
@@ -525,7 +593,59 @@ export class ListAccountComponent implements OnInit {
     return check;
   }
 
-  checkChose() {
+  selectFile(): void {
+    $('#image').click();
+  }
+
+  readURL(target: EventTarget & HTMLInputElement): void {
+    this.uploadStatus = false;
+    this.uploadProgressStatus = true;
+    if (target.files && target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // @ts-ignore
+        $('#avatar').attr('src', e.target.result);
+      };
+      reader.readAsDataURL(target.files[0]);
+      this.uploadFireBaseAndSubmit();
+    } else {
+    }
+  }
+
+  private uploadFireBaseAndSubmit(): void {
+    const target: any = document.getElementById('image');
+
+    const id = Math.random().toString(36).substring(2);
+    this.ref = this.afStorage.ref(id);
+    this.task = this.ref.put(target.files[0]);
+    this.task.snapshotChanges().pipe(
+      finalize(() => {
+        this.ref.getDownloadURL().subscribe(url => {
+          this.src = url;
+          this.image = this.src;
+        });
+      }))
+      .subscribe();
+  }
+
+  createEmployee(): void {
+    this.adminService.findAccountById(this.employeeForm.get('account').value).subscribe(next => {
+      this.account = next;
+      this.employeeForm.patchValue({
+        image: this.image,
+        account: this.account
+      });
+      this.employeeService.create(this.employeeForm.value).subscribe(next => {
+          $('#edit-em').click();
+          this.employeeForm.reset();
+          this.image = null;
+          this.toastrService.success('Thêm mới nhân viên thành công');
+        }
+      );
+    });
+  }
+
+  checkChose(): void {
     for (let i = 0; i < this.accountList.length; i++) {
       let flag = true;
       if ($('#' + this.accountList[i].accountId.toString()).is(':checked')) {
@@ -550,15 +670,14 @@ export class ListAccountComponent implements OnInit {
 
   tickForCheckBox(id: number): boolean {
     for (let i = 0; i < this.deleteChose.length; i++) {
-      if (
-        this.deleteChose[i] === id) {
+      if (this.deleteChose[i] === id) {
         return true;
       }
     }
     return false;
   }
 
-  deleteListAccount() {
+  deleteListAccount(): void {
     const reason = this.deleteListAccountForm.value.reason;
     for (let i = 0; i < this.deleteChose.length; i++) {
       this.adminService.findAccountById(this.deleteChose[i]).subscribe(

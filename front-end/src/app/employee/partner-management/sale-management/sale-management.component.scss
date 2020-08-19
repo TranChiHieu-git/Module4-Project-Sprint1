@@ -1,11 +1,11 @@
 hr {
-  border: #f18502 1px solid;
+  border: rgb(238, 159, 31) 1px solid;
   width: 100%;
 }
 
 .btn-addnew {
-  background-color: #f18502;
-  color: #581008;
+  background-color: rgb(238, 159, 31);
+  color: #ffffff;
 }
 .btn-inside-create-coupon {
   background-color: #f18502;
@@ -36,10 +36,7 @@ hr {
 
 }
 
-.datepickerinput {
-  padding: 1px 2px !important;
-  height: 30px !important;
-  width: 182px !important;
+.fromdate, .fromto, .employee, .user {
   border: rgb(118, 118, 118) 1px solid !important;
   background-color: white !important;
   color: black !important;
@@ -57,11 +54,32 @@ hr {
 
 .datePicker-div {
   position: absolute;
+  top: 25%;
   left: 80%;
 }
 
-.date{
-  padding-top: 15px !important;
+.inputnormal {
+  margin-top: 15px !important;
+}
+
+.backlist {
+  color: #0f23ce;
+  cursor: pointer;
+}
+
+.backlist:hover {
+  color: #f18502;
+  cursor: pointer;
+}
+
+.input-group {
+  padding-top: 13px !important;
+}
+
+.pagination > li.active > a {
+  background-color: #EE9F1F !important;
+  border: none !important;
+  color: white;
 }
 
 .modal-lg-custom {

@@ -23,6 +23,7 @@ export class Bill {
   idDistributor: string;
   idEmployee: string;
   deleteFlag: boolean;
+  isEditable: boolean;
 
   constructor() {
   }

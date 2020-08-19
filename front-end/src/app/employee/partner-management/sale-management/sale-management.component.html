@@ -1,11 +1,19 @@
 <div class="container mt-4">
   <div class="row px-0 py-0">
-    <div class="col-4">
+    <div class="col-6">
       <i class="fa fa-bars pt-2 dsp"></i><span class="dsp"> Danh sách phiếu </span>
     </div>
-    <div class="col-6"></div>
-    <div class="col-2">
-      <button class="btn btn-addnew mt-2" data-toggle="modal" data-target="#modal-create-coupon">Thêm mới</button>
+<!--<<<<<<< HEAD-->
+<!--    <div class="col-6"></div>-->
+<!--    <div class="col-2">-->
+<!--      <button class="btn btn-addnew mt-2" data-toggle="modal" data-target="#modal-create-coupon">Thêm mới</button>-->
+<!--=======-->
+    <div class="col-6">
+      <div class="row justify-content-end pr-3">
+        <button class="btn btn-addnew mt-2" data-toggle="modal" data-target="#modal-create-coupon">Thêm mới</button>
+        <button class="btn btn-addnew mt-2 ml-2" (click)="deleteManyCoupon()">Xóa tất cả</button>
+        <button hidden id="deleteMany" data-toggle="modal" data-target="#modalDeleteManyCoupon">Xóa tất cả</button>
+      </div>
     </div>
   </div>
   <hr>
@@ -16,7 +24,7 @@
       <tr>
         <td><label class="label-hieu-map">Tên Nhân Viên:</label></td>
         <td>
-          <input class="form-control" list="empoyee" name="myEmpoyee" formControlName="employee"/>
+          <input class="form-control employee" list="empoyee" name="myEmpoyee" formControlName="employee"/>
           <datalist id="empoyee">
             <ng-container *ngFor="let employee of employeeList">
               <option value="{{employee.name}}">{{employee.name}}</option>
@@ -29,12 +37,7 @@
         <td>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <input class="form-control"
-                     formControlName="createDateFrom" matInput [matDatepicker]="picker">
-              <span class="datePicker-div">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker class=""></mat-datepicker>
-                </span>
+              <input type="date" class="form-control fromdate" formControlName="createDateFrom">
             </div>
           </div>
         </td>
@@ -49,7 +52,7 @@
           <label class="label-hieu-map">Tên Khách Hàng:</label>
         </td>
         <td>
-          <input list="user" name="myUser" class="form-control" formControlName="user"/>
+          <input list="user" name="myUser" class="form-control user" formControlName="user"/>
           <datalist id="user">
             <ng-container *ngFor="let customers of customerList">
               <option value="{{customers.userName}}">{{customers.userName}}</option>
@@ -62,12 +65,7 @@
         <td>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <input class="form-control"
-                     formControlName="createDateTo" matInput [matDatepicker]="picker2">
-              <span class="datePicker-div">
-                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                  <mat-datepicker #picker2 class=""></mat-datepicker>
-                </span>
+              <input type="date" class="form-control fromto" formControlName="createDateTo">
             </div>
           </div>
         </td>
@@ -86,6 +84,9 @@
           <th scope="col">Tên Khách Hàng</th>
           <th scope="col"></th>
           <th scope="col"></th>
+          <th scope="col">
+            <input type="checkbox" name="checkbox" id="checkAll" (click)="checkAll(); selectAllCheckBox($event)">
+          </th>
         </tr>
         </thead>
         <tbody *ngFor="let coupon of couponList">
@@ -101,10 +102,15 @@
             </button>
           </td>
           <td>
-            <button class="feature">
+            <button class="feature" (click)="deleteCoupon(coupon.couponId)"
+                    data-toggle="modal" data-target="#modalDeleteCoupon">
               <img class="icon" width="25px" height="auto"
                    src="https://cdn4.iconfinder.com/data/icons/vectory-basic/40/recycle_bin_full-256.png">
             </button>
+          </td>
+          <td>
+            <input type="checkbox" name="checkbox" [value]="coupon.couponId"
+                   (change)="selectCheckBox($event,coupon.couponId)">
           </td>
         </tr>
         </tbody>
@@ -144,7 +150,9 @@
       </div>
     </ng-container>
     <ng-container *ngIf="couponList === null">
-      <p class="text-center">Không tìm thấy phiếu nào phù hợp với dữ liệu nhập vào!</p>
+      <p class="text-center">Không tìm thấy phiếu nào phù hợp với dữ liệu nhập vào.<a class="backlist"
+                                                                                      (click)="backList()">Nhấn vào để
+        trở lại</a></p>
     </ng-container>
   </div>
   <!--  Modal Thêm mới phiếu và chi tiết phiếu-->
@@ -289,4 +297,52 @@
       </div>
     </div>
   </form> <!-- /form -->
+</div>
+
+<!--Modal Delete-->
+<div class="modal fade" id="modalDeleteCoupon" tabindex="-1" role="dialog"
+     aria-hidden="true"
+     data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-danger" id="exampleModalLabelDelete">Xác Nhận Xóa Phiếu</h4>
+      </div>
+      <div class="modal-body">
+        <h5 class="my-3 text-center">
+          Bạn có muốn xóa phiếu số <span class="text-danger font-weight-bold">{{couponId}}</span> ?
+        </h5>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button (click)="onDelete()" class="btn btn-danger button-dialog">Có</button>
+        <button class="btn btn-secondary button-dialog" #closeDeleteModal data-dismiss="modal">
+          Không
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal Delete Many-->
+<div class="modal fade" id="modalDeleteManyCoupon" tabindex="-1" role="dialog"
+     aria-hidden="true"
+     data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-danger">Xác Nhận Xóa Các Phiếu</h4>
+      </div>
+      <div class="modal-body">
+        <h5 class="my-3 text-center">
+          <span>Bạn có muốn xóa các phiếu đã chọn ?</span>
+        </h5>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button (click)="onDeleteMany()" class="btn btn-danger button-dialog">Có</button>
+        <button class="btn btn-secondary button-dialog" #closeDeleteManyModal data-dismiss="modal">
+          Không
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

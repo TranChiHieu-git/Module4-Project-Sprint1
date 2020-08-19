@@ -18,14 +18,13 @@ h2{
   padding-bottom: 50px;
 }
 .submitButton {
-  color: #d05f31;
-  border-style: solid;
-  border-color: darkgoldenrod;
-  background-color: #ffdd59;
+  border-color: black;
+  background-color: #ffda28;
+  color: black;
   overflow: hidden;
   outline:none;
 }
 .submitButton:hover {
-  background-color: rgba(246, 229, 141,0.5);
+  background-color: orange;
   color: black;
 }

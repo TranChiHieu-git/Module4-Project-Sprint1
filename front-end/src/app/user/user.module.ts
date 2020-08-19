@@ -16,12 +16,15 @@ import {UserOdersComponent} from './user-oders/user-oders.component';
 import {UserDetailComponent} from './user-detail/user-detail.component';
 import {UserOderDetailComponent} from './user-oder-detail/user-oder-detail.component';
 import {OrderFolowComponent} from './order-folow/order-folow.component';
-import {HomeStoreComponent} from './home-store/home-store.component';
 import localeGB from '@angular/common/locales/vi';
 import { ShoppingCardComponent } from './shopping-card/shopping-card.component';
 import { ShippingComponent } from './shipping/shipping.component';
 import { PaymentComponent } from './payment/payment.component';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
+import {VerifyEmailComponent} from './verify-email/verify-email.component';
+import {RegisterSuccessComponent} from './register-success/register-success.component';
+import {SocialLoginModule, SocialAuthServiceConfig} from 'angularx-social-login';
+import {GoogleLoginProvider, FacebookLoginProvider} from 'angularx-social-login';
 registerLocaleData(localeGB);
 @NgModule({
   declarations: [TestComponent, UserManageComponent, OrderButtonComponent,
@@ -31,14 +34,18 @@ registerLocaleData(localeGB);
     ShoppingCardComponent,
     ShippingComponent,
     PaymentComponent,
-    PaymentSuccessComponent],
+    PaymentSuccessComponent,
+    VerifyEmailComponent,
+    VerifyEmailComponent,
+    RegisterSuccessComponent],
   exports: [
     OrderButtonComponent,
     UserRegisterComponent,
     UserLoginComponent,
     UserForgetpasswordComponent,
     UserDetailComponent,
-    UserOderDetailComponent
+    UserOderDetailComponent,
+    VerifyEmailComponent
   ],
   imports: [
     CommonModule,
@@ -48,10 +55,31 @@ registerLocaleData(localeGB);
     HomeStoreModule,
     ShareModule,
     MaterialModule,
-  ], providers: [
-    {provide: LOCALE_ID, useValue: 'vi'}
-
-  ]
+    SocialLoginModule,
+  ],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '399031736182-762109h8rkefbrb027lk7plmbru2unpk.apps.googleusercontent.com'
+            ),
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('946169665899071'),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+    {
+      provide: LOCALE_ID, useValue: 'vi'
+    }
+  ],
 })
 export class UserModule {
 }

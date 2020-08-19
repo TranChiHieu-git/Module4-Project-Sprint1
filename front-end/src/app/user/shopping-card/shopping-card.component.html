@@ -23,7 +23,7 @@
                   <button (click)="deleteCart(cart); buyLater(i)" class="btn btn-outline-danger">
                     Xóa
                   </button>
-                  <button style="margin-left: 10px" (click)="buyLater(i)" class="btn btn-outline-primary">
+                  <button style="margin-left: 10px" (click)="deleteCart(cart); buyLater(i)" class="btn btn-outline-primary">
                     Mua sau
                   </button>
                 </td>
@@ -31,9 +31,9 @@
                   {{cart.id.product.price|currency:'VND'}}
                 </p></td>
                 <td class="quantity">
-                  <button [disabled]="cart.quantity===1" (click)="decrease(i)" class="btn btn-outline-info">-</button>
+                  <button [disabled]="cart.quantity===1" (click)="decrease(i,cart)" class="btn btn-outline-info">-</button>
                   <button class="btn">{{cart.quantity}}</button>
-                  <button (click)="increase(i)" class="btn btn-outline-info">+</button>
+                  <button (click)="increase(i,cart)" class="btn btn-outline-info">+</button>
                 </td>
               </tr>
 

@@ -40,64 +40,94 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {FilterUniquePipe} from './warehouse-management/product/filter-unique.pipe';
 import {BillComponent} from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {FilterWareHousePipe} from './warehouse-management/bill/filter-ware-house.pipe';
-
-import {ToastrModule} from 'ngx-toastr';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
-import {SaleManagementComponent} from './partner-management/sale-management/sale-management.component';
+import {ProductSaleComponent} from './sale-management/product-sale/product-sale.component';
+// @ts-ignore
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {SalesManagementComponent} from './sale-management/sale-management.component';
+import {SaleManagementComponent} from './partner-management/sale-management/sale-management.component';
+import {ProductHaiSprint2Component} from './warehouse-management/product-hai-sprint2/product-hai-sprint2.component';
+import {CakeDetailHaiComponent} from './warehouse-management/product-hai-sprint2/cake-detail-hai/cake-detail-hai.component';
+import {ListCakeHaiComponent} from './warehouse-management/product-hai-sprint2/list-cake-hai/list-cake-hai.component';
+import {CreateProductHaiComponent} from './warehouse-management/product-hai-sprint2/create-product-hai/create-product-hai.component';
+import {DeleteProductHaiComponent} from './warehouse-management/product-hai-sprint2/delete-product-hai/delete-product-hai.component';
+import {ListGeneralHaiComponent} from './warehouse-management/product-hai-sprint2/list-general-hai/list-general-hai.component';
+import {AutofocusDirective} from '../directive/autofocus.directive';
+import {StatisticsComponent} from './warehouse-management/statistics/statistics.component';
 
+// @ts-ignore
 @NgModule({
-  declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
-    WarehouseManagementComponent, HomeComponent, ProductComponent, ListDistributorComponent,
-    BillComponent, BrandManagementComponent, CustomerManagementComponent, CustomPaginationComponent,
-    FilterProductPipe, FilterMultiplePipe, FilterUniquePipe, SaleManagementComponent],
+  declarations: [PartnerManagementComponent,
+    EmployeeDetailComponent,
+    EmployeeManagerComponent,
+    WarehouseManagementComponent,
+    HomeComponent,
+    ProductComponent,
+    ListDistributorComponent,
+    BillComponent,
+    BrandManagementComponent,
+    CustomerManagementComponent,
+    CustomPaginationComponent,
+    FilterProductPipe,
+    FilterMultiplePipe,
+    FilterUniquePipe,
+    SaleManagementComponent,
+    SalesManagementComponent,
+    ProductHaiSprint2Component,
+    CakeDetailHaiComponent,
+    ListCakeHaiComponent,
+    CreateProductHaiComponent,
+    DeleteProductHaiComponent,
+    ListGeneralHaiComponent,
+    ProductSaleComponent,
+    AutofocusDirective,
+    StatisticsComponent],
   exports: [
     WarehouseManagementComponent,
-    PartnerManagementComponent
+    PartnerManagementComponent,
+    AutofocusDirective
   ],
-    imports:
-        [
-            CommonModule,
-            EmployeeRoutingModule,
-            RouterModule,
-            ReactiveFormsModule,
-            Ng2SearchPipeModule,
-            Ng2OrderModule,
-            HttpClientModule,
-            NgbModule,
-            MaterialModule,
-            MatDialogModule,
-            ShareModule,
-            MatCardModule,
-            NgxPaginationModule,
-            AngularFireStorageModule,
-            AngularFireDatabaseModule,
-            MatPaginatorModule,
-            AngularFireModule.initializeApp({
-                apiKey: 'AIzaSyAFbHzEL2J7oXY5bWTF6dA3DnO_iCj5W48',
-                authDomain: 'webapp-1b736.firebaseapp.com',
-                databaseURL: 'https://webapp-1b736.firebaseio.com',
-                projectId: 'webapp-1b736',
-                storageBucket: 'webapp-1b736.appspot.com',
-                messagingSenderId: '1077539336649',
-                appId: '1:1077539336649:web:e5fbf4e6a877218b887818',
-                measurementId: 'G-N3YS1JFN9K'
-            }),
-            AngularFirestoreModule,
-            AngularFireAuthModule,
-            FacebookModule.forRoot(),
-            MatProgressBarModule,
-            NgSelectModule,
-            BsDatepickerModule.forRoot(),
-            MatTooltipModule
-        ],
+  imports:
+    [
+      CommonModule,
+      EmployeeRoutingModule,
+      RouterModule,
+      ReactiveFormsModule,
+      Ng2SearchPipeModule,
+      Ng2OrderModule,
+      HttpClientModule,
+      NgbModule,
+      MaterialModule,
+      MatDialogModule,
+      ShareModule,
+      MatCardModule,
+      NgxPaginationModule,
+      AngularFireStorageModule,
+      AngularFireDatabaseModule,
+      MatPaginatorModule,
+      AngularFireModule.initializeApp({
+        apiKey: 'AIzaSyAFbHzEL2J7oXY5bWTF6dA3DnO_iCj5W48',
+        authDomain: 'webapp-1b736.firebaseapp.com',
+        databaseURL: 'https://webapp-1b736.firebaseio.com',
+        projectId: 'webapp-1b736',
+        storageBucket: 'webapp-1b736.appspot.com',
+        messagingSenderId: '1077539336649',
+        appId: '1:1077539336649:web:e5fbf4e6a877218b887818',
+        measurementId: 'G-N3YS1JFN9K'
+      }),
+      AngularFirestoreModule,
+      AngularFireAuthModule,
+      FacebookModule.forRoot(),
+      MatProgressBarModule,
+      NgSelectModule,
+      BsDatepickerModule.forRoot(),
+      MatTooltipModule
+    ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-    BrandService,
+    BrandService
   ]
+
 })
 
 export class EmployeeModule {

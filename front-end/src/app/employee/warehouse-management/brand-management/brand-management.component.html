@@ -11,8 +11,10 @@
   <hr>
   <div class="row mt-3 px-3">
     <div class="col-12">
-      <button class="btn pl-2 btn-custom" data-toggle="modal" data-target="#createBrand"><span
+      <button (click)="autoFocus()" class="btn pl-2 btn-custom" data-toggle="modal" data-target="#createBrand"><span
         class="fa fa-plus-square"></span> Thêm mới
+      </button>
+      <button (click)="onAddRow()" class="btn ml-2 btn-custom"><span class="fa fa-plus-square"></span> Thêm nhanh
       </button>
       <button type="button" class="btn btn-custom float-right" (click)="deleteManyBrand()">Xóa những
         thương hiệu đã chọn
@@ -20,7 +22,7 @@
     </div>
   </div>
   <div class="row px-3">
-    <form [formGroup]="brandEditForm" (ngSubmit)="edit()">
+    <form [formGroup]="brandEditForm">
       <table class="table table-bordered mt-3 table-striped">
         <thead class="table-header">
         <tr>
@@ -42,6 +44,85 @@
         </tr>
         </thead>
         <tbody>
+        <ng-container *ngFor="let row of brandFormArray.controls; let i=index" [formGroup]="row">
+          <tr>
+            <td>
+              <div>
+                <img class="brand-logo" [src]="imgSrc">
+                <input formControlName="brandLogo" type="text" hidden [(ngModel)]="imgSrc">
+              </div>
+              <div class="mt-1">
+                <input style="display: none" type="file" name="myImage" accept="image/*"
+                       #fileInput
+                       (change)="onFileSelected($event)">
+                <button type="button" class="btn btn-custom" (click)="fileInput.click()">Chọn ảnh</button>
+              </div>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="add-brand-input">
+                <div class="input-group">
+                  <input appAutofocus formControlName="brandName" type="text" class="form-control custom-input" placeholder="(*)" >
+                </div>
+                <p class="text-danger message"
+                   *ngIf="row.get('brandName').hasError('required') && row.get('brandName').touched">
+                  Tên thương hiệu không được để trống!
+                </p>
+                <p class="message text-danger"
+                   *ngIf="row.get('brandName').hasError('pattern') && row.get('brandName').touched">
+                  Tên thương hiệu sai định dạng!
+                </p>
+                <p class="message text-danger"
+                   *ngIf="row.get('brandName').hasError('maxlength') && row.get('brandName').touched">
+                  Tên thương hiệu không quá 50 ký tự!
+                </p>
+              </div>
+            </td>
+            <td>
+              <div class="add-brand-input">
+                <div class="input-group">
+                  <input formControlName="brandAddress" type="text" class="form-control custom-input" placeholder="(*)">
+                </div>
+                <p class="text-danger message"
+                   *ngIf="row.get('brandAddress').hasError('required') && row.get('brandAddress').touched">
+                  Trụ sở thương hiệu không được để trống!
+                </p>
+                <p class="message text-danger"
+                   *ngIf="row.get('brandAddress').hasError('pattern') && row.get('brandAddress').touched">
+                  Trụ sở thương hiệu sai định dạng!
+                </p>
+                <p class="message text-danger"
+                   *ngIf="row.get('brandAddress').hasError('maxlength') && row.get('brandAddress').touched">
+                  Trụ sở thương hiệu không quá 100 ký tự!
+                </p>
+              </div>
+            </td>
+            <td>
+              <div class="add-brand-input">
+              <div class="input-group">
+                <input formControlName="brandWebsite" type="text" class="form-control custom-input" placeholder="(*)">
+              </div>
+              <p class="text-danger message"
+                 *ngIf="row.get('brandWebsite').hasError('required') && row.get('brandWebsite').touched">
+                Website thương hiệu không được để trống!
+              </p>
+              <p class="text-danger message"
+                 *ngIf="row.get('brandWebsite').hasError('pattern') && row.get('brandWebsite').touched">
+                Website sai định dạng!
+              </p>
+                <p class="text-danger message"
+                        *ngIf="row.get('brandWebsite').hasError('maxlength') && row.get('brandWebsite').touched">
+                Website không quá 50 ký tự!
+              </p>
+              </div>
+            </td>
+            <td>
+              <button class="mr-3 global-button fa fa-check" (click)="quickAddNewBrand(brandFormArray, i)"></button>
+              <button type="button" class="global-button fa fa-times" (click)="onRemoveRow(i)"></button>
+            </td>
+          </tr>
+        </ng-container>
         <tr *ngFor="let brand of brandList | orderBy: key: reverse">
           <td *ngIf="brand.isEditable">
             <div>
@@ -113,7 +194,7 @@
                     (click)="brand.isEditable=!brand.isEditable; catchBrandId(brand.id)"
                     *ngIf="!brand.isEditable"></button>
             <button class="mr-3 global-button fa fa-check"
-                    *ngIf="brand.isEditable" (click)="switchEdit(brand)"></button>
+                    *ngIf="brand.isEditable" (click)="switchEdit(brand); edit()"></button>
             <button hidden type="submit" id="submit{{brand.id}}"
             ></button>
             <button type="button" class="global-button fa fa-trash" data-toggle="modal"
@@ -199,11 +280,19 @@
                   <span class="add-brand-span input-group-text"><i class="fa fa-id-card-o fa-lg add-brand-ico"
                                                                    aria-hidden="true"></i></span>
                   </div>
-                  <input formControlName="brandName" type="text" class="form-control" placeholder="Tên thương hiệu (*)">
+                  <input formControlName="brandName" type="text" class="form-control" id="autoFocus" placeholder="Tên thương hiệu (*)">
                 </div>
                 <p class="message text-danger ml-2"
                    *ngIf="brandForm.get('brandName').hasError('required') && brandForm.get('brandName').touched">
                   Tên thương hiệu không được để trống!
+                </p>
+                <p class="message text-danger ml-2"
+                   *ngIf="brandForm.get('brandName').hasError('pattern') && brandForm.get('brandName').touched">
+                  Tên thương hiệu sai định dạng!
+                </p>
+                <p class="message text-danger ml-2"
+                   *ngIf="brandForm.get('brandName').hasError('maxlength') && brandForm.get('brandName').touched">
+                  Tên thương hiệu không quá 50 ký tự!
                 </p>
               </div>
               <div class="add-brand-input">
@@ -217,6 +306,14 @@
                 <p class="message text-danger ml-2"
                    *ngIf="brandForm.get('brandAddress').hasError('required') && brandForm.get('brandAddress').touched">
                   Trụ sở thương hiệu không được để trống!
+                </p>
+                <p class="message text-danger ml-2"
+                   *ngIf="brandForm.get('brandAddress').hasError('pattern') && brandForm.get('brandAddress').touched">
+                  Trụ sở thương hiệu sai định dạng!
+                </p>
+                <p class="message text-danger ml-2"
+                   *ngIf="brandForm.get('brandAddress').hasError('maxlength') && brandForm.get('brandAddress').touched">
+                  Trụ sở thương hiệu không quá 100 ký tự!
                 </p>
               </div>
               <div class="add-brand-input">
@@ -234,6 +331,10 @@
                 <p class="message text-danger ml-2"
                    *ngIf="brandForm.get('brandWebsite').hasError('pattern') && brandForm.get('brandWebsite').touched">
                   Website sai định dạng!
+                </p>
+                <p class="message text-danger ml-2"
+                   *ngIf="brandForm.get('brandWebsite').hasError('maxlength') && brandForm.get('brandWebsite').touched">
+                  Website sai không quá 50 ký tự!
                 </p>
               </div>
             </div>
