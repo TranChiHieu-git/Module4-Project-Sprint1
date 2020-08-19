@@ -362,31 +362,31 @@ export class BillComponent implements OnInit {
       shippingStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), removeSpace]],
       paymentStatus: ['', [Validators.required, Validators.pattern(/^[^~!@#$%^&*()_+]+$/), removeSpace]],
       idTypeBill: this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         nameTypeBill: ['']
       }),
       idStorageLocation: this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         nameStorageLocation: ['']
       }),
       idWareHouse: this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         nameWareHouse: ['']
       }),
       idTransportation: this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         nameTransportation: ['']
       }),
       idPay: this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         namePay: ['']
       }),
       idDistributor: this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: ['']
       }),
       idEmployee: this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: ['']
       }),
       deleteFlag: [0]
