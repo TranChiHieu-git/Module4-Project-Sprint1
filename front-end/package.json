@@ -33,6 +33,7 @@
     "@types/selectize": "^0.12.34",
     "angular-fusioncharts": "^3.0.4",
     "angular2-jwt": "^0.2.3",
+    "angular2-uuid": "^1.1.1",
     "angularfire2": "^5.4.2",
     "angularx-social-login": "^3.2.1",
     "bootstrap": "^4.5.0",

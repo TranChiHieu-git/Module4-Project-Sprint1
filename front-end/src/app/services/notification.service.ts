@@ -11,8 +11,8 @@ export class NotificationService {
 
   config: MatSnackBarConfig = {
     duration: 3000,
-    horizontalPosition: 'right',
-    verticalPosition: 'top'
+    horizontalPosition: 'left',
+    verticalPosition: 'bottom'
   };
   confirmProductDeleted(msg): void {
     this.config.panelClass = ['notification', 'confirmDelete'];

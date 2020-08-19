@@ -12,6 +12,7 @@ export class Page<T> {
   numberOfElements: number;
   size: number;
   number: number;
+  empty: boolean;
 
   public constructor() {
     this.pageable = new Pageable();

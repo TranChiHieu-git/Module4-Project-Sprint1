@@ -11,9 +11,6 @@ import {NotificationService} from '../../../services/notification.service';
 import * as $ from 'jquery';
 import {BsDatepickerConfig} from 'ngx-bootstrap/datepicker';
 
-
-declare const myjs: any;
-
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -24,7 +21,6 @@ export class ProductComponent implements OnInit {
   @ViewChild('closeEditModal') closeEditModal;
   @ViewChild('closeCreateModal') closeCreateModal;
   @ViewChild('closeDeleteModal') closeDeleteModal;
-  @ViewChild('filterForm') filterForm;
   page: Page<Product> = new Page();
   productForm: FormGroup;
   createProductForm: FormGroup;
@@ -49,9 +45,9 @@ export class ProductComponent implements OnInit {
               private paginationService: CustomPaginationService,
               private notificationService: NotificationService) {
     this.minDate = new Date();
-    this.maxDate = new Date();
+    // this.maxDate = new Date();
     this.minDate.setDate(this.minDate.getDate() - 1);
-    this.maxDate.setDate(this.maxDate.getDate() + 7);
+    // this.maxDate.setDate(this.maxDate.getDate() + 7);
     this.dpConfig.containerClass = 'theme-orange';
     this.dpConfig.dateInputFormat = 'DD/MM/YYYY';
   }
@@ -112,19 +108,19 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  public getNextPage(): void {
+  public getNextPage(categoryId: string, brandId: string, productName: string, price: string): void {
     this.page.pageable = this.paginationService.getNextPage(this.page);
-    this.getAllData();
+    this.searchProducts(categoryId, brandId, productName, price);
   }
 
-  public getPreviousPage(): void {
+  public getPreviousPage(categoryId: string, brandId: string, productName: string, price: string): void {
     this.page.pageable = this.paginationService.getPreviousPage(this.page);
-    this.getAllData();
+    this.searchProducts(categoryId, brandId, productName, price);
   }
 
-  public getPageInNewSize(pageSize: number): void {
+  public getPageInNewSize(pageSize: number, categoryId: string, brandId: string, productName: string, price: string): void {
     this.page.pageable = this.paginationService.getPageInNewSize(this.page, pageSize);
-    this.getAllData();
+    this.searchProducts(categoryId, brandId, productName, price);
   }
 
   editProduct(id: number): void {
@@ -362,9 +358,7 @@ export class ProductComponent implements OnInit {
     }, () => {
       console.log('findByCategoryBrandNamePrice error: no result');
     }, () => {
-      // if (this.page.content.length === 0) {
-      //   alert('not found');
-      // }
+
     });
   }
 
@@ -410,11 +404,13 @@ export class ProductComponent implements OnInit {
   }
 
   buildFormInTable(): FormGroup {
+    const SPECIAL_CHARACTER_PATTERN = '^[0-9!@#$%^&*()_+\-=\[\]{};\':"\\|,.<>\\/?]*$';
+    const PRODUCT_NAME_PATTERN = '^(\\b[A-Z]\\w*\\s*)+$';
     return this.fb.group({
-      productName: ['', Validators.required],
-      price: ['', [Validators.required], Validators.pattern('^[0-9]*[1-9][0-9]*$')],
+      productName: ['', [Validators.required]],
+      price: ['', [Validators.required]],
       expiryDate: ['', [Validators.required]],
-      quantity: ['', [Validators.required], Validators.pattern('^[0-9]*[1-9][0-9]*$')],
+      quantity: ['', [Validators.required]],
       deleteFlag: [0],
       category: this.fb.group({
         categoryId: ['', [Validators.required]]
@@ -451,8 +447,6 @@ export class ProductComponent implements OnInit {
   }
 
   onSubmitSingleRow(formArray, index): void {
-    console.log('index cua form: ' + index);
-    console.log(formArray.at(index).value);
     this.productService.createNew(formArray.at(index).value).subscribe(
       () => {
         this.removeRow(index);
@@ -460,5 +454,38 @@ export class ProductComponent implements OnInit {
         this.getAllData();
       },
       error => console.log(error));
+  }
+
+  getProductNameMsgError(): string {
+    // this.buildFormInTable().get('productName').hasError('required') ? 'Tên mặt hàng không được để trống' :
+    return this.buildFormInTable().get('productName').hasError('required') ? 'Tên mặt hàng không được để trống' : '';
+  }
+
+  getPriceMsgError(): string {
+    return this.buildFormInTable().get('price').hasError('required') ? 'Giá thành không được để trống' : '';
+  }
+
+  getExpiryDateMsgError(): string {
+    return this.buildFormInTable().get('expiryDate').hasError('required') ? 'Hạn sử dụng không được để trống' : '';
+  }
+
+  getCategoryMsgError(): string {
+    return this.buildFormInTable().get('category').get('categoryId').hasError('required') ?
+      'Tên danh mục không được để trống' : '';
+  }
+
+  getBrandMsgError(): string {
+    return this.buildFormInTable().get('brand').get('id').hasError('required') ?
+      'Tên thương hiệu không được để trống' : '';
+  }
+
+  getQuantityMsgError(): string {
+    return this.buildFormInTable().get('quantity').hasError('required') ?
+      'Số lượng không được để trống' : '';
+  }
+
+  getUnitMsgError(): string {
+    return this.buildFormInTable().get('unit').get('unitId').hasError('required') ?
+      'Đơn vị không được để trống' : '';
   }
 }

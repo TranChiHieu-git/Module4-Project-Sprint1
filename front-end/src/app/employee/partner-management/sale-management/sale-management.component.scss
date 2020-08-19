@@ -7,13 +7,27 @@ hr {
   background-color: rgb(238, 159, 31);
   color: #ffffff;
 }
+.btn-inside-create-coupon {
+  background-color: #f18502;
+  //color: #f18502;
+  border: #f18502 solid 1px;
+}
 
 .dsp {
   font-size: 25px;
   font-weight: bold;
 }
 
-label {
+//.card-body {
+//  background: none;
+//  height: auto;
+//  border: none;
+//}
+
+//label {
+//  margin-left: 20px;
+//}
+.label-hieu-map {
   margin-left: 20px;
 }
 
@@ -66,4 +80,35 @@ label {
   background-color: #EE9F1F !important;
   border: none !important;
   color: white;
+}
+
+.modal-lg-custom {
+  max-width: 85%;
+}
+
+/*notification*/
+::ng-deep snack-bar-container.edit {
+  background-color: #5cb85c;
+  color: #ffffff;
+}
+
+::ng-deep snack-bar-container.delete {
+  background-color: #C82333;
+  color: #ffffff;
+}
+
+::ng-deep snack-bar-container.create {
+  background-color: #EE9F1F;
+  color: #ffffff;
+}
+
+::ng-deep snack-bar-container.notification simple-snack-bar {
+  font-size: 18px !important;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+}
+.validation-msg {
+  color: red;
+  font-size: 12px;
 }

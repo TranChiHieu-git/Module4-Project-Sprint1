@@ -42,7 +42,8 @@
         <div class="input-group-prepend">
           <span class="input-group-text font-weight-bold text-dark" id="searchProductName">Tên Mặt Hàng</span>
         </div>
-        <input #productNameInput type="text" class="form-control" aria-label="Default" aria-describedby="searchProductName">
+        <input #productNameInput type="text" class="form-control" aria-label="Default"
+               aria-describedby="searchProductName">
         <div class="input-group-prepend">
           <span class="input-group-text font-weight-bold text-dark" id="searchPrice">Giá Thành</span>
         </div>
@@ -50,27 +51,30 @@
       </div>
     </div>
     <div class="row mt-3 px-3">
-<!--      <button (click)="findProductByCategoryAndBrand(categorySelected.value, brandSelected.value)"-->
-<!--              class="btn btn-primary btn-create-custom btn-filter-custom"><span-->
-<!--        class="fa fa-filter"></span>Tìm kiếm-->
-<!--      </button>-->
-      <button (click)="searchProducts(categorySelected.value, brandSelected.value, productNameInput.value, priceInput.value)"
-              class="btn btn-primary btn-create-custom btn-filter-custom"><span
+      <!--      <button (click)="findProductByCategoryAndBrand(categorySelected.value, brandSelected.value)"-->
+      <!--              class="btn btn-primary btn-create-custom btn-filter-custom"><span-->
+      <!--        class="fa fa-filter"></span>Tìm kiếm-->
+      <!--      </button>-->
+      <button
+        (click)="searchProducts(categorySelected.value, brandSelected.value, productNameInput.value, priceInput.value)"
+        class="btn btn-primary btn-create-custom btn-filter-custom"><span
         class="fa fa-filter"></span>Tìm kiếm
       </button>
     </div>
   </form>
   <div class="row mt-3 px-3">
     <form [formGroup]="formArray" class="w-100">
-<!--    <button class="btn btn-primary btn-create-custom" data-toggle="modal" data-target="#modal-create-product"><span-->
-<!--      class="fa fa-plus-square"></span> Thêm mới-->
-<!--    </button>-->
-    <button class="btn btn-primary btn-create-custom" (click)="addRow()"><span
-      class="fa fa-plus-square"></span> Thêm mới
-    </button>
-    <button *ngIf="formArray.length > 0" [disabled]="formArray.invalid" type="button" (click)="onSubmitMultipleRow(formArray)" class="btn btn-primary btn-create-custom"><span
-      class="fa fa-plus-square"></span> Thêm mới nhiều sản phẩm
-    </button>
+      <!--    <button class="btn btn-primary btn-create-custom" data-toggle="modal" data-target="#modal-create-product"><span-->
+      <!--      class="fa fa-plus-square"></span> Thêm mới-->
+      <!--    </button>-->
+      <button class="btn btn-primary btn-create-custom" (click)="addRow()"><span
+        class="fa fa-plus-square"></span> Thêm mới
+      </button>
+      <button *ngIf="formArray.length > 0" [disabled]="formArray.invalid" type="button"
+              (click)="onSubmitMultipleRow(formArray)"
+              class="btn btn-primary btn-create-custom btn-create-multiple-product"><span
+        class="fa fa-plus-square"></span> Thêm mới nhiều mặt hàng
+      </button>
       <!--  Table grid -->
 
       <table id="dataTable" class="table table-bordered table-striped mt-3">
@@ -91,14 +95,29 @@
         <ng-container *ngFor="let group of formArray.controls;let i=index" [formGroup]="group">
           <tr>
             <td>
-              <input class="form-control" type="text" formControlName="productName"/>
+              <input class="form-control" type="text" formControlName="productName"
+                     [matTooltip]="getProductNameMsgError()"
+                     matTooltipPosition="above"
+                     matTooltipClass="validation-tooltip"
+                     [matTooltipDisabled]="group.get('productName').valid">
+              />
             </td>
             <td>
-              <input class="form-control" type="text" formControlName="price"/>
+              <input class="form-control" type="text" formControlName="price"
+                     [matTooltip]="getPriceMsgError()"
+                     matTooltipPosition="above"
+                     matTooltipClass="validation-tooltip"
+                     [matTooltipDisabled]="group.get('price').valid">
+              />
             </td>
             <td>
               <fieldset formGroupName="category">
-                <select class="form-control col-form-label" formControlName="categoryId">
+                <select class="form-control col-form-label" formControlName="categoryId"
+                        [matTooltip]="getCategoryMsgError()"
+                        matTooltipPosition="above"
+                        matTooltipClass="validation-tooltip"
+                        [matTooltipDisabled]="group.get('category').get('categoryId').valid">
+                >
                   <option *ngFor="let category of categoryList" [ngValue]="category.categoryId"
                           [selected]="category.categoryId === createProductForm.value.category.categoryId">{{category.categoryName}}</option>
                 </select>
@@ -106,18 +125,33 @@
             </td>
             <td>
               <fieldset formGroupName="brand">
-                <select class="form-control col-form-label" formControlName="id">
+                <select class="form-control col-form-label" formControlName="id"
+                        [matTooltip]="getBrandMsgError()"
+                        matTooltipPosition="above"
+                        matTooltipClass="validation-tooltip"
+                        [matTooltipDisabled]="group.get('brand').get('id').valid">
+                >
                   <option *ngFor="let brand of brandList" [ngValue]="brand.id"
                           [selected]="brand.id === createProductForm.value.brand.id">{{brand.brandName}}</option>
                 </select>
               </fieldset>
             </td>
             <td>
-              <input class="form-control" type="text" formControlName="quantity"/>
+              <input class="form-control" type="text" formControlName="quantity"
+                     [matTooltip]="getQuantityMsgError()"
+                     matTooltipPosition="above"
+                     matTooltipClass="validation-tooltip"
+                     [matTooltipDisabled]="group.get('quantity').valid">
+              />
             </td>
             <td>
               <fieldset formGroupName="unit">
-                <select class="form-control col-form-label" formControlName="unitId">
+                <select class="form-control col-form-label" formControlName="unitId"
+                        [matTooltip]="getUnitMsgError()"
+                        matTooltipPosition="above"
+                        matTooltipClass="validation-tooltip"
+                        [matTooltipDisabled]="group.get('unit').get('unitId').valid">
+                >
                   <option *ngFor="let unit of unitList" [ngValue]="unit.unitId"
                           [selected]="unit.unitId === createProductForm.value.unit.unitId">{{unit.unitName}}</option>
                 </select>
@@ -130,11 +164,17 @@
                      [minDate]="minDate"
                      placement="left"
                      [bsConfig]="dpConfig"
+
+                     [matTooltip]="getExpiryDateMsgError()"
+                     matTooltipPosition="above"
+                     matTooltipClass="validation-tooltip"
+                     [matTooltipDisabled]="group.get('expiryDate').valid">
               />
 
             </td>
             <td>
-              <button [disabled]="formArray.at(i).invalid" type="button" class=" action-button m-1 product-edit-delete" (click)="onSubmitSingleRow(formArray,i)"><i
+              <button [disabled]="formArray.at(i).invalid" type="button" class=" action-button m-1 product-edit-delete"
+                      (click)="onSubmitSingleRow(formArray,i)"><i
                 class="icon-ok"></i></button>
             </td>
             <td>
@@ -145,9 +185,6 @@
         </ng-container>
         <!-- end add new row-->
         <ng-container *ngFor="let product of page.content | orderBy: key : reverse | filterProduct: searchProductName">
-          <div *ngIf="page.content.length === 0">
-              <span>file not found</span>
-          </div>
           <tr>
             <td>
               <span>{{product.productName}}</span>
@@ -186,6 +223,7 @@
 
             </td>
           </tr>
+
         </ng-container>
         </tbody>
       </table>
@@ -194,11 +232,14 @@
     <div class="row w-100">
       <div class="col-2"></div>
       <div class="col-8">
+        <ng-container *ngIf="page.empty">
+          <div class="text-center"><span>Không tìm thấy mặt hàng</span></div>
+        </ng-container>
         <app-custom-pagination
           [page]="page"
-          (nextPageEvent)="getNextPage()"
-          (previousPageEvent)="getPreviousPage()"
-          (pageSizeEvent)="getPageInNewSize($event)">
+          (nextPageEvent)="getNextPage(categorySelected.value, brandSelected.value, productNameInput.value, priceInput.value)"
+          (previousPageEvent)="getPreviousPage(categorySelected.value, brandSelected.value, productNameInput.value, priceInput.value)"
+          (pageSizeEvent)="getPageInNewSize($event, categorySelected.value, brandSelected.value, productNameInput.value, priceInput.value)">
         </app-custom-pagination>
       </div>
       <div class="col-2"></div>

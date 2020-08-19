@@ -184,7 +184,6 @@ export class ProductService {
   }
 
   getAllProduct(): Observable<any> {
-
     return this.httpClient.get(this.API_URL + '/products');
   }
 

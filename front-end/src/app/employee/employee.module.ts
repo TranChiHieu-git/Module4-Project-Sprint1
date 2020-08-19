@@ -1,4 +1,3 @@
-
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {EmployeeRoutingModule} from './employee-routing.module';
@@ -41,19 +40,21 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {FilterUniquePipe} from './warehouse-management/product/filter-unique.pipe';
 import {BillComponent} from './warehouse-management/bill/bill.component';
 import {NgSelectModule} from '@ng-select/ng-select';
-import { ProductSaleComponent } from './sale-management/product-sale/product-sale.component';
+import {ProductSaleComponent} from './sale-management/product-sale/product-sale.component';
 // @ts-ignore
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {SalesManagementComponent} from './sale-management/sale-management.component';
-import { SaleManagementComponent } from './partner-management/sale-management/sale-management.component';
-import { ProductHaiSprint2Component } from './warehouse-management/product-hai-sprint2/product-hai-sprint2.component';
-import { CakeDetailHaiComponent } from './warehouse-management/product-hai-sprint2/cake-detail-hai/cake-detail-hai.component';
-import { ListCakeHaiComponent } from './warehouse-management/product-hai-sprint2/list-cake-hai/list-cake-hai.component';
-import { CreateProductHaiComponent } from './warehouse-management/product-hai-sprint2/create-product-hai/create-product-hai.component';
-import { DeleteProductHaiComponent } from './warehouse-management/product-hai-sprint2/delete-product-hai/delete-product-hai.component';
-import { ListGeneralHaiComponent } from './warehouse-management/product-hai-sprint2/list-general-hai/list-general-hai.component';
+import {SaleManagementComponent} from './partner-management/sale-management/sale-management.component';
+import {ProductHaiSprint2Component} from './warehouse-management/product-hai-sprint2/product-hai-sprint2.component';
+import {CakeDetailHaiComponent} from './warehouse-management/product-hai-sprint2/cake-detail-hai/cake-detail-hai.component';
+import {ListCakeHaiComponent} from './warehouse-management/product-hai-sprint2/list-cake-hai/list-cake-hai.component';
+import {CreateProductHaiComponent} from './warehouse-management/product-hai-sprint2/create-product-hai/create-product-hai.component';
+import {DeleteProductHaiComponent} from './warehouse-management/product-hai-sprint2/delete-product-hai/delete-product-hai.component';
+import {ListGeneralHaiComponent} from './warehouse-management/product-hai-sprint2/list-general-hai/list-general-hai.component';
 import {AutofocusDirective} from '../directive/autofocus.directive';
-import { StatisticsComponent } from './warehouse-management/statistics/statistics.component';
+import {StatisticsComponent} from './warehouse-management/statistics/statistics.component';
+
 // @ts-ignore
 @NgModule({
   declarations: [PartnerManagementComponent,
@@ -86,7 +87,6 @@ import { StatisticsComponent } from './warehouse-management/statistics/statistic
     PartnerManagementComponent,
     AutofocusDirective
   ],
-
   imports:
     [
       CommonModule,
@@ -120,7 +120,8 @@ import { StatisticsComponent } from './warehouse-management/statistics/statistic
       FacebookModule.forRoot(),
       MatProgressBarModule,
       NgSelectModule,
-      BsDatepickerModule.forRoot()
+      BsDatepickerModule.forRoot(),
+      MatTooltipModule
     ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
