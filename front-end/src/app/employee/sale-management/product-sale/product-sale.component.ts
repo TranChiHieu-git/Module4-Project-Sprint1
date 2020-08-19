@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {OwlOptions} from 'ngx-owl-carousel-o';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-product-sale',
@@ -8,12 +7,9 @@ import {OwlOptions} from 'ngx-owl-carousel-o';
 })
 export class ProductSaleComponent implements OnInit {
 
-
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit(): void {
   }
-
 
 }

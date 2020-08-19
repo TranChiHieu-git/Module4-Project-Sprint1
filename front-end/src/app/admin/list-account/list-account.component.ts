@@ -85,8 +85,7 @@ export class ListAccountComponent implements OnInit {
   accountName = '';
   editMoreForm = new Array<FormGroup>();
   check: boolean = false;
-  utf8 = 'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨ'
-    + 'ỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹếý';
+  utf8 = 'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế';
 
   ngOnInit(): void {
     this.adminService.getAllAccountNotInEmployee().subscribe(next => {
@@ -129,7 +128,6 @@ export class ListAccountComponent implements OnInit {
     }, error => {
       console.log(error);
     });
-
     this.adminService.findAll().subscribe(next => {
       this.accountlist = next;
       for (let i = 0; i < this.accountlist.length; i++) {
@@ -150,7 +148,6 @@ export class ListAccountComponent implements OnInit {
     }, error => {
       console.log(error);
     });
-
     this.getAll();
     this.accountForm = this.formBuilder.group({
       accountId: [''],
@@ -186,6 +183,7 @@ export class ListAccountComponent implements OnInit {
       reason: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\s' + this.utf8 + ']{1,255}$')]]
     });
   }
+
 
   edit(id) {
     this.infoAccountById = new Employees();
@@ -301,7 +299,6 @@ export class ListAccountComponent implements OnInit {
     for (const acc of this.accountlist) {
       if (acc.accountName === v && v !== this.AccountById.accountName) {
         return {nameAccountExist: true};
-        $('.accountInput').focus();
       }
     }
     return null;

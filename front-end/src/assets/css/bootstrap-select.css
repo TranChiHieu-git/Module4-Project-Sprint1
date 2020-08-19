@@ -45,7 +45,6 @@
   width: 100%;
   text-align: right;
   white-space: nowrap;
-  display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -109,7 +108,7 @@
 }
 
 .bootstrap-select .dropdown-toggle:focus, .bootstrap-select > select.mobile-device:focus + .dropdown-toggle {
-  outline: thin dotted #333 !important;
+
   outline: 5px auto -webkit-focus-ring-color !important;
   outline-offset: -2px
 }

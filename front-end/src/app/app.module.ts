@@ -15,7 +15,6 @@ import {PagenotfoundComponent} from './pagenotfound/pagenotfound.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import {HomeStoreModule} from './user/home-store/home-store.module';
-import {CarouselModule} from 'ngx-owl-carousel-o';
 
 
 @NgModule({
@@ -38,8 +37,7 @@ import {CarouselModule} from 'ngx-owl-carousel-o';
       timeOut: 2000,
       positionClass: 'toast-top-center'
     }),
-    HomeStoreModule,
-    CarouselModule
+    HomeStoreModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

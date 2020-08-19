@@ -45,7 +45,6 @@ import { ProductSaleComponent } from './sale-management/product-sale/product-sal
 // @ts-ignore
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {SalesManagementComponent} from './sale-management/sale-management.component';
-import {CarouselModule} from 'ngx-owl-carousel-o';
 import { SaleManagementComponent } from './partner-management/sale-management/sale-management.component';
 import { ProductHaiSprint2Component } from './warehouse-management/product-hai-sprint2/product-hai-sprint2.component';
 import { CakeDetailHaiComponent } from './warehouse-management/product-hai-sprint2/cake-detail-hai/cake-detail-hai.component';
@@ -121,8 +120,7 @@ import { StatisticsComponent } from './warehouse-management/statistics/statistic
       FacebookModule.forRoot(),
       MatProgressBarModule,
       NgSelectModule,
-      BsDatepickerModule.forRoot(),
-      CarouselModule
+      BsDatepickerModule.forRoot()
     ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},

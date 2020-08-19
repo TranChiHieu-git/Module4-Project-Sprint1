@@ -54,6 +54,7 @@
         <tbody *ngFor="let account of accountList">
         <!--          edit more-->
         <tr *ngIf="!editMoreForm[account.accountId-1].controls.check.value">
+          <td>{{account.accountId}}</td>
           <td class="editMore details" (click)="info(account.accountId)"
               data-toggle="modal"
               data-target="#infor">{{account.accountName}}</td>
@@ -163,7 +164,6 @@
                     *ngIf="account.hasError('required','accountName') && account.get('accountName').touched">
                                   Vui lòng nhập tên tài khoản</span>
             </td>
-
             <td>
               <div formGroupName="pwGroup">
                 <input placeholder="Nhập mật khẩu" type="password" class="w-auto form-control"
@@ -240,7 +240,6 @@
     </div>
   </div>
 </div>
-
 <!--  create-->
 <div class="row">
   <div class="col-md-12">
@@ -348,7 +347,6 @@
     </div>
   </div>
 </div>
-
 <!--details modal-->
 <div class="modal " role="dialog" id="infor" data-backdrop="static"
      aria-labelledby="exampleModalScrollableTitle"
@@ -540,7 +538,6 @@
     </div>
   </div>
 </div>
-
 <!--edit modal-->
 <div class="modal" tabindex="-1" role="dialog" id="edit">
   <div class="modal-dialog" role="document">
@@ -663,7 +660,6 @@
     </div>
   </div>
 </div>
-
 <!--delete modal-->
 <div class="modal" tabindex="-1" role="dialog" id="delete">
   <div class="modal-dialog" role="document">
@@ -727,7 +723,6 @@
     </div>
   </div>
 </div>
-
 <!--create employee-->
 <div class="modal fade bd-example-modal-sm" id="createEmployee" tabindex="-1" role="dialog"
      aria-labelledby="mySmallModalLabel" aria-hidden="true">
