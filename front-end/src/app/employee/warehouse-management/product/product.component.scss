@@ -188,5 +188,16 @@
   box-sizing: border-box;
 }
 
+.btn-create-multiple-product {
+  margin-left: 15px;
+}
+
+::ng-deep .validation-tooltip {
+  //background-color: red !important;
+  //background-color: rgba(238, 159, 31, 0.9) !important;
+  //color: red !important;
+  font-size: 12px;
+}
+
 
 
