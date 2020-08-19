@@ -8,7 +8,7 @@ import {BrandService} from '../../../services/brand.service';
 import {ToastrService} from 'ngx-toastr';
 
 declare const checkAll: any;
-
+declare const $: any;
 @Component({
   selector: 'app-brand-management',
   templateUrl: './brand-management.component.html',
@@ -37,6 +37,7 @@ export class BrandManagementComponent implements OnInit {
   listError: any = {};
   WEBSITE_REGEXP = '^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+(\\.[a-z]{2,}){1,3}(#?\\/?[a-zA-Z0-9#]+)*\\/?(\\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$';
   NAME_REGEXP = '^((?!\\s{2,})[a-zA-Z0-9\\_\\-\\sÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế])*$';
+  ADDRESS_REGEXP = '^((?!\\s{2,})[a-zA-Z0-9\\,\\_\\-\\sÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế])*$';
 
   constructor(
     private brandService: BrandService,
@@ -61,14 +62,13 @@ export class BrandManagementComponent implements OnInit {
   ngOnInit(): void {
     this.getAllBrand();
     checkAll();
-
   }
 
   initCreateForm(): void {
     this.brandForm = this.fb.group({
       brandLogo: [''],
       brandName: ['', [Validators.required, Validators.pattern(this.NAME_REGEXP), Validators.maxLength(50)]],
-      brandAddress: ['', [Validators.required, Validators.pattern(this.NAME_REGEXP), Validators.maxLength(100)]],
+      brandAddress: ['', [Validators.required, Validators.pattern(this.ADDRESS_REGEXP), Validators.maxLength(100)]],
       brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_REGEXP), Validators.maxLength(50)]]
     });
   }
@@ -87,7 +87,7 @@ export class BrandManagementComponent implements OnInit {
   }
 
   showCreateWarning(): void {
-    this.toastr.warning('Vui lòng nhập đầy đủ thông tin!');
+    this.toastr.error('Vui lòng nhập đầy đủ thông tin!');
   }
 
   showEditSuccess(): void {
@@ -304,7 +304,7 @@ export class BrandManagementComponent implements OnInit {
     return this.fb.group({
       brandLogo: [''],
       brandName: ['', [Validators.required, Validators.pattern(this.NAME_REGEXP), Validators.maxLength(50)]],
-      brandAddress: ['', [Validators.required, Validators.pattern(this.NAME_REGEXP), Validators.maxLength(100)]],
+      brandAddress: ['', [Validators.required, Validators.pattern(this.ADDRESS_REGEXP), Validators.maxLength(100)]],
       brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_REGEXP), Validators.maxLength(50)]]
     });
   }
@@ -339,5 +339,11 @@ export class BrandManagementComponent implements OnInit {
     } else {
       this.showCreateWarning();
     }
+  }
+
+  autoFocus(): void {
+    $('#createBrand').on('shown.bs.modal', function () {
+      $('#autoFocus').trigger('focus');
+    });
   }
 }
