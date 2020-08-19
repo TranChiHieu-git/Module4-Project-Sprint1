@@ -140,12 +140,16 @@
                   <div class="col-md-7 col-sm-7">
                     <fieldset formGroupName="idTypeBill">
                       <select class="form-control-sm" formControlName="id" >
+                        <option value="">Chọn</option>
                         <ng-container>
                           <option *ngFor="let typeBill of typeBillList" [ngValue]="typeBill.id">
                             {{typeBill.nameTypeBill}}
                           </option>
                         </ng-container>
                       </select>
+                      <div *ngIf="group.get('idTypeBill.id').invalid && group.get('idTypeBill.id').touched">
+                        <i style="color: red" *ngIf="group.get('idTypeBill.id').hasError('required')">Loại phiếu không được để trống</i>
+                      </div>
                     </fieldset>
 
                   </div>
@@ -156,12 +160,16 @@
                   <div class="col-md-7 col-sm-7">
                     <fieldset formGroupName="idWareHouse">
                       <select class="form-control-sm" formControlName="id">
+                        <option value="">Chọn</option>
                         <ng-container>
                           <option *ngFor="let wareHouse of wareHouseList" [ngValue]="wareHouse.id">
                             {{wareHouse.nameWareHouse}}
                           </option>
                         </ng-container>
                       </select>
+                      <div *ngIf="group.get('idWareHouse.id').invalid && group.get('idWareHouse.id').touched">
+                        <i style="color: red" *ngIf="group.get('idWareHouse.id').hasError('required')">Kho chứa không được để trống</i>
+                      </div>
                     </fieldset>
                   </div>
                 </div>
@@ -171,12 +179,16 @@
                   <div class="col-md-7 col-sm-7">
                     <fieldset formGroupName="idTransportation">
                       <select class="form-control-sm" formControlName="id">
+                        <option value="">Chọn</option>
                         <ng-container>
                           <option *ngFor="let transportation of transportationList" [ngValue]="transportation.id">
                             {{transportation.nameTransportation}}
                           </option>
                         </ng-container>
                       </select>
+                      <div *ngIf="group.get('idTransportation.id').invalid && group.get('idTransportation.id').touched">
+                        <i style="color: red" *ngIf="group.get('idTransportation.id').hasError('required')">Phương tiện vận chuyển không được để trống</i>
+                      </div>
                     </fieldset>
                   </div>
                 </div>
@@ -186,12 +198,16 @@
                   <div class="col-md-7 col-sm-7">
                     <fieldset formGroupName="idEmployee">
                       <select class="form-control-sm" formControlName="id">
+                        <option value="">Chọn</option>
                         <ng-container>
                           <option *ngFor="let employees of employeeList" [ngValue]="employees.id">
                             {{employees.name}}
                           </option>
                         </ng-container>
                       </select>
+                      <div *ngIf="group.get('idEmployee.id').invalid && group.get('idEmployee.id').touched">
+                        <i style="color: red" *ngIf="group.get('idEmployee.id').hasError('required')">Nhân viên không được để trống</i>
+                      </div>
                     </fieldset>
                   </div>
                 </div>
@@ -201,12 +217,16 @@
                   <div class="col-md-7 col-sm-7">
                     <fieldset formGroupName="idDistributor">
                       <select class="form-control-sm" formControlName="id">
+                        <option value="">Chọn</option>
                         <ng-container>
                           <option *ngFor="let distributor of distributorList" [ngValue]="distributor.id">
                             {{distributor.name}}
                           </option>
                         </ng-container>
                       </select>
+                      <div *ngIf="group.get('idDistributor.id').invalid && group.get('idDistributor.id').touched">
+                        <i style="color: red" *ngIf="group.get('idDistributor.id').hasError('required')">Nhà phân phối không được để trống</i>
+                      </div>
                     </fieldset>
                   </div>
                 </div>
@@ -216,12 +236,16 @@
                   <div class="col-md-7 col-sm-7">
                     <fieldset formGroupName="idStorageLocation">
                       <select class="form-control-sm" formControlName="id">
+                        <option value="">Chọn</option>
                         <ng-container>
                           <option *ngFor="let storageLocation of storageLocationList" [ngValue]="storageLocation.id">
                             {{storageLocation.nameStorageLocation}}
                           </option>
                         </ng-container>
                       </select>
+                      <div *ngIf="group.get('idStorageLocation.id').invalid && group.get('idStorageLocation.id').touched">
+                        <i style="color: red" *ngIf="group.get('idStorageLocation.id').hasError('required')">Vị trí lưu trữ không được để trống</i>
+                      </div>
                     </fieldset>
                   </div>
                 </div>
@@ -231,12 +255,16 @@
                   <div class="col-md-7 col-sm-7">
                     <fieldset formGroupName="idPay">
                       <select class="form-control-sm" formControlName="id">
+                        <option value="">Chọn</option>
                         <ng-container>
                           <option *ngFor="let pay of payList" [ngValue]="pay.id">
                             {{pay.namePay}}
                           </option>
                         </ng-container>
                       </select>
+                      <div *ngIf="group.get('idPay.id').invalid && group.get('idPay.id').touched">
+                        <i style="color: red" *ngIf="group.get('idPay.id').hasError('required')">Phương thức thanh toán không được để trống</i>
+                      </div>
                     </fieldset>
                   </div>
                 </div>
