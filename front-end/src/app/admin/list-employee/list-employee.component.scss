@@ -40,6 +40,21 @@ input[type=text]:focus {
 }
 
 .btn-search {
-  background-color: #f18502;
-  color: #581008;
+  background-color: rgb(238, 159, 31);
+  color: #fdfcfc;
+}
+
+.backlist {
+  color: #0f23ce;
+  cursor: pointer;
+}
+
+.backlist:hover {
+  color: #f18502;
+  cursor: pointer;
+}
+.pagination > li.active > a {
+  background-color: #EE9F1F !important;
+  border: none !important;
+  color: white;
 }

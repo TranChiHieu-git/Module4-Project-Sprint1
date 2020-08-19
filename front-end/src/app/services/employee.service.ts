@@ -4,7 +4,8 @@ import {Employee} from '../models/employee';
 import {Observable} from 'rxjs';
 import {Department} from '../models/department';
 import {Account} from '../models/account';
-import {PositionEmp} from '../models/position';
+import {Position} from '../models/position';
+
 
 @Injectable({
   providedIn: 'root'
@@ -40,12 +41,9 @@ export class EmployeeService {
     return this.httpClient.get<Employee>(this.API_URL_EMPLOYEE + '/name' + '/' + name);
   }
 
-  findAllPosition(): Observable<PositionEmp[]> {
-    return this.httpClient.get<PositionEmp[]>(this.API_URL_POSITION);
+  findAllPosition(): Observable<Position[]> {
+    return this.httpClient.get<Position[]>(this.API_URL_POSITION);
   }
-  // findAllPosition(): Observable<Position[]> {
-  //   return this.httpClient.get<Position[]>(this.API_URL_POSITION);
-  // }
 
   findAllDepartment(): Observable<Department[]> {
     return this.httpClient.get<Department[]>(this.API_URL_DEPARTMENT);
@@ -61,5 +59,8 @@ export class EmployeeService {
 
   findAllEmployeeWithPage(currentPage, size, search): Observable<any> {
     return this.httpClient.get(this.API_URL_EMPLOYEE_PAGE + '?page=' + currentPage + '&size=' + size + '&search=' + search);
+  }
+  sendOTP(name: string): Observable<object> {
+    return this.httpClient.get(this.API_URL_ACCOUNT + '/' + name + '/otp');
   }
 }

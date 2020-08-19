@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EmployeeService} from '../../services/employee.service';
 import {Employees} from '../../models/employees';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-list-employee',
@@ -8,7 +9,7 @@ import {Employees} from '../../models/employees';
   styleUrls: ['./list-employee.component.scss']
 })
 export class ListEmployeeComponent implements OnInit {
-  size = 6;
+  size = 7;
   pageClicked = 0;
   employeeList: Employees[];
   pages = [];
@@ -22,42 +23,52 @@ export class ListEmployeeComponent implements OnInit {
     this.getAllEmployeeWithPage(0);
   }
 
-  // tslint:disable-next-line:typedef
-  getAllEmployeeWithPage(page) {
+  getAllEmployeeWithPage(page): void {
     this.employeeService.findAllEmployeeWithPage(page, this.size, this.key).subscribe(
       data => {
-        this.pageClicked = page;
-        this.employeeList = data.content;
-        this.totalPages = data.totalPages;
-        this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
+        $('.searchInput').focus();
+        if (data !== null) {
+          this.pageClicked = page;
+          this.employeeList = data.content;
+          this.totalPages = data.totalPages;
+          if (this.employeeList.length < 6) {
+            $('.table').attr('style', 'margin-bottom: ' + ((6 - this.employeeList.length) * 60) + 'px');
+          } else {
+            $('.table').attr('style', 'margin-bottom: 0');
+          }
+          this.pages = Array.apply(null, {length: this.totalPages}).map(Number.call, Number);
+        } else {
+          this.employeeList = null;
+        }
       }, error => console.log(error)
     );
   }
 
-  // tslint:disable-next-line:typedef
-  search() {
+  search(): void {
     this.ngOnInit();
   }
 
-  // tslint:disable-next-line:typedef
-  onPrevious() {
+  onPrevious(): void {
     if (this.pageClicked > 0) {
       this.pageClicked--;
       this.getAllEmployeeWithPage(this.pageClicked);
     }
   }
 
-  // tslint:disable-next-line:typedef
-  onNext() {
+  onNext(): void {
     if (this.pageClicked < this.totalPages - 1) {
       this.pageClicked++;
       this.getAllEmployeeWithPage(this.pageClicked);
     }
   }
 
-  // tslint:disable-next-line:typedef
-  onLast() {
+  onLast(): void {
     this.pageClicked = this.totalPages - 1;
     this.getAllEmployeeWithPage(this.pageClicked);
+  }
+
+  backList(): void {
+    this.key = '';
+    this.ngOnInit();
   }
 }

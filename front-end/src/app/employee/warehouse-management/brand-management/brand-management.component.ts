@@ -8,7 +8,7 @@ import {BrandService} from '../../../services/brand.service';
 import {ToastrService} from 'ngx-toastr';
 
 declare const checkAll: any;
-
+declare const $: any;
 @Component({
   selector: 'app-brand-management',
   templateUrl: './brand-management.component.html',
@@ -35,9 +35,9 @@ export class BrandManagementComponent implements OnInit {
   brandEditForm: FormGroup;
   deleteList = new Array();
   listError: any = {};
-  WEBSITE_PATTERN = '^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+(\\.[a-z]{2,}){1,3}(#?\\/?[a-zA-Z0-9#]+)*\\/?(\\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$';
-  NAME_PATTERN = '^((?!\s{2,}).)*$';
-  NAME_PATTERN2 = '^[a-zA-Z0-9\\_\\-\\sÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế]+$';
+  WEBSITE_REGEXP = '^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+(\\.[a-z]{2,}){1,3}(#?\\/?[a-zA-Z0-9#]+)*\\/?(\\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$';
+  NAME_REGEXP = '^((?!\\s{2,})[a-zA-Z0-9\\_\\-\\sÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế])*$';
+  ADDRESS_REGEXP = '^((?!\\s{2,})[a-zA-Z0-9\\,\\_\\-\\sÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế])*$';
 
   constructor(
     private brandService: BrandService,
@@ -51,7 +51,7 @@ export class BrandManagementComponent implements OnInit {
       brandLogo: ['', Validators.required],
       brandName: ['', Validators.required],
       brandAddress: ['', Validators.required],
-      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_PATTERN)]]
+      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_REGEXP)]]
     });
   }
 
@@ -62,15 +62,14 @@ export class BrandManagementComponent implements OnInit {
   ngOnInit(): void {
     this.getAllBrand();
     checkAll();
-
   }
 
   initCreateForm(): void {
     this.brandForm = this.fb.group({
       brandLogo: [''],
-      brandName: ['', [Validators.required, Validators.pattern(this.NAME_PATTERN2), Validators.maxLength(50)]],
-      brandAddress: ['', [Validators.required, Validators.pattern(this.NAME_PATTERN2), Validators.maxLength(100)]],
-      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_PATTERN), Validators.maxLength(50)]]
+      brandName: ['', [Validators.required, Validators.pattern(this.NAME_REGEXP), Validators.maxLength(50)]],
+      brandAddress: ['', [Validators.required, Validators.pattern(this.ADDRESS_REGEXP), Validators.maxLength(100)]],
+      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_REGEXP), Validators.maxLength(50)]]
     });
   }
 
@@ -79,12 +78,16 @@ export class BrandManagementComponent implements OnInit {
     this.toastr.success('Thêm mới thành công!');
   }
 
-  showCreateError(): void {
+  showDuplicateError(): void {
     this.toastr.error('Tên thương hiệu đã tồn tại!');
   }
 
+  showCreateError(): void {
+    this.toastr.error('Thêm mới thất bại!');
+  }
+
   showCreateWarning(): void {
-    this.toastr.warning('Vui lòng nhập đầy đủ thông tin!');
+    this.toastr.error('Vui lòng nhập đầy đủ thông tin!');
   }
 
   showEditSuccess(): void {
@@ -159,9 +162,11 @@ export class BrandManagementComponent implements OnInit {
         error => {
           if (error.status === 400) {
             this.listError = error.error;
+            console.log(this.listError);
+            this.showCreateError();
           }
           if (error.status === 500) {
-            this.showCreateError();
+            this.showDuplicateError();
           }
         }
       );
@@ -260,7 +265,6 @@ export class BrandManagementComponent implements OnInit {
 
   deleteAllCheckbox(event): void {
     if (event.target.checked) {
-      // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.brandList.length; i++) {
         this.deleteList.push(this.brandList[i].id);
         console.log(this.brandList[i]);
@@ -273,13 +277,11 @@ export class BrandManagementComponent implements OnInit {
   deleteManyBrand(): void {
     let deleteConfirm = false;
     if (this.deleteList.length <= 0) {
-      // alert('Bạn chưa chọn thương hiệu nào để tiến hành xóa!');
       this.toastr.error('Bạn chưa chọn thương hiệu nào để tiến hành xóa!');
     } else {
       deleteConfirm = confirm('Bạn có chắc chắn muốn xóa những thương hiệu này không?');
     }
     if (deleteConfirm) {
-      // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.deleteList.length; i++) {
         this.brandService.deleteBrandById(this.deleteList[i]).subscribe(
           next => {
@@ -301,9 +303,9 @@ export class BrandManagementComponent implements OnInit {
   createFormGroup(): FormGroup {
     return this.fb.group({
       brandLogo: [''],
-      brandName: ['', [Validators.required, Validators.pattern(this.NAME_PATTERN2), Validators.maxLength(50)]],
-      brandAddress: ['', [Validators.required, Validators.pattern(this.NAME_PATTERN2), Validators.maxLength(100)]],
-      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_PATTERN), Validators.maxLength(50)]]
+      brandName: ['', [Validators.required, Validators.pattern(this.NAME_REGEXP), Validators.maxLength(50)]],
+      brandAddress: ['', [Validators.required, Validators.pattern(this.ADDRESS_REGEXP), Validators.maxLength(100)]],
+      brandWebsite: ['', [Validators.required, Validators.pattern(this.WEBSITE_REGEXP), Validators.maxLength(50)]]
     });
   }
   onAddRow(): void{
@@ -326,14 +328,22 @@ export class BrandManagementComponent implements OnInit {
         error => {
           if (error.status === 400) {
             this.listError = error.error;
+            console.log(this.listError);
+            this.showCreateError();
           }
           if (error.status === 500) {
-            this.showCreateError();
+            this.showDuplicateError();
           }
         }
       );
     } else {
       this.showCreateWarning();
     }
+  }
+
+  autoFocus(): void {
+    $('#createBrand').on('shown.bs.modal', function () {
+      $('#autoFocus').trigger('focus');
+    });
   }
 }

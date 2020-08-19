@@ -1,5 +1,5 @@
 import {Department} from './department';
-import {PositionEmp} from './position';
+import {Position} from './position';
 
 export class Employees {
   id: number;
@@ -12,5 +12,5 @@ export class Employees {
   email: string;
   deleteFlag: boolean;
   department: Department = new Department();
-  position: PositionEmp = new PositionEmp();
+  position: Position = new Position();
 }

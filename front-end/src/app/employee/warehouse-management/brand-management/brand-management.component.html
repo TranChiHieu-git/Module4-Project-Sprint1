@@ -11,7 +11,7 @@
   <hr>
   <div class="row mt-3 px-3">
     <div class="col-12">
-      <button class="btn pl-2 btn-custom" data-toggle="modal" data-target="#createBrand"><span
+      <button (click)="autoFocus()" class="btn pl-2 btn-custom" data-toggle="modal" data-target="#createBrand"><span
         class="fa fa-plus-square"></span> Thêm mới
       </button>
       <button (click)="onAddRow()" class="btn ml-2 btn-custom"><span class="fa fa-plus-square"></span> Thêm nhanh
@@ -63,7 +63,7 @@
             <td>
               <div class="add-brand-input">
                 <div class="input-group">
-                  <input formControlName="brandName" type="text" class="form-control custom-input" placeholder="(*)">
+                  <input appAutofocus formControlName="brandName" type="text" class="form-control custom-input" placeholder="(*)" >
                 </div>
                 <p class="text-danger message"
                    *ngIf="row.get('brandName').hasError('required') && row.get('brandName').touched">
@@ -280,7 +280,7 @@
                   <span class="add-brand-span input-group-text"><i class="fa fa-id-card-o fa-lg add-brand-ico"
                                                                    aria-hidden="true"></i></span>
                   </div>
-                  <input formControlName="brandName" type="text" class="form-control" placeholder="Tên thương hiệu (*)">
+                  <input formControlName="brandName" type="text" class="form-control" id="autoFocus" placeholder="Tên thương hiệu (*)">
                 </div>
                 <p class="message text-danger ml-2"
                    *ngIf="brandForm.get('brandName').hasError('required') && brandForm.get('brandName').touched">

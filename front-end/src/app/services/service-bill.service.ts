@@ -21,6 +21,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ServiceBillService {
+  API_URL_TOP = 'http://localhost:8080/top5/';
   API_URL_BILL = 'http://localhost:8080/bills';
   API_URL_WAREHOUSE = 'http://localhost:8080/wareHouses/';
   API_URL_TRANS = 'http://localhost:8080/transportations/';
@@ -90,6 +91,10 @@ export class ServiceBillService {
   deleteById(id: number): Observable<void> {
     // @ts-ignore
     return this.httpClient.patch<void>(this.API_URL_BILL + '/delete/' + id);
+  }
+
+  findAllTop(y: string, m: string): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(this.API_URL_TOP + '?y=' + y + '&m=' + m);
   }
 
 }

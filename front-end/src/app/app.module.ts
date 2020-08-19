@@ -17,6 +17,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {HomeStoreModule} from './user/home-store/home-store.module';
 import {CarouselModule} from 'ngx-owl-carousel-o';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -4,3 +4,5 @@ function checkAll() {
     $('input:checkbox').not(this).prop('checked', this.checked);
   });
 }
+
+

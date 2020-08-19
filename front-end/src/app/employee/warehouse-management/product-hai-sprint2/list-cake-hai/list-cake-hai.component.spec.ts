@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SaleManagementComponent } from './sale-management.component';
+import { ListCakeHaiComponent } from './list-cake-hai.component';
 
-describe('SaleManagementComponent', () => {
-  let component: SaleManagementComponent;
-  let fixture: ComponentFixture<SaleManagementComponent>;
+describe('ListCakeHaiComponent', () => {
+  let component: ListCakeHaiComponent;
+  let fixture: ComponentFixture<ListCakeHaiComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SaleManagementComponent ]
+      declarations: [ ListCakeHaiComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SaleManagementComponent);
+    fixture = TestBed.createComponent(ListCakeHaiComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
