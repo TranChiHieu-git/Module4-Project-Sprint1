@@ -85,6 +85,8 @@ export class ListAccountComponent implements OnInit {
   tempJwt = new Tempjwtemp();
   accountName = '';
   utf8 = 'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹế';
+  editMoreForm = new Array<FormGroup>();
+  check: boolean = false;
 
   ngOnInit(): void {
     this.adminService.getAllAccountNotInEmployee().subscribe(next => {
@@ -100,10 +102,10 @@ export class ListAccountComponent implements OnInit {
     );
     this.employeeForm = this.formBuilder.group({
       id: [''],
-      name: ['', [Validators.required]],
-      gender: ['', [Validators.required]],
+      name: ['', [Validators.required, Validators.pattern(/^(([A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặẹẻẽềềếểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)(\s[A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặếẹẻẽềềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)*)(\s(([A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặẹẻẽềềểễệỉịọỏếốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)(\s[A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặẹẻếẽềềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)*))*$/)]],
+      gender: ['Nam', [Validators.required]],
       birthday: ['', Validators.required],
-      address: ['', [Validators.required]],
+      address: ['', [Validators.required, Validators.pattern(/^(([A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặẹẻẽềềếểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)(\s[A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặếẹẻẽềềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)*)(\s(([A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặẹẻẽềềểễệỉịọỏếốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)(\s[A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặẹẻếẽềềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)*))*$/)]],
       position: this.formBuilder.group({
         id: [],
         name: ['']
@@ -127,22 +129,41 @@ export class ListAccountComponent implements OnInit {
     }, error => {
       console.log(error);
     });
+
     this.adminService.findAll().subscribe(next => {
       this.accountlist = next;
+      for (let i = 0; i < this.accountlist.length; i++) {
+        this.editMoreForm.push(this.formBuilder.group({
+          accountId: this.accountlist[i].accountId,
+          accountName: [this.accountlist[i].accountName, [Validators.required, Validators.pattern(/^(([A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặẹẻẽềềếểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)(\s[A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặếẹẻẽềềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)*)(\s(([A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặẹẻẽềềểễệỉịọỏếốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)(\s[A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-z_àáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặẹẻếẽềềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]*)*))*$/)]],
+          accountPassword: [this.accountlist[i].accountPassword],
+          pwGroup: this.formBuilder.group({
+            accountPassword: ['',Validators.required],
+            confirmPassword: ['',Validators.required],
+          }, {validator: comparePassword}),
+          deleteFlag: [this.accountlist[i].deleteFlag],
+          role: [this.accountlist[i].role.roleId, [Validators.required]],
+          reason: [''],
+          check: false
+        }))
+      }
     }, error => {
       console.log(error);
     });
+
     this.getAll();
     this.accountForm = this.formBuilder.group({
       accountId: [''],
-      accountName: ['', [Validators.required]],
+      accountName: ['', [Validators.required, Validators.pattern('^[a-z][a-z\\,\\.\\-\\_\\@\\-]{2,}$')]],
       accountPassword: [''],
       pwGroup: this.formBuilder.group({
         accountPassword: ['', [Validators.required]],
         confirmPassword: ['', [Validators.required]],
       }, {validator: comparePassword}),
       deleteFlag: [''],
-      role: ['', [Validators.required]]
+      role: [4, [Validators.required]],
+      check: false,
+      reason: '',
     });
     this.editAccountForm = this.formBuilder.group({
       accountId: ['', [Validators.required]],
@@ -165,7 +186,104 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  addMore() {
+
+  edit(id) {
+    this.infoAccountById = new Employees();
+    this.adminService.findByInfoId(id).subscribe(next => {
+      this.infoAccountById = next;
+    });
+    this.adminService.findByInfoUserId(id).subscribe(next => {
+      this.infoAccountById2 = next;
+    });
+    this.adminService.findAllRole().subscribe(next => {
+      this.roleList = next;
+    }, error => {
+      console.log(error);
+    });
+    this.adminService.findAccountById(id).subscribe(next => {
+      this.AccountById = next;
+    }, error => {
+      this.toastrService.error('', 'tài khoản đã bị xóa');
+      this.ngOnInit();
+      $('.destroy').click();
+    });
+    this.adminService.findAccountById(id).subscribe(next => {
+      this.editAccountForm.patchValue({
+        accountId: next.accountId,
+        accountName: next.accountName,
+        accountPassword: '',
+        deleteFlag: next.deleteFlag,
+        role: next.role.roleId,
+        reason: '',
+      });
+    }, error => {
+      console.log(error);
+    });
+    $('#edit').show();
+    $('.close').click(function() {
+      $('#edit').hide();
+    });
+    $('.destroy').click(function() {
+      $('#edit').hide();
+    });
+  }
+
+  edit2(id): void {
+    this.editMoreForm[id - 1].patchValue({
+      check: true
+    });
+    this.check = true;
+  }
+
+  edit3(id) {
+    this.adminService.findRoleById(this.editMoreForm[id - 1].controls.role.value).subscribe(next => {
+      this.editMoreForm[id - 1].patchValue({
+        role: next,
+        accountPassword: this.editMoreForm[id - 1].get('pwGroup.accountPassword').value
+      });
+      this.adminService.edit(this.editMoreForm[id - 1].value).subscribe(next => {
+        this.toastrService.success('Chỉnh sửa thành công');
+        this.getAll();
+        this.check = false;
+        this.editMoreForm[id - 1].patchValue({
+          check: false
+        });
+      }, error => {
+        console.log(error);
+        this.toastrService.error('Chỉnh sửa không thành công');
+      });
+    });
+  }
+
+  cancel(id) {
+    this.editMoreForm[id - 1].patchValue({
+      check: false
+    });
+  }
+
+  editMore() {
+    for (let i = 0; i < this.editMoreForm.length; i++) {
+      if (this.editMoreForm[i].controls.check.value == true) {
+        this.adminService.findRoleById(this.editMoreForm[i].controls.role.value).subscribe(next => {
+          this.editMoreForm[i].patchValue({
+            role: next,
+            check: false
+          });
+          this.adminService.edit(this.editMoreForm[i].value).subscribe(next => {
+            this.toastrService.success('Chỉnh sửa thành công');
+            this.getAll();
+          }, error => {
+            console.log(error);
+            this.toastrService.error('Chỉnh sửa không thành công');
+          });
+        });
+      }
+    }
+    this.check = false;
+  }
+
+
+  addMore(): void {
     this.accountForm2.push(this.formBuilder.group({
       accountId: [''],
       accountName: ['', [Validators.required]],
@@ -361,47 +479,6 @@ export class ListAccountComponent implements OnInit {
     });
   }
 
-  edit(id) {
-    this.infoAccountById = new Employees();
-    this.adminService.findByInfoId(id).subscribe(next => {
-      this.infoAccountById = next;
-    });
-    this.adminService.findByInfoUserId(id).subscribe(next => {
-      this.infoAccountById2 = next;
-    });
-    this.adminService.findAllRole().subscribe(next => {
-      this.roleList = next;
-    }, error => {
-      console.log(error);
-    });
-    this.adminService.findAccountById(id).subscribe(next => {
-      this.AccountById = next;
-    }, error => {
-      this.toastrService.error('', 'tài khoản đã bị xóa');
-      this.ngOnInit();
-      $('.destroy').click();
-    });
-    this.adminService.findAccountById(id).subscribe(next => {
-      this.editAccountForm.patchValue({
-        accountId: next.accountId,
-        accountName: next.accountName,
-        accountPassword: '',
-        deleteFlag: next.deleteFlag,
-        role: next.role.roleId,
-        reason: '',
-      });
-    }, error => {
-      console.log(error);
-    });
-    $('#edit').show();
-    $('.close').click(function() {
-      $('#edit').hide();
-    });
-    $('.destroy').click(function() {
-      $('#edit').hide();
-    });
-  }
-
   delete(id) {
     this.adminService.findAccountById(id).subscribe(next => {
       this.deleteAccountForm.patchValue({
@@ -471,10 +548,9 @@ export class ListAccountComponent implements OnInit {
                 if (this.accountForm2[i].valid) {
                   this.adminService.create(this.accountForm2[i].value).subscribe(
                     () => {
-                      this.getAll();
+                      this.ngOnInit();
                       this.showCreated();
-
-
+                      this.accountForm2.splice(i, 1);
                     },
                     error => console.log(error)
                   );
@@ -537,6 +613,10 @@ export class ListAccountComponent implements OnInit {
       this.ngOnInit();
       $('.destroy').click();
     });
+  }
+
+  edited2() {
+
   }
 
   filterTypeRole(val: number) {

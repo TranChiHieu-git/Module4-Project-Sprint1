@@ -27,6 +27,8 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Tên tài khoản</th>
+          <th *ngIf="editMoreForm.length>0" scope="col"></th>
+          <th *ngIf="editMoreForm.length>0" scope="col"></th>
           <th scope="col">
             <div class="dropdown show">
               <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
@@ -49,77 +51,100 @@
           </th>
         </tr>
         </thead>
-        <tbody class=""
-               *ngFor="let account of accountList">
-        <tr>
-          <th scope="row">{{account.accountId}}</th>
-          <td class="details" (click)="info(account.accountId)" data-toggle="modal"
+        <tbody *ngFor="let account of accountList">
+        <!--          edit more-->
+        <tr *ngIf="!editMoreForm[account.accountId-1].controls.check.value">
+          <td class="editMore details" (click)="info(account.accountId)"
+              data-toggle="modal"
               data-target="#infor">{{account.accountName}}</td>
           <td><label class="pw">{{account.role.roleName}}</label></td>
           <td>
-            <button class="border-0 mr-5 bg-transparent edit"
+            <button class="border-0 mr-5  edit"
+                    (click)="edit2(account.accountId)">
+              <span class="fa fa-pencil"></span>
+            </button>
+            <button class="border-0 mr-5  edit"
                     (click)="edit(account.accountId)" data-toggle="modal" data-target="#edit">
-              <img class="icon" width="25px" height="auto"
-                   src="https://cdn4.iconfinder.com/data/icons/eldorado-education/40/291332-pencil-256.png">
+              <span class="fa fa-pencil"></span>
             </button>
             <button class="border-0 bg-transparent delete"
                     (click)="delete(account.accountId)" data-toggle="modal" data-target="#delete">
-              <img class="icon" width="25px" height="auto"
-                   src="https://cdn4.iconfinder.com/data/icons/vectory-basic/40/recycle_bin_full-256.png">
+              <span class="  fas fa-trash"></span>
+
             </button>
           </td>
           <td><input id="{{account.accountId}}" class="checkbox" type="checkbox"
                      (change)="checkChose()" [checked]="tickForCheckBox(account.accountId)"/></td>
         </tr>
+        <ng-container *ngIf="editMoreForm.length>0" [formGroup]="editMoreForm[account.accountId-1]">
+          <tr *ngIf="editMoreForm[account.accountId-1].controls.check.value">
+            <input class="form-control" formControlName="deleteFlag"
+                   aria-label="Username" aria-describedby="basic-addon1" disabled
+                   hidden>
+            <input class="form-control" formControlName="reason"
+                   aria-label="Username" aria-describedby="basic-addon1" disabled
+                   hidden>
+            <th scope="row">{{account.accountId}}</th>
+            <td>
+              <div class="input-group">
+                <input placeholder="Nhập tên tài khoản"
+                       class="w-input-custom border rounded-0 form-control"
+                       formControlName="accountName"
+                       aria-label="Username"
+                       aria-describedby="basic-addon1" >
+              </div>
+              <span class="text-danger"
+                    *ngIf="editMoreForm[account.accountId-1].hasError('required','accountName') && editMoreForm[account.accountId-1].get('accountName').touched">
+                                  Vui lòng nhập tên tài khoản</span>
+            </td>
+            <td>
+              <div formGroupName="pwGroup">
+                <input placeholder="Nhập mật khẩu" type="password" class="w-auto form-control"
+                       formControlName="accountPassword"
+                       aria-label="Username"
+                       aria-describedby="basic-addon1">
+                <span class="text-danger"
+                      *ngIf="editMoreForm[account.accountId-1].hasError('required','pwGroup.accountPassword') && editMoreForm[account.accountId-1].get('pwGroup.accountPassword').touched">
+                            Vui lòng nhập mật khẩu</span>
+              </div>
+            </td>
+            <td>
+              <div formGroupName="pwGroup">
+                <div class="input-group">
+                  <input placeholder="Xác nhận mật khẩu" type="password" class="w-auto form-control"
+                         formControlName="confirmPassword">
+                </div>
+                <span class="text-danger" *ngIf="editMoreForm[account.accountId-1].hasError('passwordnotmatch', ['pwGroup']) &&
+                      editMoreForm[account.accountId-1].get('pwGroup').touched && editMoreForm[account.accountId-1].get('pwGroup.confirmPassword').touched ">
+                      Mật khẩu không trùng nhau!</span>
+              </div>
+            </td>
+            <td>
+              <select class="browser-default custom-select form-control" formControlName="role">
+                <ng-container *ngFor="let roles of roleList">
+                  <option selected value="{{roles.roleId}}">{{roles.roleName}}</option>
+                </ng-container>
+              </select>
+            </td>
+            <td>
+              <button class="border-0 mr-2 bg-transparent edit"
+                      (click)="edit3(account.accountId)">
+                <span class="fas fa-check"></span>
+              </button>
+              <button class="border-0 mr-2 bg-transparent edit"
+                      (click)="cancel(account.accountId)">
+                <span class="fa
+                 fa-times"></span>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
         </tbody>
       </table>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination float-right mr-5">
-          <!--          <li *ngIf="pageClicked>0" class="page-item" (click)="onFirst()"><a class="page-link">First</a></li>-->
-          <li class="page-item" (click)="onPrevious()" [ngClass]="pageClicked==0?'disabled':''">
-            <a class="page-link">Trang trước</a>
-          </li>
-          <li *ngIf="pageClicked != 0" class="page-item" (click)="getAllSubmit(pages[pageClicked-1])">
-            <a class="page-link">{{pageClicked}}</a>
-          </li>
-          <li [ngClass]="(pageClicked == pages[pageClicked]) ? 'active' : ''" class="page-item"
-              (click)="getAllSubmit(pages[pageClicked])">
-            <a class="page-link">{{pageClicked + 1}}</a>
-          </li>
-          <li *ngIf="pageClicked < pages.length -1" class="page-item" (click)="getAllSubmit(pages[pageClicked+1])">
-            <a class="page-link">{{pageClicked + 2}}</a>
-          </li>
-          <li *ngIf="pageClicked < pages.length -3" class="page-item">
-            <a class="page-link">...</a>
-          </li>
-          <li *ngIf="pageClicked < pages.length-2" class="page-item" (click)="onLast()">
-            <a class="page-link">{{pages[pages.length - 1] + 1}}</a>
-          </li>
-          <li class="page-item" (click)="onNext()" [ngClass]="pageClicked==totalPages-1?'disabled':''">
-            <a class="page-link">Trang kế</a>
-          </li>
-          <!--          <li class="page-item" (click)="onLast()"><a class="page-link">Last</a></li>-->
-        </ul>
-      </nav>
-      <button class="btn btn-custom" (click)="addMore()" type="button"><span class="fa fa-plus-square"></span> Thêm mới
-      </button>
-    </div>
-  </div>
-  <div class="row px-0 py-0">
-    <div class="col-md-12">
-      <table class="table table-borderless">
-        <thead>
-        <tr *ngIf="accountForm2.length>0">
-          <th>Tên tài khoản</th>
-          <th>Mật khẩu</th>
-          <th>Xác nhận mật khẩu</th>
-          <th>Loại tài khoản</th>
-        </tr>
-        </thead>
-      </table>
+      <!--      create more-->
       <form *ngFor="let account of accountForm2" [formGroup]="account">
-        <table class="table table-borderless">
-          <tbody class="border border-dark">
+        <table class="table border-0">
+          <tbody class="border">
           <input class="form-control" formControlName="accountId" aria-label="Username"
                  aria-describedby="basic-addon1" disabled hidden>
           <input class="form-control" formControlName="deleteFlag"
@@ -165,7 +190,7 @@
               <div class="input-group">
                 <select #employee class="browser-default custom-select form-control" formControlName="role">
                   <ng-container *ngFor="let role of roleList">
-                    <option selected value="{{role.roleId}}">{{role.roleName}}</option>
+                    <option value="{{role.roleId}}">{{role.roleName}}</option>
                   </ng-container>
                 </select>
               </div>
@@ -176,8 +201,41 @@
           </tbody>
         </table>
       </form>
-      <button (click)="create2()" *ngIf="accountForm2.length > 0" [disabled]="checkInvalidForm2()" type="submit"
-              class="btn btn-custom"><span class="fa fa-check"></span> Xác Nhận
+      <button (click)="create2()" *ngIf="accountForm2.length > 0" [disabled]="checkInvalidForm2()" type="button"
+              class="mb-3 btn btn-custom"><span class=" fa fa-check"></span> Xác Nhận
+      </button>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination float-right mr-5">
+          <li *ngIf="check">
+            <button (click)="editMore()" class="text-dark btn btn-custom">Chỉnh sửa</button>
+          </li>
+          <!--          <li *ngIf="pageClicked>0" class="page-item" (click)="onFirst()"><a class="page-link">First</a></li>-->
+          <li class="page-item" (click)="onPrevious()" [ngClass]="pageClicked==0?'disabled':''">
+            <a class="page-link">Trang trước</a>
+          </li>
+          <li *ngIf="pageClicked != 0" class="page-item" (click)="getAllSubmit(pages[pageClicked-1])">
+            <a class="page-link">{{pageClicked}}</a>
+          </li>
+          <li [ngClass]="(pageClicked == pages[pageClicked]) ? 'active' : ''" class="page-item"
+              (click)="getAllSubmit(pages[pageClicked])">
+            <a class="page-link">{{pageClicked + 1}}</a>
+          </li>
+          <li *ngIf="pageClicked < pages.length -1" class="page-item" (click)="getAllSubmit(pages[pageClicked+1])">
+            <a class="page-link">{{pageClicked + 2}}</a>
+          </li>
+          <li *ngIf="pageClicked < pages.length -3" class="page-item">
+            <a class="page-link">...</a>
+          </li>
+          <li *ngIf="pageClicked < pages.length-2" class="page-item" (click)="onLast()">
+            <a class="page-link">{{pages[pages.length - 1] + 1}}</a>
+          </li>
+          <li class="page-item" (click)="onNext()" [ngClass]="pageClicked==totalPages-1?'disabled':''">
+            <a class="page-link">Trang kế</a>
+          </li>
+          <!--          <li class="page-item" (click)="onLast()"><a class="page-link">Last</a></li>-->
+        </ul>
+      </nav>
+      <button class="btn btn-custom" (click)="addMore()" type="button"><span class="fa fa-plus-square"></span> Thêm mới
       </button>
     </div>
   </div>
@@ -216,6 +274,10 @@
                   </tr>
                   <tr class="text-danger"
                       *ngIf="accountForm.hasError('required','accountName') && accountForm.get('accountName').touched">
+                    Vui lòng nhập tên tài khoản
+                  </tr>
+                  <tr class="text-danger"
+                      *ngIf="accountForm.hasError('pattern','accountName') && accountForm.get('accountName').touched">
                     Vui lòng nhập tên tài khoản
                   </tr>
                   <div formGroupName="pwGroup">
@@ -696,12 +758,16 @@
                     <!--          </div>-->
                     <div class="row">
                       <label>Họ tên <span class="text-danger"><span class="text-danger">(*)</span></span> <input
-                        type="text" class="form-control text-capitalize" formControlName="name">
+                        type="text" class="form-control" formControlName="name" [value]="employeeForm.get('name').value">
                       </label>
                     </div>
                     <div class="row alert alert-danger" role="alert"
                          *ngIf="employeeForm.get('name').hasError('required') && employeeForm.get('name').touched">
                       Tên không được để trống !
+                    </div>
+                    <div class="row alert alert-danger" role="alert"
+                         *ngIf="employeeForm.get('name').hasError('pattern') && employeeForm.get('name').touched">
+                      Tên sai cú pháp
                     </div>
                     <div class="row">
                       <label>
@@ -769,6 +835,10 @@
                       <div class="alert alert-danger" role="alert"
                            *ngIf="employeeForm.get('address').hasError('required') && employeeForm.get('address').touched">
                         Địa chỉ không đc để trống !
+                      </div>
+                      <div class="alert alert-danger" role="alert"
+                           *ngIf="employeeForm.get('address').hasError('pattern') && employeeForm.get('address').touched">
+                        Địa chỉ sai cú pháp!
                       </div>
                     </div>
                     <div class="row">

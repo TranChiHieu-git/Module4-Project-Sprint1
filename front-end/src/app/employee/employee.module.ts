@@ -46,6 +46,7 @@ import {SaleManagementComponent} from './partner-management/sale-management/sale
 // @ts-ignore
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {SalesManagementComponent} from './sale-management/sale-management.component';
+import {CarouselModule} from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [PartnerManagementComponent, EmployeeDetailComponent, EmployeeManagerComponent,
@@ -90,7 +91,8 @@ import {SalesManagementComponent} from './sale-management/sale-management.compon
       FacebookModule.forRoot(),
       MatProgressBarModule,
       NgSelectModule,
-      BsDatepickerModule.forRoot()
+      BsDatepickerModule.forRoot(),
+      CarouselModule
     ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
