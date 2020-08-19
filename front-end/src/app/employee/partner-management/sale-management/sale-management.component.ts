@@ -244,6 +244,7 @@ export class SaleManagementComponent implements OnInit {
         setTimeout(function(){
           $('#modalDeleteCoupon').modal('hide');
         }, 20);
+        this.getAllCoupon(this.pageClicked);
       });
   }
 
